@@ -1,0 +1,126 @@
+# macOS
+.DS_Store
+
+# Editor/IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Generic build/output artifacts
+build/
+out/
+output/
+outputs/
+result*/
+results*/
+report*/
+reports*/
+logs*/
+log/
+tmp/
+temp/
+.cache/
+*.tmp
+
+# Generic logs and reports
+*.log
+*.out
+*.err
+*.rpt
+*.rep
+*.jou
+
+# Simulation waves and databases
+*.vcd
+*.vpd
+*.fsdb
+*.fsdb.gz
+*.wlf
+*.shm/
+waves.shm/
+waves/
+simvision/
+xcelium.d/
+xrun.history
+
+# Synopsys VCS
+simv
+simv.daidir/
+csrc/
+ucli.key
+vc_hdrs.h
+urgReport/
+urgreport/
+simv.vdb/
+DVEfiles/
+dve.log
+*.vdb
+
+# Synopsys Design Compiler
+alib-*/
+synopsys_work/
+command.log
+*.ddc
+*.mr
+*.svf
+*.sdf
+*.spef
+*.spf
+*.pvl
+*.pt*
+*.db
+
+# Cadence Innovus/Encounter
+INNOVUS*
+innovus*
+encounter*
+*.enc.dat
+*.dat.enc
+*.spef
+*.sdf
+*.def
+*.gds
+*.gds2
+*.oas
+*.oasis
+*.guide
+*.cts
+*.ctstch
+*.rc
+*.sdc.save
+*.sav
+*.svs
+*.scandef
+*.lef.backup
+
+# Questa/ModelSim
+work/
+transcript
+vsim.wlf
+modelsim.ini
+questa.ini
+
+# Verdi/Debussy
+novas/
+novas.rc
+verdiLog/
+
+# Coverage databases
+*.ucdb
+*.cov
+*.covdb
+cov_work/
+
+# Lint/Static analysis outputs
+lint/
+spyglass/
+*.rpt.html
+
+# Other EDA scratch
+*.bak
+*~
+.vcs*
+.vcsmx/
+.vcssaif/
+*.saif
