@@ -1,6 +1,6 @@
 `include "define.vh"
 
-module mac_unit(
+module mac(
     input  [1:0]   i_mode,      // mode = 0: INT8 / 1: INT4 / 2: INT4_VSQ
     input  [23:0]  i_psum,      // partial sum in
     input  [255:0] i_a,         // flattened a vector
