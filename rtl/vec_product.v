@@ -36,7 +36,7 @@ generate
 endgenerate
 
 
-// TODO: adder tree
+// TODO: adder tree instead of chain adder
 always @(*) begin
     acc = 0;
     for (i = 0; i < VEC_SIZE; i = i + 1) begin

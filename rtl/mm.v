@@ -1,4 +1,4 @@
-module matrix_mult (
+module mm (
     input  i_clk,
     input  i_rst_n,
 
