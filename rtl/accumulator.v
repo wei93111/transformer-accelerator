@@ -1,7 +1,7 @@
 module accumulator #(
     parameter VEC_WIDTH  = 384,
-    parameter ENTRY_NUM  = 16,
-    parameter ADDR_WIDTH = $clog2(ENTRY_NUM)
+    parameter ARR_DEPTH  = 16,
+    parameter ADDR_WIDTH = $clog2(ARR_DEPTH)
 )(
     input                   i_clk,
     input                   i_rst_n,
@@ -14,18 +14,20 @@ module accumulator #(
 
     integer i;
 
+    /////////////////////
+    // dual port array //
+    /////////////////////
+
     // Register array
-    reg [VEC_WIDTH-1:0] mem [0:ENTRY_NUM-1];
+    reg [VEC_WIDTH-1:0] mem [0:ARR_DEPTH-1];
 
     // Read logic
-    always @(*) begin
-        o_data_rd = mem[i_addr_rd];
-    end
+    assign o_data_rd = mem[i_addr_rd];
 
     // Write logic
     always @(posedge i_clk or negedge i_rst_n) begin
         if (!i_rst_n) begin
-            for (i = 0; i < ENTRY_NUM; i = i + 1) mem[i] <= {VEC_WIDTH{1'b0}};
+            for (i = 0; i < ARR_DEPTH; i = i + 1) mem[i] <= {VEC_WIDTH{1'b0}};
         end else if (i_we) begin
             mem[i_addr_wr] <= i_data_wr;
         end
