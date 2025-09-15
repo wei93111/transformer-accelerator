@@ -11,24 +11,20 @@ module ram #(
     output reg [VEC_WIDTH-1:0]  o_data      // output read data
 );
 
-
     integer i;
 
-    ///////////////////////
-    // single port array //
-    ///////////////////////
-
-    // Memory array
+    // Pseudo memory array
     reg [VEC_WIDTH-1:0] mem [0:ARR_DEPTH-1];
 
-    // Read / write logic ( 1 cycle latency )
+    // Read / write logic (1 cycle latency)
     always @(posedge i_clk or negedge i_rst_n) begin
         if (!i_rst_n) begin
             for (i = 0; i < ARR_DEPTH; i = i + 1) mem[i] <= {VEC_WIDTH{1'b0}};
+            o_data <= {VEC_WIDTH{1'b0}};
         end else if (i_we) begin
             mem[i_addr] <= i_data;
         end else begin
-            o_data = mem[i_addr];
+            o_data <= mem[i_addr];
         end
     end
 

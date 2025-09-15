@@ -93,7 +93,7 @@ module mac (
 
     // output
     assign o_result = (i_mode == `INT8) ? int8_result :
-                    (i_mode == `INT4) ? int4_result : vsq_result;
+                      (i_mode == `INT4) ? int4_result : vsq_result;
 
 
 endmodule

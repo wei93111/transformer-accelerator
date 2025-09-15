@@ -14,22 +14,18 @@ module accumulator #(
 
     integer i;
 
-    /////////////////////
-    // dual port array //
-    /////////////////////
-
     // Register array
-    reg [VEC_WIDTH-1:0] mem [0:ARR_DEPTH-1];
+    reg [VEC_WIDTH-1:0] registers [0:ARR_DEPTH-1];
 
     // Read logic
-    assign o_data_rd = mem[i_addr_rd];
+    assign o_data_rd = registers[i_addr_rd];
 
-    // Write logic
+    // Write logic (1 cycle latency)
     always @(posedge i_clk or negedge i_rst_n) begin
         if (!i_rst_n) begin
-            for (i = 0; i < ARR_DEPTH; i = i + 1) mem[i] <= {VEC_WIDTH{1'b0}};
+            for (i = 0; i < ARR_DEPTH; i = i + 1) registers[i] <= {VEC_WIDTH{1'b0}};
         end else if (i_we) begin
-            mem[i_addr_wr] <= i_data_wr;
+            registers[i_addr_wr] <= i_data_wr;
         end
     end
 
