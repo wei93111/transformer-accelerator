@@ -74,21 +74,20 @@ module mac (
 
     wire [15:0] scale_mult_full;
     wire [7:0]  scale_mult_round;
-    wire [22:0] vsq_product;
+    wire [21:0] vsq_product;
 
     assign scale_mult_full  = i_scale_a * scale_b_gated;
-    assign scale_mult_round = (scale_mult_full + 16'd128) >> 8;     // rounding
-    assign vsq_product      = $signed(int4_product) * $signed({1'b0, scale_mult_round});
+    assign scale_mult_round = (scale_mult_full + 16'd128) >> 8;                             // rounding for Q0.8
+    assign vsq_product      = $signed(int4_product) * $signed({1'b0, scale_mult_round});    // Q14.8
 
-    wire [24:0] vsq_result_full;
-    wire [23:0] vsq_result_full_abs;
+    wire [23:0] vsq_result_tmp;
     wire [23:0] vsq_result;
-    wire [22:0] vsq_result_abs;
+    wire        overflow;
 
-    assign vsq_result_full     = $signed(vsq_psum_gated) + $signed(vsq_product);
-    assign vsq_result_full_abs = (~vsq_result_full[24]) ? vsq_result_full[23:0] : ~vsq_result_full[23:0] + 1;
-    assign vsq_result_abs      = (vsq_result_full_abs[23]) ? 23'h7FFFF : vsq_result_full_abs[22:0];     // saturation
-    assign vsq_result          = (~vsq_result_full[24]) ? {1'b0, vsq_result_abs} : {1'b1, ~vsq_result_abs + 1};
+    assign vsq_result_tmp = $signed(vsq_psum_gated) + $signed(vsq_product);
+    assign overflow       = (vsq_psum_gated[24] == vsq_product[21]) && (vsq_result_tmp[24] != vsq_psum_gated[24]);
+    assign vsq_result     = (~overflow)          ?  vsq_result_tmp  :                       // saturation
+                            (vsq_psum_gated[24]) ? {1'b1, 23{1'b0}} : {1'b0, 23{1'b1}};
 
 
     // output

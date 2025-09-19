@@ -124,3 +124,6 @@ spyglass/
 .vcsmx/
 .vcssaif/
 *.saif
+
+# Reference papers
+paper/
