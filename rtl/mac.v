@@ -46,7 +46,7 @@ module mac (
         .o_product (int8_product)
     );
 
-    assign int8_result = $signed(int8_psum_gated) + $signed(int8_product);
+    assign int8_result = $signed(int8_psum_gated) + $signed(int8_product);      // no saturation
 
 
     //////////////
@@ -65,7 +65,7 @@ module mac (
         .o_product (int4_product)
     );
 
-    assign int4_result = $signed(int4_psum_gated) + $signed(int4_product);
+    assign int4_result = $signed(int4_psum_gated) + $signed(int4_product);      // no saturation
 
 
     /////////
@@ -74,20 +74,20 @@ module mac (
 
     wire [15:0] scale_mult_full;
     wire [7:0]  scale_mult_round;
-    wire [21:0] vsq_product;
+    wire [22:0] vsq_product;
 
     assign scale_mult_full  = i_scale_a * scale_b_gated;
-    assign scale_mult_round = (scale_mult_full + 16'd128) >> 8;                             // rounding for Q0.8
-    assign vsq_product      = $signed(int4_product) * $signed({1'b0, scale_mult_round});    // Q14.8
+    assign scale_mult_round = (scale_mult_full + 16'd128) >> 8;                             // rounding
+    assign vsq_product      = $signed(int4_product) * $signed({1'b0, scale_mult_round});    // TODO: need to lshift 8 bits back later
 
     wire [23:0] vsq_result_tmp;
     wire [23:0] vsq_result;
     wire        overflow;
 
     assign vsq_result_tmp = $signed(vsq_psum_gated) + $signed(vsq_product);
-    assign overflow       = (vsq_psum_gated[24] == vsq_product[21]) && (vsq_result_tmp[24] != vsq_psum_gated[24]);
-    assign vsq_result     = (~overflow)          ?  vsq_result_tmp  :                       // saturation
-                            (vsq_psum_gated[24]) ? {1'b1, 23{1'b0}} : {1'b0, 23{1'b1}};
+    assign overflow       = (vsq_psum_gated[23] == vsq_product[22]) && (vsq_result_tmp[23] != vsq_psum_gated[23]);
+    assign vsq_result     = (~overflow)          ?   vsq_result_tmp   :
+                            (vsq_psum_gated[23]) ? {1'b1, {23{1'b0}}} : {1'b0, {23{1'b1}}};     // saturation
 
 
     // output

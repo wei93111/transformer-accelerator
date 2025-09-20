@@ -15,7 +15,6 @@ module vec_product #(
     wire [BIT_WIDTH-1:0]   a    [0:VEC_SIZE-1];  // a vector array
     wire [BIT_WIDTH-1:0]   b    [0:VEC_SIZE-1];  // b vector array
     wire [BIT_WIDTH*2-1:0] mult [0:VEC_SIZE-1];  // mult result array
-    reg  [ACC_WIDTH-1:0]   acc;                  // accumulation result
 
 
     // unpack input

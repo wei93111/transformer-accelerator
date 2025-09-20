@@ -125,5 +125,11 @@ spyglass/
 .vcssaif/
 *.saif
 
+# Venv
+venv/
+
+# Utils
+utils/
+
 # Reference papers
 paper/
