@@ -8,24 +8,43 @@ module mm_ctrl #(
     parameter K  = 256,
     parameter N  = 512
 )(
-    input        i_clk,
-    input        i_rst_n,
-    input  [1:0] i_mode,    // mode = 0: INT8 / 1: INT4 / 2: INT4_VSQ
-    input        i_start,   // start signal
-    output       o_done     // TODO: finish signal
+    input            i_clk,
+    input            i_rst_n,
+    input      [1:0] i_mode,    // mode = 0: INT8 / 1: INT4 / 2: INT4_VSQ
+    input            i_start,   // start signal
+    output reg       o_done     // finish signal
 );
 
     genvar gi;
 
 
-    // capture mode at start
+    localparam S_IDLE = 1'b0;
+    localparam S_BUSY = 1'b1;
+
+
+    // state and mode
     reg [1:0] mode;
+    reg       state;
 
     always @(posedge i_clk or negedge i_rst_n) begin
         if (!i_rst_n) begin
-            mode <= 0;
-        end else if (i_start) begin
-            mode <= i_mode;
+            mode  <= 2'd0;
+            state <= S_IDLE;
+        end else begin
+            case (state)
+                S_IDLE: begin
+                    if (i_start) begin
+                        mode  <= i_mode;
+                        state <= S_BUSY;
+                    end
+                end
+                S_BUSY: begin
+                    // TODO: implement finish condition
+                    if (finish) begin
+                        state <= S_IDLE;
+                    end
+                end
+            endcase
         end
     end
 
@@ -34,10 +53,11 @@ module mm_ctrl #(
     // A buffers //
     ///////////////
 
-    reg  [6:0] ram_a_addr;                  // TODO: addr gen
+    reg  [6:0] ram_a_addr;
 
     generate
         for (gi = 0; gi < 16; gi = gi + 1) begin: A_BUF
+
             wire [263:0] ram_a_data;        // for each lane
 
             ram #(
@@ -45,12 +65,13 @@ module mm_ctrl #(
                 .ARR_DEPTH ( 128 )
             ) ram_a (
                 .i_clk   ( i_clk ),
-                .i_rst_n ( 1'b1 ),          // dont reset
+                .i_rst_n ( 1'b1 ),          // no reset
                 .i_we    ( 1'b0 ),          // no write
                 .i_addr  ( ram_a_addr ),
                 .i_data  ( 264'd0 ),
                 .o_data  ( ram_a_data )
             );
+
         end
     endgenerate
 
@@ -59,7 +80,7 @@ module mm_ctrl #(
     // B buffer //
     //////////////
 
-    reg  [10:0]  ram_b_addr;        // TODO: addr gen
+    reg  [10:0]  ram_b_addr;
     wire [263:0] ram_b_data;
 
     ram #(
@@ -67,7 +88,7 @@ module mm_ctrl #(
         .ARR_DEPTH ( 2048 )
     ) ram_b (
         .i_clk   ( i_clk ),
-        .i_rst_n ( 1'b1 ),          // dont reset
+        .i_rst_n ( 1'b1 ),          // no reset
         .i_we    ( 1'b0 ),          // no write
         .i_addr  ( ram_b_addr ),
         .i_data  ( 264'd0 ),
@@ -85,8 +106,10 @@ module mm_ctrl #(
 
     generate
         for (gi = 0; gi < 16; gi = gi + 1) begin: MAC_UNIT
+
             wire [255:0] a       = A_BUF[gi].ram_a_data[263:8];
             wire [7:0]   scale_a = A_BUF[gi].ram_a_data[7:0];
+
             mac mac_unit (
                 .i_mode    ( mode ),
                 .i_psum    ( acc_data[gi*24 +: 24] ),
@@ -96,6 +119,7 @@ module mm_ctrl #(
                 .i_scale_b ( scale_b ),
                 .o_result  ( mac_res[gi*24 +: 24] )
             );
+
         end
     endgenerate
 
@@ -104,8 +128,8 @@ module mm_ctrl #(
     // accumulator //
     /////////////////
 
-    reg          acc_we;    // TODO: control acc we
-    reg  [3:0]   acc_addr;  // TODO: control acc addr
+    reg          acc_we;
+    reg  [3:0]   acc_addr;
     wire [383:0] acc_data;
 
     accumulator #(
@@ -120,6 +144,53 @@ module mm_ctrl #(
         .i_addr_rd ( acc_addr ),
         .o_data_rd ( acc_data )
     );
+
+    always @(posedge i_clk or negedge i_rst_n) begin
+        if (!i_rst_n) begin
+            acc_we   <= 1'b0;
+            acc_addr <= 4'd0;
+        end else begin
+            case (state)
+                S_IDLE: begin
+                    if (i_start) begin
+                        acc_we   <= 1'b1;
+                        acc_addr <= 4'd0;
+                    end else begin
+                        acc_we   <= 1'b0;
+                        acc_addr <= 4'd0;
+                    end
+                end
+                S_BUSY: begin
+                    if (acc_addr == 4'd15) begin
+                        acc_addr <= 4'd0;
+                    end else begin
+                        acc_addr <= acc_addr + 4'd1;
+                    end
+                end
+            endcase
+        end
+    end
+
+ 
+    // TODO: addr gen (and control o_done)
+    always @(posedge i_clk or negedge i_rst_n) begin
+        if (!i_rst_n) begin
+            ram_a_addr <= 7'd0;
+            ram_b_addr <= 11'd0;
+        end else begin
+            case (state)
+                S_IDLE: begin
+                    if (i_start) begin
+                        ram_a_addr <= 7'd0;
+                        ram_b_addr <= 11'd0;
+                    end
+                end
+                S_BUSY: begin
+                    
+                end
+            endcase
+        end
+    end
 
 
 endmodule
