@@ -128,9 +128,11 @@ module mm_ctrl #(
     // accumulator //
     /////////////////
 
-    reg          acc_we;
+    wire         acc_we;
     reg  [3:0]   acc_addr;
     wire [383:0] acc_data;
+
+    assign acc_we = (state == S_BUSY) ? 1'b1 : 1'b0;
 
     accumulator #(
         .VEC_WIDTH (384),
@@ -145,48 +147,28 @@ module mm_ctrl #(
         .o_data_rd ( acc_data )
     );
 
-    always @(posedge i_clk or negedge i_rst_n) begin
-        if (!i_rst_n) begin
-            acc_we   <= 1'b0;
-            acc_addr <= 4'd0;
-        end else begin
-            case (state)
-                S_IDLE: begin
-                    if (i_start) begin
-                        acc_we   <= 1'b1;
-                        acc_addr <= 4'd0;
-                    end else begin
-                        acc_we   <= 1'b0;
-                        acc_addr <= 4'd0;
-                    end
-                end
-                S_BUSY: begin
-                    if (acc_addr == 4'd15) begin
-                        acc_addr <= 4'd0;
-                    end else begin
-                        acc_addr <= acc_addr + 4'd1;
-                    end
-                end
-            endcase
-        end
-    end
-
  
     // TODO: addr gen (and control o_done)
     always @(posedge i_clk or negedge i_rst_n) begin
         if (!i_rst_n) begin
             ram_a_addr <= 7'd0;
             ram_b_addr <= 11'd0;
+            acc_addr   <= 4'd0;
         end else begin
             case (state)
                 S_IDLE: begin
                     if (i_start) begin
                         ram_a_addr <= 7'd0;
                         ram_b_addr <= 11'd0;
+                        acc_addr   <= 4'd0;
                     end
                 end
                 S_BUSY: begin
-                    
+                    if (acc_addr == 4'd15) begin
+                        acc_addr   <= 4'd0;
+                    end else begin
+                        acc_addr   <= acc_addr + 4'd1;
+                    end
                 end
             endcase
         end
