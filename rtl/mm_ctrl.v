@@ -6,7 +6,8 @@ module mm_ctrl #(
     parameter AD = 16,
     parameter M  = 512,
     parameter K  = 256,
-    parameter N  = 512
+    parameter N  = 512,
+    parameter ACC_ITER = K / VS;
 )(
     input            i_clk,
     input            i_rst_n,
@@ -53,7 +54,7 @@ module mm_ctrl #(
     // A buffers //
     ///////////////
 
-    reg  [6:0] ram_a_addr;
+    wire [6:0] ram_a_addr;
 
     generate
         for (gi = 0; gi < 16; gi = gi + 1) begin: A_BUF
@@ -80,7 +81,7 @@ module mm_ctrl #(
     // B buffer //
     //////////////
 
-    reg  [10:0]  ram_b_addr;
+    wire [10:0]  ram_b_addr;
     wire [263:0] ram_b_data;
 
     ram #(
@@ -147,27 +148,79 @@ module mm_ctrl #(
         .o_data_rd ( acc_data )
     );
 
- 
-    // TODO: addr gen (and control o_done)
+
+    //////////////
+    // addr gen //
+    //////////////
+
+    reg [3:0] b_cnt;    // increment every cycle
+    reg [1:0] a_cnt;    // increment every 16 cycles
+    reg [4:0] col_cnt;  // increment every 16 * 4 cycles
+    reg [4:0] row_cnt;  // increment every 16 * 4 * 32 cycles
+
+    assign ram_a_addr = a_cnt + (row_cnt * ACC_ITER);
+    assign ram_b_addr = b_cnt + (a_cnt * N) + (col_cnt * AD);
+
     always @(posedge i_clk or negedge i_rst_n) begin
         if (!i_rst_n) begin
-            ram_a_addr <= 7'd0;
-            ram_b_addr <= 11'd0;
-            acc_addr   <= 4'd0;
+            acc_addr <= 4'd0;
+            b_cnt    <= 4'd0;
+            a_cnt    <= 2'd0;
+            col_cnt  <= 5'd0;
+            row_cnt  <= 5'd0;
         end else begin
             case (state)
                 S_IDLE: begin
                     if (i_start) begin
-                        ram_a_addr <= 7'd0;
-                        ram_b_addr <= 11'd0;
-                        acc_addr   <= 4'd0;
+                        acc_addr <= 4'd0;
+                        b_cnt    <= 4'd0;
+                        a_cnt    <= 2'd0;
+                        col_cnt  <= 5'd0;
+                        row_cnt  <= 5'd0;
                     end
                 end
                 S_BUSY: begin
+                    // acc_addr
                     if (acc_addr == 4'd15) begin
-                        acc_addr   <= 4'd0;
+                        acc_addr <= 4'd0;
                     end else begin
-                        acc_addr   <= acc_addr + 4'd1;
+                        acc_addr <= acc_addr + 4'd1;
+                    end
+
+                    // b_cnt
+                    if (b_cnt == 4'd15) begin
+                        b_cnt <= 4'd0;
+                    end else begin
+                        b_cnt <= b_cnt + 4'd1;
+                    end
+
+                    // a_cnt
+                    if (b_cnt == 4'd15) begin
+                        if (a_cnt == 2'd3) begin
+                            a_cnt <= 2'd0;
+                        end else begin
+                            a_cnt <= a_cnt + 2'd1;
+                        end
+                    end
+
+                    // col_cnt
+                    if (b_cnt == 4'd15 && a_cnt == 2'd3) begin
+                        // o_done <= 1'b1;
+                        if (col_cnt == 5'd31) begin
+                            col_cnt <= 5'd0;
+                        end else begin
+                            col_cnt <= col_cnt + 5'd1;
+                        end
+                    end
+
+                    // row_cnt
+                    if (b_cnt == 4'd15 && a_cnt == 2'd3 && col_cnt == 5'd31) begin
+                        if (row_cnt == 5'd32) begin
+                            // finish <= 1'b1;
+                            row_cnt <= 5'd0;
+                        end else begin
+                            row_cnt <= row_cnt + 5'd1;
+                        end
                     end
                 end
             endcase
