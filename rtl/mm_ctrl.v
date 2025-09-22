@@ -9,12 +9,12 @@ module mm_ctrl #(
     parameter N  = 512,
     parameter I  = K / VS
 )(
-    input            i_clk,
-    input            i_rst_n,
-    input      [1:0] i_mode,        // mode = 0: INT8 / 1: INT4 / 2: INT4_VSQ
-    input            i_start,       // start signal
-    output reg       o_tile_done,   // tile done
-    output reg       o_mtrx_done   // matrix done
+    input        i_clk,
+    input        i_rst_n,
+    input  [1:0] i_mode,        // mode = 0: INT8 / 1: INT4 / 2: INT4_VSQ
+    input        i_start,       // start signal
+    output       o_tile_done,   // tile done
+    output       o_mtrx_done    // matrix done
 );
 
     genvar gi;
@@ -24,23 +24,36 @@ module mm_ctrl #(
     localparam S_BUSY = 1'b1;
 
 
-    reg  [1:0] mode;
-    reg        state;
+    // state ctrl
+    reg  [1:0]    mode;
+    reg           state;
+    reg           tile_done, mtrx_done;
 
-    wire [6:0]  ram_a_addr;
-    wire [10:0] ram_b_addr;
+    // addr ctrl
+    reg  [3:0]    b_cnt;        // increment every cycle
+    reg  [1:0]    a_cnt;        // increment every 16 cycles
+    reg  [4:0]    col_cnt;      // increment every 16 * 4 cycles
+    reg  [4:0]    row_cnt;      // increment every 16 * 4 * 32 cycles
 
-    reg  [3:0] b_cnt;    // increment every cycle
-    reg  [1:0] a_cnt;    // increment every 16 cycles
-    reg  [4:0] col_cnt;  // increment every 16 * 4 cycles
-    reg  [4:0] row_cnt;  // increment every 16 * 4 * 32 cycles
+    // ram interface
+    wire [6:0]    ram_a_addr;
+    wire [4223:0] ram_a_data;   // wide bus for 16 banks
+    wire [10:0]   ram_b_addr;
+    wire [263:0]  ram_b_data;
 
-    wire         acc_we;
-    reg  [3:0]   acc_addr;
-    wire [383:0] acc_data;
+    // accumulator interface
+    reg  [3:0]    acc_addr;
+    wire          acc_we;
+    wire [383:0]  acc_data;
+
+    // mac interface
+    wire [383:0]  mac_res;      // wide bus for 16 lanes
 
 
-    // state and mode
+    ////////////////
+    // state ctrl //
+    ////////////////
+
     always @(posedge i_clk or negedge i_rst_n) begin
         if (!i_rst_n) begin
             mode  <= 2'd0;
@@ -66,26 +79,28 @@ module mm_ctrl #(
     // finish signals
     always @(posedge i_clk or negedge i_rst_n) begin
         if (!i_rst_n) begin
-            o_tile_done <= 1'b0;
-            o_mtrx_done <= 1'b0;
+            tile_done <= 1'b0;
+            mtrx_done <= 1'b0;
         end else begin
             // tile done (pull high 1 cycle)
             if (b_cnt == 4'd15 && a_cnt == 2'd3) begin
-                o_tile_done <= 1'b1;
+                tile_done <= 1'b1;
             end else begin
-                o_tile_done <= 1'b0;
+                tile_done <= 1'b0;
             end
 
             // matrix done (pull high 1 cycle)
             if (b_cnt == 4'd15 && a_cnt == 2'd3 && col_cnt == 5'd31 && row_cnt == 5'd31) begin
-                o_mtrx_done <= 1'b1;
+                mtrx_done <= 1'b1;
             end else begin
-                o_mtrx_done <= 1'b0;
+                mtrx_done <= 1'b0;
             end
         end
     end
-    
 
+    assign o_tile_done = tile_done;
+    assign o_mtrx_done = mtrx_done;
+    
 
     ///////////////
     // A buffers //
@@ -93,21 +108,17 @@ module mm_ctrl #(
 
     generate
         for (gi = 0; gi < 16; gi = gi + 1) begin: A_BUF
-
-            wire [263:0] ram_a_data;        // for each lane
-
             ram #(
                 .VEC_WIDTH ( 264 ),
                 .ARR_DEPTH ( 128 )
             ) ram_a (
                 .i_clk   ( i_clk ),
-                .i_rst_n ( 1'b1 ),          // no reset
-                .i_we    ( 1'b0 ),          // no write
+                .i_rst_n ( 1'b1 ),      // no reset
+                .i_we    ( 1'b0 ),      // no write
                 .i_addr  ( ram_a_addr ),
                 .i_data  ( 264'd0 ),
-                .o_data  ( ram_a_data )
+                .o_data  ( ram_a_data[gi*264 +: 264] )
             );
-
         end
     endgenerate
 
@@ -115,8 +126,6 @@ module mm_ctrl #(
     //////////////
     // B buffer //
     //////////////
-
-    wire [263:0] ram_b_data;
 
     ram #(
         .VEC_WIDTH ( 264 ),
@@ -135,27 +144,18 @@ module mm_ctrl #(
     // mac units //
     ///////////////
 
-    wire [255:0] b       = ram_b_data[263:8];
-    wire [7:0]   scale_b = ram_b_data[7:0];
-    wire [383:0] mac_res;
-
     generate
         for (gi = 0; gi < 16; gi = gi + 1) begin: MAC_UNIT
-
-            wire [255:0] a       = A_BUF[gi].ram_a_data[263:8];
-            wire [7:0]   scale_a = A_BUF[gi].ram_a_data[7:0];
-            wire [23:0]  psum    = (a_cnt == 2'd0) ? 24'd0 : acc_data[gi*24 +: 24];     // a_cnt = 0 -> new round of accumulation
-
+            wire [23:0] psum = (a_cnt == 2'd0) ? 24'd0 : acc_data[gi*24 +: 24];  // new round of accumulation
             mac mac_unit (
                 .i_mode    ( mode ),
                 .i_psum    ( psum ),
-                .i_a       ( a ),
-                .i_b       ( b ),
-                .i_scale_a ( scale_a ),
-                .i_scale_b ( scale_b ),
+                .i_a       ( ram_a_data[gi*264+8 +: 256] ),
+                .i_b       ( ram_b_data[       8 +: 256] ),
+                .i_scale_a ( ram_a_data[gi*264 +: 8] ),
+                .i_scale_b ( ram_b_data[     0 +: 8] ),
                 .o_result  ( mac_res[gi*24 +: 24] )
             );
-
         end
     endgenerate
 

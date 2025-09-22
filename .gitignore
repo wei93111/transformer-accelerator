@@ -134,3 +134,7 @@ utils/
 
 # Reference papers
 paper/
+
+# Script files
+01_RUN
+99_CLEAN
