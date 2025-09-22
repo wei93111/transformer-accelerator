@@ -38,12 +38,12 @@ module mac (
     wire [23:0] int8_result;
 
     vec_product #(
-        .BIT_WIDTH (8),
-        .VEC_SIZE  (32)
+        .BIT_WIDTH ( 8 ),
+        .VEC_SIZE  ( 32 )
     ) int8_vp (
-        .i_a       (i_a),
-        .i_b       (int8_b_gated),
-        .o_product (int8_product)
+        .i_a       ( i_a ),
+        .i_b       ( int8_b_gated ),
+        .o_product ( int8_product )
     );
 
     assign int8_result = $signed(int8_psum_gated) + $signed(int8_product);      // no saturation
@@ -57,12 +57,12 @@ module mac (
     wire [23:0] int4_result;
 
     vec_product #(
-        .BIT_WIDTH (4),
-        .VEC_SIZE  (64)
+        .BIT_WIDTH ( 4 ),
+        .VEC_SIZE  ( 64 )
     ) int4_vp (
-        .i_a       (i_a),
-        .i_b       (int4_b_gated),
-        .o_product (int4_product)
+        .i_a       ( i_a ),
+        .i_b       ( int4_b_gated ),
+        .o_product ( int4_product )
     );
 
     assign int4_result = $signed(int4_psum_gated) + $signed(int4_product);      // no saturation
@@ -87,7 +87,7 @@ module mac (
     assign vsq_result_tmp = $signed(vsq_psum_gated) + $signed(vsq_product);
     assign overflow       = (vsq_psum_gated[23] == vsq_product[22]) && (vsq_result_tmp[23] != vsq_psum_gated[23]);
     assign vsq_result     = (~overflow)          ?   vsq_result_tmp   :
-                            (vsq_psum_gated[23]) ? {1'b1, {23{1'b0}}} : {1'b0, {23{1'b1}}};     // saturation
+                            (vsq_psum_gated[23]) ? {1'b1, 23'd0} : {1'b0, 23'd1};           // saturation
 
 
     // output

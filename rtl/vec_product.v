@@ -12,6 +12,7 @@ module vec_product #(
     genvar gi, gj;
     integer i;
 
+    // TODO: no wire array in verilog
     wire [BIT_WIDTH-1:0]   a    [0:VEC_SIZE-1];  // a vector array
     wire [BIT_WIDTH-1:0]   b    [0:VEC_SIZE-1];  // b vector array
     wire [BIT_WIDTH*2-1:0] mult [0:VEC_SIZE-1];  // mult result array

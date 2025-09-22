@@ -7,18 +7,20 @@ module mm_ctrl #(
     parameter M  = 512,
     parameter K  = 256,
     parameter N  = 512,
-    parameter ACC_ITER = K / VS;
+    parameter I  = K / VS;
 )(
     input            i_clk,
     input            i_rst_n,
-    input      [1:0] i_mode,    // mode = 0: INT8 / 1: INT4 / 2: INT4_VSQ
-    input            i_start,   // start signal
-    output reg       o_done     // finish signal
+    input      [1:0] i_mode,        // mode = 0: INT8 / 1: INT4 / 2: INT4_VSQ
+    input            i_start,       // start signal
+    output reg       o_tile_done;   // tile done
+    output reg       o_mtrx_done;   // matrix done
 );
 
     genvar gi;
 
 
+    // state params
     localparam S_IDLE = 1'b0;
     localparam S_BUSY = 1'b1;
 
@@ -40,8 +42,7 @@ module mm_ctrl #(
                     end
                 end
                 S_BUSY: begin
-                    // TODO: implement finish condition
-                    if (finish) begin
+                    if (b_cnt == 4'd15 && a_cnt == 2'd3 && col_cnt == 5'd31 && row_cnt == 5'd31) begin
                         state <= S_IDLE;
                     end
                 end
@@ -50,11 +51,31 @@ module mm_ctrl #(
     end
 
 
+    // finish signals
+    always @(posedge i_clk or negedge i_rst_n) begin
+        o_tile_done <= 1'b0;
+        o_mtrx_done <= 1'b0;
+    end else begin
+        // tile done (pull high 1 cycle)
+        if (b_cnt == 4'd15 && a_cnt == 2'd3) begin
+            o_tile_done <= 1'b1;
+        end else begin
+            o_tile_done <= 1'b0;
+        end
+
+        // matrix done (pull high 1 cycle)
+        if (b_cnt == 4'd15 && a_cnt == 2'd3 && col_cnt == 5'd31 && row_cnt == 5'd31) begin
+            o_mtrx_done <= 1'b1;
+        end else begin
+            o_mtrx_done <= 1'b0;
+        end
+    end
+    
+
+
     ///////////////
     // A buffers //
     ///////////////
-
-    wire [6:0] ram_a_addr;
 
     generate
         for (gi = 0; gi < 16; gi = gi + 1) begin: A_BUF
@@ -81,7 +102,6 @@ module mm_ctrl #(
     // B buffer //
     //////////////
 
-    wire [10:0]  ram_b_addr;
     wire [263:0] ram_b_data;
 
     ram #(
@@ -110,10 +130,11 @@ module mm_ctrl #(
 
             wire [255:0] a       = A_BUF[gi].ram_a_data[263:8];
             wire [7:0]   scale_a = A_BUF[gi].ram_a_data[7:0];
+            wire [23:0]  psum    = (a_cnt == 2'd0) ? 24'd0 : acc_data[gi*24 +: 24];     // a_cnt = 0 -> new round of accumulation
 
             mac mac_unit (
                 .i_mode    ( mode ),
-                .i_psum    ( acc_data[gi*24 +: 24] ),
+                .i_psum    ( psum ),
                 .i_a       ( a ),
                 .i_b       ( b ),
                 .i_scale_a ( scale_a ),
@@ -136,8 +157,8 @@ module mm_ctrl #(
     assign acc_we = (state == S_BUSY) ? 1'b1 : 1'b0;
 
     accumulator #(
-        .VEC_WIDTH (384),
-        .ARR_DEPTH (16)
+        .VEC_WIDTH ( 384 ),
+        .ARR_DEPTH ( 16 )
     ) acc (
         .i_clk     ( i_clk ),
         .i_rst_n   ( i_rst_n ),
@@ -153,13 +174,16 @@ module mm_ctrl #(
     // addr gen //
     //////////////
 
+    wire [6:0]  ram_a_addr;
+    wire [10:0] ram_b_addr;
+
+    assign ram_a_addr = a_cnt + (row_cnt * I);
+    assign ram_b_addr = b_cnt + (a_cnt * N) + (col_cnt * AD);
+
     reg [3:0] b_cnt;    // increment every cycle
     reg [1:0] a_cnt;    // increment every 16 cycles
     reg [4:0] col_cnt;  // increment every 16 * 4 cycles
     reg [4:0] row_cnt;  // increment every 16 * 4 * 32 cycles
-
-    assign ram_a_addr = a_cnt + (row_cnt * ACC_ITER);
-    assign ram_b_addr = b_cnt + (a_cnt * N) + (col_cnt * AD);
 
     always @(posedge i_clk or negedge i_rst_n) begin
         if (!i_rst_n) begin
@@ -197,6 +221,7 @@ module mm_ctrl #(
                     // a_cnt
                     if (b_cnt == 4'd15) begin
                         if (a_cnt == 2'd3) begin
+                            // tile done
                             a_cnt <= 2'd0;
                         end else begin
                             a_cnt <= a_cnt + 2'd1;
@@ -205,7 +230,6 @@ module mm_ctrl #(
 
                     // col_cnt
                     if (b_cnt == 4'd15 && a_cnt == 2'd3) begin
-                        // o_done <= 1'b1;
                         if (col_cnt == 5'd31) begin
                             col_cnt <= 5'd0;
                         end else begin
@@ -215,8 +239,8 @@ module mm_ctrl #(
 
                     // row_cnt
                     if (b_cnt == 4'd15 && a_cnt == 2'd3 && col_cnt == 5'd31) begin
-                        if (row_cnt == 5'd32) begin
-                            // finish <= 1'b1;
+                        if (row_cnt == 5'd31) begin
+                            // matrix done
                             row_cnt <= 5'd0;
                         end else begin
                             row_cnt <= row_cnt + 5'd1;

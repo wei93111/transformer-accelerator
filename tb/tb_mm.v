@@ -27,7 +27,6 @@
 module testbench;
 
     reg clk;
-    reg clk_start;
     reg rst_n;
 
     reg [1:0] mode;
@@ -39,17 +38,17 @@ module testbench;
 
     // dut
     mm_ctrl dut (
-        .i_clk   (clk),
-        .i_rst_n (rst_n),
-        .i_mode  (mode),
-        .i_start (start),
-        .o_done  (done)
+        .i_clk   ( clk ),
+        .i_rst_n ( rst_n ),
+        .i_mode  ( mode ),
+        .i_start ( start ),
+        .o_done  ( done )
     );
 
 
     // clk gen
     always #(`CYCLE * 0.50) begin
-        if (clk_start) clk = ~clk;
+        clk = ~clk;
     end
 
 
@@ -73,14 +72,12 @@ module testbench;
         $display("SIMULATION START\n");
         $display("-------------------------------------------------------------\n");
 
-        // start clk and init rst
-        clk = 0;
-        clk_start = 0;
+        // init rst
+        clk   = 0;
         rst_n = 1;
 
         #(`CYCLE * 1.0);
         rst_n = 0;
-        clk_start = 1;
 
         #(`CYCLE * 1.0);
         rst_n = 1;
