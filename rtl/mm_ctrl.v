@@ -20,15 +20,27 @@ module mm_ctrl #(
     genvar gi;
 
 
-    // state params
     localparam S_IDLE = 1'b0;
     localparam S_BUSY = 1'b1;
 
 
-    // state and mode
-    reg [1:0] mode;
-    reg       state;
+    reg  [1:0] mode;
+    reg        state;
 
+    wire [6:0]  ram_a_addr;
+    wire [10:0] ram_b_addr;
+
+    reg  [3:0] b_cnt;    // increment every cycle
+    reg  [1:0] a_cnt;    // increment every 16 cycles
+    reg  [4:0] col_cnt;  // increment every 16 * 4 cycles
+    reg  [4:0] row_cnt;  // increment every 16 * 4 * 32 cycles
+
+    wire         acc_we;
+    reg  [3:0]   acc_addr;
+    wire [383:0] acc_data;
+
+
+    // state and mode
     always @(posedge i_clk or negedge i_rst_n) begin
         if (!i_rst_n) begin
             mode  <= 2'd0;
@@ -152,10 +164,6 @@ module mm_ctrl #(
     // accumulator //
     /////////////////
 
-    wire         acc_we;
-    reg  [3:0]   acc_addr;
-    wire [383:0] acc_data;
-
     assign acc_we = (state == S_BUSY) ? 1'b1 : 1'b0;
 
     accumulator #(
@@ -176,16 +184,8 @@ module mm_ctrl #(
     // addr gen //
     //////////////
 
-    wire [6:0]  ram_a_addr;
-    wire [10:0] ram_b_addr;
-
     assign ram_a_addr = a_cnt + (row_cnt * I);
     assign ram_b_addr = b_cnt + (a_cnt * N) + (col_cnt * AD);
-
-    reg [3:0] b_cnt;    // increment every cycle
-    reg [1:0] a_cnt;    // increment every 16 cycles
-    reg [4:0] col_cnt;  // increment every 16 * 4 cycles
-    reg [4:0] row_cnt;  // increment every 16 * 4 * 32 cycles
 
     always @(posedge i_clk or negedge i_rst_n) begin
         if (!i_rst_n) begin

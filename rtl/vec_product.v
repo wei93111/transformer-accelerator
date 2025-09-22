@@ -13,9 +13,10 @@ module vec_product #(
     integer i;
 
 
-    reg [BIT_WIDTH-1:0]   a    [0:VEC_SIZE-1];  // a vector array
-    reg [BIT_WIDTH-1:0]   b    [0:VEC_SIZE-1];  // b vector array
-    reg [BIT_WIDTH*2-1:0] mult [0:VEC_SIZE-1];  // mult result array
+    reg [BIT_WIDTH-1:0]   a         [0:VEC_SIZE-1];                 // a vector array
+    reg [BIT_WIDTH-1:0]   b         [0:VEC_SIZE-1];                 // b vector array
+    reg [BIT_WIDTH*2-1:0] mult      [0:VEC_SIZE-1];                 // mult result array
+    reg [ACC_WIDTH-1:0]   tree_sums [0:NUM_LEVEL][0:VEC_SIZE-1];    // tree sums array (unused entries are not synthesized)
 
 
     // unpack input
@@ -42,8 +43,6 @@ module vec_product #(
     ////////////////
     // tree adder //
     ////////////////
-
-    reg [ACC_WIDTH-1:0] tree_sums [0:NUM_LEVEL][0:VEC_SIZE-1];   // tree sums array (unused entries are not synthesized)
 
     // base
     generate
