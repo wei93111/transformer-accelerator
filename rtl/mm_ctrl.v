@@ -1,4 +1,4 @@
-`include "define.vh"
+`include "define.v"
 
 module mm_ctrl #(
     parameter VS = 64,
@@ -7,14 +7,14 @@ module mm_ctrl #(
     parameter M  = 512,
     parameter K  = 256,
     parameter N  = 512,
-    parameter I  = K / VS;
+    parameter I  = K / VS
 )(
     input            i_clk,
     input            i_rst_n,
     input      [1:0] i_mode,        // mode = 0: INT8 / 1: INT4 / 2: INT4_VSQ
     input            i_start,       // start signal
-    output reg       o_tile_done;   // tile done
-    output reg       o_mtrx_done;   // matrix done
+    output reg       o_tile_done,   // tile done
+    output reg       o_mtrx_done   // matrix done
 );
 
     genvar gi;
@@ -53,21 +53,23 @@ module mm_ctrl #(
 
     // finish signals
     always @(posedge i_clk or negedge i_rst_n) begin
-        o_tile_done <= 1'b0;
-        o_mtrx_done <= 1'b0;
-    end else begin
-        // tile done (pull high 1 cycle)
-        if (b_cnt == 4'd15 && a_cnt == 2'd3) begin
-            o_tile_done <= 1'b1;
-        end else begin
+        if (!i_rst_n) begin
             o_tile_done <= 1'b0;
-        end
-
-        // matrix done (pull high 1 cycle)
-        if (b_cnt == 4'd15 && a_cnt == 2'd3 && col_cnt == 5'd31 && row_cnt == 5'd31) begin
-            o_mtrx_done <= 1'b1;
-        end else begin
             o_mtrx_done <= 1'b0;
+        end else begin
+            // tile done (pull high 1 cycle)
+            if (b_cnt == 4'd15 && a_cnt == 2'd3) begin
+                o_tile_done <= 1'b1;
+            end else begin
+                o_tile_done <= 1'b0;
+            end
+
+            // matrix done (pull high 1 cycle)
+            if (b_cnt == 4'd15 && a_cnt == 2'd3 && col_cnt == 5'd31 && row_cnt == 5'd31) begin
+                o_mtrx_done <= 1'b1;
+            end else begin
+                o_mtrx_done <= 1'b0;
+            end
         end
     end
     

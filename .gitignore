@@ -115,6 +115,7 @@ cov_work/
 # Lint/Static analysis outputs
 lint/
 spyglass/
+spyglass-1/
 *.rpt.html
 
 # Other EDA scratch

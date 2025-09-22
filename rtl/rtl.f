@@ -2,7 +2,7 @@
 +incdir+rtl
 
 // rtl files
-rtl/define.vh
+rtl/define.v
 rtl/vec_product.v
 rtl/mac.v
 rtl/ram.v

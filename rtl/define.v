@@ -1,5 +1,5 @@
-`ifndef DEFINE_VH
-`define DEFINE_VH
+`ifndef DEFINE_V
+`define DEFINE_V
 
     // operation modes
     `define INT8     0

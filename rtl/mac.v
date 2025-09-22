@@ -1,4 +1,4 @@
-`include "define.vh"
+`include "define.v"
 
 module mac (
     input  [1:0]   i_mode,      // mode = 0: INT8 / 1: INT4 / 2: INT4_VSQ
