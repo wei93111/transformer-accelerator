@@ -1,41 +1,32 @@
 `timescale 1ns / 1ps
-`define CYCLE 2.0
-`define IN_DELAY 0.50
-`define OUT_DELAY 0.50
-`define END_CYCLE 100000000
+`define CYCLE 10.0
+`define END_CYCLE 1000000
 
 
-// `ifdef pat0
-//     `define IN_A "./tb/pat/p0_ina.dat"
-//     `define IN_B "./tb/pat/p0_inb.dat"
-//     `define OUT  "./tb/pat/p0_out.dat"
-//     `define MODE 0  // INT8
-// `elsif pat1
-//     `define IN_A "./tb/pat/p1_ina.dat"
-//     `define IN_B "./tb/pat/p1_inb.dat"
-//     `define OUT  "./tb/pat/p1_out.dat"
-//     `define MODE 1  // INT4
-// `elsif pat2
-//     `define IN_A "./tb/pat/p2_ina.dat"
-//     `define IN_B "./tb/pat/p2_inb.dat"
-//     `define OUT  "./tb/pat/p2_out.dat"
-//     `define MODE 2  // INT4_VSQ
-// `else
-//     `define IN_A "./tb/pat/p0_ina.dat"
-//     `define IN_B "./tb/pat/p0_inb.dat"
-//     `define OUT  "./tb/pat/p0_out.dat"
-//     `define MODE 0
-// `endif
-
-`ifdef pat1
+`ifdef pat0
+    `define IN_A "./tb/pat/p0_ina.dat"
+    `define IN_B "./tb/pat/p0_inb.dat"
+    `define OUT  "./tb/pat/p0_out.dat"
+    `define MODE 0  // INT8
+`elsif pat1
     `define IN_A "./tb/pat/p1_ina.dat"
     `define IN_B "./tb/pat/p1_inb.dat"
     `define OUT  "./tb/pat/p1_out.dat"
     `define MODE 1  // INT4
+`elsif pat2
+    `define IN_A "./tb/pat/p2_ina.dat"
+    `define IN_B "./tb/pat/p2_inb.dat"
+    `define OUT  "./tb/pat/p2_out.dat"
+    `define MODE 2  // INT4_VSQ
+`else
+    `define IN_A "./tb/pat/p0_ina.dat"
+    `define IN_B "./tb/pat/p0_inb.dat"
+    `define OUT  "./tb/pat/p0_out.dat"
+    `define MODE 0
 `endif
 
 
-module testbench;
+module tb_mm;
 
 
     logic clk;
@@ -47,11 +38,31 @@ module testbench;
     logic       mtrx_done;
 
     // flattened matrices (raster scan indexing)
-    logic [3:0]  mtrx_a   [0:512*256-1];
-    logic [3:0]  mtrx_b   [0:256*512-1];
-    logic [23:0] mtrx_out [0:512*512-1];
+    logic [3:0]  mtrx_a      [0:512*256-1];
+    logic [3:0]  mtrx_b      [0:256*512-1];
+    logic [23:0] mtrx_golden [0:512*512-1];
 
+    // calculated output (raster scan indexing)
+    logic [23:0] tile [0:255];
+    logic [23:0] mtrx [0:512*512-1];
+
+    logic [9:0]   tile_cnt;
+    logic [9:0]   tile_row;
+    logic [9:0]   tile_col;
     logic [255:0] tmp;
+
+    integer errors;
+
+
+    assign tile_row = tile_cnt >> 5;
+    assign tile_col = tile_cnt - (tile_row * 32);
+
+
+    // clk gen (time exceed handled here)
+    clk_gen u_clk_gen(
+        .clk   ( clk ),
+        .rst_n ( rst_n )
+    );
 
 
     // dut
@@ -65,17 +76,10 @@ module testbench;
     );
 
 
-    // clk gen
-    always #(`CYCLE * 0.50) begin
-        clk = ~clk;
-    end
-
-
     // dump waveform
     initial begin
-        $fsdbDumpfile("tb_mm.fsdb");
-        $fsdbDumpvars;
-        $fsdbDumpMDA;
+        $fsdbDumpfile("mm.fsdb");
+        $fsdbDumpvars(2, tb_mm, "+mda");
     end
 
 
@@ -83,27 +87,29 @@ module testbench;
     initial begin
         $readmemh(`IN_A, mtrx_a);
         $readmemh(`IN_B, mtrx_b);
-        $readmemh(`OUT, mtrx_out);
+        $readmemh(`OUT, mtrx_golden);
 
         // load to A buffers
         for (int bank = 0; bank < 16; bank = bank + 1) begin                    // for each bank
-            for (int row = 0; row < 32; row = row + 1) begin                    // for each row idx (512 / 16 total)
+            for (int row_grp = 0; row_grp < 32; row_grp = row_grp + 1) begin    // for each row group (512 / 16 total)
                 for (int vec = 0; vec < 4; vec = vec + 1) begin                 // for each VS vector
-                    for (int entry = 0; entry < 64; entry = entry + 1) begin    // flatten entries to vector
-                        tmp[entry*4 +: 4] = mtrx_a[(bank+row*16)*256 + vec*64 + entry];
+                    for (int entry = 0; entry < 64; entry = entry + 1) begin    // flatten entries to a vector
+                        tmp[entry*4 +: 4] = mtrx_a[(bank+row_grp*16)*256 + vec*64 + entry];
                     end
-                    dut.A_BUF[bank].ram_a.mem[row*4 + vec][263:8] = tmp;        // matrix entries
-                    dut.A_BUF[bank].ram_a.mem[row*4 + vec][7:0]   = 8'd0;       // scale factor
+                    dut.A_BUF[bank].ram_a.mem[row_grp*4 + vec][263:8] = tmp;    // matrix entries
+                    dut.A_BUF[bank].ram_a.mem[row_grp*4 + vec][7:0]   = 8'd0;   // scale factor
                 end
             end
         end
 
         // load to B buffer
-        for (int vec = 0; vec < 4; vec = vec + 1) begin
-            for (int col = 0; col < 512; col = col + 1) begin
-                for (int entry = 0; entry < 64; entry = entry + 1) begin
-                    // tmp[entry*4 +: 4] = mtrx_b[entry];
+        for (int vec = 0; vec < 4; vec = vec + 1) begin                         // for each VS vector
+            for (int col = 0; col < 512; col = col + 1) begin                   // for each column
+                for (int entry = 0; entry < 64; entry = entry + 1) begin        // flatten entries to a vector
+                    tmp[entry*4 +: 4] = mtrx_b[(entry+vec*64)*512 + col];
                 end
+                dut.ram_b.mem[vec*512 + col][263:8] = tmp;                      // matrix entries
+                dut.ram_b.mem[vec*512 + col][7:0]   = 8'd0;                     // scale factor
             end
         end
     end
@@ -111,44 +117,87 @@ module testbench;
 
     // stimulus
     initial begin
-        $display("-------------------------------------------------------------\n");
-        $display("SIMULATION START\n");
-        $display("-------------------------------------------------------------\n");
-
-        // init rst
-        clk   = 0;
-        rst_n = 1;
-
-        #(`CYCLE * 1.0);
-        rst_n = 0;
-
-        #(`CYCLE * 1.0);
-        rst_n = 1;
-
+        $display("===============================================================================");
+        $display("SIMULATION START");
+        $display("===============================================================================");
+        
+        // reset
+        wait (rst_n === 1'b0);
+        start    = 1'b0;
+        mode     = 2'd0;
+        tile_cnt = 10'd0;
+        wait (rst_n === 1'b1);
 
         // start
-        @(posedge clk);   #(`IN_DELAY);
-        start = 1;
+        @(posedge clk);
+        start = 1'b1;
         mode  = `MODE;
 
         #(`CYCLE * 1.0);
-        start = 0;
+        start = 1'b0;
         mode  = 2'bxx;
     end
 
 
-    // TODO: check result
-    // initial begin
-    //     $readmemb(`OUT, golden);
-    //     if (tile_done) begin
-    //         for (int i = 0; i < 1024; i = i + 1) begin
-    //             if (dut.acc.registers[i] != golden[i]) begin
-    //                 $display("Error at address %d:   Result: %d   Golden: %d", i, dut.acc.registers[i], golden[i]);
-    //                 $finish;
-    //             end
-    //         end
-    //     end
-    // end
+    // finish
+    initial begin
+        wait (mtrx_done === 1'b1);
 
+        $display("===============================================================================");
+        $display("VERIFICATION RESULTS (SHOW FIRST 32 OUTPUTS)");
+        $display("===============================================================================");
+
+        errors = 0;
+        for(int idx = 0; idx < 512*512; idx = idx + 1) begin
+            if (mtrx[idx] !== mtrx_golden[idx]) begin
+                if (idx < 32) 
+                    $display("[ERROR  ]   [%d] Your Result:%24h Golden:%24h", idx, mtrx[idx], mtrx_golden[idx]);
+                errors = errors + 1;
+            end else begin
+                if (idx < 32) 
+                    $display("[CORRECT]   [%d] Your Result:%24h Golden:%24h", idx, mtrx[idx], mtrx_golden[idx]);
+            end
+        end
+        
+        if (errors == 0) begin
+            $display(">>> Congratulation! All result are correct");
+        end else begin
+            $display(">>> There are %d errors QQ", errors);
+        end
+
+        #(`CYCLE * 2.0);
+        $finish;
+    end
+
+
+    // save result for each tile
+    always @(posedge tile_done) begin
+        for (int col = 0; col < 16; col = col + 1) begin
+            for (int row = 0; row < 16; row = row + 1) begin
+                mtrx[(tile_row*16 + row) * 512 + (tile_col*16 + col)] = dut.acc.registers[col][row*24 +: 24];
+            end
+        end
+        tile_cnt <= tile_cnt + 10'd1;
+    end
+
+
+endmodule
+
+
+module clk_gen (
+    output logic clk,
+    output logic rst_n
+);
+
+    always #(`CYCLE * 0.5) clk = ~clk;
+
+    initial begin
+        clk   = 1'b0;
+        rst_n = 1'b1;   #(`CYCLE * 0.5);
+        rst_n = 1'b0;   #(`CYCLE * 1.5);
+        rst_n = 1'b1;   #(`CYCLE * `END_CYCLE);
+        $display("Error! Time limit exceeded!");
+        $finish;
+    end
 
 endmodule
