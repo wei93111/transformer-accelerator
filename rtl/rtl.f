@@ -10,4 +10,4 @@ rtl/accumulator.v
 rtl/mm_ctrl.v
 
 // testbench
-tb/tb_mm.v
+tb/tb_mm.sv
