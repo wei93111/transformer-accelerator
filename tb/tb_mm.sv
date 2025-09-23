@@ -32,6 +32,7 @@ module tb_mm;
     logic clk;
     logic rst_n;
 
+    // interface
     logic [1:0] mode;
     logic       start;
     logic       tile_done;
@@ -41,21 +42,15 @@ module tb_mm;
     logic [3:0]  mtrx_a      [0:512*256-1];
     logic [3:0]  mtrx_b      [0:256*512-1];
     logic [23:0] mtrx_golden [0:512*512-1];
+    logic [23:0] mtrx_out    [0:512*512-1];
 
-    // calculated output (raster scan indexing)
-    logic [23:0] tile [0:255];
-    logic [23:0] mtrx [0:512*512-1];
-
+    // vars
     logic [9:0]   tile_cnt;
     logic [9:0]   tile_row;
     logic [9:0]   tile_col;
     logic [255:0] tmp;
 
     integer errors;
-
-
-    assign tile_row = tile_cnt >> 5;
-    assign tile_col = tile_cnt - (tile_row * 32);
 
 
     // clk gen (time exceed handled here)
@@ -143,26 +138,45 @@ module tb_mm;
     initial begin
         wait (mtrx_done === 1'b1);
 
+        #(`CYCLE * 2.0);
         $display("===============================================================================");
-        $display("VERIFICATION RESULTS (SHOW FIRST 32 OUTPUTS)");
+        $display("VERIFICATION RESULTS");
         $display("===============================================================================");
 
         errors = 0;
+        $display("SHOW FIRST 32 OUTPUTS:")
         for(int idx = 0; idx < 512*512; idx = idx + 1) begin
-            if (mtrx[idx] !== mtrx_golden[idx]) begin
+            if (mtrx_out[idx] !== mtrx_golden[idx]) begin
                 if (idx < 32) 
-                    $display("[ERROR  ]   [%d] Your Result:%24h Golden:%24h", idx, mtrx[idx], mtrx_golden[idx]);
+                    $display("[ERROR  ]   [%d] Calculated:%24h Golden:%24h", idx, mtrx_out[idx], mtrx_golden[idx]);
                 errors = errors + 1;
             end else begin
                 if (idx < 32) 
-                    $display("[CORRECT]   [%d] Your Result:%24h Golden:%24h", idx, mtrx[idx], mtrx_golden[idx]);
+                    $display("[CORRECT]   [%d] Calculated:%24h Golden:%24h", idx, mtrx_out[idx], mtrx_golden[idx]);
             end
         end
         
         if (errors == 0) begin
-            $display(">>> Congratulation! All result are correct");
+            $display("");
+            $display("	******************************               ");
+            $display("	**                          **       |\__||  ");
+            $display("	**    Congratulations !!    **      / O.O  | ");
+            $display("	**                          **    /_____   | ");
+            $display("	**    Simulation PASS!!     **   /^ ^ ^ \\  |");
+            $display("	**                          **  |^ ^ ^ ^ |w| ");
+            $display("	******************************   \\m___m__|_|");
+            $display("");
         end else begin
-            $display(">>> There are %d errors QQ", errors);
+            $display("");
+            $display("	******************************               ");
+            $display("	**                          **       |\__||  ");
+            $display("	**    OOPS!!                **      / X,X  | ");
+            $display("	**                          **    /_____   | ");
+            $display("	**    Simulation Failed!!   **   /^ ^ ^ \\  |");
+            $display("	**                          **  |^ ^ ^ ^ |w| ");
+            $display("	******************************   \\m___m__|_|");
+            $display("");
+            $display("	Total of %d errors               ", errors);
         end
 
         #(`CYCLE * 2.0);
@@ -170,11 +184,14 @@ module tb_mm;
     end
 
 
-    // save result for each tile
+    // save each tile output
+    assign tile_row = tile_cnt >> 5;
+    assign tile_col = tile_cnt - (tile_row * 32);
+
     always @(posedge tile_done) begin
         for (int col = 0; col < 16; col = col + 1) begin
             for (int row = 0; row < 16; row = row + 1) begin
-                mtrx[(tile_row*16 + row) * 512 + (tile_col*16 + col)] = dut.acc.registers[col][row*24 +: 24];
+                mtrx_out[(tile_row*16 + row) * 512 + (tile_col*16 + col)] = dut.acc.registers[col][row*24 +: 24];
             end
         end
         tile_cnt <= tile_cnt + 10'd1;
