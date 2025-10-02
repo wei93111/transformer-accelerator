@@ -1,8 +1,8 @@
-// include directory
+// commands
 +incdir+rtl
+-timescale=1ns/10ps
 
 // rtl files
-rtl/define.v
 rtl/vec_product.v
 rtl/mac.v
 rtl/ram.v

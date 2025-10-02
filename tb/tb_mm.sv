@@ -1,6 +1,6 @@
-`timescale 1ns / 1ps
+`timescale 1ns / 10ps
 `define CYCLE 10.0
-`define END_CYCLE 1000000
+`define END_CYCLE 100000
 
 
 `ifdef pat0
@@ -78,43 +78,9 @@ module tb_mm;
     end
 
 
-    // load pattern
-    initial begin
-        $readmemh(`IN_A, mtrx_a);
-        $readmemh(`IN_B, mtrx_b);
-        $readmemh(`OUT, mtrx_golden);
-
-        // load to A buffers
-        for (int bank = 0; bank < 16; bank = bank + 1) begin                    // for each bank
-            for (int row_grp = 0; row_grp < 32; row_grp = row_grp + 1) begin    // for each row group (512 / 16 total)
-                for (int vec = 0; vec < 4; vec = vec + 1) begin                 // for each VS vector
-                    for (int entry = 0; entry < 64; entry = entry + 1) begin    // flatten entries to a vector
-                        tmp[entry*4 +: 4] = mtrx_a[(bank+row_grp*16)*256 + vec*64 + entry];
-                    end
-                    dut.A_BUF[bank].ram_a.mem[row_grp*4 + vec][263:8] = tmp;    // matrix entries
-                    dut.A_BUF[bank].ram_a.mem[row_grp*4 + vec][7:0]   = 8'd0;   // scale factor
-                end
-            end
-        end
-
-        // load to B buffer
-        for (int vec = 0; vec < 4; vec = vec + 1) begin                         // for each VS vector
-            for (int col = 0; col < 512; col = col + 1) begin                   // for each column
-                for (int entry = 0; entry < 64; entry = entry + 1) begin        // flatten entries to a vector
-                    tmp[entry*4 +: 4] = mtrx_b[(entry+vec*64)*512 + col];
-                end
-                dut.ram_b.mem[vec*512 + col][263:8] = tmp;                      // matrix entries
-                dut.ram_b.mem[vec*512 + col][7:0]   = 8'd0;                     // scale factor
-            end
-        end
-    end
-
-
     // stimulus
     initial begin
-        $display("===============================================================================");
-        $display("SIMULATION START");
-        $display("===============================================================================");
+        $display("Starting simulation...\n");
         
         // reset
         wait (rst_n === 1'b0);
@@ -124,7 +90,7 @@ module tb_mm;
         wait (rst_n === 1'b1);
 
         // start
-        @(posedge clk);
+        @(negedge clk);
         start = 1'b1;
         mode  = `MODE;
 
@@ -139,42 +105,41 @@ module tb_mm;
         wait (mtrx_done === 1'b1);
 
         #(`CYCLE * 2.0);
-        $display("===============================================================================");
-        $display("VERIFICATION RESULTS");
-        $display("===============================================================================");
+        $display("////////////////////////");
+        $display("// Simulation Results //");
+        $display("////////////////////////");
+        $display("");
 
         errors = 0;
-        $display("SHOW FIRST 32 OUTPUTS:")
-        for(int idx = 0; idx < 512*512; idx = idx + 1) begin
+        $display("First 32 outputs:\n");
+        for (integer idx = 0; idx < 512*512; idx = idx + 1) begin
             if (mtrx_out[idx] !== mtrx_golden[idx]) begin
-                if (idx < 32) 
-                    $display("[ERROR  ]   [%d] Calculated:%24h Golden:%24h", idx, mtrx_out[idx], mtrx_golden[idx]);
                 errors = errors + 1;
+                if (idx < 32) $display("[ERROR  ] [%d] Calculated:%24h Golden:%24h", idx, mtrx_out[idx], mtrx_golden[idx]);
             end else begin
-                if (idx < 32) 
-                    $display("[CORRECT]   [%d] Calculated:%24h Golden:%24h", idx, mtrx_out[idx], mtrx_golden[idx]);
+                if (idx < 32) $display("[CORRECT] [%d] Calculated:%24h Golden:%24h", idx, mtrx_out[idx], mtrx_golden[idx]);
             end
         end
         
         if (errors == 0) begin
             $display("");
-            $display("	******************************               ");
-            $display("	**                          **       |\__||  ");
-            $display("	**    Congratulations !!    **      / O.O  | ");
-            $display("	**                          **    /_____   | ");
-            $display("	**    Simulation PASS!!     **   /^ ^ ^ \\  |");
-            $display("	**                          **  |^ ^ ^ ^ |w| ");
-            $display("	******************************   \\m___m__|_|");
+            $display("	//////////////////////////////               ");
+            $display("	//                          //       |\__||  ");
+            $display("	//    Congratulations !!    //      / O.O  | ");
+            $display("	//                          //    /_____   | ");
+            $display("	//    Simulation PASS!!     //   /^ ^ ^ \\  |");
+            $display("	//                          //  |^ ^ ^ ^ |w| ");
+            $display("	//////////////////////////////   \\m___m__|_|");
             $display("");
         end else begin
             $display("");
-            $display("	******************************               ");
-            $display("	**                          **       |\__||  ");
-            $display("	**    OOPS!!                **      / X,X  | ");
-            $display("	**                          **    /_____   | ");
-            $display("	**    Simulation Failed!!   **   /^ ^ ^ \\  |");
-            $display("	**                          **  |^ ^ ^ ^ |w| ");
-            $display("	******************************   \\m___m__|_|");
+            $display("	//////////////////////////////               ");
+            $display("	//                          //       |\__||  ");
+            $display("	//    OOPS!!                //      / X,X  | ");
+            $display("	//                          //    /_____   | ");
+            $display("	//    Simulation Failed!!   //   /^ ^ ^ \\  |");
+            $display("	//                          //  |^ ^ ^ ^ |w| ");
+            $display("	//////////////////////////////   \\m___m__|_|");
             $display("");
             $display("	Total of %d errors               ", errors);
         end
@@ -184,13 +149,211 @@ module tb_mm;
     end
 
 
+    // load pattern
+    initial begin
+        $readmemh(`IN_A, mtrx_a);
+        $readmemh(`IN_B, mtrx_b);
+        $readmemh(`OUT, mtrx_golden);
+
+        // load to A buffers (unrolled...)
+
+        // Bank 0
+        for (integer row_grp = 0; row_grp < 32; row_grp = row_grp + 1) begin    // for each row group (512 / 16 total)
+            for (integer vec = 0; vec < 4; vec = vec + 1) begin                 // for each VS vector
+                for (integer entry = 0; entry < 64; entry = entry + 1) begin    // flatten entries to a vector
+                    tmp[entry*4 +: 4] = mtrx_a[(0+row_grp*16)*256 + vec*64 + entry];
+                end
+                dut.A_BUF[0].ram_a.mem[row_grp*4+vec][263:8] = tmp;             // matrix entries
+                dut.A_BUF[0].ram_a.mem[row_grp*4+vec][7:0]   = 8'd0;            // scale factor
+            end
+        end
+
+        // Bank 1
+        for (integer row_grp = 0; row_grp < 32; row_grp = row_grp + 1) begin    // for each row group (512 / 16 total)
+            for (integer vec = 0; vec < 4; vec = vec + 1) begin                 // for each VS vector
+                for (integer entry = 0; entry < 64; entry = entry + 1) begin    // flatten entries to a vector
+                    tmp[entry*4 +: 4] = mtrx_a[(1+row_grp*16)*256 + vec*64 + entry];
+                end
+                dut.A_BUF[1].ram_a.mem[row_grp*4+vec][263:8] = tmp;             // matrix entries
+                dut.A_BUF[1].ram_a.mem[row_grp*4+vec][7:0]   = 8'd0;            // scale factor
+            end
+        end
+
+        // Bank 2
+        for (integer row_grp = 0; row_grp < 32; row_grp = row_grp + 1) begin    // for each row group (512 / 16 total)
+            for (integer vec = 0; vec < 4; vec = vec + 1) begin                 // for each VS vector
+                for (integer entry = 0; entry < 64; entry = entry + 1) begin    // flatten entries to a vector
+                    tmp[entry*4 +: 4] = mtrx_a[(2+row_grp*16)*256 + vec*64 + entry];
+                end
+                dut.A_BUF[2].ram_a.mem[row_grp*4+vec][263:8] = tmp;             // matrix entries
+                dut.A_BUF[2].ram_a.mem[row_grp*4+vec][7:0]   = 8'd0;            // scale factor
+            end
+        end
+
+        // Bank 3
+        for (integer row_grp = 0; row_grp < 32; row_grp = row_grp + 1) begin    // for each row group (512 / 16 total)
+            for (integer vec = 0; vec < 4; vec = vec + 1) begin                 // for each VS vector
+                for (integer entry = 0; entry < 64; entry = entry + 1) begin    // flatten entries to a vector
+                    tmp[entry*4 +: 4] = mtrx_a[(3+row_grp*16)*256 + vec*64 + entry];
+                end
+                dut.A_BUF[3].ram_a.mem[row_grp*4+vec][263:8] = tmp;             // matrix entries
+                dut.A_BUF[3].ram_a.mem[row_grp*4+vec][7:0]   = 8'd0;            // scale factor
+            end
+        end
+
+        // Bank 4
+        for (integer row_grp = 0; row_grp < 32; row_grp = row_grp + 1) begin    // for each row group (512 / 16 total)
+            for (integer vec = 0; vec < 4; vec = vec + 1) begin                 // for each VS vector
+                for (integer entry = 0; entry < 64; entry = entry + 1) begin    // flatten entries to a vector
+                    tmp[entry*4 +: 4] = mtrx_a[(4+row_grp*16)*256 + vec*64 + entry];
+                end
+                dut.A_BUF[4].ram_a.mem[row_grp*4+vec][263:8] = tmp;             // matrix entries
+                dut.A_BUF[4].ram_a.mem[row_grp*4+vec][7:0]   = 8'd0;            // scale factor
+            end
+        end
+
+        // Bank 5
+        for (integer row_grp = 0; row_grp < 32; row_grp = row_grp + 1) begin    // for each row group (512 / 16 total)
+            for (integer vec = 0; vec < 4; vec = vec + 1) begin                 // for each VS vector
+                for (integer entry = 0; entry < 64; entry = entry + 1) begin    // flatten entries to a vector
+                    tmp[entry*4 +: 4] = mtrx_a[(5+row_grp*16)*256 + vec*64 + entry];
+                end
+                dut.A_BUF[5].ram_a.mem[row_grp*4+vec][263:8] = tmp;             // matrix entries
+                dut.A_BUF[5].ram_a.mem[row_grp*4+vec][7:0]   = 8'd0;            // scale factor
+            end
+        end
+
+        // Bank 6
+        for (integer row_grp = 0; row_grp < 32; row_grp = row_grp + 1) begin    // for each row group (512 / 16 total)
+            for (integer vec = 0; vec < 4; vec = vec + 1) begin                 // for each VS vector
+                for (integer entry = 0; entry < 64; entry = entry + 1) begin    // flatten entries to a vector
+                    tmp[entry*4 +: 4] = mtrx_a[(6+row_grp*16)*256 + vec*64 + entry];
+                end
+                dut.A_BUF[6].ram_a.mem[row_grp*4+vec][263:8] = tmp;             // matrix entries
+                dut.A_BUF[6].ram_a.mem[row_grp*4+vec][7:0]   = 8'd0;            // scale factor
+            end
+        end
+
+        // Bank 7
+        for (integer row_grp = 0; row_grp < 32; row_grp = row_grp + 1) begin    // for each row group (512 / 16 total)
+            for (integer vec = 0; vec < 4; vec = vec + 1) begin                 // for each VS vector
+                for (integer entry = 0; entry < 64; entry = entry + 1) begin    // flatten entries to a vector
+                    tmp[entry*4 +: 4] = mtrx_a[(7+row_grp*16)*256 + vec*64 + entry];
+                end
+                dut.A_BUF[7].ram_a.mem[row_grp*4+vec][263:8] = tmp;             // matrix entries
+                dut.A_BUF[7].ram_a.mem[row_grp*4+vec][7:0]   = 8'd0;            // scale factor
+            end
+        end
+
+        // Bank 8
+        for (integer row_grp = 0; row_grp < 32; row_grp = row_grp + 1) begin    // for each row group (512 / 16 total)
+            for (integer vec = 0; vec < 4; vec = vec + 1) begin                 // for each VS vector
+                for (integer entry = 0; entry < 64; entry = entry + 1) begin    // flatten entries to a vector
+                    tmp[entry*4 +: 4] = mtrx_a[(8+row_grp*16)*256 + vec*64 + entry];
+                end
+                dut.A_BUF[8].ram_a.mem[row_grp*4+vec][263:8] = tmp;             // matrix entries
+                dut.A_BUF[8].ram_a.mem[row_grp*4+vec][7:0]   = 8'd0;            // scale factor
+            end
+        end
+
+        // Bank 9
+        for (integer row_grp = 0; row_grp < 32; row_grp = row_grp + 1) begin    // for each row group (512 / 16 total)
+            for (integer vec = 0; vec < 4; vec = vec + 1) begin                 // for each VS vector
+                for (integer entry = 0; entry < 64; entry = entry + 1) begin    // flatten entries to a vector
+                    tmp[entry*4 +: 4] = mtrx_a[(9+row_grp*16)*256 + vec*64 + entry];
+                end
+                dut.A_BUF[9].ram_a.mem[row_grp*4+vec][263:8] = tmp;             // matrix entries
+                dut.A_BUF[9].ram_a.mem[row_grp*4+vec][7:0]   = 8'd0;            // scale factor
+            end
+        end
+
+        // Bank 10
+        for (integer row_grp = 0; row_grp < 32; row_grp = row_grp + 1) begin    // for each row group (512 / 16 total)
+            for (integer vec = 0; vec < 4; vec = vec + 1) begin                 // for each VS vector
+                for (integer entry = 0; entry < 64; entry = entry + 1) begin    // flatten entries to a vector
+                    tmp[entry*4 +: 4] = mtrx_a[(10+row_grp*16)*256 + vec*64 + entry];
+                end
+                dut.A_BUF[10].ram_a.mem[row_grp*4+vec][263:8] = tmp;             // matrix entries
+                dut.A_BUF[10].ram_a.mem[row_grp*4+vec][7:0]   = 8'd0;            // scale factor
+            end
+        end
+
+        // Bank 11
+        for (integer row_grp = 0; row_grp < 32; row_grp = row_grp + 1) begin    // for each row group (512 / 16 total)
+            for (integer vec = 0; vec < 4; vec = vec + 1) begin                 // for each VS vector
+                for (integer entry = 0; entry < 64; entry = entry + 1) begin    // flatten entries to a vector
+                    tmp[entry*4 +: 4] = mtrx_a[(11+row_grp*16)*256 + vec*64 + entry];
+                end
+                dut.A_BUF[11].ram_a.mem[row_grp*4+vec][263:8] = tmp;             // matrix entries
+                dut.A_BUF[11].ram_a.mem[row_grp*4+vec][7:0]   = 8'd0;            // scale factor
+            end
+        end
+
+        // Bank 12
+        for (integer row_grp = 0; row_grp < 32; row_grp = row_grp + 1) begin    // for each row group (512 / 16 total)
+            for (integer vec = 0; vec < 4; vec = vec + 1) begin                 // for each VS vector
+                for (integer entry = 0; entry < 64; entry = entry + 1) begin    // flatten entries to a vector
+                    tmp[entry*4 +: 4] = mtrx_a[(12+row_grp*16)*256 + vec*64 + entry];
+                end
+                dut.A_BUF[12].ram_a.mem[row_grp*4+vec][263:8] = tmp;             // matrix entries
+                dut.A_BUF[12].ram_a.mem[row_grp*4+vec][7:0]   = 8'd0;            // scale factor
+            end
+        end
+
+        // Bank 13
+        for (integer row_grp = 0; row_grp < 32; row_grp = row_grp + 1) begin    // for each row group (512 / 16 total)
+            for (integer vec = 0; vec < 4; vec = vec + 1) begin                 // for each VS vector
+                for (integer entry = 0; entry < 64; entry = entry + 1) begin    // flatten entries to a vector
+                    tmp[entry*4 +: 4] = mtrx_a[(13+row_grp*16)*256 + vec*64 + entry];
+                end
+                dut.A_BUF[13].ram_a.mem[row_grp*4+vec][263:8] = tmp;             // matrix entries
+                dut.A_BUF[13].ram_a.mem[row_grp*4+vec][7:0]   = 8'd0;            // scale factor
+            end
+        end
+
+        // Bank 14
+        for (integer row_grp = 0; row_grp < 32; row_grp = row_grp + 1) begin    // for each row group (512 / 16 total)
+            for (integer vec = 0; vec < 4; vec = vec + 1) begin                 // for each VS vector
+                for (integer entry = 0; entry < 64; entry = entry + 1) begin    // flatten entries to a vector
+                    tmp[entry*4 +: 4] = mtrx_a[(14+row_grp*16)*256 + vec*64 + entry];
+                end
+                dut.A_BUF[14].ram_a.mem[row_grp*4+vec][263:8] = tmp;             // matrix entries
+                dut.A_BUF[14].ram_a.mem[row_grp*4+vec][7:0]   = 8'd0;            // scale factor
+            end
+        end
+
+        // Bank 15
+        for (integer row_grp = 0; row_grp < 32; row_grp = row_grp + 1) begin    // for each row group (512 / 16 total)
+            for (integer vec = 0; vec < 4; vec = vec + 1) begin                 // for each VS vector
+                for (integer entry = 0; entry < 64; entry = entry + 1) begin    // flatten entries to a vector
+                    tmp[entry*4 +: 4] = mtrx_a[(15+row_grp*16)*256 + vec*64 + entry];
+                end
+                dut.A_BUF[15].ram_a.mem[row_grp*4+vec][263:8] = tmp;             // matrix entries
+                dut.A_BUF[15].ram_a.mem[row_grp*4+vec][7:0]   = 8'd0;            // scale factor
+            end
+        end
+
+
+        // load to B buffer
+        for (integer vec = 0; vec < 4; vec = vec + 1) begin                         // for each VS vector
+            for (integer col = 0; col < 512; col = col + 1) begin                   // for each column
+                for (integer entry = 0; entry < 64; entry = entry + 1) begin        // flatten entries to a vector
+                    tmp[entry*4 +: 4] = mtrx_b[(entry+vec*64)*512 + col];
+                end
+                dut.ram_b.mem[vec*512 + col][263:8] = tmp;                          // matrix entries
+                dut.ram_b.mem[vec*512 + col][7:0]   = 8'd0;                         // scale factor
+            end
+        end
+    end
+
+
     // save each tile output
     assign tile_row = tile_cnt >> 5;
     assign tile_col = tile_cnt - (tile_row * 32);
 
     always @(posedge tile_done) begin
-        for (int col = 0; col < 16; col = col + 1) begin
-            for (int row = 0; row < 16; row = row + 1) begin
+        for (integer col = 0; col < 16; col = col + 1) begin
+            for (integer row = 0; row < 16; row = row + 1) begin
                 mtrx_out[(tile_row*16 + row) * 512 + (tile_col*16 + col)] = dut.acc.registers[col][row*24 +: 24];
             end
         end
@@ -211,7 +374,7 @@ module clk_gen (
     initial begin
         clk   = 1'b0;
         rst_n = 1'b1;   #(`CYCLE * 0.5);
-        rst_n = 1'b0;   #(`CYCLE * 1.5);
+        rst_n = 1'b0;   #(`CYCLE * 2.0);
         rst_n = 1'b1;   #(`CYCLE * `END_CYCLE);
         $display("Error! Time limit exceeded!");
         $finish;
