@@ -1,30 +1,18 @@
-#!/usr/bin/env python3
-
-"""
-Pattern generator for INT4 matrices used by the testbench.
-
-Generates under tb/pat/:
-  - p1_ina.dat : 512x256 INT4 (A), random values in [-8, 7]
-  - p1_inb.dat : 256x512 INT4 (B), random values in [-8, 7]
-  - p1_out.dat : 512x512 24-bit golden C = A @ B, row-major
-
-All files are written in raster scan (row-major) order.
-Each line contains a hex token and an end-of-line address comment: "// [idx]".
-"""
-
 from pathlib import Path
 import os
-import sys
+import numpy as np
+
+
+M       = 512                           # rows of A
+K       = 256                           # cols of A / rows of B
+N       = 512                           # cols of B
+INA_DIR = Path("tb/pat/p2_ina.dat")     # A input pattern
+INB_DIR = Path("tb/pat/p2_inb.dat")     # B input pattern
+OUT_DIR = Path("tb/pat/p2_out.dat")     # golden output pattern
 
 
 def generate_int4_random(m, k, n, seed=None):
     """Generate random INT4 matrices A(m,k), B(k,n) with values in [-8, 7]."""
-    try:
-        import numpy as np  # type: ignore
-    except Exception as e:
-        print("Error: NumPy is required to generate large random patterns efficiently.")
-        print("Please install numpy (e.g., 'pip install numpy') and re-run.")
-        raise
 
     if seed is None:
         # Optional reproducibility via PATGEN_SEED env var
@@ -45,8 +33,6 @@ def compute_golden_24bit(a, b):
     Note: No saturation is applied in design for INT4 mode, but results are represented in 24 bits.
     We mask to 24b when writing hex.
     """
-    import numpy as np  # type: ignore
-
     # Upcast to prevent overflow during matmul
     c = (a.astype(np.int32) @ b.astype(np.int32))
     return c
@@ -54,8 +40,6 @@ def compute_golden_24bit(a, b):
 
 def write_int4_nibbles_row_major(path: Path, data_2d) -> None:
     """Write a 2D INT4 array in row-major order: one hex nibble per line with address."""
-    import numpy as np  # type: ignore
-
     path.parent.mkdir(parents=True, exist_ok=True)
     m, n = data_2d.shape
     with path.open("w", encoding="utf-8") as f:
@@ -70,8 +54,6 @@ def write_int4_nibbles_row_major(path: Path, data_2d) -> None:
 
 def write_24bit_words_row_major(path: Path, data_2d) -> None:
     """Write a 2D int32 array as 24-bit two's complement hex words in row-major order."""
-    import numpy as np  # type: ignore
-
     path.parent.mkdir(parents=True, exist_ok=True)
     m, n = data_2d.shape
     with path.open("w", encoding="utf-8") as f:
@@ -99,32 +81,21 @@ def write_24bit_hex_words_with_address(output_path, number_of_entries, value):
 
 
 def main() -> None:
-    # Matrix dimensions
-    m = 512  # rows of A, rows of output
-    k = 256  # cols of A / rows of B
-    n = 512  # cols of B, cols of output
-
-    repo_root = Path(__file__).resolve().parents[1]
-    pat_dir = repo_root / "tb" / "pat"
-
-    a_out = pat_dir / "p1_ina.dat"
-    b_out = pat_dir / "p1_inb.dat"
-    c_out = pat_dir / "p1_out.dat"
 
     # Generate random INT4 inputs
-    a, b = generate_int4_random(m, k, n)
+    a, b = generate_int4_random(M, K, N)
 
     # Compute golden
     c = compute_golden_24bit(a, b)
 
     # Write in raster order with address comments
-    write_int4_nibbles_row_major(a_out, a)
-    write_int4_nibbles_row_major(b_out, b)
-    write_24bit_words_row_major(c_out, c)
+    write_int4_nibbles_row_major(INA_DIR, a)
+    write_int4_nibbles_row_major(INB_DIR, b)
+    write_24bit_words_row_major(OUT_DIR, c)
 
-    print(f"Wrote A pattern: {a_out} ({m*k} entries)")
-    print(f"Wrote B pattern: {b_out} ({k*n} entries)")
-    print(f"Wrote golden output: {c_out} ({m*n} entries)")
+    print(f"Wrote A pattern: {INA_DIR} ({M*K} entries)")
+    print(f"Wrote B pattern: {INB_DIR} ({K*N} entries)")
+    print(f"Wrote golden output: {OUT_DIR} ({M*N} entries)")
 
 
 if __name__ == "__main__":
