@@ -28,5 +28,4 @@ module ram #(
         end
     end
 
-
 endmodule

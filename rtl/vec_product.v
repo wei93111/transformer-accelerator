@@ -67,5 +67,4 @@ module vec_product #(
     // final result
     assign o_product = tree_sums[NUM_LEVEL][0];
 
-
 endmodule

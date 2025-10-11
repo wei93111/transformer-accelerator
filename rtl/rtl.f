@@ -6,8 +6,9 @@
 rtl/vec_product.v
 rtl/mac.v
 rtl/ram.v
-rtl/accumulator.v
+rtl/buffer.v
 rtl/mm_ctrl.v
+rtl/ppu.v
 
 // testbench
 tb/tb_mm.sv

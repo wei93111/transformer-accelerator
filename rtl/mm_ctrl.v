@@ -9,17 +9,20 @@ module mm_ctrl #(
     parameter N  = 512,
     parameter I  = K / VS
 )(
-    input        i_clk,
-    input        i_rst_n,
-    input  [1:0] i_mode,        // mode = 0: INT8 / 1: INT4 / 2: INT4_VSQ
-    input        i_start,       // start signal
-    output       o_tile_done,   // tile done
-    output       o_mtrx_done    // matrix done
+    input          i_clk,
+    input          i_rst_n,
+    input  [1:0]   i_mode,          // mode = 0: INT8 / 1: INT4 / 2: INT4_VSQ
+    input          i_start,         // start signal
+    output         o_tile_done,     // tile done
+    output         o_mtrx_done,     // matrix done
+    output         o_ppu_start,     // ppu start signal
+    output [383:0] o_acc_data       // accumulator data
 );
 
     genvar gi;
 
 
+    // states
     localparam S_IDLE = 1'b0;
     localparam S_BUSY = 1'b1;
 
@@ -28,6 +31,7 @@ module mm_ctrl #(
     reg  [1:0]    mode;
     reg           state;
     reg           tile_done, mtrx_done;
+    reg           ppu_start;
 
     // addr ctrl
     reg  [3:0]    b_cnt;        // increment every cycle
@@ -48,6 +52,12 @@ module mm_ctrl #(
 
     // mac interface
     wire [383:0]  mac_res;      // wide bus for 16 lanes
+
+
+    assign o_tile_done = tile_done;
+    assign o_mtrx_done = mtrx_done;
+    assign o_ppu_start = ppu_start;
+    assign o_acc_data  = acc_data;
 
 
     ////////////////
@@ -81,6 +91,7 @@ module mm_ctrl #(
         if (!i_rst_n) begin
             tile_done <= 1'b0;
             mtrx_done <= 1'b0;
+            ppu_start <= 1'b0;
         end else begin
             // tile done (pull high 1 cycle)
             if (b_cnt == 4'd15 && a_cnt == 2'd3) begin
@@ -95,11 +106,15 @@ module mm_ctrl #(
             end else begin
                 mtrx_done <= 1'b0;
             end
+
+            // ppu start (one cycle earlier)
+            if (b_cnt == 4'd14 && a_cnt == 2'd3) begin
+                ppu_start <= 1'b1;
+            end else begin
+                ppu_start <= 1'b0;
+            end
         end
     end
-
-    assign o_tile_done = tile_done;
-    assign o_mtrx_done = mtrx_done;
     
 
     ///////////////
@@ -166,7 +181,7 @@ module mm_ctrl #(
 
     assign acc_we = (state == S_BUSY) ? 1'b1 : 1'b0;
 
-    accumulator #(
+    buffer #(
         .VEC_WIDTH ( 384 ),
         .ARR_DEPTH ( 16 )
     ) acc (
@@ -252,6 +267,5 @@ module mm_ctrl #(
             endcase
         end
     end
-
 
 endmodule

@@ -10,7 +10,6 @@ module mac (
     output [23:0]  o_result     // result = partial sum + vector dot product
 );
 
-
     // gate signals
     wire         int8_gate, int4_gate, vsq_gate;
 
@@ -99,6 +98,5 @@ module mac (
     // output
     assign o_result = (i_mode == `INT8) ? int8_result :
                       (i_mode == `INT4) ? int4_result : vsq_result;
-
 
 endmodule

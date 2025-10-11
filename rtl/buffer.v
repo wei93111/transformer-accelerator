@@ -1,4 +1,4 @@
-module accumulator #(
+module buffer #(
     parameter VEC_WIDTH  = 384,
     parameter ARR_DEPTH  = 16,
     parameter ADDR_WIDTH = $clog2(ARR_DEPTH)
@@ -28,6 +28,5 @@ module accumulator #(
             registers[i_addr_wr] <= i_data_wr;
         end
     end
-
 
 endmodule
