@@ -64,7 +64,6 @@ command.log
 *.ddc
 *.mr
 *.svf
-*.sdf
 *.spef
 *.spf
 *.pvl
@@ -82,7 +81,6 @@ encounter*
 *.enc.dat
 *.dat.enc
 *.spef
-*.sdf
 *.def
 *.gds
 *.gds2
