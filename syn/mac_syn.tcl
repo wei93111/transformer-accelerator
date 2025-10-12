@@ -8,12 +8,8 @@ set symbol_library "generic.sdb"
 set synthetic_library "dw_foundation.sldb"
 
 # read files
-read_file -format verilog {../rtl/vec_product.v ../rtl/mac.v}
-
-# create clock
-create_clock -name "clk" -period 10 -waveform {"0" "5"} {"clk"}
-set_dont_touch_network [find clock clk]
-set_fix_hold clk
+analyze -format verilog {../rtl/mac.v ../rtl/vec_product.v ../rtl/define.v}
+elaborate mac
 
 # set operating conditions
 set_operating_conditions "typical" -library "typical"
