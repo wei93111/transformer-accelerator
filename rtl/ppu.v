@@ -1,10 +1,15 @@
 module ppu (
     input          i_clk,
     input          i_rst_n,
-    input  [1:0]   i_mode,          // mode = 0: INT8 / 1: INT4 / 2: INT4_VSQ
     input          i_ppu_start,     // ppu start signal
-    input  [383:0] i_acc_data       // accumulator data
+    input  [383:0] i_acc_data,      // accumulator data
+    output         o_ram_we,        // ram write enable
+    output [15:0]  o_ram_data,      // ram data
+    output [12:0]  o_ram_addr       // ram address
 );
+
+    genvar gi;
+
 
     // states
     localparam S_IDLE = 1'b0;
@@ -12,13 +17,36 @@ module ppu (
 
 
     // state ctrl
-    reg        state;
-    reg  [3:0] acc_cnt;
-    reg  [1:0] tile_cnt;
+    reg         state;
+    reg  [3:0]  acc_cnt;
+    reg  [1:0]  tile_cnt;
 
-    // vsq buffer interface
-    wire       vsq_buf_we;
-    wire [5:0] vsq_buf_addr_wr
+    // scaling
+    reg  [3:0]   scale_addr;
+    wire [255:0] scale_data;
+    wire [639:0] scale_res;     // Q32.6 x 16 entries
+
+    // bias add
+    reg  [3:0]   bias_addr;
+    wire [15:0]  bias_data;
+    wire [639:0] bias_res;      // Q32.6 x 16 entries
+
+    // relu
+    wire [639:0] relu_res;      // Q32.6 x 16 entries
+
+    // vsq buffer
+    wire         vsq_buf_we;
+    wire [5:0]   vsq_buf_addr_wr;
+
+    // ram interface (TODO: write to output ram)
+    reg          ram_we;
+    reg  [15:0]  ram_data;
+    reg  [12:0]  ram_addr;
+
+
+    assign o_ram_we   = ram_we;
+    assign o_ram_data = ram_data;
+    assign o_ram_addr = ram_addr;
 
 
     //////////
@@ -77,11 +105,67 @@ module ppu (
     end
 
 
+    /////////////
+    // scaling //
+    /////////////
+
+    assign scale_addr = acc_cnt;
+
+    buffer #(
+        .VEC_WIDTH ( 256 ),     // Q6.10 x 16 entries
+        .ARR_DEPTH ( 16 )
+    ) scale_buf (
+        .i_clk     ( i_clk ),
+        .i_rst_n   ( i_rst_n ),
+        .i_we      ( 1'b0 ),
+        .i_addr_wr ( 7'd0 ),
+        .i_data_wr ( 8'd0 ),
+        .i_addr_rd ( scale_addr ),
+        .o_data_rd ( scale_data )
+    );
+
+    generate
+        for (gi = 0; gi < 16; gi = gi + 1) begin: SCALE_MULT
+            assign scale_res[gi*40 +: 40] = $signed(scale_data[gi*16 +: 16]) * $signed(i_acc_data[gi*24 +: 24]);
+        end
+    endgenerate
+
+
     //////////////
-    // datapath //
+    // bias add //
     //////////////
 
-    // TODO: bias addition, scaling, relu, running max (for each lane)
+    assign bias_addr = acc_cnt;
+
+    buffer #(
+        .VEC_WIDTH ( 16 ),      // Q6.10, same for each lane
+        .ARR_DEPTH ( 16 )
+    ) bias_buf (
+        .i_clk     ( i_clk ),
+        .i_rst_n   ( i_rst_n ),
+        .i_we      ( 1'b0 ),
+        .i_addr_wr ( 7'd0 ),
+        .i_data_wr ( 8'd0 ),
+        .i_addr_rd ( bias_addr ),
+        .o_data_rd ( bias_data )
+    );
+
+    generate
+        for (gi = 0; gi < 16; gi = gi + 1) begin: BIAS_ADD
+            assign bias_res[gi*40 +: 40] = $signed(bias_data) + $signed(scale_res[gi*40 +: 40]);
+        end
+    endgenerate
+
+
+    //////////
+    // relu //
+    //////////
+
+    generate
+        for (gi = 0; gi < 16; gi = gi + 1) begin: RELU
+            assign relu_res[gi*40 +: 40] = ($signed(bias_res[gi*40 +: 40]) > 40'sd0) ? bias_res[gi*40 +: 40] : 40'd0;
+        end
+    endgenerate
 
 
     ////////////////
@@ -99,7 +183,7 @@ module ppu (
         .i_rst_n   ( i_rst_n ),
         .i_we      ( vsq_buf_we ),
         .i_addr_wr ( vsq_buf_addr_wr ),
-        .i_data_wr (  ),    // output from datapath
+        .i_data_wr ( relu_res ),
         .i_addr_rd (  ),    // from quantize.v
         .o_data_rd (  )     // to quantize.v
     );
@@ -110,6 +194,7 @@ module ppu (
     //////////////
 
     // TODO: int4 quantization after vsq buf filled
+    // keep running max for 16 lanes
     // start -> 16 reciprocal units -> read out vsq buf and quantize
 
 

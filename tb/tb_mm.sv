@@ -50,6 +50,7 @@ module tb_mm;
     logic [9:0]   tile_col;
     logic [255:0] tmp;
 
+
     integer errors;
 
 
@@ -67,7 +68,9 @@ module tb_mm;
         .i_mode      ( mode ),
         .i_start     ( start ),
         .o_tile_done ( tile_done ),
-        .o_mtrx_done ( mtrx_done )
+        .o_mtrx_done ( mtrx_done ),
+        .o_ppu_start ( ),
+        .o_acc_data  ( )
     );
 
 
