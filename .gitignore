@@ -70,6 +70,10 @@ command.log
 *.pvl
 *.pt*
 *.db
+*.area
+*.power
+*.timing
+*.syn
 
 # Cadence Innovus/Encounter
 INNOVUS*
