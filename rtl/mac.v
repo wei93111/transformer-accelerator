@@ -62,7 +62,7 @@ module mac (
         .o_product ( int8_product )
     );
 
-    assign int8_result = $signed(int8_psum_gated) + $signed(int8_product);      // no saturation
+    assign int8_result = $signed(int8_psum_gated) + $signed(int8_product);      // TODO: saturation
 
 
     //////////////
@@ -78,7 +78,7 @@ module mac (
         .o_product ( int4_product )
     );
 
-    assign int4_result = $signed(int4_psum_gated) + $signed(int4_product);      // no saturation
+    assign int4_result = $signed(int4_psum_gated) + $signed(int4_product);      // TODO: saturation
 
 
     /////////

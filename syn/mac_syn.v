@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////
 // Created by: Synopsys DC Expert(TM) in wire load mode
 // Version   : U-2022.12
-// Date      : Sun Oct 12 21:25:30 2025
+// Date      : Sun Oct 12 23:27:18 2025
 /////////////////////////////////////////////////////////////
 
 
@@ -1525,10 +1525,10 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_32 ( a, b, product );
          n87, n88, n89, n90, n91, n92, n93, n94, n95, n96, n97, n98, n99, n100,
          n101, n102, n103, n104, n105, n106, n107, n108, n109, n110, n111,
          n112, n113, n114, n115, n116, n117, n118, n119, n120, n121, n122,
-         n123, n131, n132, n133, n134, n135, n140, n141, n142, n143, n144,
-         n145, n146, n147, n148, n149, n150, n151, n152, n153, n154, n155,
-         n156, n157, n158, n159, n189, n190, n191, n192, n193, n194, n195,
-         n196, n197, n198, n199, n200;
+         n123, n131, n132, n133, n134, n135, n140, n141, n142, n143, n145,
+         n146, n148, n149, n150, n151, n152, n153, n154, n155, n156, n157,
+         n158, n159, n189, n190, n191, n192, n193, n194, n195, n196, n197,
+         n198, n199, n200;
 
   CLKINVX1 U1 ( .A(n1), .Y(product[15]) );
   ADDFXL U2 ( .A(n56), .B(n15), .CI(n2), .CO(n1), .S(product[14]) );
@@ -1567,7 +1567,6 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_32 ( a, b, product );
   ADDHXL U30 ( .A(n83), .B(n70), .CO(n46), .S(n47) );
   ADDFXL U31 ( .A(n84), .B(n71), .CI(n77), .CO(n48), .S(n49) );
   ADDHXL U32 ( .A(n85), .B(n54), .CO(n50), .S(n51) );
-  OAI22XL U33 ( .A0(n152), .A1(n144), .B0(n195), .B1(n96), .Y(n52) );
   AO21X1 U34 ( .A0(n152), .A1(n156), .B0(n88), .Y(n56) );
   OAI22XL U35 ( .A0(n152), .A1(n89), .B0(n195), .B1(n88), .Y(n15) );
   OAI22XL U36 ( .A0(n152), .A1(n90), .B0(n195), .B1(n89), .Y(n57) );
@@ -1615,7 +1614,6 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_32 ( a, b, product );
   XNOR2X1 U85 ( .A(n150), .B(b[3]), .Y(n110) );
   XNOR2X1 U86 ( .A(n150), .B(b[2]), .Y(n111) );
   XNOR2X1 U87 ( .A(n150), .B(b[1]), .Y(n112) );
-  OAI22XL U90 ( .A0(n155), .A1(n147), .B0(n123), .B1(n143), .Y(n55) );
   AO21X1 U91 ( .A0(n155), .A1(n159), .B0(n115), .Y(n80) );
   OAI22XL U92 ( .A0(n155), .A1(n116), .B0(n115), .B1(n143), .Y(n81) );
   OAI22XL U93 ( .A0(n155), .A1(n117), .B0(n116), .B1(n143), .Y(n82) );
@@ -1631,10 +1629,8 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_32 ( a, b, product );
   XNOR2X1 U104 ( .A(n151), .B(b[3]), .Y(n119) );
   XNOR2X1 U105 ( .A(n151), .B(b[2]), .Y(n120) );
   XNOR2X1 U106 ( .A(n151), .B(b[1]), .Y(n121) );
-  CLKINVX1 U112 ( .A(n148), .Y(n144) );
   CLKINVX1 U116 ( .A(n149), .Y(n145) );
   CLKINVX1 U120 ( .A(n150), .Y(n146) );
-  CLKINVX1 U124 ( .A(n151), .Y(n147) );
   XOR2X1 U127 ( .A(a[6]), .B(a[7]), .Y(n132) );
   XNOR2X1 U128 ( .A(a[6]), .B(a[5]), .Y(n156) );
   XOR2X1 U130 ( .A(a[4]), .B(a[5]), .Y(n133) );
@@ -1643,43 +1639,45 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_32 ( a, b, product );
   XNOR2X1 U134 ( .A(a[2]), .B(a[1]), .Y(n158) );
   XOR2X1 U136 ( .A(a[0]), .B(a[1]), .Y(n135) );
   CLKINVX1 U137 ( .A(a[0]), .Y(n159) );
-  CLKINVX1 U140 ( .A(n198), .Y(n189) );
-  CLKINVX1 U141 ( .A(n200), .Y(n190) );
-  CLKINVX1 U142 ( .A(n199), .Y(n191) );
-  CLKINVX1 U143 ( .A(n158), .Y(n142) );
-  CLKINVX1 U144 ( .A(n142), .Y(n192) );
-  CLKINVX1 U145 ( .A(b[0]), .Y(n131) );
-  CLKINVX1 U146 ( .A(n131), .Y(n193) );
-  CLKINVX1 U147 ( .A(n197), .Y(n194) );
-  CLKINVX1 U148 ( .A(n156), .Y(n140) );
-  CLKINVX1 U149 ( .A(n140), .Y(n195) );
-  NAND2BXL U150 ( .AN(n193), .B(a[1]), .Y(n123) );
-  NAND2BXL U151 ( .AN(n193), .B(a[3]), .Y(n114) );
-  CLKINVX1 U152 ( .A(n157), .Y(n141) );
-  CLKINVX1 U153 ( .A(n141), .Y(n196) );
-  NOR2BXL U154 ( .AN(n193), .B(n159), .Y(product[0]) );
-  XNOR2XL U155 ( .A(a[7]), .B(b[0]), .Y(n95) );
-  XNOR2XL U156 ( .A(a[1]), .B(b[0]), .Y(n122) );
-  NOR2BXL U157 ( .AN(n193), .B(n192), .Y(n79) );
-  XNOR2XL U158 ( .A(a[3]), .B(b[0]), .Y(n113) );
-  NOR2BXL U159 ( .AN(n193), .B(n196), .Y(n71) );
-  NAND2BXL U160 ( .AN(n193), .B(a[7]), .Y(n96) );
-  NAND2BXL U161 ( .AN(n193), .B(a[5]), .Y(n105) );
-  XNOR2XL U162 ( .A(a[5]), .B(b[0]), .Y(n104) );
-  NOR2BXL U163 ( .AN(n193), .B(n195), .Y(n63) );
-  CLKBUFX3 U164 ( .A(n159), .Y(n143) );
-  CLKBUFX3 U165 ( .A(a[1]), .Y(n151) );
-  CLKBUFX3 U166 ( .A(a[3]), .Y(n150) );
-  CLKBUFX3 U167 ( .A(a[5]), .Y(n149) );
-  CLKBUFX3 U168 ( .A(a[7]), .Y(n148) );
-  AND2X2 U169 ( .A(n132), .B(n156), .Y(n197) );
-  CLKINVX1 U170 ( .A(n197), .Y(n152) );
-  AND2X2 U171 ( .A(n133), .B(n157), .Y(n198) );
-  CLKINVX1 U172 ( .A(n198), .Y(n153) );
-  AND2X2 U173 ( .A(n134), .B(n158), .Y(n199) );
-  CLKINVX1 U174 ( .A(n199), .Y(n154) );
-  AND2X2 U175 ( .A(n135), .B(n159), .Y(n200) );
-  CLKINVX1 U176 ( .A(n200), .Y(n155) );
+  NOR2X1 U140 ( .A(n157), .B(n131), .Y(n71) );
+  NOR2X1 U141 ( .A(n156), .B(n131), .Y(n63) );
+  NOR2X1 U142 ( .A(n131), .B(n159), .Y(product[0]) );
+  OAI2BB2XL U143 ( .B0(n156), .B1(n96), .A0N(n197), .A1N(n148), .Y(n52) );
+  OAI2BB2XL U144 ( .B0(n123), .B1(n159), .A0N(n200), .A1N(n151), .Y(n55) );
+  NOR2X1 U145 ( .A(n158), .B(n131), .Y(n79) );
+  CLKINVX1 U146 ( .A(n198), .Y(n189) );
+  CLKINVX1 U147 ( .A(n200), .Y(n190) );
+  CLKINVX1 U148 ( .A(n199), .Y(n191) );
+  CLKINVX1 U149 ( .A(n158), .Y(n142) );
+  CLKINVX1 U150 ( .A(n142), .Y(n192) );
+  CLKINVX1 U151 ( .A(b[0]), .Y(n131) );
+  CLKINVX1 U152 ( .A(n131), .Y(n193) );
+  CLKINVX1 U153 ( .A(n197), .Y(n194) );
+  CLKINVX1 U154 ( .A(n156), .Y(n140) );
+  CLKINVX1 U155 ( .A(n140), .Y(n195) );
+  NAND2BXL U156 ( .AN(n193), .B(a[1]), .Y(n123) );
+  NAND2BXL U157 ( .AN(n193), .B(a[3]), .Y(n114) );
+  CLKINVX1 U158 ( .A(n157), .Y(n141) );
+  CLKINVX1 U159 ( .A(n141), .Y(n196) );
+  XNOR2XL U160 ( .A(a[7]), .B(b[0]), .Y(n95) );
+  XNOR2XL U161 ( .A(a[1]), .B(b[0]), .Y(n122) );
+  XNOR2XL U162 ( .A(a[3]), .B(b[0]), .Y(n113) );
+  NAND2BXL U163 ( .AN(n193), .B(a[7]), .Y(n96) );
+  NAND2BXL U164 ( .AN(n193), .B(a[5]), .Y(n105) );
+  XNOR2XL U165 ( .A(a[5]), .B(b[0]), .Y(n104) );
+  CLKBUFX3 U166 ( .A(n159), .Y(n143) );
+  CLKBUFX3 U167 ( .A(a[1]), .Y(n151) );
+  CLKBUFX3 U168 ( .A(a[3]), .Y(n150) );
+  CLKBUFX3 U169 ( .A(a[5]), .Y(n149) );
+  CLKBUFX3 U170 ( .A(a[7]), .Y(n148) );
+  AND2X2 U171 ( .A(n132), .B(n156), .Y(n197) );
+  CLKINVX1 U172 ( .A(n197), .Y(n152) );
+  AND2X2 U173 ( .A(n133), .B(n157), .Y(n198) );
+  CLKINVX1 U174 ( .A(n198), .Y(n153) );
+  AND2X2 U175 ( .A(n134), .B(n158), .Y(n199) );
+  CLKINVX1 U176 ( .A(n199), .Y(n154) );
+  AND2X2 U177 ( .A(n135), .B(n159), .Y(n200) );
+  CLKINVX1 U178 ( .A(n200), .Y(n155) );
 endmodule
 
 
@@ -1696,10 +1694,10 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_33 ( a, b, product );
          n87, n88, n89, n90, n91, n92, n93, n94, n95, n96, n97, n98, n99, n100,
          n101, n102, n103, n104, n105, n106, n107, n108, n109, n110, n111,
          n112, n113, n114, n115, n116, n117, n118, n119, n120, n121, n122,
-         n123, n131, n132, n133, n134, n135, n140, n141, n142, n143, n144,
-         n145, n146, n147, n148, n149, n150, n151, n152, n153, n154, n155,
-         n156, n157, n158, n159, n189, n190, n191, n192, n193, n194, n195,
-         n196, n197, n198, n199, n200;
+         n123, n131, n132, n133, n134, n135, n140, n141, n142, n143, n145,
+         n146, n148, n149, n150, n151, n152, n153, n154, n155, n156, n157,
+         n158, n159, n189, n190, n191, n192, n193, n194, n195, n196, n197,
+         n198, n199, n200;
 
   CLKINVX1 U1 ( .A(n1), .Y(product[15]) );
   ADDFXL U2 ( .A(n56), .B(n15), .CI(n2), .CO(n1), .S(product[14]) );
@@ -1738,7 +1736,6 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_33 ( a, b, product );
   ADDHXL U30 ( .A(n83), .B(n70), .CO(n46), .S(n47) );
   ADDFXL U31 ( .A(n84), .B(n71), .CI(n77), .CO(n48), .S(n49) );
   ADDHXL U32 ( .A(n85), .B(n54), .CO(n50), .S(n51) );
-  OAI22XL U33 ( .A0(n152), .A1(n144), .B0(n195), .B1(n96), .Y(n52) );
   AO21X1 U34 ( .A0(n152), .A1(n156), .B0(n88), .Y(n56) );
   OAI22XL U35 ( .A0(n152), .A1(n89), .B0(n195), .B1(n88), .Y(n15) );
   OAI22XL U36 ( .A0(n152), .A1(n90), .B0(n195), .B1(n89), .Y(n57) );
@@ -1786,7 +1783,6 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_33 ( a, b, product );
   XNOR2X1 U85 ( .A(n150), .B(b[3]), .Y(n110) );
   XNOR2X1 U86 ( .A(n150), .B(b[2]), .Y(n111) );
   XNOR2X1 U87 ( .A(n150), .B(b[1]), .Y(n112) );
-  OAI22XL U90 ( .A0(n155), .A1(n147), .B0(n123), .B1(n143), .Y(n55) );
   AO21X1 U91 ( .A0(n155), .A1(n159), .B0(n115), .Y(n80) );
   OAI22XL U92 ( .A0(n155), .A1(n116), .B0(n115), .B1(n143), .Y(n81) );
   OAI22XL U93 ( .A0(n155), .A1(n117), .B0(n116), .B1(n143), .Y(n82) );
@@ -1802,10 +1798,8 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_33 ( a, b, product );
   XNOR2X1 U104 ( .A(n151), .B(b[3]), .Y(n119) );
   XNOR2X1 U105 ( .A(n151), .B(b[2]), .Y(n120) );
   XNOR2X1 U106 ( .A(n151), .B(b[1]), .Y(n121) );
-  CLKINVX1 U112 ( .A(n148), .Y(n144) );
   CLKINVX1 U116 ( .A(n149), .Y(n145) );
   CLKINVX1 U120 ( .A(n150), .Y(n146) );
-  CLKINVX1 U124 ( .A(n151), .Y(n147) );
   XOR2X1 U127 ( .A(a[6]), .B(a[7]), .Y(n132) );
   XNOR2X1 U128 ( .A(a[6]), .B(a[5]), .Y(n156) );
   XOR2X1 U130 ( .A(a[4]), .B(a[5]), .Y(n133) );
@@ -1814,43 +1808,45 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_33 ( a, b, product );
   XNOR2X1 U134 ( .A(a[2]), .B(a[1]), .Y(n158) );
   XOR2X1 U136 ( .A(a[0]), .B(a[1]), .Y(n135) );
   CLKINVX1 U137 ( .A(a[0]), .Y(n159) );
-  CLKINVX1 U140 ( .A(n198), .Y(n189) );
-  CLKINVX1 U141 ( .A(n200), .Y(n190) );
-  CLKINVX1 U142 ( .A(n199), .Y(n191) );
-  CLKINVX1 U143 ( .A(n158), .Y(n142) );
-  CLKINVX1 U144 ( .A(n142), .Y(n192) );
-  CLKINVX1 U145 ( .A(b[0]), .Y(n131) );
-  CLKINVX1 U146 ( .A(n131), .Y(n193) );
-  CLKINVX1 U147 ( .A(n197), .Y(n194) );
-  CLKINVX1 U148 ( .A(n156), .Y(n140) );
-  CLKINVX1 U149 ( .A(n140), .Y(n195) );
-  NAND2BXL U150 ( .AN(n193), .B(a[1]), .Y(n123) );
-  NAND2BXL U151 ( .AN(n193), .B(a[3]), .Y(n114) );
-  CLKINVX1 U152 ( .A(n157), .Y(n141) );
-  CLKINVX1 U153 ( .A(n141), .Y(n196) );
-  NOR2BXL U154 ( .AN(n193), .B(n159), .Y(product[0]) );
-  XNOR2XL U155 ( .A(a[7]), .B(b[0]), .Y(n95) );
-  XNOR2XL U156 ( .A(a[1]), .B(b[0]), .Y(n122) );
-  NOR2BXL U157 ( .AN(n193), .B(n192), .Y(n79) );
-  XNOR2XL U158 ( .A(a[3]), .B(b[0]), .Y(n113) );
-  NOR2BXL U159 ( .AN(n193), .B(n196), .Y(n71) );
-  NAND2BXL U160 ( .AN(n193), .B(a[7]), .Y(n96) );
-  NAND2BXL U161 ( .AN(n193), .B(a[5]), .Y(n105) );
-  XNOR2XL U162 ( .A(a[5]), .B(b[0]), .Y(n104) );
-  NOR2BXL U163 ( .AN(n193), .B(n195), .Y(n63) );
-  CLKBUFX3 U164 ( .A(n159), .Y(n143) );
-  CLKBUFX3 U165 ( .A(a[1]), .Y(n151) );
-  CLKBUFX3 U166 ( .A(a[3]), .Y(n150) );
-  CLKBUFX3 U167 ( .A(a[5]), .Y(n149) );
-  CLKBUFX3 U168 ( .A(a[7]), .Y(n148) );
-  AND2X2 U169 ( .A(n132), .B(n156), .Y(n197) );
-  CLKINVX1 U170 ( .A(n197), .Y(n152) );
-  AND2X2 U171 ( .A(n133), .B(n157), .Y(n198) );
-  CLKINVX1 U172 ( .A(n198), .Y(n153) );
-  AND2X2 U173 ( .A(n134), .B(n158), .Y(n199) );
-  CLKINVX1 U174 ( .A(n199), .Y(n154) );
-  AND2X2 U175 ( .A(n135), .B(n159), .Y(n200) );
-  CLKINVX1 U176 ( .A(n200), .Y(n155) );
+  NOR2X1 U140 ( .A(n157), .B(n131), .Y(n71) );
+  NOR2X1 U141 ( .A(n156), .B(n131), .Y(n63) );
+  OAI2BB2XL U142 ( .B0(n156), .B1(n96), .A0N(n197), .A1N(n148), .Y(n52) );
+  NOR2X1 U143 ( .A(n131), .B(n159), .Y(product[0]) );
+  OAI2BB2XL U144 ( .B0(n123), .B1(n159), .A0N(n200), .A1N(n151), .Y(n55) );
+  NOR2X1 U145 ( .A(n158), .B(n131), .Y(n79) );
+  CLKINVX1 U146 ( .A(n198), .Y(n189) );
+  CLKINVX1 U147 ( .A(n200), .Y(n190) );
+  CLKINVX1 U148 ( .A(n199), .Y(n191) );
+  CLKINVX1 U149 ( .A(n158), .Y(n142) );
+  CLKINVX1 U150 ( .A(n142), .Y(n192) );
+  CLKINVX1 U151 ( .A(b[0]), .Y(n131) );
+  CLKINVX1 U152 ( .A(n131), .Y(n193) );
+  CLKINVX1 U153 ( .A(n197), .Y(n194) );
+  CLKINVX1 U154 ( .A(n156), .Y(n140) );
+  CLKINVX1 U155 ( .A(n140), .Y(n195) );
+  NAND2BXL U156 ( .AN(n193), .B(a[1]), .Y(n123) );
+  NAND2BXL U157 ( .AN(n193), .B(a[3]), .Y(n114) );
+  CLKINVX1 U158 ( .A(n157), .Y(n141) );
+  CLKINVX1 U159 ( .A(n141), .Y(n196) );
+  XNOR2XL U160 ( .A(a[7]), .B(b[0]), .Y(n95) );
+  XNOR2XL U161 ( .A(a[1]), .B(b[0]), .Y(n122) );
+  XNOR2XL U162 ( .A(a[3]), .B(b[0]), .Y(n113) );
+  NAND2BXL U163 ( .AN(n193), .B(a[7]), .Y(n96) );
+  NAND2BXL U164 ( .AN(n193), .B(a[5]), .Y(n105) );
+  XNOR2XL U165 ( .A(a[5]), .B(b[0]), .Y(n104) );
+  CLKBUFX3 U166 ( .A(n159), .Y(n143) );
+  CLKBUFX3 U167 ( .A(a[1]), .Y(n151) );
+  CLKBUFX3 U168 ( .A(a[3]), .Y(n150) );
+  CLKBUFX3 U169 ( .A(a[5]), .Y(n149) );
+  CLKBUFX3 U170 ( .A(a[7]), .Y(n148) );
+  AND2X2 U171 ( .A(n132), .B(n156), .Y(n197) );
+  CLKINVX1 U172 ( .A(n197), .Y(n152) );
+  AND2X2 U173 ( .A(n133), .B(n157), .Y(n198) );
+  CLKINVX1 U174 ( .A(n198), .Y(n153) );
+  AND2X2 U175 ( .A(n134), .B(n158), .Y(n199) );
+  CLKINVX1 U176 ( .A(n199), .Y(n154) );
+  AND2X2 U177 ( .A(n135), .B(n159), .Y(n200) );
+  CLKINVX1 U178 ( .A(n200), .Y(n155) );
 endmodule
 
 
@@ -1867,10 +1863,10 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_34 ( a, b, product );
          n87, n88, n89, n90, n91, n92, n93, n94, n95, n96, n97, n98, n99, n100,
          n101, n102, n103, n104, n105, n106, n107, n108, n109, n110, n111,
          n112, n113, n114, n115, n116, n117, n118, n119, n120, n121, n122,
-         n123, n131, n132, n133, n134, n135, n140, n141, n142, n143, n144,
-         n145, n146, n147, n148, n149, n150, n151, n152, n153, n154, n155,
-         n156, n157, n158, n159, n189, n190, n191, n192, n193, n194, n195,
-         n196, n197, n198, n199, n200;
+         n123, n131, n132, n133, n134, n135, n140, n141, n142, n143, n145,
+         n146, n148, n149, n150, n151, n152, n153, n154, n155, n156, n157,
+         n158, n159, n189, n190, n191, n192, n193, n194, n195, n196, n197,
+         n198, n199, n200;
 
   CLKINVX1 U1 ( .A(n1), .Y(product[15]) );
   ADDFXL U2 ( .A(n56), .B(n15), .CI(n2), .CO(n1), .S(product[14]) );
@@ -1909,7 +1905,6 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_34 ( a, b, product );
   ADDHXL U30 ( .A(n83), .B(n70), .CO(n46), .S(n47) );
   ADDFXL U31 ( .A(n84), .B(n71), .CI(n77), .CO(n48), .S(n49) );
   ADDHXL U32 ( .A(n85), .B(n54), .CO(n50), .S(n51) );
-  OAI22XL U33 ( .A0(n152), .A1(n144), .B0(n195), .B1(n96), .Y(n52) );
   AO21X1 U34 ( .A0(n152), .A1(n156), .B0(n88), .Y(n56) );
   OAI22XL U35 ( .A0(n152), .A1(n89), .B0(n195), .B1(n88), .Y(n15) );
   OAI22XL U36 ( .A0(n152), .A1(n90), .B0(n195), .B1(n89), .Y(n57) );
@@ -1957,7 +1952,6 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_34 ( a, b, product );
   XNOR2X1 U85 ( .A(n150), .B(b[3]), .Y(n110) );
   XNOR2X1 U86 ( .A(n150), .B(b[2]), .Y(n111) );
   XNOR2X1 U87 ( .A(n150), .B(b[1]), .Y(n112) );
-  OAI22XL U90 ( .A0(n155), .A1(n147), .B0(n123), .B1(n143), .Y(n55) );
   AO21X1 U91 ( .A0(n155), .A1(n159), .B0(n115), .Y(n80) );
   OAI22XL U92 ( .A0(n155), .A1(n116), .B0(n115), .B1(n143), .Y(n81) );
   OAI22XL U93 ( .A0(n155), .A1(n117), .B0(n116), .B1(n143), .Y(n82) );
@@ -1973,10 +1967,8 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_34 ( a, b, product );
   XNOR2X1 U104 ( .A(n151), .B(b[3]), .Y(n119) );
   XNOR2X1 U105 ( .A(n151), .B(b[2]), .Y(n120) );
   XNOR2X1 U106 ( .A(n151), .B(b[1]), .Y(n121) );
-  CLKINVX1 U112 ( .A(n148), .Y(n144) );
   CLKINVX1 U116 ( .A(n149), .Y(n145) );
   CLKINVX1 U120 ( .A(n150), .Y(n146) );
-  CLKINVX1 U124 ( .A(n151), .Y(n147) );
   XOR2X1 U127 ( .A(a[6]), .B(a[7]), .Y(n132) );
   XNOR2X1 U128 ( .A(a[6]), .B(a[5]), .Y(n156) );
   XOR2X1 U130 ( .A(a[4]), .B(a[5]), .Y(n133) );
@@ -1985,43 +1977,45 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_34 ( a, b, product );
   XNOR2X1 U134 ( .A(a[2]), .B(a[1]), .Y(n158) );
   XOR2X1 U136 ( .A(a[0]), .B(a[1]), .Y(n135) );
   CLKINVX1 U137 ( .A(a[0]), .Y(n159) );
-  CLKINVX1 U140 ( .A(n198), .Y(n189) );
-  CLKINVX1 U141 ( .A(n200), .Y(n190) );
-  CLKINVX1 U142 ( .A(n199), .Y(n191) );
-  CLKINVX1 U143 ( .A(n158), .Y(n142) );
-  CLKINVX1 U144 ( .A(n142), .Y(n192) );
-  CLKINVX1 U145 ( .A(b[0]), .Y(n131) );
-  CLKINVX1 U146 ( .A(n131), .Y(n193) );
-  CLKINVX1 U147 ( .A(n197), .Y(n194) );
-  CLKINVX1 U148 ( .A(n156), .Y(n140) );
-  CLKINVX1 U149 ( .A(n140), .Y(n195) );
-  NAND2BXL U150 ( .AN(n193), .B(a[1]), .Y(n123) );
-  NAND2BXL U151 ( .AN(n193), .B(a[3]), .Y(n114) );
-  CLKINVX1 U152 ( .A(n157), .Y(n141) );
-  CLKINVX1 U153 ( .A(n141), .Y(n196) );
-  NOR2BXL U154 ( .AN(n193), .B(n159), .Y(product[0]) );
-  XNOR2XL U155 ( .A(a[7]), .B(b[0]), .Y(n95) );
-  XNOR2XL U156 ( .A(a[1]), .B(b[0]), .Y(n122) );
-  NOR2BXL U157 ( .AN(n193), .B(n192), .Y(n79) );
-  XNOR2XL U158 ( .A(a[3]), .B(b[0]), .Y(n113) );
-  NOR2BXL U159 ( .AN(n193), .B(n196), .Y(n71) );
-  NAND2BXL U160 ( .AN(n193), .B(a[7]), .Y(n96) );
-  NAND2BXL U161 ( .AN(n193), .B(a[5]), .Y(n105) );
-  XNOR2XL U162 ( .A(a[5]), .B(b[0]), .Y(n104) );
-  NOR2BXL U163 ( .AN(n193), .B(n195), .Y(n63) );
-  CLKBUFX3 U164 ( .A(n159), .Y(n143) );
-  CLKBUFX3 U165 ( .A(a[1]), .Y(n151) );
-  CLKBUFX3 U166 ( .A(a[3]), .Y(n150) );
-  CLKBUFX3 U167 ( .A(a[5]), .Y(n149) );
-  CLKBUFX3 U168 ( .A(a[7]), .Y(n148) );
-  AND2X2 U169 ( .A(n132), .B(n156), .Y(n197) );
-  CLKINVX1 U170 ( .A(n197), .Y(n152) );
-  AND2X2 U171 ( .A(n133), .B(n157), .Y(n198) );
-  CLKINVX1 U172 ( .A(n198), .Y(n153) );
-  AND2X2 U173 ( .A(n134), .B(n158), .Y(n199) );
-  CLKINVX1 U174 ( .A(n199), .Y(n154) );
-  AND2X2 U175 ( .A(n135), .B(n159), .Y(n200) );
-  CLKINVX1 U176 ( .A(n200), .Y(n155) );
+  NOR2X1 U140 ( .A(n157), .B(n131), .Y(n71) );
+  NOR2X1 U141 ( .A(n156), .B(n131), .Y(n63) );
+  NOR2X1 U142 ( .A(n131), .B(n159), .Y(product[0]) );
+  OAI2BB2XL U143 ( .B0(n156), .B1(n96), .A0N(n197), .A1N(n148), .Y(n52) );
+  OAI2BB2XL U144 ( .B0(n123), .B1(n159), .A0N(n200), .A1N(n151), .Y(n55) );
+  NOR2X1 U145 ( .A(n158), .B(n131), .Y(n79) );
+  CLKINVX1 U146 ( .A(n198), .Y(n189) );
+  CLKINVX1 U147 ( .A(n200), .Y(n190) );
+  CLKINVX1 U148 ( .A(n199), .Y(n191) );
+  CLKINVX1 U149 ( .A(n158), .Y(n142) );
+  CLKINVX1 U150 ( .A(n142), .Y(n192) );
+  CLKINVX1 U151 ( .A(b[0]), .Y(n131) );
+  CLKINVX1 U152 ( .A(n131), .Y(n193) );
+  CLKINVX1 U153 ( .A(n197), .Y(n194) );
+  CLKINVX1 U154 ( .A(n156), .Y(n140) );
+  CLKINVX1 U155 ( .A(n140), .Y(n195) );
+  NAND2BXL U156 ( .AN(n193), .B(a[1]), .Y(n123) );
+  NAND2BXL U157 ( .AN(n193), .B(a[3]), .Y(n114) );
+  CLKINVX1 U158 ( .A(n157), .Y(n141) );
+  CLKINVX1 U159 ( .A(n141), .Y(n196) );
+  XNOR2XL U160 ( .A(a[7]), .B(b[0]), .Y(n95) );
+  XNOR2XL U161 ( .A(a[1]), .B(b[0]), .Y(n122) );
+  XNOR2XL U162 ( .A(a[3]), .B(b[0]), .Y(n113) );
+  NAND2BXL U163 ( .AN(n193), .B(a[7]), .Y(n96) );
+  NAND2BXL U164 ( .AN(n193), .B(a[5]), .Y(n105) );
+  XNOR2XL U165 ( .A(a[5]), .B(b[0]), .Y(n104) );
+  CLKBUFX3 U166 ( .A(n159), .Y(n143) );
+  CLKBUFX3 U167 ( .A(a[1]), .Y(n151) );
+  CLKBUFX3 U168 ( .A(a[3]), .Y(n150) );
+  CLKBUFX3 U169 ( .A(a[5]), .Y(n149) );
+  CLKBUFX3 U170 ( .A(a[7]), .Y(n148) );
+  AND2X2 U171 ( .A(n132), .B(n156), .Y(n197) );
+  CLKINVX1 U172 ( .A(n197), .Y(n152) );
+  AND2X2 U173 ( .A(n133), .B(n157), .Y(n198) );
+  CLKINVX1 U174 ( .A(n198), .Y(n153) );
+  AND2X2 U175 ( .A(n134), .B(n158), .Y(n199) );
+  CLKINVX1 U176 ( .A(n199), .Y(n154) );
+  AND2X2 U177 ( .A(n135), .B(n159), .Y(n200) );
+  CLKINVX1 U178 ( .A(n200), .Y(n155) );
 endmodule
 
 
@@ -2038,10 +2032,10 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_35 ( a, b, product );
          n87, n88, n89, n90, n91, n92, n93, n94, n95, n96, n97, n98, n99, n100,
          n101, n102, n103, n104, n105, n106, n107, n108, n109, n110, n111,
          n112, n113, n114, n115, n116, n117, n118, n119, n120, n121, n122,
-         n123, n131, n132, n133, n134, n135, n140, n141, n142, n143, n144,
-         n145, n146, n147, n148, n149, n150, n151, n152, n153, n154, n155,
-         n156, n157, n158, n159, n189, n190, n191, n192, n193, n194, n195,
-         n196, n197, n198, n199, n200;
+         n123, n131, n132, n133, n134, n135, n140, n141, n142, n143, n145,
+         n146, n148, n149, n150, n151, n152, n153, n154, n155, n156, n157,
+         n158, n159, n189, n190, n191, n192, n193, n194, n195, n196, n197,
+         n198, n199, n200;
 
   CLKINVX1 U1 ( .A(n1), .Y(product[15]) );
   ADDFXL U2 ( .A(n56), .B(n15), .CI(n2), .CO(n1), .S(product[14]) );
@@ -2080,7 +2074,6 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_35 ( a, b, product );
   ADDHXL U30 ( .A(n83), .B(n70), .CO(n46), .S(n47) );
   ADDFXL U31 ( .A(n84), .B(n71), .CI(n77), .CO(n48), .S(n49) );
   ADDHXL U32 ( .A(n85), .B(n54), .CO(n50), .S(n51) );
-  OAI22XL U33 ( .A0(n152), .A1(n144), .B0(n195), .B1(n96), .Y(n52) );
   AO21X1 U34 ( .A0(n152), .A1(n156), .B0(n88), .Y(n56) );
   OAI22XL U35 ( .A0(n152), .A1(n89), .B0(n195), .B1(n88), .Y(n15) );
   OAI22XL U36 ( .A0(n152), .A1(n90), .B0(n195), .B1(n89), .Y(n57) );
@@ -2128,7 +2121,6 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_35 ( a, b, product );
   XNOR2X1 U85 ( .A(n150), .B(b[3]), .Y(n110) );
   XNOR2X1 U86 ( .A(n150), .B(b[2]), .Y(n111) );
   XNOR2X1 U87 ( .A(n150), .B(b[1]), .Y(n112) );
-  OAI22XL U90 ( .A0(n155), .A1(n147), .B0(n123), .B1(n143), .Y(n55) );
   AO21X1 U91 ( .A0(n155), .A1(n159), .B0(n115), .Y(n80) );
   OAI22XL U92 ( .A0(n155), .A1(n116), .B0(n115), .B1(n143), .Y(n81) );
   OAI22XL U93 ( .A0(n155), .A1(n117), .B0(n116), .B1(n143), .Y(n82) );
@@ -2144,10 +2136,8 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_35 ( a, b, product );
   XNOR2X1 U104 ( .A(n151), .B(b[3]), .Y(n119) );
   XNOR2X1 U105 ( .A(n151), .B(b[2]), .Y(n120) );
   XNOR2X1 U106 ( .A(n151), .B(b[1]), .Y(n121) );
-  CLKINVX1 U112 ( .A(n148), .Y(n144) );
   CLKINVX1 U116 ( .A(n149), .Y(n145) );
   CLKINVX1 U120 ( .A(n150), .Y(n146) );
-  CLKINVX1 U124 ( .A(n151), .Y(n147) );
   XOR2X1 U127 ( .A(a[6]), .B(a[7]), .Y(n132) );
   XNOR2X1 U128 ( .A(a[6]), .B(a[5]), .Y(n156) );
   XOR2X1 U130 ( .A(a[4]), .B(a[5]), .Y(n133) );
@@ -2156,43 +2146,45 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_35 ( a, b, product );
   XNOR2X1 U134 ( .A(a[2]), .B(a[1]), .Y(n158) );
   XOR2X1 U136 ( .A(a[0]), .B(a[1]), .Y(n135) );
   CLKINVX1 U137 ( .A(a[0]), .Y(n159) );
-  CLKINVX1 U140 ( .A(n198), .Y(n189) );
-  CLKINVX1 U141 ( .A(n200), .Y(n190) );
-  CLKINVX1 U142 ( .A(n199), .Y(n191) );
-  CLKINVX1 U143 ( .A(n158), .Y(n142) );
-  CLKINVX1 U144 ( .A(n142), .Y(n192) );
-  CLKINVX1 U145 ( .A(b[0]), .Y(n131) );
-  CLKINVX1 U146 ( .A(n131), .Y(n193) );
-  CLKINVX1 U147 ( .A(n197), .Y(n194) );
-  CLKINVX1 U148 ( .A(n156), .Y(n140) );
-  CLKINVX1 U149 ( .A(n140), .Y(n195) );
-  NAND2BXL U150 ( .AN(n193), .B(a[1]), .Y(n123) );
-  NAND2BXL U151 ( .AN(n193), .B(a[3]), .Y(n114) );
-  CLKINVX1 U152 ( .A(n157), .Y(n141) );
-  CLKINVX1 U153 ( .A(n141), .Y(n196) );
-  NOR2BXL U154 ( .AN(n193), .B(n159), .Y(product[0]) );
-  XNOR2XL U155 ( .A(a[7]), .B(b[0]), .Y(n95) );
-  XNOR2XL U156 ( .A(a[1]), .B(b[0]), .Y(n122) );
-  NOR2BXL U157 ( .AN(n193), .B(n192), .Y(n79) );
-  XNOR2XL U158 ( .A(a[3]), .B(b[0]), .Y(n113) );
-  NOR2BXL U159 ( .AN(n193), .B(n196), .Y(n71) );
-  NAND2BXL U160 ( .AN(n193), .B(a[7]), .Y(n96) );
-  NAND2BXL U161 ( .AN(n193), .B(a[5]), .Y(n105) );
-  XNOR2XL U162 ( .A(a[5]), .B(b[0]), .Y(n104) );
-  NOR2BXL U163 ( .AN(n193), .B(n195), .Y(n63) );
-  CLKBUFX3 U164 ( .A(n159), .Y(n143) );
-  CLKBUFX3 U165 ( .A(a[1]), .Y(n151) );
-  CLKBUFX3 U166 ( .A(a[3]), .Y(n150) );
-  CLKBUFX3 U167 ( .A(a[5]), .Y(n149) );
-  CLKBUFX3 U168 ( .A(a[7]), .Y(n148) );
-  AND2X2 U169 ( .A(n132), .B(n156), .Y(n197) );
-  CLKINVX1 U170 ( .A(n197), .Y(n152) );
-  AND2X2 U171 ( .A(n133), .B(n157), .Y(n198) );
-  CLKINVX1 U172 ( .A(n198), .Y(n153) );
-  AND2X2 U173 ( .A(n134), .B(n158), .Y(n199) );
-  CLKINVX1 U174 ( .A(n199), .Y(n154) );
-  AND2X2 U175 ( .A(n135), .B(n159), .Y(n200) );
-  CLKINVX1 U176 ( .A(n200), .Y(n155) );
+  NOR2X1 U140 ( .A(n157), .B(n131), .Y(n71) );
+  NOR2X1 U141 ( .A(n156), .B(n131), .Y(n63) );
+  OAI2BB2XL U142 ( .B0(n156), .B1(n96), .A0N(n197), .A1N(n148), .Y(n52) );
+  NOR2X1 U143 ( .A(n131), .B(n159), .Y(product[0]) );
+  OAI2BB2XL U144 ( .B0(n123), .B1(n159), .A0N(n200), .A1N(n151), .Y(n55) );
+  NOR2X1 U145 ( .A(n158), .B(n131), .Y(n79) );
+  CLKINVX1 U146 ( .A(n198), .Y(n189) );
+  CLKINVX1 U147 ( .A(n200), .Y(n190) );
+  CLKINVX1 U148 ( .A(n199), .Y(n191) );
+  CLKINVX1 U149 ( .A(n158), .Y(n142) );
+  CLKINVX1 U150 ( .A(n142), .Y(n192) );
+  CLKINVX1 U151 ( .A(b[0]), .Y(n131) );
+  CLKINVX1 U152 ( .A(n131), .Y(n193) );
+  CLKINVX1 U153 ( .A(n197), .Y(n194) );
+  CLKINVX1 U154 ( .A(n156), .Y(n140) );
+  CLKINVX1 U155 ( .A(n140), .Y(n195) );
+  NAND2BXL U156 ( .AN(n193), .B(a[1]), .Y(n123) );
+  NAND2BXL U157 ( .AN(n193), .B(a[3]), .Y(n114) );
+  CLKINVX1 U158 ( .A(n157), .Y(n141) );
+  CLKINVX1 U159 ( .A(n141), .Y(n196) );
+  XNOR2XL U160 ( .A(a[7]), .B(b[0]), .Y(n95) );
+  XNOR2XL U161 ( .A(a[1]), .B(b[0]), .Y(n122) );
+  XNOR2XL U162 ( .A(a[3]), .B(b[0]), .Y(n113) );
+  NAND2BXL U163 ( .AN(n193), .B(a[7]), .Y(n96) );
+  NAND2BXL U164 ( .AN(n193), .B(a[5]), .Y(n105) );
+  XNOR2XL U165 ( .A(a[5]), .B(b[0]), .Y(n104) );
+  CLKBUFX3 U166 ( .A(n159), .Y(n143) );
+  CLKBUFX3 U167 ( .A(a[1]), .Y(n151) );
+  CLKBUFX3 U168 ( .A(a[3]), .Y(n150) );
+  CLKBUFX3 U169 ( .A(a[5]), .Y(n149) );
+  CLKBUFX3 U170 ( .A(a[7]), .Y(n148) );
+  AND2X2 U171 ( .A(n132), .B(n156), .Y(n197) );
+  CLKINVX1 U172 ( .A(n197), .Y(n152) );
+  AND2X2 U173 ( .A(n133), .B(n157), .Y(n198) );
+  CLKINVX1 U174 ( .A(n198), .Y(n153) );
+  AND2X2 U175 ( .A(n134), .B(n158), .Y(n199) );
+  CLKINVX1 U176 ( .A(n199), .Y(n154) );
+  AND2X2 U177 ( .A(n135), .B(n159), .Y(n200) );
+  CLKINVX1 U178 ( .A(n200), .Y(n155) );
 endmodule
 
 
@@ -2209,10 +2201,10 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_36 ( a, b, product );
          n87, n88, n89, n90, n91, n92, n93, n94, n95, n96, n97, n98, n99, n100,
          n101, n102, n103, n104, n105, n106, n107, n108, n109, n110, n111,
          n112, n113, n114, n115, n116, n117, n118, n119, n120, n121, n122,
-         n123, n131, n132, n133, n134, n135, n140, n141, n142, n143, n144,
-         n145, n146, n147, n148, n149, n150, n151, n152, n153, n154, n155,
-         n156, n157, n158, n159, n189, n190, n191, n192, n193, n194, n195,
-         n196, n197, n198, n199, n200;
+         n123, n131, n132, n133, n134, n135, n140, n141, n142, n143, n145,
+         n146, n148, n149, n150, n151, n152, n153, n154, n155, n156, n157,
+         n158, n159, n189, n190, n191, n192, n193, n194, n195, n196, n197,
+         n198, n199, n200;
 
   CLKINVX1 U1 ( .A(n1), .Y(product[15]) );
   ADDFXL U2 ( .A(n56), .B(n15), .CI(n2), .CO(n1), .S(product[14]) );
@@ -2251,7 +2243,6 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_36 ( a, b, product );
   ADDHXL U30 ( .A(n83), .B(n70), .CO(n46), .S(n47) );
   ADDFXL U31 ( .A(n84), .B(n71), .CI(n77), .CO(n48), .S(n49) );
   ADDHXL U32 ( .A(n85), .B(n54), .CO(n50), .S(n51) );
-  OAI22XL U33 ( .A0(n152), .A1(n144), .B0(n193), .B1(n96), .Y(n52) );
   AO21X1 U34 ( .A0(n152), .A1(n156), .B0(n88), .Y(n56) );
   OAI22XL U35 ( .A0(n152), .A1(n89), .B0(n193), .B1(n88), .Y(n15) );
   OAI22XL U36 ( .A0(n152), .A1(n90), .B0(n193), .B1(n89), .Y(n57) );
@@ -2299,7 +2290,6 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_36 ( a, b, product );
   XNOR2X1 U85 ( .A(n150), .B(b[3]), .Y(n110) );
   XNOR2X1 U86 ( .A(n150), .B(b[2]), .Y(n111) );
   XNOR2X1 U87 ( .A(n150), .B(b[1]), .Y(n112) );
-  OAI22XL U90 ( .A0(n155), .A1(n147), .B0(n123), .B1(n143), .Y(n55) );
   AO21X1 U91 ( .A0(n155), .A1(n159), .B0(n115), .Y(n80) );
   OAI22XL U92 ( .A0(n155), .A1(n116), .B0(n115), .B1(n143), .Y(n81) );
   OAI22XL U93 ( .A0(n155), .A1(n117), .B0(n116), .B1(n143), .Y(n82) );
@@ -2315,10 +2305,8 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_36 ( a, b, product );
   XNOR2X1 U104 ( .A(n151), .B(b[3]), .Y(n119) );
   XNOR2X1 U105 ( .A(n151), .B(b[2]), .Y(n120) );
   XNOR2X1 U106 ( .A(n151), .B(b[1]), .Y(n121) );
-  CLKINVX1 U112 ( .A(n148), .Y(n144) );
   CLKINVX1 U116 ( .A(n149), .Y(n145) );
   CLKINVX1 U120 ( .A(n150), .Y(n146) );
-  CLKINVX1 U124 ( .A(n151), .Y(n147) );
   XOR2X1 U127 ( .A(a[6]), .B(a[7]), .Y(n132) );
   XNOR2X1 U128 ( .A(a[6]), .B(a[5]), .Y(n156) );
   XOR2X1 U130 ( .A(a[4]), .B(a[5]), .Y(n133) );
@@ -2327,43 +2315,45 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_36 ( a, b, product );
   XNOR2X1 U134 ( .A(a[2]), .B(a[1]), .Y(n158) );
   XOR2X1 U136 ( .A(a[0]), .B(a[1]), .Y(n135) );
   CLKINVX1 U137 ( .A(a[0]), .Y(n159) );
-  CLKINVX1 U140 ( .A(n198), .Y(n189) );
-  CLKINVX1 U141 ( .A(n200), .Y(n190) );
-  CLKINVX1 U142 ( .A(n199), .Y(n191) );
-  CLKINVX1 U143 ( .A(n158), .Y(n142) );
-  CLKINVX1 U144 ( .A(n142), .Y(n192) );
-  CLKINVX1 U145 ( .A(n156), .Y(n140) );
-  CLKINVX1 U146 ( .A(n140), .Y(n193) );
-  CLKINVX1 U147 ( .A(n197), .Y(n194) );
-  CLKINVX1 U148 ( .A(b[0]), .Y(n131) );
-  CLKINVX1 U149 ( .A(n131), .Y(n195) );
-  NAND2BXL U150 ( .AN(n195), .B(a[1]), .Y(n123) );
-  NAND2BXL U151 ( .AN(n195), .B(a[3]), .Y(n114) );
-  CLKINVX1 U152 ( .A(n157), .Y(n141) );
-  CLKINVX1 U153 ( .A(n141), .Y(n196) );
-  NOR2BXL U154 ( .AN(n195), .B(n159), .Y(product[0]) );
-  XNOR2XL U155 ( .A(a[7]), .B(b[0]), .Y(n95) );
-  XNOR2XL U156 ( .A(a[1]), .B(b[0]), .Y(n122) );
-  NOR2BXL U157 ( .AN(n195), .B(n192), .Y(n79) );
-  XNOR2XL U158 ( .A(a[3]), .B(b[0]), .Y(n113) );
-  NOR2BXL U159 ( .AN(n195), .B(n196), .Y(n71) );
-  NAND2BXL U160 ( .AN(n195), .B(a[7]), .Y(n96) );
-  NAND2BXL U161 ( .AN(n195), .B(a[5]), .Y(n105) );
-  XNOR2XL U162 ( .A(a[5]), .B(b[0]), .Y(n104) );
-  NOR2BXL U163 ( .AN(n195), .B(n193), .Y(n63) );
-  CLKBUFX3 U164 ( .A(n159), .Y(n143) );
-  CLKBUFX3 U165 ( .A(a[1]), .Y(n151) );
-  CLKBUFX3 U166 ( .A(a[3]), .Y(n150) );
-  CLKBUFX3 U167 ( .A(a[5]), .Y(n149) );
-  CLKBUFX3 U168 ( .A(a[7]), .Y(n148) );
-  AND2X2 U169 ( .A(n132), .B(n156), .Y(n197) );
-  CLKINVX1 U170 ( .A(n197), .Y(n152) );
-  AND2X2 U171 ( .A(n133), .B(n157), .Y(n198) );
-  CLKINVX1 U172 ( .A(n198), .Y(n153) );
-  AND2X2 U173 ( .A(n134), .B(n158), .Y(n199) );
-  CLKINVX1 U174 ( .A(n199), .Y(n154) );
-  AND2X2 U175 ( .A(n135), .B(n159), .Y(n200) );
-  CLKINVX1 U176 ( .A(n200), .Y(n155) );
+  NOR2X1 U140 ( .A(n157), .B(n131), .Y(n71) );
+  NOR2X1 U141 ( .A(n156), .B(n131), .Y(n63) );
+  NOR2X1 U142 ( .A(n131), .B(n159), .Y(product[0]) );
+  OAI2BB2XL U143 ( .B0(n156), .B1(n96), .A0N(n197), .A1N(n148), .Y(n52) );
+  OAI2BB2XL U144 ( .B0(n123), .B1(n159), .A0N(n200), .A1N(n151), .Y(n55) );
+  NOR2X1 U145 ( .A(n158), .B(n131), .Y(n79) );
+  CLKINVX1 U146 ( .A(n198), .Y(n189) );
+  CLKINVX1 U147 ( .A(n200), .Y(n190) );
+  CLKINVX1 U148 ( .A(n199), .Y(n191) );
+  CLKINVX1 U149 ( .A(n158), .Y(n142) );
+  CLKINVX1 U150 ( .A(n142), .Y(n192) );
+  CLKINVX1 U151 ( .A(n156), .Y(n140) );
+  CLKINVX1 U152 ( .A(n140), .Y(n193) );
+  CLKINVX1 U153 ( .A(n197), .Y(n194) );
+  CLKINVX1 U154 ( .A(b[0]), .Y(n131) );
+  CLKINVX1 U155 ( .A(n131), .Y(n195) );
+  NAND2BXL U156 ( .AN(n195), .B(a[1]), .Y(n123) );
+  NAND2BXL U157 ( .AN(n195), .B(a[3]), .Y(n114) );
+  CLKINVX1 U158 ( .A(n157), .Y(n141) );
+  CLKINVX1 U159 ( .A(n141), .Y(n196) );
+  XNOR2XL U160 ( .A(a[7]), .B(b[0]), .Y(n95) );
+  XNOR2XL U161 ( .A(a[1]), .B(b[0]), .Y(n122) );
+  XNOR2XL U162 ( .A(a[3]), .B(b[0]), .Y(n113) );
+  NAND2BXL U163 ( .AN(n195), .B(a[7]), .Y(n96) );
+  NAND2BXL U164 ( .AN(n195), .B(a[5]), .Y(n105) );
+  XNOR2XL U165 ( .A(a[5]), .B(b[0]), .Y(n104) );
+  CLKBUFX3 U166 ( .A(n159), .Y(n143) );
+  CLKBUFX3 U167 ( .A(a[1]), .Y(n151) );
+  CLKBUFX3 U168 ( .A(a[3]), .Y(n150) );
+  CLKBUFX3 U169 ( .A(a[5]), .Y(n149) );
+  CLKBUFX3 U170 ( .A(a[7]), .Y(n148) );
+  AND2X2 U171 ( .A(n132), .B(n156), .Y(n197) );
+  CLKINVX1 U172 ( .A(n197), .Y(n152) );
+  AND2X2 U173 ( .A(n133), .B(n157), .Y(n198) );
+  CLKINVX1 U174 ( .A(n198), .Y(n153) );
+  AND2X2 U175 ( .A(n134), .B(n158), .Y(n199) );
+  CLKINVX1 U176 ( .A(n199), .Y(n154) );
+  AND2X2 U177 ( .A(n135), .B(n159), .Y(n200) );
+  CLKINVX1 U178 ( .A(n200), .Y(n155) );
 endmodule
 
 
@@ -2380,10 +2370,10 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_37 ( a, b, product );
          n87, n88, n89, n90, n91, n92, n93, n94, n95, n96, n97, n98, n99, n100,
          n101, n102, n103, n104, n105, n106, n107, n108, n109, n110, n111,
          n112, n113, n114, n115, n116, n117, n118, n119, n120, n121, n122,
-         n123, n131, n132, n133, n134, n135, n140, n141, n142, n143, n144,
-         n145, n146, n147, n148, n149, n150, n151, n152, n153, n154, n155,
-         n156, n157, n158, n159, n189, n190, n191, n192, n193, n194, n195,
-         n196, n197, n198, n199, n200;
+         n123, n131, n132, n133, n134, n135, n140, n141, n142, n143, n145,
+         n146, n148, n149, n150, n151, n152, n153, n154, n155, n156, n157,
+         n158, n159, n189, n190, n191, n192, n193, n194, n195, n196, n197,
+         n198, n199, n200;
 
   CLKINVX1 U1 ( .A(n1), .Y(product[15]) );
   ADDFXL U2 ( .A(n56), .B(n15), .CI(n2), .CO(n1), .S(product[14]) );
@@ -2422,7 +2412,6 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_37 ( a, b, product );
   ADDHXL U30 ( .A(n83), .B(n70), .CO(n46), .S(n47) );
   ADDFXL U31 ( .A(n84), .B(n71), .CI(n77), .CO(n48), .S(n49) );
   ADDHXL U32 ( .A(n85), .B(n54), .CO(n50), .S(n51) );
-  OAI22XL U33 ( .A0(n152), .A1(n144), .B0(n193), .B1(n96), .Y(n52) );
   AO21X1 U34 ( .A0(n152), .A1(n156), .B0(n88), .Y(n56) );
   OAI22XL U35 ( .A0(n152), .A1(n89), .B0(n193), .B1(n88), .Y(n15) );
   OAI22XL U36 ( .A0(n152), .A1(n90), .B0(n193), .B1(n89), .Y(n57) );
@@ -2470,7 +2459,6 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_37 ( a, b, product );
   XNOR2X1 U85 ( .A(n150), .B(b[3]), .Y(n110) );
   XNOR2X1 U86 ( .A(n150), .B(b[2]), .Y(n111) );
   XNOR2X1 U87 ( .A(n150), .B(b[1]), .Y(n112) );
-  OAI22XL U90 ( .A0(n155), .A1(n147), .B0(n123), .B1(n143), .Y(n55) );
   AO21X1 U91 ( .A0(n155), .A1(n159), .B0(n115), .Y(n80) );
   OAI22XL U92 ( .A0(n155), .A1(n116), .B0(n115), .B1(n143), .Y(n81) );
   OAI22XL U93 ( .A0(n155), .A1(n117), .B0(n116), .B1(n143), .Y(n82) );
@@ -2486,10 +2474,8 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_37 ( a, b, product );
   XNOR2X1 U104 ( .A(n151), .B(b[3]), .Y(n119) );
   XNOR2X1 U105 ( .A(n151), .B(b[2]), .Y(n120) );
   XNOR2X1 U106 ( .A(n151), .B(b[1]), .Y(n121) );
-  CLKINVX1 U112 ( .A(n148), .Y(n144) );
   CLKINVX1 U116 ( .A(n149), .Y(n145) );
   CLKINVX1 U120 ( .A(n150), .Y(n146) );
-  CLKINVX1 U124 ( .A(n151), .Y(n147) );
   XOR2X1 U127 ( .A(a[6]), .B(a[7]), .Y(n132) );
   XNOR2X1 U128 ( .A(a[6]), .B(a[5]), .Y(n156) );
   XOR2X1 U130 ( .A(a[4]), .B(a[5]), .Y(n133) );
@@ -2498,43 +2484,45 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_37 ( a, b, product );
   XNOR2X1 U134 ( .A(a[2]), .B(a[1]), .Y(n158) );
   XOR2X1 U136 ( .A(a[0]), .B(a[1]), .Y(n135) );
   CLKINVX1 U137 ( .A(a[0]), .Y(n159) );
-  CLKINVX1 U140 ( .A(n198), .Y(n189) );
-  CLKINVX1 U141 ( .A(n200), .Y(n190) );
-  CLKINVX1 U142 ( .A(n199), .Y(n191) );
-  CLKINVX1 U143 ( .A(n158), .Y(n142) );
-  CLKINVX1 U144 ( .A(n142), .Y(n192) );
-  CLKINVX1 U145 ( .A(n156), .Y(n140) );
-  CLKINVX1 U146 ( .A(n140), .Y(n193) );
-  CLKINVX1 U147 ( .A(n197), .Y(n194) );
-  CLKINVX1 U148 ( .A(b[0]), .Y(n131) );
-  CLKINVX1 U149 ( .A(n131), .Y(n195) );
-  NAND2BXL U150 ( .AN(n195), .B(a[1]), .Y(n123) );
-  NAND2BXL U151 ( .AN(n195), .B(a[3]), .Y(n114) );
-  CLKINVX1 U152 ( .A(n157), .Y(n141) );
-  CLKINVX1 U153 ( .A(n141), .Y(n196) );
-  NOR2BXL U154 ( .AN(n195), .B(n159), .Y(product[0]) );
-  XNOR2XL U155 ( .A(a[7]), .B(b[0]), .Y(n95) );
-  XNOR2XL U156 ( .A(a[1]), .B(b[0]), .Y(n122) );
-  NOR2BXL U157 ( .AN(n195), .B(n192), .Y(n79) );
-  XNOR2XL U158 ( .A(a[3]), .B(b[0]), .Y(n113) );
-  NOR2BXL U159 ( .AN(n195), .B(n196), .Y(n71) );
-  NAND2BXL U160 ( .AN(n195), .B(a[7]), .Y(n96) );
-  NAND2BXL U161 ( .AN(n195), .B(a[5]), .Y(n105) );
-  XNOR2XL U162 ( .A(a[5]), .B(b[0]), .Y(n104) );
-  NOR2BXL U163 ( .AN(n195), .B(n193), .Y(n63) );
-  CLKBUFX3 U164 ( .A(n159), .Y(n143) );
-  CLKBUFX3 U165 ( .A(a[1]), .Y(n151) );
-  CLKBUFX3 U166 ( .A(a[3]), .Y(n150) );
-  CLKBUFX3 U167 ( .A(a[5]), .Y(n149) );
-  CLKBUFX3 U168 ( .A(a[7]), .Y(n148) );
-  AND2X2 U169 ( .A(n132), .B(n156), .Y(n197) );
-  CLKINVX1 U170 ( .A(n197), .Y(n152) );
-  AND2X2 U171 ( .A(n133), .B(n157), .Y(n198) );
-  CLKINVX1 U172 ( .A(n198), .Y(n153) );
-  AND2X2 U173 ( .A(n134), .B(n158), .Y(n199) );
-  CLKINVX1 U174 ( .A(n199), .Y(n154) );
-  AND2X2 U175 ( .A(n135), .B(n159), .Y(n200) );
-  CLKINVX1 U176 ( .A(n200), .Y(n155) );
+  NOR2X1 U140 ( .A(n157), .B(n131), .Y(n71) );
+  NOR2X1 U141 ( .A(n156), .B(n131), .Y(n63) );
+  OAI2BB2XL U142 ( .B0(n156), .B1(n96), .A0N(n197), .A1N(n148), .Y(n52) );
+  NOR2X1 U143 ( .A(n131), .B(n159), .Y(product[0]) );
+  OAI2BB2XL U144 ( .B0(n123), .B1(n159), .A0N(n200), .A1N(n151), .Y(n55) );
+  NOR2X1 U145 ( .A(n158), .B(n131), .Y(n79) );
+  CLKINVX1 U146 ( .A(n198), .Y(n189) );
+  CLKINVX1 U147 ( .A(n200), .Y(n190) );
+  CLKINVX1 U148 ( .A(n199), .Y(n191) );
+  CLKINVX1 U149 ( .A(n158), .Y(n142) );
+  CLKINVX1 U150 ( .A(n142), .Y(n192) );
+  CLKINVX1 U151 ( .A(n156), .Y(n140) );
+  CLKINVX1 U152 ( .A(n140), .Y(n193) );
+  CLKINVX1 U153 ( .A(n197), .Y(n194) );
+  CLKINVX1 U154 ( .A(b[0]), .Y(n131) );
+  CLKINVX1 U155 ( .A(n131), .Y(n195) );
+  NAND2BXL U156 ( .AN(n195), .B(a[1]), .Y(n123) );
+  NAND2BXL U157 ( .AN(n195), .B(a[3]), .Y(n114) );
+  CLKINVX1 U158 ( .A(n157), .Y(n141) );
+  CLKINVX1 U159 ( .A(n141), .Y(n196) );
+  XNOR2XL U160 ( .A(a[7]), .B(b[0]), .Y(n95) );
+  XNOR2XL U161 ( .A(a[1]), .B(b[0]), .Y(n122) );
+  XNOR2XL U162 ( .A(a[3]), .B(b[0]), .Y(n113) );
+  NAND2BXL U163 ( .AN(n195), .B(a[7]), .Y(n96) );
+  NAND2BXL U164 ( .AN(n195), .B(a[5]), .Y(n105) );
+  XNOR2XL U165 ( .A(a[5]), .B(b[0]), .Y(n104) );
+  CLKBUFX3 U166 ( .A(n159), .Y(n143) );
+  CLKBUFX3 U167 ( .A(a[1]), .Y(n151) );
+  CLKBUFX3 U168 ( .A(a[3]), .Y(n150) );
+  CLKBUFX3 U169 ( .A(a[5]), .Y(n149) );
+  CLKBUFX3 U170 ( .A(a[7]), .Y(n148) );
+  AND2X2 U171 ( .A(n132), .B(n156), .Y(n197) );
+  CLKINVX1 U172 ( .A(n197), .Y(n152) );
+  AND2X2 U173 ( .A(n133), .B(n157), .Y(n198) );
+  CLKINVX1 U174 ( .A(n198), .Y(n153) );
+  AND2X2 U175 ( .A(n134), .B(n158), .Y(n199) );
+  CLKINVX1 U176 ( .A(n199), .Y(n154) );
+  AND2X2 U177 ( .A(n135), .B(n159), .Y(n200) );
+  CLKINVX1 U178 ( .A(n200), .Y(n155) );
 endmodule
 
 
@@ -2551,10 +2539,10 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_38 ( a, b, product );
          n87, n88, n89, n90, n91, n92, n93, n94, n95, n96, n97, n98, n99, n100,
          n101, n102, n103, n104, n105, n106, n107, n108, n109, n110, n111,
          n112, n113, n114, n115, n116, n117, n118, n119, n120, n121, n122,
-         n123, n131, n132, n133, n134, n135, n140, n141, n142, n143, n144,
-         n145, n146, n147, n148, n149, n150, n151, n152, n153, n154, n155,
-         n156, n157, n158, n159, n189, n190, n191, n192, n193, n194, n195,
-         n196, n197, n198, n199, n200;
+         n123, n131, n132, n133, n134, n135, n140, n141, n142, n143, n145,
+         n146, n148, n149, n150, n151, n152, n153, n154, n155, n156, n157,
+         n158, n159, n189, n190, n191, n192, n193, n194, n195, n196, n197,
+         n198, n199, n200;
 
   CLKINVX1 U1 ( .A(n1), .Y(product[15]) );
   ADDFXL U2 ( .A(n56), .B(n15), .CI(n2), .CO(n1), .S(product[14]) );
@@ -2593,7 +2581,6 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_38 ( a, b, product );
   ADDHXL U30 ( .A(n83), .B(n70), .CO(n46), .S(n47) );
   ADDFXL U31 ( .A(n84), .B(n71), .CI(n77), .CO(n48), .S(n49) );
   ADDHXL U32 ( .A(n85), .B(n54), .CO(n50), .S(n51) );
-  OAI22XL U33 ( .A0(n152), .A1(n144), .B0(n196), .B1(n96), .Y(n52) );
   AO21X1 U34 ( .A0(n152), .A1(n156), .B0(n88), .Y(n56) );
   OAI22XL U35 ( .A0(n152), .A1(n89), .B0(n196), .B1(n88), .Y(n15) );
   OAI22XL U36 ( .A0(n152), .A1(n90), .B0(n196), .B1(n89), .Y(n57) );
@@ -2641,7 +2628,6 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_38 ( a, b, product );
   XNOR2X1 U85 ( .A(n150), .B(b[3]), .Y(n110) );
   XNOR2X1 U86 ( .A(n150), .B(b[2]), .Y(n111) );
   XNOR2X1 U87 ( .A(n150), .B(b[1]), .Y(n112) );
-  OAI22XL U90 ( .A0(n155), .A1(n147), .B0(n123), .B1(n143), .Y(n55) );
   AO21X1 U91 ( .A0(n155), .A1(n159), .B0(n115), .Y(n80) );
   OAI22XL U92 ( .A0(n155), .A1(n116), .B0(n115), .B1(n143), .Y(n81) );
   OAI22XL U93 ( .A0(n155), .A1(n117), .B0(n116), .B1(n143), .Y(n82) );
@@ -2657,10 +2643,8 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_38 ( a, b, product );
   XNOR2X1 U104 ( .A(n151), .B(b[3]), .Y(n119) );
   XNOR2X1 U105 ( .A(n151), .B(b[2]), .Y(n120) );
   XNOR2X1 U106 ( .A(n151), .B(b[1]), .Y(n121) );
-  CLKINVX1 U112 ( .A(n148), .Y(n144) );
   CLKINVX1 U116 ( .A(n149), .Y(n145) );
   CLKINVX1 U120 ( .A(n150), .Y(n146) );
-  CLKINVX1 U124 ( .A(n151), .Y(n147) );
   XOR2X1 U127 ( .A(a[6]), .B(a[7]), .Y(n132) );
   XNOR2X1 U128 ( .A(a[6]), .B(a[5]), .Y(n156) );
   XOR2X1 U130 ( .A(a[4]), .B(a[5]), .Y(n133) );
@@ -2669,43 +2653,45 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_38 ( a, b, product );
   XNOR2X1 U134 ( .A(a[2]), .B(a[1]), .Y(n158) );
   XOR2X1 U136 ( .A(a[0]), .B(a[1]), .Y(n135) );
   CLKINVX1 U137 ( .A(a[0]), .Y(n159) );
-  CLKINVX1 U140 ( .A(n200), .Y(n189) );
-  CLKINVX1 U141 ( .A(n199), .Y(n190) );
-  CLKINVX1 U142 ( .A(n198), .Y(n191) );
-  CLKINVX1 U143 ( .A(n158), .Y(n142) );
-  CLKINVX1 U144 ( .A(n142), .Y(n192) );
-  CLKINVX1 U145 ( .A(n157), .Y(n141) );
-  CLKINVX1 U146 ( .A(n141), .Y(n193) );
-  CLKINVX1 U147 ( .A(n197), .Y(n194) );
-  CLKINVX1 U148 ( .A(b[0]), .Y(n131) );
-  CLKINVX1 U149 ( .A(n131), .Y(n195) );
-  NAND2BXL U150 ( .AN(n195), .B(a[1]), .Y(n123) );
-  NAND2BXL U151 ( .AN(n195), .B(a[3]), .Y(n114) );
-  CLKINVX1 U152 ( .A(n156), .Y(n140) );
-  CLKINVX1 U153 ( .A(n140), .Y(n196) );
-  NOR2BXL U154 ( .AN(n195), .B(n159), .Y(product[0]) );
-  XNOR2XL U155 ( .A(a[7]), .B(b[0]), .Y(n95) );
-  XNOR2XL U156 ( .A(a[1]), .B(b[0]), .Y(n122) );
-  NOR2BXL U157 ( .AN(n195), .B(n192), .Y(n79) );
-  XNOR2XL U158 ( .A(a[3]), .B(b[0]), .Y(n113) );
-  NOR2BXL U159 ( .AN(n195), .B(n193), .Y(n71) );
-  NAND2BXL U160 ( .AN(n195), .B(a[7]), .Y(n96) );
-  NAND2BXL U161 ( .AN(n195), .B(a[5]), .Y(n105) );
-  XNOR2XL U162 ( .A(a[5]), .B(b[0]), .Y(n104) );
-  NOR2BXL U163 ( .AN(n195), .B(n196), .Y(n63) );
-  CLKBUFX3 U164 ( .A(n159), .Y(n143) );
-  CLKBUFX3 U165 ( .A(a[1]), .Y(n151) );
-  CLKBUFX3 U166 ( .A(a[3]), .Y(n150) );
-  CLKBUFX3 U167 ( .A(a[5]), .Y(n149) );
-  CLKBUFX3 U168 ( .A(a[7]), .Y(n148) );
-  AND2X2 U169 ( .A(n132), .B(n156), .Y(n197) );
-  CLKINVX1 U170 ( .A(n197), .Y(n152) );
-  AND2X2 U171 ( .A(n133), .B(n157), .Y(n198) );
-  CLKINVX1 U172 ( .A(n198), .Y(n153) );
-  AND2X2 U173 ( .A(n134), .B(n158), .Y(n199) );
-  CLKINVX1 U174 ( .A(n199), .Y(n154) );
-  AND2X2 U175 ( .A(n135), .B(n159), .Y(n200) );
-  CLKINVX1 U176 ( .A(n200), .Y(n155) );
+  NOR2X1 U140 ( .A(n157), .B(n131), .Y(n71) );
+  NOR2X1 U141 ( .A(n156), .B(n131), .Y(n63) );
+  NOR2X1 U142 ( .A(n131), .B(n159), .Y(product[0]) );
+  OAI2BB2XL U143 ( .B0(n156), .B1(n96), .A0N(n197), .A1N(n148), .Y(n52) );
+  OAI2BB2XL U144 ( .B0(n123), .B1(n159), .A0N(n200), .A1N(n151), .Y(n55) );
+  NOR2X1 U145 ( .A(n158), .B(n131), .Y(n79) );
+  CLKINVX1 U146 ( .A(n200), .Y(n189) );
+  CLKINVX1 U147 ( .A(n199), .Y(n190) );
+  CLKINVX1 U148 ( .A(n198), .Y(n191) );
+  CLKINVX1 U149 ( .A(n158), .Y(n142) );
+  CLKINVX1 U150 ( .A(n142), .Y(n192) );
+  CLKINVX1 U151 ( .A(n157), .Y(n141) );
+  CLKINVX1 U152 ( .A(n141), .Y(n193) );
+  CLKINVX1 U153 ( .A(n197), .Y(n194) );
+  CLKINVX1 U154 ( .A(b[0]), .Y(n131) );
+  CLKINVX1 U155 ( .A(n131), .Y(n195) );
+  NAND2BXL U156 ( .AN(n195), .B(a[1]), .Y(n123) );
+  NAND2BXL U157 ( .AN(n195), .B(a[3]), .Y(n114) );
+  CLKINVX1 U158 ( .A(n156), .Y(n140) );
+  CLKINVX1 U159 ( .A(n140), .Y(n196) );
+  XNOR2XL U160 ( .A(a[7]), .B(b[0]), .Y(n95) );
+  XNOR2XL U161 ( .A(a[1]), .B(b[0]), .Y(n122) );
+  XNOR2XL U162 ( .A(a[3]), .B(b[0]), .Y(n113) );
+  NAND2BXL U163 ( .AN(n195), .B(a[7]), .Y(n96) );
+  NAND2BXL U164 ( .AN(n195), .B(a[5]), .Y(n105) );
+  XNOR2XL U165 ( .A(a[5]), .B(b[0]), .Y(n104) );
+  CLKBUFX3 U166 ( .A(n159), .Y(n143) );
+  CLKBUFX3 U167 ( .A(a[1]), .Y(n151) );
+  CLKBUFX3 U168 ( .A(a[3]), .Y(n150) );
+  CLKBUFX3 U169 ( .A(a[5]), .Y(n149) );
+  CLKBUFX3 U170 ( .A(a[7]), .Y(n148) );
+  AND2X2 U171 ( .A(n132), .B(n156), .Y(n197) );
+  CLKINVX1 U172 ( .A(n197), .Y(n152) );
+  AND2X2 U173 ( .A(n133), .B(n157), .Y(n198) );
+  CLKINVX1 U174 ( .A(n198), .Y(n153) );
+  AND2X2 U175 ( .A(n134), .B(n158), .Y(n199) );
+  CLKINVX1 U176 ( .A(n199), .Y(n154) );
+  AND2X2 U177 ( .A(n135), .B(n159), .Y(n200) );
+  CLKINVX1 U178 ( .A(n200), .Y(n155) );
 endmodule
 
 
@@ -2722,10 +2708,10 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_39 ( a, b, product );
          n87, n88, n89, n90, n91, n92, n93, n94, n95, n96, n97, n98, n99, n100,
          n101, n102, n103, n104, n105, n106, n107, n108, n109, n110, n111,
          n112, n113, n114, n115, n116, n117, n118, n119, n120, n121, n122,
-         n123, n131, n132, n133, n134, n135, n140, n141, n142, n143, n144,
-         n145, n146, n147, n148, n149, n150, n151, n152, n153, n154, n155,
-         n156, n157, n158, n159, n189, n190, n191, n192, n193, n194, n195,
-         n196, n197, n198, n199, n200;
+         n123, n131, n132, n133, n134, n135, n140, n141, n142, n143, n145,
+         n146, n148, n149, n150, n151, n152, n153, n154, n155, n156, n157,
+         n158, n159, n189, n190, n191, n192, n193, n194, n195, n196, n197,
+         n198, n199, n200;
 
   CLKINVX1 U1 ( .A(n1), .Y(product[15]) );
   ADDFXL U2 ( .A(n56), .B(n15), .CI(n2), .CO(n1), .S(product[14]) );
@@ -2764,7 +2750,6 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_39 ( a, b, product );
   ADDHXL U30 ( .A(n83), .B(n70), .CO(n46), .S(n47) );
   ADDFXL U31 ( .A(n84), .B(n71), .CI(n77), .CO(n48), .S(n49) );
   ADDHXL U32 ( .A(n85), .B(n54), .CO(n50), .S(n51) );
-  OAI22XL U33 ( .A0(n152), .A1(n144), .B0(n196), .B1(n96), .Y(n52) );
   AO21X1 U34 ( .A0(n152), .A1(n156), .B0(n88), .Y(n56) );
   OAI22XL U35 ( .A0(n152), .A1(n89), .B0(n196), .B1(n88), .Y(n15) );
   OAI22XL U36 ( .A0(n152), .A1(n90), .B0(n196), .B1(n89), .Y(n57) );
@@ -2812,7 +2797,6 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_39 ( a, b, product );
   XNOR2X1 U85 ( .A(n150), .B(b[3]), .Y(n110) );
   XNOR2X1 U86 ( .A(n150), .B(b[2]), .Y(n111) );
   XNOR2X1 U87 ( .A(n150), .B(b[1]), .Y(n112) );
-  OAI22XL U90 ( .A0(n155), .A1(n147), .B0(n123), .B1(n143), .Y(n55) );
   AO21X1 U91 ( .A0(n155), .A1(n159), .B0(n115), .Y(n80) );
   OAI22XL U92 ( .A0(n155), .A1(n116), .B0(n115), .B1(n143), .Y(n81) );
   OAI22XL U93 ( .A0(n155), .A1(n117), .B0(n116), .B1(n143), .Y(n82) );
@@ -2828,10 +2812,8 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_39 ( a, b, product );
   XNOR2X1 U104 ( .A(n151), .B(b[3]), .Y(n119) );
   XNOR2X1 U105 ( .A(n151), .B(b[2]), .Y(n120) );
   XNOR2X1 U106 ( .A(n151), .B(b[1]), .Y(n121) );
-  CLKINVX1 U112 ( .A(n148), .Y(n144) );
   CLKINVX1 U116 ( .A(n149), .Y(n145) );
   CLKINVX1 U120 ( .A(n150), .Y(n146) );
-  CLKINVX1 U124 ( .A(n151), .Y(n147) );
   XOR2X1 U127 ( .A(a[6]), .B(a[7]), .Y(n132) );
   XNOR2X1 U128 ( .A(a[6]), .B(a[5]), .Y(n156) );
   XOR2X1 U130 ( .A(a[4]), .B(a[5]), .Y(n133) );
@@ -2840,43 +2822,45 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_39 ( a, b, product );
   XNOR2X1 U134 ( .A(a[2]), .B(a[1]), .Y(n158) );
   XOR2X1 U136 ( .A(a[0]), .B(a[1]), .Y(n135) );
   CLKINVX1 U137 ( .A(a[0]), .Y(n159) );
-  CLKINVX1 U140 ( .A(n200), .Y(n189) );
-  CLKINVX1 U141 ( .A(n199), .Y(n190) );
-  CLKINVX1 U142 ( .A(n198), .Y(n191) );
-  CLKINVX1 U143 ( .A(n158), .Y(n142) );
-  CLKINVX1 U144 ( .A(n142), .Y(n192) );
-  CLKINVX1 U145 ( .A(n157), .Y(n141) );
-  CLKINVX1 U146 ( .A(n141), .Y(n193) );
-  CLKINVX1 U147 ( .A(n197), .Y(n194) );
-  CLKINVX1 U148 ( .A(b[0]), .Y(n131) );
-  CLKINVX1 U149 ( .A(n131), .Y(n195) );
-  NAND2BXL U150 ( .AN(n195), .B(a[1]), .Y(n123) );
-  NAND2BXL U151 ( .AN(n195), .B(a[3]), .Y(n114) );
-  CLKINVX1 U152 ( .A(n156), .Y(n140) );
-  CLKINVX1 U153 ( .A(n140), .Y(n196) );
-  NOR2BXL U154 ( .AN(n195), .B(n159), .Y(product[0]) );
-  XNOR2XL U155 ( .A(a[7]), .B(b[0]), .Y(n95) );
-  XNOR2XL U156 ( .A(a[1]), .B(b[0]), .Y(n122) );
-  NOR2BXL U157 ( .AN(n195), .B(n192), .Y(n79) );
-  XNOR2XL U158 ( .A(a[3]), .B(b[0]), .Y(n113) );
-  NOR2BXL U159 ( .AN(n195), .B(n193), .Y(n71) );
-  NAND2BXL U160 ( .AN(n195), .B(a[7]), .Y(n96) );
-  NAND2BXL U161 ( .AN(n195), .B(a[5]), .Y(n105) );
-  XNOR2XL U162 ( .A(a[5]), .B(b[0]), .Y(n104) );
-  NOR2BXL U163 ( .AN(n195), .B(n196), .Y(n63) );
-  CLKBUFX3 U164 ( .A(n159), .Y(n143) );
-  CLKBUFX3 U165 ( .A(a[1]), .Y(n151) );
-  CLKBUFX3 U166 ( .A(a[3]), .Y(n150) );
-  CLKBUFX3 U167 ( .A(a[5]), .Y(n149) );
-  CLKBUFX3 U168 ( .A(a[7]), .Y(n148) );
-  AND2X2 U169 ( .A(n132), .B(n156), .Y(n197) );
-  CLKINVX1 U170 ( .A(n197), .Y(n152) );
-  AND2X2 U171 ( .A(n133), .B(n157), .Y(n198) );
-  CLKINVX1 U172 ( .A(n198), .Y(n153) );
-  AND2X2 U173 ( .A(n134), .B(n158), .Y(n199) );
-  CLKINVX1 U174 ( .A(n199), .Y(n154) );
-  AND2X2 U175 ( .A(n135), .B(n159), .Y(n200) );
-  CLKINVX1 U176 ( .A(n200), .Y(n155) );
+  NOR2X1 U140 ( .A(n157), .B(n131), .Y(n71) );
+  NOR2X1 U141 ( .A(n156), .B(n131), .Y(n63) );
+  OAI2BB2XL U142 ( .B0(n156), .B1(n96), .A0N(n197), .A1N(n148), .Y(n52) );
+  NOR2X1 U143 ( .A(n131), .B(n159), .Y(product[0]) );
+  OAI2BB2XL U144 ( .B0(n123), .B1(n159), .A0N(n200), .A1N(n151), .Y(n55) );
+  NOR2X1 U145 ( .A(n158), .B(n131), .Y(n79) );
+  CLKINVX1 U146 ( .A(n200), .Y(n189) );
+  CLKINVX1 U147 ( .A(n199), .Y(n190) );
+  CLKINVX1 U148 ( .A(n198), .Y(n191) );
+  CLKINVX1 U149 ( .A(n158), .Y(n142) );
+  CLKINVX1 U150 ( .A(n142), .Y(n192) );
+  CLKINVX1 U151 ( .A(n157), .Y(n141) );
+  CLKINVX1 U152 ( .A(n141), .Y(n193) );
+  CLKINVX1 U153 ( .A(n197), .Y(n194) );
+  CLKINVX1 U154 ( .A(b[0]), .Y(n131) );
+  CLKINVX1 U155 ( .A(n131), .Y(n195) );
+  NAND2BXL U156 ( .AN(n195), .B(a[1]), .Y(n123) );
+  NAND2BXL U157 ( .AN(n195), .B(a[3]), .Y(n114) );
+  CLKINVX1 U158 ( .A(n156), .Y(n140) );
+  CLKINVX1 U159 ( .A(n140), .Y(n196) );
+  XNOR2XL U160 ( .A(a[7]), .B(b[0]), .Y(n95) );
+  XNOR2XL U161 ( .A(a[1]), .B(b[0]), .Y(n122) );
+  XNOR2XL U162 ( .A(a[3]), .B(b[0]), .Y(n113) );
+  NAND2BXL U163 ( .AN(n195), .B(a[7]), .Y(n96) );
+  NAND2BXL U164 ( .AN(n195), .B(a[5]), .Y(n105) );
+  XNOR2XL U165 ( .A(a[5]), .B(b[0]), .Y(n104) );
+  CLKBUFX3 U166 ( .A(n159), .Y(n143) );
+  CLKBUFX3 U167 ( .A(a[1]), .Y(n151) );
+  CLKBUFX3 U168 ( .A(a[3]), .Y(n150) );
+  CLKBUFX3 U169 ( .A(a[5]), .Y(n149) );
+  CLKBUFX3 U170 ( .A(a[7]), .Y(n148) );
+  AND2X2 U171 ( .A(n132), .B(n156), .Y(n197) );
+  CLKINVX1 U172 ( .A(n197), .Y(n152) );
+  AND2X2 U173 ( .A(n133), .B(n157), .Y(n198) );
+  CLKINVX1 U174 ( .A(n198), .Y(n153) );
+  AND2X2 U175 ( .A(n134), .B(n158), .Y(n199) );
+  CLKINVX1 U176 ( .A(n199), .Y(n154) );
+  AND2X2 U177 ( .A(n135), .B(n159), .Y(n200) );
+  CLKINVX1 U178 ( .A(n200), .Y(n155) );
 endmodule
 
 
@@ -2893,10 +2877,10 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_40 ( a, b, product );
          n87, n88, n89, n90, n91, n92, n93, n94, n95, n96, n97, n98, n99, n100,
          n101, n102, n103, n104, n105, n106, n107, n108, n109, n110, n111,
          n112, n113, n114, n115, n116, n117, n118, n119, n120, n121, n122,
-         n123, n131, n132, n133, n134, n135, n140, n141, n142, n143, n144,
-         n145, n146, n147, n148, n149, n150, n151, n152, n153, n154, n155,
-         n156, n157, n158, n159, n189, n190, n191, n192, n193, n194, n195,
-         n196, n197, n198, n199, n200;
+         n123, n131, n132, n133, n134, n135, n140, n141, n142, n143, n145,
+         n146, n148, n149, n150, n151, n152, n153, n154, n155, n156, n157,
+         n158, n159, n189, n190, n191, n192, n193, n194, n195, n196, n197,
+         n198, n199, n200;
 
   CLKINVX1 U1 ( .A(n1), .Y(product[15]) );
   ADDFXL U2 ( .A(n56), .B(n15), .CI(n2), .CO(n1), .S(product[14]) );
@@ -2935,7 +2919,6 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_40 ( a, b, product );
   ADDHXL U30 ( .A(n83), .B(n70), .CO(n46), .S(n47) );
   ADDFXL U31 ( .A(n84), .B(n71), .CI(n77), .CO(n48), .S(n49) );
   ADDHXL U32 ( .A(n85), .B(n54), .CO(n50), .S(n51) );
-  OAI22XL U33 ( .A0(n152), .A1(n144), .B0(n193), .B1(n96), .Y(n52) );
   AO21X1 U34 ( .A0(n152), .A1(n156), .B0(n88), .Y(n56) );
   OAI22XL U35 ( .A0(n152), .A1(n89), .B0(n193), .B1(n88), .Y(n15) );
   OAI22XL U36 ( .A0(n152), .A1(n90), .B0(n193), .B1(n89), .Y(n57) );
@@ -2983,7 +2966,6 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_40 ( a, b, product );
   XNOR2X1 U85 ( .A(n150), .B(b[3]), .Y(n110) );
   XNOR2X1 U86 ( .A(n150), .B(b[2]), .Y(n111) );
   XNOR2X1 U87 ( .A(n150), .B(b[1]), .Y(n112) );
-  OAI22XL U90 ( .A0(n155), .A1(n147), .B0(n123), .B1(n143), .Y(n55) );
   AO21X1 U91 ( .A0(n155), .A1(n159), .B0(n115), .Y(n80) );
   OAI22XL U92 ( .A0(n155), .A1(n116), .B0(n115), .B1(n143), .Y(n81) );
   OAI22XL U93 ( .A0(n155), .A1(n117), .B0(n116), .B1(n143), .Y(n82) );
@@ -2999,10 +2981,8 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_40 ( a, b, product );
   XNOR2X1 U104 ( .A(n151), .B(b[3]), .Y(n119) );
   XNOR2X1 U105 ( .A(n151), .B(b[2]), .Y(n120) );
   XNOR2X1 U106 ( .A(n151), .B(b[1]), .Y(n121) );
-  CLKINVX1 U112 ( .A(n148), .Y(n144) );
   CLKINVX1 U116 ( .A(n149), .Y(n145) );
   CLKINVX1 U120 ( .A(n150), .Y(n146) );
-  CLKINVX1 U124 ( .A(n151), .Y(n147) );
   XOR2X1 U127 ( .A(a[6]), .B(a[7]), .Y(n132) );
   XNOR2X1 U128 ( .A(a[6]), .B(a[5]), .Y(n156) );
   XOR2X1 U130 ( .A(a[4]), .B(a[5]), .Y(n133) );
@@ -3011,43 +2991,45 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_40 ( a, b, product );
   XNOR2X1 U134 ( .A(a[2]), .B(a[1]), .Y(n158) );
   XOR2X1 U136 ( .A(a[0]), .B(a[1]), .Y(n135) );
   CLKINVX1 U137 ( .A(a[0]), .Y(n159) );
-  CLKINVX1 U140 ( .A(n198), .Y(n189) );
-  CLKINVX1 U141 ( .A(n200), .Y(n190) );
-  CLKINVX1 U142 ( .A(n199), .Y(n191) );
-  CLKINVX1 U143 ( .A(n158), .Y(n142) );
-  CLKINVX1 U144 ( .A(n142), .Y(n192) );
-  CLKINVX1 U145 ( .A(n156), .Y(n140) );
-  CLKINVX1 U146 ( .A(n140), .Y(n193) );
-  CLKINVX1 U147 ( .A(n197), .Y(n194) );
-  CLKINVX1 U148 ( .A(b[0]), .Y(n131) );
-  CLKINVX1 U149 ( .A(n131), .Y(n195) );
-  NAND2BXL U150 ( .AN(n195), .B(a[1]), .Y(n123) );
-  NAND2BXL U151 ( .AN(n195), .B(a[3]), .Y(n114) );
-  CLKINVX1 U152 ( .A(n157), .Y(n141) );
-  CLKINVX1 U153 ( .A(n141), .Y(n196) );
-  NOR2BXL U154 ( .AN(n195), .B(n159), .Y(product[0]) );
-  XNOR2XL U155 ( .A(a[7]), .B(b[0]), .Y(n95) );
-  XNOR2XL U156 ( .A(a[1]), .B(b[0]), .Y(n122) );
-  NOR2BXL U157 ( .AN(n195), .B(n192), .Y(n79) );
-  XNOR2XL U158 ( .A(a[3]), .B(b[0]), .Y(n113) );
-  NOR2BXL U159 ( .AN(n195), .B(n196), .Y(n71) );
-  NAND2BXL U160 ( .AN(n195), .B(a[7]), .Y(n96) );
-  NAND2BXL U161 ( .AN(n195), .B(a[5]), .Y(n105) );
-  XNOR2XL U162 ( .A(a[5]), .B(b[0]), .Y(n104) );
-  NOR2BXL U163 ( .AN(n195), .B(n193), .Y(n63) );
-  CLKBUFX3 U164 ( .A(n159), .Y(n143) );
-  CLKBUFX3 U165 ( .A(a[1]), .Y(n151) );
-  CLKBUFX3 U166 ( .A(a[3]), .Y(n150) );
-  CLKBUFX3 U167 ( .A(a[5]), .Y(n149) );
-  CLKBUFX3 U168 ( .A(a[7]), .Y(n148) );
-  AND2X2 U169 ( .A(n132), .B(n156), .Y(n197) );
-  CLKINVX1 U170 ( .A(n197), .Y(n152) );
-  AND2X2 U171 ( .A(n133), .B(n157), .Y(n198) );
-  CLKINVX1 U172 ( .A(n198), .Y(n153) );
-  AND2X2 U173 ( .A(n134), .B(n158), .Y(n199) );
-  CLKINVX1 U174 ( .A(n199), .Y(n154) );
-  AND2X2 U175 ( .A(n135), .B(n159), .Y(n200) );
-  CLKINVX1 U176 ( .A(n200), .Y(n155) );
+  NOR2X1 U140 ( .A(n157), .B(n131), .Y(n71) );
+  NOR2X1 U141 ( .A(n156), .B(n131), .Y(n63) );
+  NOR2X1 U142 ( .A(n131), .B(n159), .Y(product[0]) );
+  OAI2BB2XL U143 ( .B0(n156), .B1(n96), .A0N(n197), .A1N(n148), .Y(n52) );
+  OAI2BB2XL U144 ( .B0(n123), .B1(n159), .A0N(n200), .A1N(n151), .Y(n55) );
+  NOR2X1 U145 ( .A(n158), .B(n131), .Y(n79) );
+  CLKINVX1 U146 ( .A(n198), .Y(n189) );
+  CLKINVX1 U147 ( .A(n200), .Y(n190) );
+  CLKINVX1 U148 ( .A(n199), .Y(n191) );
+  CLKINVX1 U149 ( .A(n158), .Y(n142) );
+  CLKINVX1 U150 ( .A(n142), .Y(n192) );
+  CLKINVX1 U151 ( .A(n156), .Y(n140) );
+  CLKINVX1 U152 ( .A(n140), .Y(n193) );
+  CLKINVX1 U153 ( .A(n197), .Y(n194) );
+  CLKINVX1 U154 ( .A(b[0]), .Y(n131) );
+  CLKINVX1 U155 ( .A(n131), .Y(n195) );
+  NAND2BXL U156 ( .AN(n195), .B(a[1]), .Y(n123) );
+  NAND2BXL U157 ( .AN(n195), .B(a[3]), .Y(n114) );
+  CLKINVX1 U158 ( .A(n157), .Y(n141) );
+  CLKINVX1 U159 ( .A(n141), .Y(n196) );
+  XNOR2XL U160 ( .A(a[7]), .B(b[0]), .Y(n95) );
+  XNOR2XL U161 ( .A(a[1]), .B(b[0]), .Y(n122) );
+  XNOR2XL U162 ( .A(a[3]), .B(b[0]), .Y(n113) );
+  NAND2BXL U163 ( .AN(n195), .B(a[7]), .Y(n96) );
+  NAND2BXL U164 ( .AN(n195), .B(a[5]), .Y(n105) );
+  XNOR2XL U165 ( .A(a[5]), .B(b[0]), .Y(n104) );
+  CLKBUFX3 U166 ( .A(n159), .Y(n143) );
+  CLKBUFX3 U167 ( .A(a[1]), .Y(n151) );
+  CLKBUFX3 U168 ( .A(a[3]), .Y(n150) );
+  CLKBUFX3 U169 ( .A(a[5]), .Y(n149) );
+  CLKBUFX3 U170 ( .A(a[7]), .Y(n148) );
+  AND2X2 U171 ( .A(n132), .B(n156), .Y(n197) );
+  CLKINVX1 U172 ( .A(n197), .Y(n152) );
+  AND2X2 U173 ( .A(n133), .B(n157), .Y(n198) );
+  CLKINVX1 U174 ( .A(n198), .Y(n153) );
+  AND2X2 U175 ( .A(n134), .B(n158), .Y(n199) );
+  CLKINVX1 U176 ( .A(n199), .Y(n154) );
+  AND2X2 U177 ( .A(n135), .B(n159), .Y(n200) );
+  CLKINVX1 U178 ( .A(n200), .Y(n155) );
 endmodule
 
 
@@ -3064,10 +3046,10 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_41 ( a, b, product );
          n87, n88, n89, n90, n91, n92, n93, n94, n95, n96, n97, n98, n99, n100,
          n101, n102, n103, n104, n105, n106, n107, n108, n109, n110, n111,
          n112, n113, n114, n115, n116, n117, n118, n119, n120, n121, n122,
-         n123, n131, n132, n133, n134, n135, n140, n141, n142, n143, n144,
-         n145, n146, n147, n148, n149, n150, n151, n152, n153, n154, n155,
-         n156, n157, n158, n159, n189, n190, n191, n192, n193, n194, n195,
-         n196, n197, n198, n199, n200;
+         n123, n131, n132, n133, n134, n135, n140, n141, n142, n143, n145,
+         n146, n148, n149, n150, n151, n152, n153, n154, n155, n156, n157,
+         n158, n159, n189, n190, n191, n192, n193, n194, n195, n196, n197,
+         n198, n199, n200;
 
   CLKINVX1 U1 ( .A(n1), .Y(product[15]) );
   ADDFXL U2 ( .A(n56), .B(n15), .CI(n2), .CO(n1), .S(product[14]) );
@@ -3106,7 +3088,6 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_41 ( a, b, product );
   ADDHXL U30 ( .A(n83), .B(n70), .CO(n46), .S(n47) );
   ADDFXL U31 ( .A(n84), .B(n71), .CI(n77), .CO(n48), .S(n49) );
   ADDHXL U32 ( .A(n85), .B(n54), .CO(n50), .S(n51) );
-  OAI22XL U33 ( .A0(n152), .A1(n144), .B0(n193), .B1(n96), .Y(n52) );
   AO21X1 U34 ( .A0(n152), .A1(n156), .B0(n88), .Y(n56) );
   OAI22XL U35 ( .A0(n152), .A1(n89), .B0(n193), .B1(n88), .Y(n15) );
   OAI22XL U36 ( .A0(n152), .A1(n90), .B0(n193), .B1(n89), .Y(n57) );
@@ -3154,7 +3135,6 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_41 ( a, b, product );
   XNOR2X1 U85 ( .A(n150), .B(b[3]), .Y(n110) );
   XNOR2X1 U86 ( .A(n150), .B(b[2]), .Y(n111) );
   XNOR2X1 U87 ( .A(n150), .B(b[1]), .Y(n112) );
-  OAI22XL U90 ( .A0(n155), .A1(n147), .B0(n123), .B1(n143), .Y(n55) );
   AO21X1 U91 ( .A0(n155), .A1(n159), .B0(n115), .Y(n80) );
   OAI22XL U92 ( .A0(n155), .A1(n116), .B0(n115), .B1(n143), .Y(n81) );
   OAI22XL U93 ( .A0(n155), .A1(n117), .B0(n116), .B1(n143), .Y(n82) );
@@ -3170,10 +3150,8 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_41 ( a, b, product );
   XNOR2X1 U104 ( .A(n151), .B(b[3]), .Y(n119) );
   XNOR2X1 U105 ( .A(n151), .B(b[2]), .Y(n120) );
   XNOR2X1 U106 ( .A(n151), .B(b[1]), .Y(n121) );
-  CLKINVX1 U112 ( .A(n148), .Y(n144) );
   CLKINVX1 U116 ( .A(n149), .Y(n145) );
   CLKINVX1 U120 ( .A(n150), .Y(n146) );
-  CLKINVX1 U124 ( .A(n151), .Y(n147) );
   XOR2X1 U127 ( .A(a[6]), .B(a[7]), .Y(n132) );
   XNOR2X1 U128 ( .A(a[6]), .B(a[5]), .Y(n156) );
   XOR2X1 U130 ( .A(a[4]), .B(a[5]), .Y(n133) );
@@ -3182,43 +3160,45 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_41 ( a, b, product );
   XNOR2X1 U134 ( .A(a[2]), .B(a[1]), .Y(n158) );
   XOR2X1 U136 ( .A(a[0]), .B(a[1]), .Y(n135) );
   CLKINVX1 U137 ( .A(a[0]), .Y(n159) );
-  CLKINVX1 U140 ( .A(n198), .Y(n189) );
-  CLKINVX1 U141 ( .A(n200), .Y(n190) );
-  CLKINVX1 U142 ( .A(n199), .Y(n191) );
-  CLKINVX1 U143 ( .A(n158), .Y(n142) );
-  CLKINVX1 U144 ( .A(n142), .Y(n192) );
-  CLKINVX1 U145 ( .A(n156), .Y(n140) );
-  CLKINVX1 U146 ( .A(n140), .Y(n193) );
-  CLKINVX1 U147 ( .A(n197), .Y(n194) );
-  CLKINVX1 U148 ( .A(b[0]), .Y(n131) );
-  CLKINVX1 U149 ( .A(n131), .Y(n195) );
-  NAND2BXL U150 ( .AN(n195), .B(a[1]), .Y(n123) );
-  NAND2BXL U151 ( .AN(n195), .B(a[3]), .Y(n114) );
-  CLKINVX1 U152 ( .A(n157), .Y(n141) );
-  CLKINVX1 U153 ( .A(n141), .Y(n196) );
-  NOR2BXL U154 ( .AN(n195), .B(n159), .Y(product[0]) );
-  XNOR2XL U155 ( .A(a[7]), .B(b[0]), .Y(n95) );
-  XNOR2XL U156 ( .A(a[1]), .B(b[0]), .Y(n122) );
-  NOR2BXL U157 ( .AN(n195), .B(n192), .Y(n79) );
-  XNOR2XL U158 ( .A(a[3]), .B(b[0]), .Y(n113) );
-  NOR2BXL U159 ( .AN(n195), .B(n196), .Y(n71) );
-  NAND2BXL U160 ( .AN(n195), .B(a[7]), .Y(n96) );
-  NAND2BXL U161 ( .AN(n195), .B(a[5]), .Y(n105) );
-  XNOR2XL U162 ( .A(a[5]), .B(b[0]), .Y(n104) );
-  NOR2BXL U163 ( .AN(n195), .B(n193), .Y(n63) );
-  CLKBUFX3 U164 ( .A(n159), .Y(n143) );
-  CLKBUFX3 U165 ( .A(a[1]), .Y(n151) );
-  CLKBUFX3 U166 ( .A(a[3]), .Y(n150) );
-  CLKBUFX3 U167 ( .A(a[5]), .Y(n149) );
-  CLKBUFX3 U168 ( .A(a[7]), .Y(n148) );
-  AND2X2 U169 ( .A(n132), .B(n156), .Y(n197) );
-  CLKINVX1 U170 ( .A(n197), .Y(n152) );
-  AND2X2 U171 ( .A(n133), .B(n157), .Y(n198) );
-  CLKINVX1 U172 ( .A(n198), .Y(n153) );
-  AND2X2 U173 ( .A(n134), .B(n158), .Y(n199) );
-  CLKINVX1 U174 ( .A(n199), .Y(n154) );
-  AND2X2 U175 ( .A(n135), .B(n159), .Y(n200) );
-  CLKINVX1 U176 ( .A(n200), .Y(n155) );
+  NOR2X1 U140 ( .A(n157), .B(n131), .Y(n71) );
+  NOR2X1 U141 ( .A(n156), .B(n131), .Y(n63) );
+  OAI2BB2XL U142 ( .B0(n156), .B1(n96), .A0N(n197), .A1N(n148), .Y(n52) );
+  NOR2X1 U143 ( .A(n131), .B(n159), .Y(product[0]) );
+  OAI2BB2XL U144 ( .B0(n123), .B1(n159), .A0N(n200), .A1N(n151), .Y(n55) );
+  NOR2X1 U145 ( .A(n158), .B(n131), .Y(n79) );
+  CLKINVX1 U146 ( .A(n198), .Y(n189) );
+  CLKINVX1 U147 ( .A(n200), .Y(n190) );
+  CLKINVX1 U148 ( .A(n199), .Y(n191) );
+  CLKINVX1 U149 ( .A(n158), .Y(n142) );
+  CLKINVX1 U150 ( .A(n142), .Y(n192) );
+  CLKINVX1 U151 ( .A(n156), .Y(n140) );
+  CLKINVX1 U152 ( .A(n140), .Y(n193) );
+  CLKINVX1 U153 ( .A(n197), .Y(n194) );
+  CLKINVX1 U154 ( .A(b[0]), .Y(n131) );
+  CLKINVX1 U155 ( .A(n131), .Y(n195) );
+  NAND2BXL U156 ( .AN(n195), .B(a[1]), .Y(n123) );
+  NAND2BXL U157 ( .AN(n195), .B(a[3]), .Y(n114) );
+  CLKINVX1 U158 ( .A(n157), .Y(n141) );
+  CLKINVX1 U159 ( .A(n141), .Y(n196) );
+  XNOR2XL U160 ( .A(a[7]), .B(b[0]), .Y(n95) );
+  XNOR2XL U161 ( .A(a[1]), .B(b[0]), .Y(n122) );
+  XNOR2XL U162 ( .A(a[3]), .B(b[0]), .Y(n113) );
+  NAND2BXL U163 ( .AN(n195), .B(a[7]), .Y(n96) );
+  NAND2BXL U164 ( .AN(n195), .B(a[5]), .Y(n105) );
+  XNOR2XL U165 ( .A(a[5]), .B(b[0]), .Y(n104) );
+  CLKBUFX3 U166 ( .A(n159), .Y(n143) );
+  CLKBUFX3 U167 ( .A(a[1]), .Y(n151) );
+  CLKBUFX3 U168 ( .A(a[3]), .Y(n150) );
+  CLKBUFX3 U169 ( .A(a[5]), .Y(n149) );
+  CLKBUFX3 U170 ( .A(a[7]), .Y(n148) );
+  AND2X2 U171 ( .A(n132), .B(n156), .Y(n197) );
+  CLKINVX1 U172 ( .A(n197), .Y(n152) );
+  AND2X2 U173 ( .A(n133), .B(n157), .Y(n198) );
+  CLKINVX1 U174 ( .A(n198), .Y(n153) );
+  AND2X2 U175 ( .A(n134), .B(n158), .Y(n199) );
+  CLKINVX1 U176 ( .A(n199), .Y(n154) );
+  AND2X2 U177 ( .A(n135), .B(n159), .Y(n200) );
+  CLKINVX1 U178 ( .A(n200), .Y(n155) );
 endmodule
 
 
@@ -3235,10 +3215,10 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_42 ( a, b, product );
          n87, n88, n89, n90, n91, n92, n93, n94, n95, n96, n97, n98, n99, n100,
          n101, n102, n103, n104, n105, n106, n107, n108, n109, n110, n111,
          n112, n113, n114, n115, n116, n117, n118, n119, n120, n121, n122,
-         n123, n131, n132, n133, n134, n135, n140, n141, n142, n143, n144,
-         n145, n146, n147, n148, n149, n150, n151, n152, n153, n154, n155,
-         n156, n157, n158, n159, n189, n190, n191, n192, n193, n194, n195,
-         n196, n197, n198, n199, n200;
+         n123, n131, n132, n133, n134, n135, n140, n141, n142, n143, n145,
+         n146, n148, n149, n150, n151, n152, n153, n154, n155, n156, n157,
+         n158, n159, n189, n190, n191, n192, n193, n194, n195, n196, n197,
+         n198, n199, n200;
 
   CLKINVX1 U1 ( .A(n1), .Y(product[15]) );
   ADDFXL U2 ( .A(n56), .B(n15), .CI(n2), .CO(n1), .S(product[14]) );
@@ -3277,7 +3257,6 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_42 ( a, b, product );
   ADDHXL U30 ( .A(n83), .B(n70), .CO(n46), .S(n47) );
   ADDFXL U31 ( .A(n84), .B(n71), .CI(n77), .CO(n48), .S(n49) );
   ADDHXL U32 ( .A(n85), .B(n54), .CO(n50), .S(n51) );
-  OAI22XL U33 ( .A0(n152), .A1(n144), .B0(n193), .B1(n96), .Y(n52) );
   AO21X1 U34 ( .A0(n152), .A1(n156), .B0(n88), .Y(n56) );
   OAI22XL U35 ( .A0(n152), .A1(n89), .B0(n193), .B1(n88), .Y(n15) );
   OAI22XL U36 ( .A0(n152), .A1(n90), .B0(n193), .B1(n89), .Y(n57) );
@@ -3325,7 +3304,6 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_42 ( a, b, product );
   XNOR2X1 U85 ( .A(n150), .B(b[3]), .Y(n110) );
   XNOR2X1 U86 ( .A(n150), .B(b[2]), .Y(n111) );
   XNOR2X1 U87 ( .A(n150), .B(b[1]), .Y(n112) );
-  OAI22XL U90 ( .A0(n155), .A1(n147), .B0(n123), .B1(n143), .Y(n55) );
   AO21X1 U91 ( .A0(n155), .A1(n159), .B0(n115), .Y(n80) );
   OAI22XL U92 ( .A0(n155), .A1(n116), .B0(n115), .B1(n143), .Y(n81) );
   OAI22XL U93 ( .A0(n155), .A1(n117), .B0(n116), .B1(n143), .Y(n82) );
@@ -3341,10 +3319,8 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_42 ( a, b, product );
   XNOR2X1 U104 ( .A(n151), .B(b[3]), .Y(n119) );
   XNOR2X1 U105 ( .A(n151), .B(b[2]), .Y(n120) );
   XNOR2X1 U106 ( .A(n151), .B(b[1]), .Y(n121) );
-  CLKINVX1 U112 ( .A(n148), .Y(n144) );
   CLKINVX1 U116 ( .A(n149), .Y(n145) );
   CLKINVX1 U120 ( .A(n150), .Y(n146) );
-  CLKINVX1 U124 ( .A(n151), .Y(n147) );
   XOR2X1 U127 ( .A(a[6]), .B(a[7]), .Y(n132) );
   XNOR2X1 U128 ( .A(a[6]), .B(a[5]), .Y(n156) );
   XOR2X1 U130 ( .A(a[4]), .B(a[5]), .Y(n133) );
@@ -3353,43 +3329,45 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_42 ( a, b, product );
   XNOR2X1 U134 ( .A(a[2]), .B(a[1]), .Y(n158) );
   XOR2X1 U136 ( .A(a[0]), .B(a[1]), .Y(n135) );
   CLKINVX1 U137 ( .A(a[0]), .Y(n159) );
-  CLKINVX1 U140 ( .A(n198), .Y(n189) );
-  CLKINVX1 U141 ( .A(n200), .Y(n190) );
-  CLKINVX1 U142 ( .A(n199), .Y(n191) );
-  CLKINVX1 U143 ( .A(n158), .Y(n142) );
-  CLKINVX1 U144 ( .A(n142), .Y(n192) );
-  CLKINVX1 U145 ( .A(n156), .Y(n140) );
-  CLKINVX1 U146 ( .A(n140), .Y(n193) );
-  CLKINVX1 U147 ( .A(n197), .Y(n194) );
-  CLKINVX1 U148 ( .A(b[0]), .Y(n131) );
-  CLKINVX1 U149 ( .A(n131), .Y(n195) );
-  NAND2BXL U150 ( .AN(n195), .B(a[1]), .Y(n123) );
-  NAND2BXL U151 ( .AN(n195), .B(a[3]), .Y(n114) );
-  CLKINVX1 U152 ( .A(n157), .Y(n141) );
-  CLKINVX1 U153 ( .A(n141), .Y(n196) );
-  NOR2BXL U154 ( .AN(n195), .B(n159), .Y(product[0]) );
-  XNOR2XL U155 ( .A(a[7]), .B(b[0]), .Y(n95) );
-  XNOR2XL U156 ( .A(a[1]), .B(b[0]), .Y(n122) );
-  NOR2BXL U157 ( .AN(n195), .B(n192), .Y(n79) );
-  XNOR2XL U158 ( .A(a[3]), .B(b[0]), .Y(n113) );
-  NOR2BXL U159 ( .AN(n195), .B(n196), .Y(n71) );
-  NAND2BXL U160 ( .AN(n195), .B(a[7]), .Y(n96) );
-  NAND2BXL U161 ( .AN(n195), .B(a[5]), .Y(n105) );
-  XNOR2XL U162 ( .A(a[5]), .B(b[0]), .Y(n104) );
-  NOR2BXL U163 ( .AN(n195), .B(n193), .Y(n63) );
-  CLKBUFX3 U164 ( .A(n159), .Y(n143) );
-  CLKBUFX3 U165 ( .A(a[1]), .Y(n151) );
-  CLKBUFX3 U166 ( .A(a[3]), .Y(n150) );
-  CLKBUFX3 U167 ( .A(a[5]), .Y(n149) );
-  CLKBUFX3 U168 ( .A(a[7]), .Y(n148) );
-  AND2X2 U169 ( .A(n132), .B(n156), .Y(n197) );
-  CLKINVX1 U170 ( .A(n197), .Y(n152) );
-  AND2X2 U171 ( .A(n133), .B(n157), .Y(n198) );
-  CLKINVX1 U172 ( .A(n198), .Y(n153) );
-  AND2X2 U173 ( .A(n134), .B(n158), .Y(n199) );
-  CLKINVX1 U174 ( .A(n199), .Y(n154) );
-  AND2X2 U175 ( .A(n135), .B(n159), .Y(n200) );
-  CLKINVX1 U176 ( .A(n200), .Y(n155) );
+  NOR2X1 U140 ( .A(n157), .B(n131), .Y(n71) );
+  NOR2X1 U141 ( .A(n156), .B(n131), .Y(n63) );
+  NOR2X1 U142 ( .A(n131), .B(n159), .Y(product[0]) );
+  OAI2BB2XL U143 ( .B0(n156), .B1(n96), .A0N(n197), .A1N(n148), .Y(n52) );
+  OAI2BB2XL U144 ( .B0(n123), .B1(n159), .A0N(n200), .A1N(n151), .Y(n55) );
+  NOR2X1 U145 ( .A(n158), .B(n131), .Y(n79) );
+  CLKINVX1 U146 ( .A(n198), .Y(n189) );
+  CLKINVX1 U147 ( .A(n200), .Y(n190) );
+  CLKINVX1 U148 ( .A(n199), .Y(n191) );
+  CLKINVX1 U149 ( .A(n158), .Y(n142) );
+  CLKINVX1 U150 ( .A(n142), .Y(n192) );
+  CLKINVX1 U151 ( .A(n156), .Y(n140) );
+  CLKINVX1 U152 ( .A(n140), .Y(n193) );
+  CLKINVX1 U153 ( .A(n197), .Y(n194) );
+  CLKINVX1 U154 ( .A(b[0]), .Y(n131) );
+  CLKINVX1 U155 ( .A(n131), .Y(n195) );
+  NAND2BXL U156 ( .AN(n195), .B(a[1]), .Y(n123) );
+  NAND2BXL U157 ( .AN(n195), .B(a[3]), .Y(n114) );
+  CLKINVX1 U158 ( .A(n157), .Y(n141) );
+  CLKINVX1 U159 ( .A(n141), .Y(n196) );
+  XNOR2XL U160 ( .A(a[7]), .B(b[0]), .Y(n95) );
+  XNOR2XL U161 ( .A(a[1]), .B(b[0]), .Y(n122) );
+  XNOR2XL U162 ( .A(a[3]), .B(b[0]), .Y(n113) );
+  NAND2BXL U163 ( .AN(n195), .B(a[7]), .Y(n96) );
+  NAND2BXL U164 ( .AN(n195), .B(a[5]), .Y(n105) );
+  XNOR2XL U165 ( .A(a[5]), .B(b[0]), .Y(n104) );
+  CLKBUFX3 U166 ( .A(n159), .Y(n143) );
+  CLKBUFX3 U167 ( .A(a[1]), .Y(n151) );
+  CLKBUFX3 U168 ( .A(a[3]), .Y(n150) );
+  CLKBUFX3 U169 ( .A(a[5]), .Y(n149) );
+  CLKBUFX3 U170 ( .A(a[7]), .Y(n148) );
+  AND2X2 U171 ( .A(n132), .B(n156), .Y(n197) );
+  CLKINVX1 U172 ( .A(n197), .Y(n152) );
+  AND2X2 U173 ( .A(n133), .B(n157), .Y(n198) );
+  CLKINVX1 U174 ( .A(n198), .Y(n153) );
+  AND2X2 U175 ( .A(n134), .B(n158), .Y(n199) );
+  CLKINVX1 U176 ( .A(n199), .Y(n154) );
+  AND2X2 U177 ( .A(n135), .B(n159), .Y(n200) );
+  CLKINVX1 U178 ( .A(n200), .Y(n155) );
 endmodule
 
 
@@ -3406,10 +3384,10 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_43 ( a, b, product );
          n87, n88, n89, n90, n91, n92, n93, n94, n95, n96, n97, n98, n99, n100,
          n101, n102, n103, n104, n105, n106, n107, n108, n109, n110, n111,
          n112, n113, n114, n115, n116, n117, n118, n119, n120, n121, n122,
-         n123, n131, n132, n133, n134, n135, n140, n141, n142, n143, n144,
-         n145, n146, n147, n148, n149, n150, n151, n152, n153, n154, n155,
-         n156, n157, n158, n159, n189, n190, n191, n192, n193, n194, n195,
-         n196, n197, n198, n199, n200;
+         n123, n131, n132, n133, n134, n135, n140, n141, n142, n143, n145,
+         n146, n148, n149, n150, n151, n152, n153, n154, n155, n156, n157,
+         n158, n159, n189, n190, n191, n192, n193, n194, n195, n196, n197,
+         n198, n199, n200;
 
   CLKINVX1 U1 ( .A(n1), .Y(product[15]) );
   ADDFXL U2 ( .A(n56), .B(n15), .CI(n2), .CO(n1), .S(product[14]) );
@@ -3448,7 +3426,6 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_43 ( a, b, product );
   ADDHXL U30 ( .A(n83), .B(n70), .CO(n46), .S(n47) );
   ADDFXL U31 ( .A(n84), .B(n71), .CI(n77), .CO(n48), .S(n49) );
   ADDHXL U32 ( .A(n85), .B(n54), .CO(n50), .S(n51) );
-  OAI22XL U33 ( .A0(n152), .A1(n144), .B0(n193), .B1(n96), .Y(n52) );
   AO21X1 U34 ( .A0(n152), .A1(n156), .B0(n88), .Y(n56) );
   OAI22XL U35 ( .A0(n152), .A1(n89), .B0(n193), .B1(n88), .Y(n15) );
   OAI22XL U36 ( .A0(n152), .A1(n90), .B0(n193), .B1(n89), .Y(n57) );
@@ -3496,7 +3473,6 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_43 ( a, b, product );
   XNOR2X1 U85 ( .A(n150), .B(b[3]), .Y(n110) );
   XNOR2X1 U86 ( .A(n150), .B(b[2]), .Y(n111) );
   XNOR2X1 U87 ( .A(n150), .B(b[1]), .Y(n112) );
-  OAI22XL U90 ( .A0(n155), .A1(n147), .B0(n123), .B1(n143), .Y(n55) );
   AO21X1 U91 ( .A0(n155), .A1(n159), .B0(n115), .Y(n80) );
   OAI22XL U92 ( .A0(n155), .A1(n116), .B0(n115), .B1(n143), .Y(n81) );
   OAI22XL U93 ( .A0(n155), .A1(n117), .B0(n116), .B1(n143), .Y(n82) );
@@ -3512,10 +3488,8 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_43 ( a, b, product );
   XNOR2X1 U104 ( .A(n151), .B(b[3]), .Y(n119) );
   XNOR2X1 U105 ( .A(n151), .B(b[2]), .Y(n120) );
   XNOR2X1 U106 ( .A(n151), .B(b[1]), .Y(n121) );
-  CLKINVX1 U112 ( .A(n148), .Y(n144) );
   CLKINVX1 U116 ( .A(n149), .Y(n145) );
   CLKINVX1 U120 ( .A(n150), .Y(n146) );
-  CLKINVX1 U124 ( .A(n151), .Y(n147) );
   XOR2X1 U127 ( .A(a[6]), .B(a[7]), .Y(n132) );
   XNOR2X1 U128 ( .A(a[6]), .B(a[5]), .Y(n156) );
   XOR2X1 U130 ( .A(a[4]), .B(a[5]), .Y(n133) );
@@ -3524,43 +3498,45 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_43 ( a, b, product );
   XNOR2X1 U134 ( .A(a[2]), .B(a[1]), .Y(n158) );
   XOR2X1 U136 ( .A(a[0]), .B(a[1]), .Y(n135) );
   CLKINVX1 U137 ( .A(a[0]), .Y(n159) );
-  CLKINVX1 U140 ( .A(n198), .Y(n189) );
-  CLKINVX1 U141 ( .A(n200), .Y(n190) );
-  CLKINVX1 U142 ( .A(n199), .Y(n191) );
-  CLKINVX1 U143 ( .A(n158), .Y(n142) );
-  CLKINVX1 U144 ( .A(n142), .Y(n192) );
-  CLKINVX1 U145 ( .A(n156), .Y(n140) );
-  CLKINVX1 U146 ( .A(n140), .Y(n193) );
-  CLKINVX1 U147 ( .A(n197), .Y(n194) );
-  CLKINVX1 U148 ( .A(b[0]), .Y(n131) );
-  CLKINVX1 U149 ( .A(n131), .Y(n195) );
-  NAND2BXL U150 ( .AN(n195), .B(a[1]), .Y(n123) );
-  NAND2BXL U151 ( .AN(n195), .B(a[3]), .Y(n114) );
-  CLKINVX1 U152 ( .A(n157), .Y(n141) );
-  CLKINVX1 U153 ( .A(n141), .Y(n196) );
-  NOR2BXL U154 ( .AN(n195), .B(n159), .Y(product[0]) );
-  XNOR2XL U155 ( .A(a[7]), .B(b[0]), .Y(n95) );
-  XNOR2XL U156 ( .A(a[1]), .B(b[0]), .Y(n122) );
-  NOR2BXL U157 ( .AN(n195), .B(n192), .Y(n79) );
-  XNOR2XL U158 ( .A(a[3]), .B(b[0]), .Y(n113) );
-  NOR2BXL U159 ( .AN(n195), .B(n196), .Y(n71) );
-  NAND2BXL U160 ( .AN(n195), .B(a[7]), .Y(n96) );
-  NAND2BXL U161 ( .AN(n195), .B(a[5]), .Y(n105) );
-  XNOR2XL U162 ( .A(a[5]), .B(b[0]), .Y(n104) );
-  NOR2BXL U163 ( .AN(n195), .B(n193), .Y(n63) );
-  CLKBUFX3 U164 ( .A(n159), .Y(n143) );
-  CLKBUFX3 U165 ( .A(a[1]), .Y(n151) );
-  CLKBUFX3 U166 ( .A(a[3]), .Y(n150) );
-  CLKBUFX3 U167 ( .A(a[5]), .Y(n149) );
-  CLKBUFX3 U168 ( .A(a[7]), .Y(n148) );
-  AND2X2 U169 ( .A(n132), .B(n156), .Y(n197) );
-  CLKINVX1 U170 ( .A(n197), .Y(n152) );
-  AND2X2 U171 ( .A(n133), .B(n157), .Y(n198) );
-  CLKINVX1 U172 ( .A(n198), .Y(n153) );
-  AND2X2 U173 ( .A(n134), .B(n158), .Y(n199) );
-  CLKINVX1 U174 ( .A(n199), .Y(n154) );
-  AND2X2 U175 ( .A(n135), .B(n159), .Y(n200) );
-  CLKINVX1 U176 ( .A(n200), .Y(n155) );
+  NOR2X1 U140 ( .A(n157), .B(n131), .Y(n71) );
+  NOR2X1 U141 ( .A(n156), .B(n131), .Y(n63) );
+  OAI2BB2XL U142 ( .B0(n156), .B1(n96), .A0N(n197), .A1N(n148), .Y(n52) );
+  NOR2X1 U143 ( .A(n131), .B(n159), .Y(product[0]) );
+  OAI2BB2XL U144 ( .B0(n123), .B1(n159), .A0N(n200), .A1N(n151), .Y(n55) );
+  NOR2X1 U145 ( .A(n158), .B(n131), .Y(n79) );
+  CLKINVX1 U146 ( .A(n198), .Y(n189) );
+  CLKINVX1 U147 ( .A(n200), .Y(n190) );
+  CLKINVX1 U148 ( .A(n199), .Y(n191) );
+  CLKINVX1 U149 ( .A(n158), .Y(n142) );
+  CLKINVX1 U150 ( .A(n142), .Y(n192) );
+  CLKINVX1 U151 ( .A(n156), .Y(n140) );
+  CLKINVX1 U152 ( .A(n140), .Y(n193) );
+  CLKINVX1 U153 ( .A(n197), .Y(n194) );
+  CLKINVX1 U154 ( .A(b[0]), .Y(n131) );
+  CLKINVX1 U155 ( .A(n131), .Y(n195) );
+  NAND2BXL U156 ( .AN(n195), .B(a[1]), .Y(n123) );
+  NAND2BXL U157 ( .AN(n195), .B(a[3]), .Y(n114) );
+  CLKINVX1 U158 ( .A(n157), .Y(n141) );
+  CLKINVX1 U159 ( .A(n141), .Y(n196) );
+  XNOR2XL U160 ( .A(a[7]), .B(b[0]), .Y(n95) );
+  XNOR2XL U161 ( .A(a[1]), .B(b[0]), .Y(n122) );
+  XNOR2XL U162 ( .A(a[3]), .B(b[0]), .Y(n113) );
+  NAND2BXL U163 ( .AN(n195), .B(a[7]), .Y(n96) );
+  NAND2BXL U164 ( .AN(n195), .B(a[5]), .Y(n105) );
+  XNOR2XL U165 ( .A(a[5]), .B(b[0]), .Y(n104) );
+  CLKBUFX3 U166 ( .A(n159), .Y(n143) );
+  CLKBUFX3 U167 ( .A(a[1]), .Y(n151) );
+  CLKBUFX3 U168 ( .A(a[3]), .Y(n150) );
+  CLKBUFX3 U169 ( .A(a[5]), .Y(n149) );
+  CLKBUFX3 U170 ( .A(a[7]), .Y(n148) );
+  AND2X2 U171 ( .A(n132), .B(n156), .Y(n197) );
+  CLKINVX1 U172 ( .A(n197), .Y(n152) );
+  AND2X2 U173 ( .A(n133), .B(n157), .Y(n198) );
+  CLKINVX1 U174 ( .A(n198), .Y(n153) );
+  AND2X2 U175 ( .A(n134), .B(n158), .Y(n199) );
+  CLKINVX1 U176 ( .A(n199), .Y(n154) );
+  AND2X2 U177 ( .A(n135), .B(n159), .Y(n200) );
+  CLKINVX1 U178 ( .A(n200), .Y(n155) );
 endmodule
 
 
@@ -3577,10 +3553,10 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_44 ( a, b, product );
          n87, n88, n89, n90, n91, n92, n93, n94, n95, n96, n97, n98, n99, n100,
          n101, n102, n103, n104, n105, n106, n107, n108, n109, n110, n111,
          n112, n113, n114, n115, n116, n117, n118, n119, n120, n121, n122,
-         n123, n131, n132, n133, n134, n135, n140, n141, n142, n143, n144,
-         n145, n146, n147, n148, n149, n150, n151, n152, n153, n154, n155,
-         n156, n157, n158, n159, n189, n190, n191, n192, n193, n194, n195,
-         n196, n197, n198, n199, n200;
+         n123, n131, n132, n133, n134, n135, n140, n141, n142, n143, n145,
+         n146, n148, n149, n150, n151, n152, n153, n154, n155, n156, n157,
+         n158, n159, n189, n190, n191, n192, n193, n194, n195, n196, n197,
+         n198, n199, n200;
 
   CLKINVX1 U1 ( .A(n1), .Y(product[15]) );
   ADDFXL U2 ( .A(n56), .B(n15), .CI(n2), .CO(n1), .S(product[14]) );
@@ -3619,7 +3595,6 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_44 ( a, b, product );
   ADDHXL U30 ( .A(n83), .B(n70), .CO(n46), .S(n47) );
   ADDFXL U31 ( .A(n84), .B(n71), .CI(n77), .CO(n48), .S(n49) );
   ADDHXL U32 ( .A(n85), .B(n54), .CO(n50), .S(n51) );
-  OAI22XL U33 ( .A0(n152), .A1(n144), .B0(n193), .B1(n96), .Y(n52) );
   AO21X1 U34 ( .A0(n152), .A1(n156), .B0(n88), .Y(n56) );
   OAI22XL U35 ( .A0(n152), .A1(n89), .B0(n193), .B1(n88), .Y(n15) );
   OAI22XL U36 ( .A0(n152), .A1(n90), .B0(n193), .B1(n89), .Y(n57) );
@@ -3667,7 +3642,6 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_44 ( a, b, product );
   XNOR2X1 U85 ( .A(n150), .B(b[3]), .Y(n110) );
   XNOR2X1 U86 ( .A(n150), .B(b[2]), .Y(n111) );
   XNOR2X1 U87 ( .A(n150), .B(b[1]), .Y(n112) );
-  OAI22XL U90 ( .A0(n155), .A1(n147), .B0(n123), .B1(n143), .Y(n55) );
   AO21X1 U91 ( .A0(n155), .A1(n159), .B0(n115), .Y(n80) );
   OAI22XL U92 ( .A0(n155), .A1(n116), .B0(n115), .B1(n143), .Y(n81) );
   OAI22XL U93 ( .A0(n155), .A1(n117), .B0(n116), .B1(n143), .Y(n82) );
@@ -3683,10 +3657,8 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_44 ( a, b, product );
   XNOR2X1 U104 ( .A(n151), .B(b[3]), .Y(n119) );
   XNOR2X1 U105 ( .A(n151), .B(b[2]), .Y(n120) );
   XNOR2X1 U106 ( .A(n151), .B(b[1]), .Y(n121) );
-  CLKINVX1 U112 ( .A(n148), .Y(n144) );
   CLKINVX1 U116 ( .A(n149), .Y(n145) );
   CLKINVX1 U120 ( .A(n150), .Y(n146) );
-  CLKINVX1 U124 ( .A(n151), .Y(n147) );
   XOR2X1 U127 ( .A(a[6]), .B(a[7]), .Y(n132) );
   XNOR2X1 U128 ( .A(a[6]), .B(a[5]), .Y(n156) );
   XOR2X1 U130 ( .A(a[4]), .B(a[5]), .Y(n133) );
@@ -3695,43 +3667,45 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_44 ( a, b, product );
   XNOR2X1 U134 ( .A(a[2]), .B(a[1]), .Y(n158) );
   XOR2X1 U136 ( .A(a[0]), .B(a[1]), .Y(n135) );
   CLKINVX1 U137 ( .A(a[0]), .Y(n159) );
-  CLKINVX1 U140 ( .A(n198), .Y(n189) );
-  CLKINVX1 U141 ( .A(n200), .Y(n190) );
-  CLKINVX1 U142 ( .A(n199), .Y(n191) );
-  CLKINVX1 U143 ( .A(n158), .Y(n142) );
-  CLKINVX1 U144 ( .A(n142), .Y(n192) );
-  CLKINVX1 U145 ( .A(n156), .Y(n140) );
-  CLKINVX1 U146 ( .A(n140), .Y(n193) );
-  CLKINVX1 U147 ( .A(n197), .Y(n194) );
-  CLKINVX1 U148 ( .A(b[0]), .Y(n131) );
-  CLKINVX1 U149 ( .A(n131), .Y(n195) );
-  NAND2BXL U150 ( .AN(n195), .B(a[1]), .Y(n123) );
-  NAND2BXL U151 ( .AN(n195), .B(a[3]), .Y(n114) );
-  CLKINVX1 U152 ( .A(n157), .Y(n141) );
-  CLKINVX1 U153 ( .A(n141), .Y(n196) );
-  NOR2BXL U154 ( .AN(n195), .B(n159), .Y(product[0]) );
-  XNOR2XL U155 ( .A(a[7]), .B(b[0]), .Y(n95) );
-  XNOR2XL U156 ( .A(a[1]), .B(b[0]), .Y(n122) );
-  NOR2BXL U157 ( .AN(n195), .B(n192), .Y(n79) );
-  XNOR2XL U158 ( .A(a[3]), .B(b[0]), .Y(n113) );
-  NOR2BXL U159 ( .AN(n195), .B(n196), .Y(n71) );
-  NAND2BXL U160 ( .AN(n195), .B(a[7]), .Y(n96) );
-  NAND2BXL U161 ( .AN(n195), .B(a[5]), .Y(n105) );
-  XNOR2XL U162 ( .A(a[5]), .B(b[0]), .Y(n104) );
-  NOR2BXL U163 ( .AN(n195), .B(n193), .Y(n63) );
-  CLKBUFX3 U164 ( .A(n159), .Y(n143) );
-  CLKBUFX3 U165 ( .A(a[1]), .Y(n151) );
-  CLKBUFX3 U166 ( .A(a[3]), .Y(n150) );
-  CLKBUFX3 U167 ( .A(a[5]), .Y(n149) );
-  CLKBUFX3 U168 ( .A(a[7]), .Y(n148) );
-  AND2X2 U169 ( .A(n132), .B(n156), .Y(n197) );
-  CLKINVX1 U170 ( .A(n197), .Y(n152) );
-  AND2X2 U171 ( .A(n133), .B(n157), .Y(n198) );
-  CLKINVX1 U172 ( .A(n198), .Y(n153) );
-  AND2X2 U173 ( .A(n134), .B(n158), .Y(n199) );
-  CLKINVX1 U174 ( .A(n199), .Y(n154) );
-  AND2X2 U175 ( .A(n135), .B(n159), .Y(n200) );
-  CLKINVX1 U176 ( .A(n200), .Y(n155) );
+  NOR2X1 U140 ( .A(n157), .B(n131), .Y(n71) );
+  NOR2X1 U141 ( .A(n156), .B(n131), .Y(n63) );
+  NOR2X1 U142 ( .A(n131), .B(n159), .Y(product[0]) );
+  OAI2BB2XL U143 ( .B0(n156), .B1(n96), .A0N(n197), .A1N(n148), .Y(n52) );
+  OAI2BB2XL U144 ( .B0(n123), .B1(n159), .A0N(n200), .A1N(n151), .Y(n55) );
+  NOR2X1 U145 ( .A(n158), .B(n131), .Y(n79) );
+  CLKINVX1 U146 ( .A(n198), .Y(n189) );
+  CLKINVX1 U147 ( .A(n200), .Y(n190) );
+  CLKINVX1 U148 ( .A(n199), .Y(n191) );
+  CLKINVX1 U149 ( .A(n158), .Y(n142) );
+  CLKINVX1 U150 ( .A(n142), .Y(n192) );
+  CLKINVX1 U151 ( .A(n156), .Y(n140) );
+  CLKINVX1 U152 ( .A(n140), .Y(n193) );
+  CLKINVX1 U153 ( .A(n197), .Y(n194) );
+  CLKINVX1 U154 ( .A(b[0]), .Y(n131) );
+  CLKINVX1 U155 ( .A(n131), .Y(n195) );
+  NAND2BXL U156 ( .AN(n195), .B(a[1]), .Y(n123) );
+  NAND2BXL U157 ( .AN(n195), .B(a[3]), .Y(n114) );
+  CLKINVX1 U158 ( .A(n157), .Y(n141) );
+  CLKINVX1 U159 ( .A(n141), .Y(n196) );
+  XNOR2XL U160 ( .A(a[7]), .B(b[0]), .Y(n95) );
+  XNOR2XL U161 ( .A(a[1]), .B(b[0]), .Y(n122) );
+  XNOR2XL U162 ( .A(a[3]), .B(b[0]), .Y(n113) );
+  NAND2BXL U163 ( .AN(n195), .B(a[7]), .Y(n96) );
+  NAND2BXL U164 ( .AN(n195), .B(a[5]), .Y(n105) );
+  XNOR2XL U165 ( .A(a[5]), .B(b[0]), .Y(n104) );
+  CLKBUFX3 U166 ( .A(n159), .Y(n143) );
+  CLKBUFX3 U167 ( .A(a[1]), .Y(n151) );
+  CLKBUFX3 U168 ( .A(a[3]), .Y(n150) );
+  CLKBUFX3 U169 ( .A(a[5]), .Y(n149) );
+  CLKBUFX3 U170 ( .A(a[7]), .Y(n148) );
+  AND2X2 U171 ( .A(n132), .B(n156), .Y(n197) );
+  CLKINVX1 U172 ( .A(n197), .Y(n152) );
+  AND2X2 U173 ( .A(n133), .B(n157), .Y(n198) );
+  CLKINVX1 U174 ( .A(n198), .Y(n153) );
+  AND2X2 U175 ( .A(n134), .B(n158), .Y(n199) );
+  CLKINVX1 U176 ( .A(n199), .Y(n154) );
+  AND2X2 U177 ( .A(n135), .B(n159), .Y(n200) );
+  CLKINVX1 U178 ( .A(n200), .Y(n155) );
 endmodule
 
 
@@ -3748,10 +3722,10 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_45 ( a, b, product );
          n87, n88, n89, n90, n91, n92, n93, n94, n95, n96, n97, n98, n99, n100,
          n101, n102, n103, n104, n105, n106, n107, n108, n109, n110, n111,
          n112, n113, n114, n115, n116, n117, n118, n119, n120, n121, n122,
-         n123, n131, n132, n133, n134, n135, n140, n141, n142, n143, n144,
-         n145, n146, n147, n148, n149, n150, n151, n152, n153, n154, n155,
-         n156, n157, n158, n159, n189, n190, n191, n192, n193, n194, n195,
-         n196, n197, n198, n199, n200;
+         n123, n131, n132, n133, n134, n135, n140, n141, n142, n143, n145,
+         n146, n148, n149, n150, n151, n152, n153, n154, n155, n156, n157,
+         n158, n159, n189, n190, n191, n192, n193, n194, n195, n196, n197,
+         n198, n199, n200;
 
   CLKINVX1 U1 ( .A(n1), .Y(product[15]) );
   ADDFXL U2 ( .A(n56), .B(n15), .CI(n2), .CO(n1), .S(product[14]) );
@@ -3790,7 +3764,6 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_45 ( a, b, product );
   ADDHXL U30 ( .A(n83), .B(n70), .CO(n46), .S(n47) );
   ADDFXL U31 ( .A(n84), .B(n71), .CI(n77), .CO(n48), .S(n49) );
   ADDHXL U32 ( .A(n85), .B(n54), .CO(n50), .S(n51) );
-  OAI22XL U33 ( .A0(n152), .A1(n144), .B0(n193), .B1(n96), .Y(n52) );
   AO21X1 U34 ( .A0(n152), .A1(n156), .B0(n88), .Y(n56) );
   OAI22XL U35 ( .A0(n152), .A1(n89), .B0(n193), .B1(n88), .Y(n15) );
   OAI22XL U36 ( .A0(n152), .A1(n90), .B0(n193), .B1(n89), .Y(n57) );
@@ -3838,7 +3811,6 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_45 ( a, b, product );
   XNOR2X1 U85 ( .A(n150), .B(b[3]), .Y(n110) );
   XNOR2X1 U86 ( .A(n150), .B(b[2]), .Y(n111) );
   XNOR2X1 U87 ( .A(n150), .B(b[1]), .Y(n112) );
-  OAI22XL U90 ( .A0(n155), .A1(n147), .B0(n123), .B1(n143), .Y(n55) );
   AO21X1 U91 ( .A0(n155), .A1(n159), .B0(n115), .Y(n80) );
   OAI22XL U92 ( .A0(n155), .A1(n116), .B0(n115), .B1(n143), .Y(n81) );
   OAI22XL U93 ( .A0(n155), .A1(n117), .B0(n116), .B1(n143), .Y(n82) );
@@ -3854,10 +3826,8 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_45 ( a, b, product );
   XNOR2X1 U104 ( .A(n151), .B(b[3]), .Y(n119) );
   XNOR2X1 U105 ( .A(n151), .B(b[2]), .Y(n120) );
   XNOR2X1 U106 ( .A(n151), .B(b[1]), .Y(n121) );
-  CLKINVX1 U112 ( .A(n148), .Y(n144) );
   CLKINVX1 U116 ( .A(n149), .Y(n145) );
   CLKINVX1 U120 ( .A(n150), .Y(n146) );
-  CLKINVX1 U124 ( .A(n151), .Y(n147) );
   XOR2X1 U127 ( .A(a[6]), .B(a[7]), .Y(n132) );
   XNOR2X1 U128 ( .A(a[6]), .B(a[5]), .Y(n156) );
   XOR2X1 U130 ( .A(a[4]), .B(a[5]), .Y(n133) );
@@ -3866,43 +3836,45 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_45 ( a, b, product );
   XNOR2X1 U134 ( .A(a[2]), .B(a[1]), .Y(n158) );
   XOR2X1 U136 ( .A(a[0]), .B(a[1]), .Y(n135) );
   CLKINVX1 U137 ( .A(a[0]), .Y(n159) );
-  CLKINVX1 U140 ( .A(n198), .Y(n189) );
-  CLKINVX1 U141 ( .A(n200), .Y(n190) );
-  CLKINVX1 U142 ( .A(n199), .Y(n191) );
-  CLKINVX1 U143 ( .A(n158), .Y(n142) );
-  CLKINVX1 U144 ( .A(n142), .Y(n192) );
-  CLKINVX1 U145 ( .A(n156), .Y(n140) );
-  CLKINVX1 U146 ( .A(n140), .Y(n193) );
-  CLKINVX1 U147 ( .A(n197), .Y(n194) );
-  CLKINVX1 U148 ( .A(b[0]), .Y(n131) );
-  CLKINVX1 U149 ( .A(n131), .Y(n195) );
-  NAND2BXL U150 ( .AN(n195), .B(a[1]), .Y(n123) );
-  NAND2BXL U151 ( .AN(n195), .B(a[3]), .Y(n114) );
-  CLKINVX1 U152 ( .A(n157), .Y(n141) );
-  CLKINVX1 U153 ( .A(n141), .Y(n196) );
-  NOR2BXL U154 ( .AN(n195), .B(n159), .Y(product[0]) );
-  XNOR2XL U155 ( .A(a[7]), .B(b[0]), .Y(n95) );
-  XNOR2XL U156 ( .A(a[1]), .B(b[0]), .Y(n122) );
-  NOR2BXL U157 ( .AN(n195), .B(n192), .Y(n79) );
-  XNOR2XL U158 ( .A(a[3]), .B(b[0]), .Y(n113) );
-  NOR2BXL U159 ( .AN(n195), .B(n196), .Y(n71) );
-  NAND2BXL U160 ( .AN(n195), .B(a[7]), .Y(n96) );
-  NAND2BXL U161 ( .AN(n195), .B(a[5]), .Y(n105) );
-  XNOR2XL U162 ( .A(a[5]), .B(b[0]), .Y(n104) );
-  NOR2BXL U163 ( .AN(n195), .B(n193), .Y(n63) );
-  CLKBUFX3 U164 ( .A(n159), .Y(n143) );
-  CLKBUFX3 U165 ( .A(a[1]), .Y(n151) );
-  CLKBUFX3 U166 ( .A(a[3]), .Y(n150) );
-  CLKBUFX3 U167 ( .A(a[5]), .Y(n149) );
-  CLKBUFX3 U168 ( .A(a[7]), .Y(n148) );
-  AND2X2 U169 ( .A(n132), .B(n156), .Y(n197) );
-  CLKINVX1 U170 ( .A(n197), .Y(n152) );
-  AND2X2 U171 ( .A(n133), .B(n157), .Y(n198) );
-  CLKINVX1 U172 ( .A(n198), .Y(n153) );
-  AND2X2 U173 ( .A(n134), .B(n158), .Y(n199) );
-  CLKINVX1 U174 ( .A(n199), .Y(n154) );
-  AND2X2 U175 ( .A(n135), .B(n159), .Y(n200) );
-  CLKINVX1 U176 ( .A(n200), .Y(n155) );
+  NOR2X1 U140 ( .A(n157), .B(n131), .Y(n71) );
+  NOR2X1 U141 ( .A(n156), .B(n131), .Y(n63) );
+  OAI2BB2XL U142 ( .B0(n156), .B1(n96), .A0N(n197), .A1N(n148), .Y(n52) );
+  NOR2X1 U143 ( .A(n131), .B(n159), .Y(product[0]) );
+  OAI2BB2XL U144 ( .B0(n123), .B1(n159), .A0N(n200), .A1N(n151), .Y(n55) );
+  NOR2X1 U145 ( .A(n158), .B(n131), .Y(n79) );
+  CLKINVX1 U146 ( .A(n198), .Y(n189) );
+  CLKINVX1 U147 ( .A(n200), .Y(n190) );
+  CLKINVX1 U148 ( .A(n199), .Y(n191) );
+  CLKINVX1 U149 ( .A(n158), .Y(n142) );
+  CLKINVX1 U150 ( .A(n142), .Y(n192) );
+  CLKINVX1 U151 ( .A(n156), .Y(n140) );
+  CLKINVX1 U152 ( .A(n140), .Y(n193) );
+  CLKINVX1 U153 ( .A(n197), .Y(n194) );
+  CLKINVX1 U154 ( .A(b[0]), .Y(n131) );
+  CLKINVX1 U155 ( .A(n131), .Y(n195) );
+  NAND2BXL U156 ( .AN(n195), .B(a[1]), .Y(n123) );
+  NAND2BXL U157 ( .AN(n195), .B(a[3]), .Y(n114) );
+  CLKINVX1 U158 ( .A(n157), .Y(n141) );
+  CLKINVX1 U159 ( .A(n141), .Y(n196) );
+  XNOR2XL U160 ( .A(a[7]), .B(b[0]), .Y(n95) );
+  XNOR2XL U161 ( .A(a[1]), .B(b[0]), .Y(n122) );
+  XNOR2XL U162 ( .A(a[3]), .B(b[0]), .Y(n113) );
+  NAND2BXL U163 ( .AN(n195), .B(a[7]), .Y(n96) );
+  NAND2BXL U164 ( .AN(n195), .B(a[5]), .Y(n105) );
+  XNOR2XL U165 ( .A(a[5]), .B(b[0]), .Y(n104) );
+  CLKBUFX3 U166 ( .A(n159), .Y(n143) );
+  CLKBUFX3 U167 ( .A(a[1]), .Y(n151) );
+  CLKBUFX3 U168 ( .A(a[3]), .Y(n150) );
+  CLKBUFX3 U169 ( .A(a[5]), .Y(n149) );
+  CLKBUFX3 U170 ( .A(a[7]), .Y(n148) );
+  AND2X2 U171 ( .A(n132), .B(n156), .Y(n197) );
+  CLKINVX1 U172 ( .A(n197), .Y(n152) );
+  AND2X2 U173 ( .A(n133), .B(n157), .Y(n198) );
+  CLKINVX1 U174 ( .A(n198), .Y(n153) );
+  AND2X2 U175 ( .A(n134), .B(n158), .Y(n199) );
+  CLKINVX1 U176 ( .A(n199), .Y(n154) );
+  AND2X2 U177 ( .A(n135), .B(n159), .Y(n200) );
+  CLKINVX1 U178 ( .A(n200), .Y(n155) );
 endmodule
 
 
@@ -3919,10 +3891,10 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_46 ( a, b, product );
          n87, n88, n89, n90, n91, n92, n93, n94, n95, n96, n97, n98, n99, n100,
          n101, n102, n103, n104, n105, n106, n107, n108, n109, n110, n111,
          n112, n113, n114, n115, n116, n117, n118, n119, n120, n121, n122,
-         n123, n131, n132, n133, n134, n135, n140, n141, n142, n143, n144,
-         n145, n146, n147, n148, n149, n150, n151, n152, n153, n154, n155,
-         n156, n157, n158, n159, n189, n190, n191, n192, n193, n194, n195,
-         n196, n197, n198, n199, n200;
+         n123, n131, n132, n133, n134, n135, n140, n141, n142, n143, n145,
+         n146, n148, n149, n150, n151, n152, n153, n154, n155, n156, n157,
+         n158, n159, n189, n190, n191, n192, n193, n194, n195, n196, n197,
+         n198, n199, n200;
 
   CLKINVX1 U1 ( .A(n1), .Y(product[15]) );
   ADDFXL U2 ( .A(n56), .B(n15), .CI(n2), .CO(n1), .S(product[14]) );
@@ -3961,7 +3933,6 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_46 ( a, b, product );
   ADDHXL U30 ( .A(n83), .B(n70), .CO(n46), .S(n47) );
   ADDFXL U31 ( .A(n84), .B(n71), .CI(n77), .CO(n48), .S(n49) );
   ADDHXL U32 ( .A(n85), .B(n54), .CO(n50), .S(n51) );
-  OAI22XL U33 ( .A0(n152), .A1(n144), .B0(n196), .B1(n96), .Y(n52) );
   AO21X1 U34 ( .A0(n152), .A1(n156), .B0(n88), .Y(n56) );
   OAI22XL U35 ( .A0(n152), .A1(n89), .B0(n196), .B1(n88), .Y(n15) );
   OAI22XL U36 ( .A0(n152), .A1(n90), .B0(n196), .B1(n89), .Y(n57) );
@@ -4009,7 +3980,6 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_46 ( a, b, product );
   XNOR2X1 U85 ( .A(n150), .B(b[3]), .Y(n110) );
   XNOR2X1 U86 ( .A(n150), .B(b[2]), .Y(n111) );
   XNOR2X1 U87 ( .A(n150), .B(b[1]), .Y(n112) );
-  OAI22XL U90 ( .A0(n155), .A1(n147), .B0(n123), .B1(n143), .Y(n55) );
   AO21X1 U91 ( .A0(n155), .A1(n159), .B0(n115), .Y(n80) );
   OAI22XL U92 ( .A0(n155), .A1(n116), .B0(n115), .B1(n143), .Y(n81) );
   OAI22XL U93 ( .A0(n155), .A1(n117), .B0(n116), .B1(n143), .Y(n82) );
@@ -4025,10 +3995,8 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_46 ( a, b, product );
   XNOR2X1 U104 ( .A(n151), .B(b[3]), .Y(n119) );
   XNOR2X1 U105 ( .A(n151), .B(b[2]), .Y(n120) );
   XNOR2X1 U106 ( .A(n151), .B(b[1]), .Y(n121) );
-  CLKINVX1 U112 ( .A(n148), .Y(n144) );
   CLKINVX1 U116 ( .A(n149), .Y(n145) );
   CLKINVX1 U120 ( .A(n150), .Y(n146) );
-  CLKINVX1 U124 ( .A(n151), .Y(n147) );
   XOR2X1 U127 ( .A(a[6]), .B(a[7]), .Y(n132) );
   XNOR2X1 U128 ( .A(a[6]), .B(a[5]), .Y(n156) );
   XOR2X1 U130 ( .A(a[4]), .B(a[5]), .Y(n133) );
@@ -4037,43 +4005,45 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_46 ( a, b, product );
   XNOR2X1 U134 ( .A(a[2]), .B(a[1]), .Y(n158) );
   XOR2X1 U136 ( .A(a[0]), .B(a[1]), .Y(n135) );
   CLKINVX1 U137 ( .A(a[0]), .Y(n159) );
-  CLKINVX1 U140 ( .A(n200), .Y(n189) );
-  CLKINVX1 U141 ( .A(n199), .Y(n190) );
-  CLKINVX1 U142 ( .A(n198), .Y(n191) );
-  CLKINVX1 U143 ( .A(n158), .Y(n142) );
-  CLKINVX1 U144 ( .A(n142), .Y(n192) );
-  CLKINVX1 U145 ( .A(n157), .Y(n141) );
-  CLKINVX1 U146 ( .A(n141), .Y(n193) );
-  CLKINVX1 U147 ( .A(n197), .Y(n194) );
-  CLKINVX1 U148 ( .A(b[0]), .Y(n131) );
-  CLKINVX1 U149 ( .A(n131), .Y(n195) );
-  NAND2BXL U150 ( .AN(n195), .B(a[1]), .Y(n123) );
-  NAND2BXL U151 ( .AN(n195), .B(a[3]), .Y(n114) );
-  CLKINVX1 U152 ( .A(n156), .Y(n140) );
-  CLKINVX1 U153 ( .A(n140), .Y(n196) );
-  NOR2BXL U154 ( .AN(n195), .B(n159), .Y(product[0]) );
-  XNOR2XL U155 ( .A(a[7]), .B(b[0]), .Y(n95) );
-  XNOR2XL U156 ( .A(a[1]), .B(b[0]), .Y(n122) );
-  NOR2BXL U157 ( .AN(n195), .B(n192), .Y(n79) );
-  XNOR2XL U158 ( .A(a[3]), .B(b[0]), .Y(n113) );
-  NOR2BXL U159 ( .AN(n195), .B(n193), .Y(n71) );
-  NAND2BXL U160 ( .AN(n195), .B(a[7]), .Y(n96) );
-  NAND2BXL U161 ( .AN(n195), .B(a[5]), .Y(n105) );
-  XNOR2XL U162 ( .A(a[5]), .B(b[0]), .Y(n104) );
-  NOR2BXL U163 ( .AN(n195), .B(n196), .Y(n63) );
-  CLKBUFX3 U164 ( .A(n159), .Y(n143) );
-  CLKBUFX3 U165 ( .A(a[1]), .Y(n151) );
-  CLKBUFX3 U166 ( .A(a[3]), .Y(n150) );
-  CLKBUFX3 U167 ( .A(a[5]), .Y(n149) );
-  CLKBUFX3 U168 ( .A(a[7]), .Y(n148) );
-  AND2X2 U169 ( .A(n132), .B(n156), .Y(n197) );
-  CLKINVX1 U170 ( .A(n197), .Y(n152) );
-  AND2X2 U171 ( .A(n133), .B(n157), .Y(n198) );
-  CLKINVX1 U172 ( .A(n198), .Y(n153) );
-  AND2X2 U173 ( .A(n134), .B(n158), .Y(n199) );
-  CLKINVX1 U174 ( .A(n199), .Y(n154) );
-  AND2X2 U175 ( .A(n135), .B(n159), .Y(n200) );
-  CLKINVX1 U176 ( .A(n200), .Y(n155) );
+  NOR2X1 U140 ( .A(n157), .B(n131), .Y(n71) );
+  NOR2X1 U141 ( .A(n156), .B(n131), .Y(n63) );
+  NOR2X1 U142 ( .A(n131), .B(n159), .Y(product[0]) );
+  OAI2BB2XL U143 ( .B0(n156), .B1(n96), .A0N(n197), .A1N(n148), .Y(n52) );
+  OAI2BB2XL U144 ( .B0(n123), .B1(n159), .A0N(n200), .A1N(n151), .Y(n55) );
+  NOR2X1 U145 ( .A(n158), .B(n131), .Y(n79) );
+  CLKINVX1 U146 ( .A(n200), .Y(n189) );
+  CLKINVX1 U147 ( .A(n199), .Y(n190) );
+  CLKINVX1 U148 ( .A(n198), .Y(n191) );
+  CLKINVX1 U149 ( .A(n158), .Y(n142) );
+  CLKINVX1 U150 ( .A(n142), .Y(n192) );
+  CLKINVX1 U151 ( .A(n157), .Y(n141) );
+  CLKINVX1 U152 ( .A(n141), .Y(n193) );
+  CLKINVX1 U153 ( .A(n197), .Y(n194) );
+  CLKINVX1 U154 ( .A(b[0]), .Y(n131) );
+  CLKINVX1 U155 ( .A(n131), .Y(n195) );
+  NAND2BXL U156 ( .AN(n195), .B(a[1]), .Y(n123) );
+  NAND2BXL U157 ( .AN(n195), .B(a[3]), .Y(n114) );
+  CLKINVX1 U158 ( .A(n156), .Y(n140) );
+  CLKINVX1 U159 ( .A(n140), .Y(n196) );
+  XNOR2XL U160 ( .A(a[7]), .B(b[0]), .Y(n95) );
+  XNOR2XL U161 ( .A(a[1]), .B(b[0]), .Y(n122) );
+  XNOR2XL U162 ( .A(a[3]), .B(b[0]), .Y(n113) );
+  NAND2BXL U163 ( .AN(n195), .B(a[7]), .Y(n96) );
+  NAND2BXL U164 ( .AN(n195), .B(a[5]), .Y(n105) );
+  XNOR2XL U165 ( .A(a[5]), .B(b[0]), .Y(n104) );
+  CLKBUFX3 U166 ( .A(n159), .Y(n143) );
+  CLKBUFX3 U167 ( .A(a[1]), .Y(n151) );
+  CLKBUFX3 U168 ( .A(a[3]), .Y(n150) );
+  CLKBUFX3 U169 ( .A(a[5]), .Y(n149) );
+  CLKBUFX3 U170 ( .A(a[7]), .Y(n148) );
+  AND2X2 U171 ( .A(n132), .B(n156), .Y(n197) );
+  CLKINVX1 U172 ( .A(n197), .Y(n152) );
+  AND2X2 U173 ( .A(n133), .B(n157), .Y(n198) );
+  CLKINVX1 U174 ( .A(n198), .Y(n153) );
+  AND2X2 U175 ( .A(n134), .B(n158), .Y(n199) );
+  CLKINVX1 U176 ( .A(n199), .Y(n154) );
+  AND2X2 U177 ( .A(n135), .B(n159), .Y(n200) );
+  CLKINVX1 U178 ( .A(n200), .Y(n155) );
 endmodule
 
 
@@ -4090,10 +4060,10 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_47 ( a, b, product );
          n87, n88, n89, n90, n91, n92, n93, n94, n95, n96, n97, n98, n99, n100,
          n101, n102, n103, n104, n105, n106, n107, n108, n109, n110, n111,
          n112, n113, n114, n115, n116, n117, n118, n119, n120, n121, n122,
-         n123, n131, n132, n133, n134, n135, n140, n141, n142, n143, n144,
-         n145, n146, n147, n148, n149, n150, n151, n152, n153, n154, n155,
-         n156, n157, n158, n159, n189, n190, n191, n192, n193, n194, n195,
-         n196, n197, n198, n199, n200;
+         n123, n131, n132, n133, n134, n135, n140, n141, n142, n143, n145,
+         n146, n148, n149, n150, n151, n152, n153, n154, n155, n156, n157,
+         n158, n159, n189, n190, n191, n192, n193, n194, n195, n196, n197,
+         n198, n199, n200;
 
   CLKINVX1 U1 ( .A(n1), .Y(product[15]) );
   ADDFXL U2 ( .A(n56), .B(n15), .CI(n2), .CO(n1), .S(product[14]) );
@@ -4132,7 +4102,6 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_47 ( a, b, product );
   ADDHXL U30 ( .A(n83), .B(n70), .CO(n46), .S(n47) );
   ADDFXL U31 ( .A(n84), .B(n71), .CI(n77), .CO(n48), .S(n49) );
   ADDHXL U32 ( .A(n85), .B(n54), .CO(n50), .S(n51) );
-  OAI22XL U33 ( .A0(n152), .A1(n144), .B0(n196), .B1(n96), .Y(n52) );
   AO21X1 U34 ( .A0(n152), .A1(n156), .B0(n88), .Y(n56) );
   OAI22XL U35 ( .A0(n152), .A1(n89), .B0(n196), .B1(n88), .Y(n15) );
   OAI22XL U36 ( .A0(n152), .A1(n90), .B0(n196), .B1(n89), .Y(n57) );
@@ -4180,7 +4149,6 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_47 ( a, b, product );
   XNOR2X1 U85 ( .A(n150), .B(b[3]), .Y(n110) );
   XNOR2X1 U86 ( .A(n150), .B(b[2]), .Y(n111) );
   XNOR2X1 U87 ( .A(n150), .B(b[1]), .Y(n112) );
-  OAI22XL U90 ( .A0(n155), .A1(n147), .B0(n123), .B1(n143), .Y(n55) );
   AO21X1 U91 ( .A0(n155), .A1(n159), .B0(n115), .Y(n80) );
   OAI22XL U92 ( .A0(n155), .A1(n116), .B0(n115), .B1(n143), .Y(n81) );
   OAI22XL U93 ( .A0(n155), .A1(n117), .B0(n116), .B1(n143), .Y(n82) );
@@ -4196,10 +4164,8 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_47 ( a, b, product );
   XNOR2X1 U104 ( .A(n151), .B(b[3]), .Y(n119) );
   XNOR2X1 U105 ( .A(n151), .B(b[2]), .Y(n120) );
   XNOR2X1 U106 ( .A(n151), .B(b[1]), .Y(n121) );
-  CLKINVX1 U112 ( .A(n148), .Y(n144) );
   CLKINVX1 U116 ( .A(n149), .Y(n145) );
   CLKINVX1 U120 ( .A(n150), .Y(n146) );
-  CLKINVX1 U124 ( .A(n151), .Y(n147) );
   XOR2X1 U127 ( .A(a[6]), .B(a[7]), .Y(n132) );
   XNOR2X1 U128 ( .A(a[6]), .B(a[5]), .Y(n156) );
   XOR2X1 U130 ( .A(a[4]), .B(a[5]), .Y(n133) );
@@ -4208,43 +4174,45 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_47 ( a, b, product );
   XNOR2X1 U134 ( .A(a[2]), .B(a[1]), .Y(n158) );
   XOR2X1 U136 ( .A(a[0]), .B(a[1]), .Y(n135) );
   CLKINVX1 U137 ( .A(a[0]), .Y(n159) );
-  CLKINVX1 U140 ( .A(n200), .Y(n189) );
-  CLKINVX1 U141 ( .A(n199), .Y(n190) );
-  CLKINVX1 U142 ( .A(n198), .Y(n191) );
-  CLKINVX1 U143 ( .A(n158), .Y(n142) );
-  CLKINVX1 U144 ( .A(n142), .Y(n192) );
-  CLKINVX1 U145 ( .A(n157), .Y(n141) );
-  CLKINVX1 U146 ( .A(n141), .Y(n193) );
-  CLKINVX1 U147 ( .A(n197), .Y(n194) );
-  CLKINVX1 U148 ( .A(b[0]), .Y(n131) );
-  CLKINVX1 U149 ( .A(n131), .Y(n195) );
-  NAND2BXL U150 ( .AN(n195), .B(a[1]), .Y(n123) );
-  NAND2BXL U151 ( .AN(n195), .B(a[3]), .Y(n114) );
-  CLKINVX1 U152 ( .A(n156), .Y(n140) );
-  CLKINVX1 U153 ( .A(n140), .Y(n196) );
-  NOR2BXL U154 ( .AN(n195), .B(n159), .Y(product[0]) );
-  XNOR2XL U155 ( .A(a[7]), .B(b[0]), .Y(n95) );
-  XNOR2XL U156 ( .A(a[1]), .B(b[0]), .Y(n122) );
-  NOR2BXL U157 ( .AN(n195), .B(n192), .Y(n79) );
-  XNOR2XL U158 ( .A(a[3]), .B(b[0]), .Y(n113) );
-  NOR2BXL U159 ( .AN(n195), .B(n193), .Y(n71) );
-  NAND2BXL U160 ( .AN(n195), .B(a[7]), .Y(n96) );
-  NAND2BXL U161 ( .AN(n195), .B(a[5]), .Y(n105) );
-  XNOR2XL U162 ( .A(a[5]), .B(b[0]), .Y(n104) );
-  NOR2BXL U163 ( .AN(n195), .B(n196), .Y(n63) );
-  CLKBUFX3 U164 ( .A(n159), .Y(n143) );
-  CLKBUFX3 U165 ( .A(a[1]), .Y(n151) );
-  CLKBUFX3 U166 ( .A(a[3]), .Y(n150) );
-  CLKBUFX3 U167 ( .A(a[5]), .Y(n149) );
-  CLKBUFX3 U168 ( .A(a[7]), .Y(n148) );
-  AND2X2 U169 ( .A(n132), .B(n156), .Y(n197) );
-  CLKINVX1 U170 ( .A(n197), .Y(n152) );
-  AND2X2 U171 ( .A(n133), .B(n157), .Y(n198) );
-  CLKINVX1 U172 ( .A(n198), .Y(n153) );
-  AND2X2 U173 ( .A(n134), .B(n158), .Y(n199) );
-  CLKINVX1 U174 ( .A(n199), .Y(n154) );
-  AND2X2 U175 ( .A(n135), .B(n159), .Y(n200) );
-  CLKINVX1 U176 ( .A(n200), .Y(n155) );
+  NOR2X1 U140 ( .A(n157), .B(n131), .Y(n71) );
+  NOR2X1 U141 ( .A(n156), .B(n131), .Y(n63) );
+  OAI2BB2XL U142 ( .B0(n156), .B1(n96), .A0N(n197), .A1N(n148), .Y(n52) );
+  NOR2X1 U143 ( .A(n131), .B(n159), .Y(product[0]) );
+  OAI2BB2XL U144 ( .B0(n123), .B1(n159), .A0N(n200), .A1N(n151), .Y(n55) );
+  NOR2X1 U145 ( .A(n158), .B(n131), .Y(n79) );
+  CLKINVX1 U146 ( .A(n200), .Y(n189) );
+  CLKINVX1 U147 ( .A(n199), .Y(n190) );
+  CLKINVX1 U148 ( .A(n198), .Y(n191) );
+  CLKINVX1 U149 ( .A(n158), .Y(n142) );
+  CLKINVX1 U150 ( .A(n142), .Y(n192) );
+  CLKINVX1 U151 ( .A(n157), .Y(n141) );
+  CLKINVX1 U152 ( .A(n141), .Y(n193) );
+  CLKINVX1 U153 ( .A(n197), .Y(n194) );
+  CLKINVX1 U154 ( .A(b[0]), .Y(n131) );
+  CLKINVX1 U155 ( .A(n131), .Y(n195) );
+  NAND2BXL U156 ( .AN(n195), .B(a[1]), .Y(n123) );
+  NAND2BXL U157 ( .AN(n195), .B(a[3]), .Y(n114) );
+  CLKINVX1 U158 ( .A(n156), .Y(n140) );
+  CLKINVX1 U159 ( .A(n140), .Y(n196) );
+  XNOR2XL U160 ( .A(a[7]), .B(b[0]), .Y(n95) );
+  XNOR2XL U161 ( .A(a[1]), .B(b[0]), .Y(n122) );
+  XNOR2XL U162 ( .A(a[3]), .B(b[0]), .Y(n113) );
+  NAND2BXL U163 ( .AN(n195), .B(a[7]), .Y(n96) );
+  NAND2BXL U164 ( .AN(n195), .B(a[5]), .Y(n105) );
+  XNOR2XL U165 ( .A(a[5]), .B(b[0]), .Y(n104) );
+  CLKBUFX3 U166 ( .A(n159), .Y(n143) );
+  CLKBUFX3 U167 ( .A(a[1]), .Y(n151) );
+  CLKBUFX3 U168 ( .A(a[3]), .Y(n150) );
+  CLKBUFX3 U169 ( .A(a[5]), .Y(n149) );
+  CLKBUFX3 U170 ( .A(a[7]), .Y(n148) );
+  AND2X2 U171 ( .A(n132), .B(n156), .Y(n197) );
+  CLKINVX1 U172 ( .A(n197), .Y(n152) );
+  AND2X2 U173 ( .A(n133), .B(n157), .Y(n198) );
+  CLKINVX1 U174 ( .A(n198), .Y(n153) );
+  AND2X2 U175 ( .A(n134), .B(n158), .Y(n199) );
+  CLKINVX1 U176 ( .A(n199), .Y(n154) );
+  AND2X2 U177 ( .A(n135), .B(n159), .Y(n200) );
+  CLKINVX1 U178 ( .A(n200), .Y(n155) );
 endmodule
 
 
@@ -4261,10 +4229,10 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_48 ( a, b, product );
          n87, n88, n89, n90, n91, n92, n93, n94, n95, n96, n97, n98, n99, n100,
          n101, n102, n103, n104, n105, n106, n107, n108, n109, n110, n111,
          n112, n113, n114, n115, n116, n117, n118, n119, n120, n121, n122,
-         n123, n131, n132, n133, n134, n135, n140, n141, n142, n143, n144,
-         n145, n146, n147, n148, n149, n150, n151, n152, n153, n154, n155,
-         n156, n157, n158, n159, n189, n190, n191, n192, n193, n194, n195,
-         n196, n197, n198, n199, n200;
+         n123, n131, n132, n133, n134, n135, n140, n141, n142, n143, n145,
+         n146, n148, n149, n150, n151, n152, n153, n154, n155, n156, n157,
+         n158, n159, n189, n190, n191, n192, n193, n194, n195, n196, n197,
+         n198, n199, n200;
 
   CLKINVX1 U1 ( .A(n1), .Y(product[15]) );
   ADDFXL U2 ( .A(n56), .B(n15), .CI(n2), .CO(n1), .S(product[14]) );
@@ -4303,7 +4271,6 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_48 ( a, b, product );
   ADDHXL U30 ( .A(n83), .B(n70), .CO(n46), .S(n47) );
   ADDFXL U31 ( .A(n84), .B(n71), .CI(n77), .CO(n48), .S(n49) );
   ADDHXL U32 ( .A(n85), .B(n54), .CO(n50), .S(n51) );
-  OAI22XL U33 ( .A0(n152), .A1(n144), .B0(n193), .B1(n96), .Y(n52) );
   AO21X1 U34 ( .A0(n152), .A1(n156), .B0(n88), .Y(n56) );
   OAI22XL U35 ( .A0(n152), .A1(n89), .B0(n193), .B1(n88), .Y(n15) );
   OAI22XL U36 ( .A0(n152), .A1(n90), .B0(n193), .B1(n89), .Y(n57) );
@@ -4351,7 +4318,6 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_48 ( a, b, product );
   XNOR2X1 U85 ( .A(n150), .B(b[3]), .Y(n110) );
   XNOR2X1 U86 ( .A(n150), .B(b[2]), .Y(n111) );
   XNOR2X1 U87 ( .A(n150), .B(b[1]), .Y(n112) );
-  OAI22XL U90 ( .A0(n155), .A1(n147), .B0(n123), .B1(n143), .Y(n55) );
   AO21X1 U91 ( .A0(n155), .A1(n159), .B0(n115), .Y(n80) );
   OAI22XL U92 ( .A0(n155), .A1(n116), .B0(n115), .B1(n143), .Y(n81) );
   OAI22XL U93 ( .A0(n155), .A1(n117), .B0(n116), .B1(n143), .Y(n82) );
@@ -4367,10 +4333,8 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_48 ( a, b, product );
   XNOR2X1 U104 ( .A(n151), .B(b[3]), .Y(n119) );
   XNOR2X1 U105 ( .A(n151), .B(b[2]), .Y(n120) );
   XNOR2X1 U106 ( .A(n151), .B(b[1]), .Y(n121) );
-  CLKINVX1 U112 ( .A(n148), .Y(n144) );
   CLKINVX1 U116 ( .A(n149), .Y(n145) );
   CLKINVX1 U120 ( .A(n150), .Y(n146) );
-  CLKINVX1 U124 ( .A(n151), .Y(n147) );
   XOR2X1 U127 ( .A(a[6]), .B(a[7]), .Y(n132) );
   XNOR2X1 U128 ( .A(a[6]), .B(a[5]), .Y(n156) );
   XOR2X1 U130 ( .A(a[4]), .B(a[5]), .Y(n133) );
@@ -4379,43 +4343,45 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_48 ( a, b, product );
   XNOR2X1 U134 ( .A(a[2]), .B(a[1]), .Y(n158) );
   XOR2X1 U136 ( .A(a[0]), .B(a[1]), .Y(n135) );
   CLKINVX1 U137 ( .A(a[0]), .Y(n159) );
-  CLKINVX1 U140 ( .A(n198), .Y(n189) );
-  CLKINVX1 U141 ( .A(n200), .Y(n190) );
-  CLKINVX1 U142 ( .A(n199), .Y(n191) );
-  CLKINVX1 U143 ( .A(n158), .Y(n142) );
-  CLKINVX1 U144 ( .A(n142), .Y(n192) );
-  CLKINVX1 U145 ( .A(n156), .Y(n140) );
-  CLKINVX1 U146 ( .A(n140), .Y(n193) );
-  CLKINVX1 U147 ( .A(n197), .Y(n194) );
-  CLKINVX1 U148 ( .A(b[0]), .Y(n131) );
-  CLKINVX1 U149 ( .A(n131), .Y(n195) );
-  NAND2BXL U150 ( .AN(n195), .B(a[1]), .Y(n123) );
-  NAND2BXL U151 ( .AN(n195), .B(a[3]), .Y(n114) );
-  CLKINVX1 U152 ( .A(n157), .Y(n141) );
-  CLKINVX1 U153 ( .A(n141), .Y(n196) );
-  NOR2BXL U154 ( .AN(n195), .B(n159), .Y(product[0]) );
-  XNOR2XL U155 ( .A(a[7]), .B(b[0]), .Y(n95) );
-  XNOR2XL U156 ( .A(a[1]), .B(b[0]), .Y(n122) );
-  NOR2BXL U157 ( .AN(n195), .B(n192), .Y(n79) );
-  XNOR2XL U158 ( .A(a[3]), .B(b[0]), .Y(n113) );
-  NOR2BXL U159 ( .AN(n195), .B(n196), .Y(n71) );
-  NAND2BXL U160 ( .AN(n195), .B(a[7]), .Y(n96) );
-  NAND2BXL U161 ( .AN(n195), .B(a[5]), .Y(n105) );
-  XNOR2XL U162 ( .A(a[5]), .B(b[0]), .Y(n104) );
-  NOR2BXL U163 ( .AN(n195), .B(n193), .Y(n63) );
-  CLKBUFX3 U164 ( .A(n159), .Y(n143) );
-  CLKBUFX3 U165 ( .A(a[1]), .Y(n151) );
-  CLKBUFX3 U166 ( .A(a[3]), .Y(n150) );
-  CLKBUFX3 U167 ( .A(a[5]), .Y(n149) );
-  CLKBUFX3 U168 ( .A(a[7]), .Y(n148) );
-  AND2X2 U169 ( .A(n132), .B(n156), .Y(n197) );
-  CLKINVX1 U170 ( .A(n197), .Y(n152) );
-  AND2X2 U171 ( .A(n133), .B(n157), .Y(n198) );
-  CLKINVX1 U172 ( .A(n198), .Y(n153) );
-  AND2X2 U173 ( .A(n134), .B(n158), .Y(n199) );
-  CLKINVX1 U174 ( .A(n199), .Y(n154) );
-  AND2X2 U175 ( .A(n135), .B(n159), .Y(n200) );
-  CLKINVX1 U176 ( .A(n200), .Y(n155) );
+  NOR2X1 U140 ( .A(n157), .B(n131), .Y(n71) );
+  NOR2X1 U141 ( .A(n156), .B(n131), .Y(n63) );
+  NOR2X1 U142 ( .A(n131), .B(n159), .Y(product[0]) );
+  OAI2BB2XL U143 ( .B0(n156), .B1(n96), .A0N(n197), .A1N(n148), .Y(n52) );
+  OAI2BB2XL U144 ( .B0(n123), .B1(n159), .A0N(n200), .A1N(n151), .Y(n55) );
+  NOR2X1 U145 ( .A(n158), .B(n131), .Y(n79) );
+  CLKINVX1 U146 ( .A(n198), .Y(n189) );
+  CLKINVX1 U147 ( .A(n200), .Y(n190) );
+  CLKINVX1 U148 ( .A(n199), .Y(n191) );
+  CLKINVX1 U149 ( .A(n158), .Y(n142) );
+  CLKINVX1 U150 ( .A(n142), .Y(n192) );
+  CLKINVX1 U151 ( .A(n156), .Y(n140) );
+  CLKINVX1 U152 ( .A(n140), .Y(n193) );
+  CLKINVX1 U153 ( .A(n197), .Y(n194) );
+  CLKINVX1 U154 ( .A(b[0]), .Y(n131) );
+  CLKINVX1 U155 ( .A(n131), .Y(n195) );
+  NAND2BXL U156 ( .AN(n195), .B(a[1]), .Y(n123) );
+  NAND2BXL U157 ( .AN(n195), .B(a[3]), .Y(n114) );
+  CLKINVX1 U158 ( .A(n157), .Y(n141) );
+  CLKINVX1 U159 ( .A(n141), .Y(n196) );
+  XNOR2XL U160 ( .A(a[7]), .B(b[0]), .Y(n95) );
+  XNOR2XL U161 ( .A(a[1]), .B(b[0]), .Y(n122) );
+  XNOR2XL U162 ( .A(a[3]), .B(b[0]), .Y(n113) );
+  NAND2BXL U163 ( .AN(n195), .B(a[7]), .Y(n96) );
+  NAND2BXL U164 ( .AN(n195), .B(a[5]), .Y(n105) );
+  XNOR2XL U165 ( .A(a[5]), .B(b[0]), .Y(n104) );
+  CLKBUFX3 U166 ( .A(n159), .Y(n143) );
+  CLKBUFX3 U167 ( .A(a[1]), .Y(n151) );
+  CLKBUFX3 U168 ( .A(a[3]), .Y(n150) );
+  CLKBUFX3 U169 ( .A(a[5]), .Y(n149) );
+  CLKBUFX3 U170 ( .A(a[7]), .Y(n148) );
+  AND2X2 U171 ( .A(n132), .B(n156), .Y(n197) );
+  CLKINVX1 U172 ( .A(n197), .Y(n152) );
+  AND2X2 U173 ( .A(n133), .B(n157), .Y(n198) );
+  CLKINVX1 U174 ( .A(n198), .Y(n153) );
+  AND2X2 U175 ( .A(n134), .B(n158), .Y(n199) );
+  CLKINVX1 U176 ( .A(n199), .Y(n154) );
+  AND2X2 U177 ( .A(n135), .B(n159), .Y(n200) );
+  CLKINVX1 U178 ( .A(n200), .Y(n155) );
 endmodule
 
 
@@ -4432,10 +4398,10 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_49 ( a, b, product );
          n87, n88, n89, n90, n91, n92, n93, n94, n95, n96, n97, n98, n99, n100,
          n101, n102, n103, n104, n105, n106, n107, n108, n109, n110, n111,
          n112, n113, n114, n115, n116, n117, n118, n119, n120, n121, n122,
-         n123, n131, n132, n133, n134, n135, n140, n141, n142, n143, n144,
-         n145, n146, n147, n148, n149, n150, n151, n152, n153, n154, n155,
-         n156, n157, n158, n159, n189, n190, n191, n192, n193, n194, n195,
-         n196, n197, n198, n199, n200;
+         n123, n131, n132, n133, n134, n135, n140, n141, n142, n143, n145,
+         n146, n148, n149, n150, n151, n152, n153, n154, n155, n156, n157,
+         n158, n159, n189, n190, n191, n192, n193, n194, n195, n196, n197,
+         n198, n199, n200;
 
   CLKINVX1 U1 ( .A(n1), .Y(product[15]) );
   ADDFXL U2 ( .A(n56), .B(n15), .CI(n2), .CO(n1), .S(product[14]) );
@@ -4474,7 +4440,6 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_49 ( a, b, product );
   ADDHXL U30 ( .A(n83), .B(n70), .CO(n46), .S(n47) );
   ADDFXL U31 ( .A(n84), .B(n71), .CI(n77), .CO(n48), .S(n49) );
   ADDHXL U32 ( .A(n85), .B(n54), .CO(n50), .S(n51) );
-  OAI22XL U33 ( .A0(n152), .A1(n144), .B0(n193), .B1(n96), .Y(n52) );
   AO21X1 U34 ( .A0(n152), .A1(n156), .B0(n88), .Y(n56) );
   OAI22XL U35 ( .A0(n152), .A1(n89), .B0(n193), .B1(n88), .Y(n15) );
   OAI22XL U36 ( .A0(n152), .A1(n90), .B0(n193), .B1(n89), .Y(n57) );
@@ -4522,7 +4487,6 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_49 ( a, b, product );
   XNOR2X1 U85 ( .A(n150), .B(b[3]), .Y(n110) );
   XNOR2X1 U86 ( .A(n150), .B(b[2]), .Y(n111) );
   XNOR2X1 U87 ( .A(n150), .B(b[1]), .Y(n112) );
-  OAI22XL U90 ( .A0(n155), .A1(n147), .B0(n123), .B1(n143), .Y(n55) );
   AO21X1 U91 ( .A0(n155), .A1(n159), .B0(n115), .Y(n80) );
   OAI22XL U92 ( .A0(n155), .A1(n116), .B0(n115), .B1(n143), .Y(n81) );
   OAI22XL U93 ( .A0(n155), .A1(n117), .B0(n116), .B1(n143), .Y(n82) );
@@ -4538,10 +4502,8 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_49 ( a, b, product );
   XNOR2X1 U104 ( .A(n151), .B(b[3]), .Y(n119) );
   XNOR2X1 U105 ( .A(n151), .B(b[2]), .Y(n120) );
   XNOR2X1 U106 ( .A(n151), .B(b[1]), .Y(n121) );
-  CLKINVX1 U112 ( .A(n148), .Y(n144) );
   CLKINVX1 U116 ( .A(n149), .Y(n145) );
   CLKINVX1 U120 ( .A(n150), .Y(n146) );
-  CLKINVX1 U124 ( .A(n151), .Y(n147) );
   XOR2X1 U127 ( .A(a[6]), .B(a[7]), .Y(n132) );
   XNOR2X1 U128 ( .A(a[6]), .B(a[5]), .Y(n156) );
   XOR2X1 U130 ( .A(a[4]), .B(a[5]), .Y(n133) );
@@ -4550,43 +4512,45 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_49 ( a, b, product );
   XNOR2X1 U134 ( .A(a[2]), .B(a[1]), .Y(n158) );
   XOR2X1 U136 ( .A(a[0]), .B(a[1]), .Y(n135) );
   CLKINVX1 U137 ( .A(a[0]), .Y(n159) );
-  CLKINVX1 U140 ( .A(n198), .Y(n189) );
-  CLKINVX1 U141 ( .A(n200), .Y(n190) );
-  CLKINVX1 U142 ( .A(n199), .Y(n191) );
-  CLKINVX1 U143 ( .A(n158), .Y(n142) );
-  CLKINVX1 U144 ( .A(n142), .Y(n192) );
-  CLKINVX1 U145 ( .A(n156), .Y(n140) );
-  CLKINVX1 U146 ( .A(n140), .Y(n193) );
-  CLKINVX1 U147 ( .A(n197), .Y(n194) );
-  CLKINVX1 U148 ( .A(b[0]), .Y(n131) );
-  CLKINVX1 U149 ( .A(n131), .Y(n195) );
-  NAND2BXL U150 ( .AN(n195), .B(a[1]), .Y(n123) );
-  NAND2BXL U151 ( .AN(n195), .B(a[3]), .Y(n114) );
-  CLKINVX1 U152 ( .A(n157), .Y(n141) );
-  CLKINVX1 U153 ( .A(n141), .Y(n196) );
-  NOR2BXL U154 ( .AN(n195), .B(n159), .Y(product[0]) );
-  XNOR2XL U155 ( .A(a[7]), .B(b[0]), .Y(n95) );
-  XNOR2XL U156 ( .A(a[1]), .B(b[0]), .Y(n122) );
-  NOR2BXL U157 ( .AN(n195), .B(n192), .Y(n79) );
-  XNOR2XL U158 ( .A(a[3]), .B(b[0]), .Y(n113) );
-  NOR2BXL U159 ( .AN(n195), .B(n196), .Y(n71) );
-  NAND2BXL U160 ( .AN(n195), .B(a[7]), .Y(n96) );
-  NAND2BXL U161 ( .AN(n195), .B(a[5]), .Y(n105) );
-  XNOR2XL U162 ( .A(a[5]), .B(b[0]), .Y(n104) );
-  NOR2BXL U163 ( .AN(n195), .B(n193), .Y(n63) );
-  CLKBUFX3 U164 ( .A(n159), .Y(n143) );
-  CLKBUFX3 U165 ( .A(a[1]), .Y(n151) );
-  CLKBUFX3 U166 ( .A(a[3]), .Y(n150) );
-  CLKBUFX3 U167 ( .A(a[5]), .Y(n149) );
-  CLKBUFX3 U168 ( .A(a[7]), .Y(n148) );
-  AND2X2 U169 ( .A(n132), .B(n156), .Y(n197) );
-  CLKINVX1 U170 ( .A(n197), .Y(n152) );
-  AND2X2 U171 ( .A(n133), .B(n157), .Y(n198) );
-  CLKINVX1 U172 ( .A(n198), .Y(n153) );
-  AND2X2 U173 ( .A(n134), .B(n158), .Y(n199) );
-  CLKINVX1 U174 ( .A(n199), .Y(n154) );
-  AND2X2 U175 ( .A(n135), .B(n159), .Y(n200) );
-  CLKINVX1 U176 ( .A(n200), .Y(n155) );
+  NOR2X1 U140 ( .A(n157), .B(n131), .Y(n71) );
+  NOR2X1 U141 ( .A(n156), .B(n131), .Y(n63) );
+  OAI2BB2XL U142 ( .B0(n156), .B1(n96), .A0N(n197), .A1N(n148), .Y(n52) );
+  NOR2X1 U143 ( .A(n131), .B(n159), .Y(product[0]) );
+  OAI2BB2XL U144 ( .B0(n123), .B1(n159), .A0N(n200), .A1N(n151), .Y(n55) );
+  NOR2X1 U145 ( .A(n158), .B(n131), .Y(n79) );
+  CLKINVX1 U146 ( .A(n198), .Y(n189) );
+  CLKINVX1 U147 ( .A(n200), .Y(n190) );
+  CLKINVX1 U148 ( .A(n199), .Y(n191) );
+  CLKINVX1 U149 ( .A(n158), .Y(n142) );
+  CLKINVX1 U150 ( .A(n142), .Y(n192) );
+  CLKINVX1 U151 ( .A(n156), .Y(n140) );
+  CLKINVX1 U152 ( .A(n140), .Y(n193) );
+  CLKINVX1 U153 ( .A(n197), .Y(n194) );
+  CLKINVX1 U154 ( .A(b[0]), .Y(n131) );
+  CLKINVX1 U155 ( .A(n131), .Y(n195) );
+  NAND2BXL U156 ( .AN(n195), .B(a[1]), .Y(n123) );
+  NAND2BXL U157 ( .AN(n195), .B(a[3]), .Y(n114) );
+  CLKINVX1 U158 ( .A(n157), .Y(n141) );
+  CLKINVX1 U159 ( .A(n141), .Y(n196) );
+  XNOR2XL U160 ( .A(a[7]), .B(b[0]), .Y(n95) );
+  XNOR2XL U161 ( .A(a[1]), .B(b[0]), .Y(n122) );
+  XNOR2XL U162 ( .A(a[3]), .B(b[0]), .Y(n113) );
+  NAND2BXL U163 ( .AN(n195), .B(a[7]), .Y(n96) );
+  NAND2BXL U164 ( .AN(n195), .B(a[5]), .Y(n105) );
+  XNOR2XL U165 ( .A(a[5]), .B(b[0]), .Y(n104) );
+  CLKBUFX3 U166 ( .A(n159), .Y(n143) );
+  CLKBUFX3 U167 ( .A(a[1]), .Y(n151) );
+  CLKBUFX3 U168 ( .A(a[3]), .Y(n150) );
+  CLKBUFX3 U169 ( .A(a[5]), .Y(n149) );
+  CLKBUFX3 U170 ( .A(a[7]), .Y(n148) );
+  AND2X2 U171 ( .A(n132), .B(n156), .Y(n197) );
+  CLKINVX1 U172 ( .A(n197), .Y(n152) );
+  AND2X2 U173 ( .A(n133), .B(n157), .Y(n198) );
+  CLKINVX1 U174 ( .A(n198), .Y(n153) );
+  AND2X2 U175 ( .A(n134), .B(n158), .Y(n199) );
+  CLKINVX1 U176 ( .A(n199), .Y(n154) );
+  AND2X2 U177 ( .A(n135), .B(n159), .Y(n200) );
+  CLKINVX1 U178 ( .A(n200), .Y(n155) );
 endmodule
 
 
@@ -4603,10 +4567,10 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_50 ( a, b, product );
          n87, n88, n89, n90, n91, n92, n93, n94, n95, n96, n97, n98, n99, n100,
          n101, n102, n103, n104, n105, n106, n107, n108, n109, n110, n111,
          n112, n113, n114, n115, n116, n117, n118, n119, n120, n121, n122,
-         n123, n131, n132, n133, n134, n135, n140, n141, n142, n143, n144,
-         n145, n146, n147, n148, n149, n150, n151, n152, n153, n154, n155,
-         n156, n157, n158, n159, n189, n190, n191, n192, n193, n194, n195,
-         n196, n197, n198, n199, n200;
+         n123, n131, n132, n133, n134, n135, n140, n141, n142, n143, n145,
+         n146, n148, n149, n150, n151, n152, n153, n154, n155, n156, n157,
+         n158, n159, n189, n190, n191, n192, n193, n194, n195, n196, n197,
+         n198, n199, n200;
 
   CLKINVX1 U1 ( .A(n1), .Y(product[15]) );
   ADDFXL U2 ( .A(n56), .B(n15), .CI(n2), .CO(n1), .S(product[14]) );
@@ -4645,7 +4609,6 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_50 ( a, b, product );
   ADDHXL U30 ( .A(n83), .B(n70), .CO(n46), .S(n47) );
   ADDFXL U31 ( .A(n84), .B(n71), .CI(n77), .CO(n48), .S(n49) );
   ADDHXL U32 ( .A(n85), .B(n54), .CO(n50), .S(n51) );
-  OAI22XL U33 ( .A0(n152), .A1(n144), .B0(n193), .B1(n96), .Y(n52) );
   AO21X1 U34 ( .A0(n152), .A1(n156), .B0(n88), .Y(n56) );
   OAI22XL U35 ( .A0(n152), .A1(n89), .B0(n193), .B1(n88), .Y(n15) );
   OAI22XL U36 ( .A0(n152), .A1(n90), .B0(n193), .B1(n89), .Y(n57) );
@@ -4693,7 +4656,6 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_50 ( a, b, product );
   XNOR2X1 U85 ( .A(n150), .B(b[3]), .Y(n110) );
   XNOR2X1 U86 ( .A(n150), .B(b[2]), .Y(n111) );
   XNOR2X1 U87 ( .A(n150), .B(b[1]), .Y(n112) );
-  OAI22XL U90 ( .A0(n155), .A1(n147), .B0(n123), .B1(n143), .Y(n55) );
   AO21X1 U91 ( .A0(n155), .A1(n159), .B0(n115), .Y(n80) );
   OAI22XL U92 ( .A0(n155), .A1(n116), .B0(n115), .B1(n143), .Y(n81) );
   OAI22XL U93 ( .A0(n155), .A1(n117), .B0(n116), .B1(n143), .Y(n82) );
@@ -4709,10 +4671,8 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_50 ( a, b, product );
   XNOR2X1 U104 ( .A(n151), .B(b[3]), .Y(n119) );
   XNOR2X1 U105 ( .A(n151), .B(b[2]), .Y(n120) );
   XNOR2X1 U106 ( .A(n151), .B(b[1]), .Y(n121) );
-  CLKINVX1 U112 ( .A(n148), .Y(n144) );
   CLKINVX1 U116 ( .A(n149), .Y(n145) );
   CLKINVX1 U120 ( .A(n150), .Y(n146) );
-  CLKINVX1 U124 ( .A(n151), .Y(n147) );
   XOR2X1 U127 ( .A(a[6]), .B(a[7]), .Y(n132) );
   XNOR2X1 U128 ( .A(a[6]), .B(a[5]), .Y(n156) );
   XOR2X1 U130 ( .A(a[4]), .B(a[5]), .Y(n133) );
@@ -4721,43 +4681,45 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_50 ( a, b, product );
   XNOR2X1 U134 ( .A(a[2]), .B(a[1]), .Y(n158) );
   XOR2X1 U136 ( .A(a[0]), .B(a[1]), .Y(n135) );
   CLKINVX1 U137 ( .A(a[0]), .Y(n159) );
-  CLKINVX1 U140 ( .A(n198), .Y(n189) );
-  CLKINVX1 U141 ( .A(n200), .Y(n190) );
-  CLKINVX1 U142 ( .A(n199), .Y(n191) );
-  CLKINVX1 U143 ( .A(n158), .Y(n142) );
-  CLKINVX1 U144 ( .A(n142), .Y(n192) );
-  CLKINVX1 U145 ( .A(n156), .Y(n140) );
-  CLKINVX1 U146 ( .A(n140), .Y(n193) );
-  CLKINVX1 U147 ( .A(n197), .Y(n194) );
-  CLKINVX1 U148 ( .A(b[0]), .Y(n131) );
-  CLKINVX1 U149 ( .A(n131), .Y(n195) );
-  NAND2BXL U150 ( .AN(n195), .B(a[1]), .Y(n123) );
-  NAND2BXL U151 ( .AN(n195), .B(a[3]), .Y(n114) );
-  CLKINVX1 U152 ( .A(n157), .Y(n141) );
-  CLKINVX1 U153 ( .A(n141), .Y(n196) );
-  NOR2BXL U154 ( .AN(n195), .B(n159), .Y(product[0]) );
-  XNOR2XL U155 ( .A(a[7]), .B(b[0]), .Y(n95) );
-  XNOR2XL U156 ( .A(a[1]), .B(b[0]), .Y(n122) );
-  NOR2BXL U157 ( .AN(n195), .B(n192), .Y(n79) );
-  XNOR2XL U158 ( .A(a[3]), .B(b[0]), .Y(n113) );
-  NOR2BXL U159 ( .AN(n195), .B(n196), .Y(n71) );
-  NAND2BXL U160 ( .AN(n195), .B(a[7]), .Y(n96) );
-  NAND2BXL U161 ( .AN(n195), .B(a[5]), .Y(n105) );
-  XNOR2XL U162 ( .A(a[5]), .B(b[0]), .Y(n104) );
-  NOR2BXL U163 ( .AN(n195), .B(n193), .Y(n63) );
-  CLKBUFX3 U164 ( .A(n159), .Y(n143) );
-  CLKBUFX3 U165 ( .A(a[1]), .Y(n151) );
-  CLKBUFX3 U166 ( .A(a[3]), .Y(n150) );
-  CLKBUFX3 U167 ( .A(a[5]), .Y(n149) );
-  CLKBUFX3 U168 ( .A(a[7]), .Y(n148) );
-  AND2X2 U169 ( .A(n132), .B(n156), .Y(n197) );
-  CLKINVX1 U170 ( .A(n197), .Y(n152) );
-  AND2X2 U171 ( .A(n133), .B(n157), .Y(n198) );
-  CLKINVX1 U172 ( .A(n198), .Y(n153) );
-  AND2X2 U173 ( .A(n134), .B(n158), .Y(n199) );
-  CLKINVX1 U174 ( .A(n199), .Y(n154) );
-  AND2X2 U175 ( .A(n135), .B(n159), .Y(n200) );
-  CLKINVX1 U176 ( .A(n200), .Y(n155) );
+  NOR2X1 U140 ( .A(n157), .B(n131), .Y(n71) );
+  NOR2X1 U141 ( .A(n156), .B(n131), .Y(n63) );
+  NOR2X1 U142 ( .A(n131), .B(n159), .Y(product[0]) );
+  OAI2BB2XL U143 ( .B0(n156), .B1(n96), .A0N(n197), .A1N(n148), .Y(n52) );
+  OAI2BB2XL U144 ( .B0(n123), .B1(n159), .A0N(n200), .A1N(n151), .Y(n55) );
+  NOR2X1 U145 ( .A(n158), .B(n131), .Y(n79) );
+  CLKINVX1 U146 ( .A(n198), .Y(n189) );
+  CLKINVX1 U147 ( .A(n200), .Y(n190) );
+  CLKINVX1 U148 ( .A(n199), .Y(n191) );
+  CLKINVX1 U149 ( .A(n158), .Y(n142) );
+  CLKINVX1 U150 ( .A(n142), .Y(n192) );
+  CLKINVX1 U151 ( .A(n156), .Y(n140) );
+  CLKINVX1 U152 ( .A(n140), .Y(n193) );
+  CLKINVX1 U153 ( .A(n197), .Y(n194) );
+  CLKINVX1 U154 ( .A(b[0]), .Y(n131) );
+  CLKINVX1 U155 ( .A(n131), .Y(n195) );
+  NAND2BXL U156 ( .AN(n195), .B(a[1]), .Y(n123) );
+  NAND2BXL U157 ( .AN(n195), .B(a[3]), .Y(n114) );
+  CLKINVX1 U158 ( .A(n157), .Y(n141) );
+  CLKINVX1 U159 ( .A(n141), .Y(n196) );
+  XNOR2XL U160 ( .A(a[7]), .B(b[0]), .Y(n95) );
+  XNOR2XL U161 ( .A(a[1]), .B(b[0]), .Y(n122) );
+  XNOR2XL U162 ( .A(a[3]), .B(b[0]), .Y(n113) );
+  NAND2BXL U163 ( .AN(n195), .B(a[7]), .Y(n96) );
+  NAND2BXL U164 ( .AN(n195), .B(a[5]), .Y(n105) );
+  XNOR2XL U165 ( .A(a[5]), .B(b[0]), .Y(n104) );
+  CLKBUFX3 U166 ( .A(n159), .Y(n143) );
+  CLKBUFX3 U167 ( .A(a[1]), .Y(n151) );
+  CLKBUFX3 U168 ( .A(a[3]), .Y(n150) );
+  CLKBUFX3 U169 ( .A(a[5]), .Y(n149) );
+  CLKBUFX3 U170 ( .A(a[7]), .Y(n148) );
+  AND2X2 U171 ( .A(n132), .B(n156), .Y(n197) );
+  CLKINVX1 U172 ( .A(n197), .Y(n152) );
+  AND2X2 U173 ( .A(n133), .B(n157), .Y(n198) );
+  CLKINVX1 U174 ( .A(n198), .Y(n153) );
+  AND2X2 U175 ( .A(n134), .B(n158), .Y(n199) );
+  CLKINVX1 U176 ( .A(n199), .Y(n154) );
+  AND2X2 U177 ( .A(n135), .B(n159), .Y(n200) );
+  CLKINVX1 U178 ( .A(n200), .Y(n155) );
 endmodule
 
 
@@ -4774,10 +4736,10 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_51 ( a, b, product );
          n87, n88, n89, n90, n91, n92, n93, n94, n95, n96, n97, n98, n99, n100,
          n101, n102, n103, n104, n105, n106, n107, n108, n109, n110, n111,
          n112, n113, n114, n115, n116, n117, n118, n119, n120, n121, n122,
-         n123, n131, n132, n133, n134, n135, n140, n141, n142, n143, n144,
-         n145, n146, n147, n148, n149, n150, n151, n152, n153, n154, n155,
-         n156, n157, n158, n159, n189, n190, n191, n192, n193, n194, n195,
-         n196, n197, n198, n199, n200;
+         n123, n131, n132, n133, n134, n135, n140, n141, n142, n143, n145,
+         n146, n148, n149, n150, n151, n152, n153, n154, n155, n156, n157,
+         n158, n159, n189, n190, n191, n192, n193, n194, n195, n196, n197,
+         n198, n199, n200;
 
   CLKINVX1 U1 ( .A(n1), .Y(product[15]) );
   ADDFXL U2 ( .A(n56), .B(n15), .CI(n2), .CO(n1), .S(product[14]) );
@@ -4816,7 +4778,6 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_51 ( a, b, product );
   ADDHXL U30 ( .A(n83), .B(n70), .CO(n46), .S(n47) );
   ADDFXL U31 ( .A(n84), .B(n71), .CI(n77), .CO(n48), .S(n49) );
   ADDHXL U32 ( .A(n85), .B(n54), .CO(n50), .S(n51) );
-  OAI22XL U33 ( .A0(n152), .A1(n144), .B0(n193), .B1(n96), .Y(n52) );
   AO21X1 U34 ( .A0(n152), .A1(n156), .B0(n88), .Y(n56) );
   OAI22XL U35 ( .A0(n152), .A1(n89), .B0(n193), .B1(n88), .Y(n15) );
   OAI22XL U36 ( .A0(n152), .A1(n90), .B0(n193), .B1(n89), .Y(n57) );
@@ -4864,7 +4825,6 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_51 ( a, b, product );
   XNOR2X1 U85 ( .A(n150), .B(b[3]), .Y(n110) );
   XNOR2X1 U86 ( .A(n150), .B(b[2]), .Y(n111) );
   XNOR2X1 U87 ( .A(n150), .B(b[1]), .Y(n112) );
-  OAI22XL U90 ( .A0(n155), .A1(n147), .B0(n123), .B1(n143), .Y(n55) );
   AO21X1 U91 ( .A0(n155), .A1(n159), .B0(n115), .Y(n80) );
   OAI22XL U92 ( .A0(n155), .A1(n116), .B0(n115), .B1(n143), .Y(n81) );
   OAI22XL U93 ( .A0(n155), .A1(n117), .B0(n116), .B1(n143), .Y(n82) );
@@ -4880,10 +4840,8 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_51 ( a, b, product );
   XNOR2X1 U104 ( .A(n151), .B(b[3]), .Y(n119) );
   XNOR2X1 U105 ( .A(n151), .B(b[2]), .Y(n120) );
   XNOR2X1 U106 ( .A(n151), .B(b[1]), .Y(n121) );
-  CLKINVX1 U112 ( .A(n148), .Y(n144) );
   CLKINVX1 U116 ( .A(n149), .Y(n145) );
   CLKINVX1 U120 ( .A(n150), .Y(n146) );
-  CLKINVX1 U124 ( .A(n151), .Y(n147) );
   XOR2X1 U127 ( .A(a[6]), .B(a[7]), .Y(n132) );
   XNOR2X1 U128 ( .A(a[6]), .B(a[5]), .Y(n156) );
   XOR2X1 U130 ( .A(a[4]), .B(a[5]), .Y(n133) );
@@ -4892,43 +4850,45 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_51 ( a, b, product );
   XNOR2X1 U134 ( .A(a[2]), .B(a[1]), .Y(n158) );
   XOR2X1 U136 ( .A(a[0]), .B(a[1]), .Y(n135) );
   CLKINVX1 U137 ( .A(a[0]), .Y(n159) );
-  CLKINVX1 U140 ( .A(n198), .Y(n189) );
-  CLKINVX1 U141 ( .A(n200), .Y(n190) );
-  CLKINVX1 U142 ( .A(n199), .Y(n191) );
-  CLKINVX1 U143 ( .A(n158), .Y(n142) );
-  CLKINVX1 U144 ( .A(n142), .Y(n192) );
-  CLKINVX1 U145 ( .A(n156), .Y(n140) );
-  CLKINVX1 U146 ( .A(n140), .Y(n193) );
-  CLKINVX1 U147 ( .A(n197), .Y(n194) );
-  CLKINVX1 U148 ( .A(b[0]), .Y(n131) );
-  CLKINVX1 U149 ( .A(n131), .Y(n195) );
-  NAND2BXL U150 ( .AN(n195), .B(a[1]), .Y(n123) );
-  NAND2BXL U151 ( .AN(n195), .B(a[3]), .Y(n114) );
-  CLKINVX1 U152 ( .A(n157), .Y(n141) );
-  CLKINVX1 U153 ( .A(n141), .Y(n196) );
-  NOR2BXL U154 ( .AN(n195), .B(n159), .Y(product[0]) );
-  XNOR2XL U155 ( .A(a[7]), .B(b[0]), .Y(n95) );
-  XNOR2XL U156 ( .A(a[1]), .B(b[0]), .Y(n122) );
-  NOR2BXL U157 ( .AN(n195), .B(n192), .Y(n79) );
-  XNOR2XL U158 ( .A(a[3]), .B(b[0]), .Y(n113) );
-  NOR2BXL U159 ( .AN(n195), .B(n196), .Y(n71) );
-  NAND2BXL U160 ( .AN(n195), .B(a[7]), .Y(n96) );
-  NAND2BXL U161 ( .AN(n195), .B(a[5]), .Y(n105) );
-  XNOR2XL U162 ( .A(a[5]), .B(b[0]), .Y(n104) );
-  NOR2BXL U163 ( .AN(n195), .B(n193), .Y(n63) );
-  CLKBUFX3 U164 ( .A(n159), .Y(n143) );
-  CLKBUFX3 U165 ( .A(a[1]), .Y(n151) );
-  CLKBUFX3 U166 ( .A(a[3]), .Y(n150) );
-  CLKBUFX3 U167 ( .A(a[5]), .Y(n149) );
-  CLKBUFX3 U168 ( .A(a[7]), .Y(n148) );
-  AND2X2 U169 ( .A(n132), .B(n156), .Y(n197) );
-  CLKINVX1 U170 ( .A(n197), .Y(n152) );
-  AND2X2 U171 ( .A(n133), .B(n157), .Y(n198) );
-  CLKINVX1 U172 ( .A(n198), .Y(n153) );
-  AND2X2 U173 ( .A(n134), .B(n158), .Y(n199) );
-  CLKINVX1 U174 ( .A(n199), .Y(n154) );
-  AND2X2 U175 ( .A(n135), .B(n159), .Y(n200) );
-  CLKINVX1 U176 ( .A(n200), .Y(n155) );
+  NOR2X1 U140 ( .A(n157), .B(n131), .Y(n71) );
+  NOR2X1 U141 ( .A(n156), .B(n131), .Y(n63) );
+  OAI2BB2XL U142 ( .B0(n156), .B1(n96), .A0N(n197), .A1N(n148), .Y(n52) );
+  NOR2X1 U143 ( .A(n131), .B(n159), .Y(product[0]) );
+  OAI2BB2XL U144 ( .B0(n123), .B1(n159), .A0N(n200), .A1N(n151), .Y(n55) );
+  NOR2X1 U145 ( .A(n158), .B(n131), .Y(n79) );
+  CLKINVX1 U146 ( .A(n198), .Y(n189) );
+  CLKINVX1 U147 ( .A(n200), .Y(n190) );
+  CLKINVX1 U148 ( .A(n199), .Y(n191) );
+  CLKINVX1 U149 ( .A(n158), .Y(n142) );
+  CLKINVX1 U150 ( .A(n142), .Y(n192) );
+  CLKINVX1 U151 ( .A(n156), .Y(n140) );
+  CLKINVX1 U152 ( .A(n140), .Y(n193) );
+  CLKINVX1 U153 ( .A(n197), .Y(n194) );
+  CLKINVX1 U154 ( .A(b[0]), .Y(n131) );
+  CLKINVX1 U155 ( .A(n131), .Y(n195) );
+  NAND2BXL U156 ( .AN(n195), .B(a[1]), .Y(n123) );
+  NAND2BXL U157 ( .AN(n195), .B(a[3]), .Y(n114) );
+  CLKINVX1 U158 ( .A(n157), .Y(n141) );
+  CLKINVX1 U159 ( .A(n141), .Y(n196) );
+  XNOR2XL U160 ( .A(a[7]), .B(b[0]), .Y(n95) );
+  XNOR2XL U161 ( .A(a[1]), .B(b[0]), .Y(n122) );
+  XNOR2XL U162 ( .A(a[3]), .B(b[0]), .Y(n113) );
+  NAND2BXL U163 ( .AN(n195), .B(a[7]), .Y(n96) );
+  NAND2BXL U164 ( .AN(n195), .B(a[5]), .Y(n105) );
+  XNOR2XL U165 ( .A(a[5]), .B(b[0]), .Y(n104) );
+  CLKBUFX3 U166 ( .A(n159), .Y(n143) );
+  CLKBUFX3 U167 ( .A(a[1]), .Y(n151) );
+  CLKBUFX3 U168 ( .A(a[3]), .Y(n150) );
+  CLKBUFX3 U169 ( .A(a[5]), .Y(n149) );
+  CLKBUFX3 U170 ( .A(a[7]), .Y(n148) );
+  AND2X2 U171 ( .A(n132), .B(n156), .Y(n197) );
+  CLKINVX1 U172 ( .A(n197), .Y(n152) );
+  AND2X2 U173 ( .A(n133), .B(n157), .Y(n198) );
+  CLKINVX1 U174 ( .A(n198), .Y(n153) );
+  AND2X2 U175 ( .A(n134), .B(n158), .Y(n199) );
+  CLKINVX1 U176 ( .A(n199), .Y(n154) );
+  AND2X2 U177 ( .A(n135), .B(n159), .Y(n200) );
+  CLKINVX1 U178 ( .A(n200), .Y(n155) );
 endmodule
 
 
@@ -4945,10 +4905,10 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_52 ( a, b, product );
          n87, n88, n89, n90, n91, n92, n93, n94, n95, n96, n97, n98, n99, n100,
          n101, n102, n103, n104, n105, n106, n107, n108, n109, n110, n111,
          n112, n113, n114, n115, n116, n117, n118, n119, n120, n121, n122,
-         n123, n131, n132, n133, n134, n135, n140, n141, n142, n143, n144,
-         n145, n146, n147, n148, n149, n150, n151, n152, n153, n154, n155,
-         n156, n157, n158, n159, n189, n190, n191, n192, n193, n194, n195,
-         n196, n197, n198, n199, n200;
+         n123, n131, n132, n133, n134, n135, n140, n141, n142, n143, n145,
+         n146, n148, n149, n150, n151, n152, n153, n154, n155, n156, n157,
+         n158, n159, n189, n190, n191, n192, n193, n194, n195, n196, n197,
+         n198, n199, n200;
 
   CLKINVX1 U1 ( .A(n1), .Y(product[15]) );
   ADDFXL U2 ( .A(n56), .B(n15), .CI(n2), .CO(n1), .S(product[14]) );
@@ -4987,7 +4947,6 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_52 ( a, b, product );
   ADDHXL U30 ( .A(n83), .B(n70), .CO(n46), .S(n47) );
   ADDFXL U31 ( .A(n84), .B(n71), .CI(n77), .CO(n48), .S(n49) );
   ADDHXL U32 ( .A(n85), .B(n54), .CO(n50), .S(n51) );
-  OAI22XL U33 ( .A0(n152), .A1(n144), .B0(n193), .B1(n96), .Y(n52) );
   AO21X1 U34 ( .A0(n152), .A1(n156), .B0(n88), .Y(n56) );
   OAI22XL U35 ( .A0(n152), .A1(n89), .B0(n193), .B1(n88), .Y(n15) );
   OAI22XL U36 ( .A0(n152), .A1(n90), .B0(n193), .B1(n89), .Y(n57) );
@@ -5035,7 +4994,6 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_52 ( a, b, product );
   XNOR2X1 U85 ( .A(n150), .B(b[3]), .Y(n110) );
   XNOR2X1 U86 ( .A(n150), .B(b[2]), .Y(n111) );
   XNOR2X1 U87 ( .A(n150), .B(b[1]), .Y(n112) );
-  OAI22XL U90 ( .A0(n155), .A1(n147), .B0(n123), .B1(n143), .Y(n55) );
   AO21X1 U91 ( .A0(n155), .A1(n159), .B0(n115), .Y(n80) );
   OAI22XL U92 ( .A0(n155), .A1(n116), .B0(n115), .B1(n143), .Y(n81) );
   OAI22XL U93 ( .A0(n155), .A1(n117), .B0(n116), .B1(n143), .Y(n82) );
@@ -5051,10 +5009,8 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_52 ( a, b, product );
   XNOR2X1 U104 ( .A(n151), .B(b[3]), .Y(n119) );
   XNOR2X1 U105 ( .A(n151), .B(b[2]), .Y(n120) );
   XNOR2X1 U106 ( .A(n151), .B(b[1]), .Y(n121) );
-  CLKINVX1 U112 ( .A(n148), .Y(n144) );
   CLKINVX1 U116 ( .A(n149), .Y(n145) );
   CLKINVX1 U120 ( .A(n150), .Y(n146) );
-  CLKINVX1 U124 ( .A(n151), .Y(n147) );
   XOR2X1 U127 ( .A(a[6]), .B(a[7]), .Y(n132) );
   XNOR2X1 U128 ( .A(a[6]), .B(a[5]), .Y(n156) );
   XOR2X1 U130 ( .A(a[4]), .B(a[5]), .Y(n133) );
@@ -5063,43 +5019,45 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_52 ( a, b, product );
   XNOR2X1 U134 ( .A(a[2]), .B(a[1]), .Y(n158) );
   XOR2X1 U136 ( .A(a[0]), .B(a[1]), .Y(n135) );
   CLKINVX1 U137 ( .A(a[0]), .Y(n159) );
-  CLKINVX1 U140 ( .A(n198), .Y(n189) );
-  CLKINVX1 U141 ( .A(n200), .Y(n190) );
-  CLKINVX1 U142 ( .A(n199), .Y(n191) );
-  CLKINVX1 U143 ( .A(n158), .Y(n142) );
-  CLKINVX1 U144 ( .A(n142), .Y(n192) );
-  CLKINVX1 U145 ( .A(n156), .Y(n140) );
-  CLKINVX1 U146 ( .A(n140), .Y(n193) );
-  CLKINVX1 U147 ( .A(n197), .Y(n194) );
-  CLKINVX1 U148 ( .A(b[0]), .Y(n131) );
-  CLKINVX1 U149 ( .A(n131), .Y(n195) );
-  NAND2BXL U150 ( .AN(n195), .B(a[1]), .Y(n123) );
-  NAND2BXL U151 ( .AN(n195), .B(a[3]), .Y(n114) );
-  CLKINVX1 U152 ( .A(n157), .Y(n141) );
-  CLKINVX1 U153 ( .A(n141), .Y(n196) );
-  NOR2BXL U154 ( .AN(n195), .B(n159), .Y(product[0]) );
-  XNOR2XL U155 ( .A(a[7]), .B(b[0]), .Y(n95) );
-  XNOR2XL U156 ( .A(a[1]), .B(b[0]), .Y(n122) );
-  NOR2BXL U157 ( .AN(n195), .B(n192), .Y(n79) );
-  XNOR2XL U158 ( .A(a[3]), .B(b[0]), .Y(n113) );
-  NOR2BXL U159 ( .AN(n195), .B(n196), .Y(n71) );
-  NAND2BXL U160 ( .AN(n195), .B(a[7]), .Y(n96) );
-  NAND2BXL U161 ( .AN(n195), .B(a[5]), .Y(n105) );
-  XNOR2XL U162 ( .A(a[5]), .B(b[0]), .Y(n104) );
-  NOR2BXL U163 ( .AN(n195), .B(n193), .Y(n63) );
-  CLKBUFX3 U164 ( .A(n159), .Y(n143) );
-  CLKBUFX3 U165 ( .A(a[1]), .Y(n151) );
-  CLKBUFX3 U166 ( .A(a[3]), .Y(n150) );
-  CLKBUFX3 U167 ( .A(a[5]), .Y(n149) );
-  CLKBUFX3 U168 ( .A(a[7]), .Y(n148) );
-  AND2X2 U169 ( .A(n132), .B(n156), .Y(n197) );
-  CLKINVX1 U170 ( .A(n197), .Y(n152) );
-  AND2X2 U171 ( .A(n133), .B(n157), .Y(n198) );
-  CLKINVX1 U172 ( .A(n198), .Y(n153) );
-  AND2X2 U173 ( .A(n134), .B(n158), .Y(n199) );
-  CLKINVX1 U174 ( .A(n199), .Y(n154) );
-  AND2X2 U175 ( .A(n135), .B(n159), .Y(n200) );
-  CLKINVX1 U176 ( .A(n200), .Y(n155) );
+  NOR2X1 U140 ( .A(n157), .B(n131), .Y(n71) );
+  NOR2X1 U141 ( .A(n156), .B(n131), .Y(n63) );
+  NOR2X1 U142 ( .A(n131), .B(n159), .Y(product[0]) );
+  OAI2BB2XL U143 ( .B0(n156), .B1(n96), .A0N(n197), .A1N(n148), .Y(n52) );
+  OAI2BB2XL U144 ( .B0(n123), .B1(n159), .A0N(n200), .A1N(n151), .Y(n55) );
+  NOR2X1 U145 ( .A(n158), .B(n131), .Y(n79) );
+  CLKINVX1 U146 ( .A(n198), .Y(n189) );
+  CLKINVX1 U147 ( .A(n200), .Y(n190) );
+  CLKINVX1 U148 ( .A(n199), .Y(n191) );
+  CLKINVX1 U149 ( .A(n158), .Y(n142) );
+  CLKINVX1 U150 ( .A(n142), .Y(n192) );
+  CLKINVX1 U151 ( .A(n156), .Y(n140) );
+  CLKINVX1 U152 ( .A(n140), .Y(n193) );
+  CLKINVX1 U153 ( .A(n197), .Y(n194) );
+  CLKINVX1 U154 ( .A(b[0]), .Y(n131) );
+  CLKINVX1 U155 ( .A(n131), .Y(n195) );
+  NAND2BXL U156 ( .AN(n195), .B(a[1]), .Y(n123) );
+  NAND2BXL U157 ( .AN(n195), .B(a[3]), .Y(n114) );
+  CLKINVX1 U158 ( .A(n157), .Y(n141) );
+  CLKINVX1 U159 ( .A(n141), .Y(n196) );
+  XNOR2XL U160 ( .A(a[7]), .B(b[0]), .Y(n95) );
+  XNOR2XL U161 ( .A(a[1]), .B(b[0]), .Y(n122) );
+  XNOR2XL U162 ( .A(a[3]), .B(b[0]), .Y(n113) );
+  NAND2BXL U163 ( .AN(n195), .B(a[7]), .Y(n96) );
+  NAND2BXL U164 ( .AN(n195), .B(a[5]), .Y(n105) );
+  XNOR2XL U165 ( .A(a[5]), .B(b[0]), .Y(n104) );
+  CLKBUFX3 U166 ( .A(n159), .Y(n143) );
+  CLKBUFX3 U167 ( .A(a[1]), .Y(n151) );
+  CLKBUFX3 U168 ( .A(a[3]), .Y(n150) );
+  CLKBUFX3 U169 ( .A(a[5]), .Y(n149) );
+  CLKBUFX3 U170 ( .A(a[7]), .Y(n148) );
+  AND2X2 U171 ( .A(n132), .B(n156), .Y(n197) );
+  CLKINVX1 U172 ( .A(n197), .Y(n152) );
+  AND2X2 U173 ( .A(n133), .B(n157), .Y(n198) );
+  CLKINVX1 U174 ( .A(n198), .Y(n153) );
+  AND2X2 U175 ( .A(n134), .B(n158), .Y(n199) );
+  CLKINVX1 U176 ( .A(n199), .Y(n154) );
+  AND2X2 U177 ( .A(n135), .B(n159), .Y(n200) );
+  CLKINVX1 U178 ( .A(n200), .Y(n155) );
 endmodule
 
 
@@ -5116,10 +5074,10 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_53 ( a, b, product );
          n87, n88, n89, n90, n91, n92, n93, n94, n95, n96, n97, n98, n99, n100,
          n101, n102, n103, n104, n105, n106, n107, n108, n109, n110, n111,
          n112, n113, n114, n115, n116, n117, n118, n119, n120, n121, n122,
-         n123, n131, n132, n133, n134, n135, n140, n141, n142, n143, n144,
-         n145, n146, n147, n148, n149, n150, n151, n152, n153, n154, n155,
-         n156, n157, n158, n159, n189, n190, n191, n192, n193, n194, n195,
-         n196, n197, n198, n199, n200;
+         n123, n131, n132, n133, n134, n135, n140, n141, n142, n143, n145,
+         n146, n148, n149, n150, n151, n152, n153, n154, n155, n156, n157,
+         n158, n159, n189, n190, n191, n192, n193, n194, n195, n196, n197,
+         n198, n199, n200;
 
   CLKINVX1 U1 ( .A(n1), .Y(product[15]) );
   ADDFXL U2 ( .A(n56), .B(n15), .CI(n2), .CO(n1), .S(product[14]) );
@@ -5158,7 +5116,6 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_53 ( a, b, product );
   ADDHXL U30 ( .A(n83), .B(n70), .CO(n46), .S(n47) );
   ADDFXL U31 ( .A(n84), .B(n71), .CI(n77), .CO(n48), .S(n49) );
   ADDHXL U32 ( .A(n85), .B(n54), .CO(n50), .S(n51) );
-  OAI22XL U33 ( .A0(n152), .A1(n144), .B0(n193), .B1(n96), .Y(n52) );
   AO21X1 U34 ( .A0(n152), .A1(n156), .B0(n88), .Y(n56) );
   OAI22XL U35 ( .A0(n152), .A1(n89), .B0(n193), .B1(n88), .Y(n15) );
   OAI22XL U36 ( .A0(n152), .A1(n90), .B0(n193), .B1(n89), .Y(n57) );
@@ -5206,7 +5163,6 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_53 ( a, b, product );
   XNOR2X1 U85 ( .A(n150), .B(b[3]), .Y(n110) );
   XNOR2X1 U86 ( .A(n150), .B(b[2]), .Y(n111) );
   XNOR2X1 U87 ( .A(n150), .B(b[1]), .Y(n112) );
-  OAI22XL U90 ( .A0(n155), .A1(n147), .B0(n123), .B1(n143), .Y(n55) );
   AO21X1 U91 ( .A0(n155), .A1(n159), .B0(n115), .Y(n80) );
   OAI22XL U92 ( .A0(n155), .A1(n116), .B0(n115), .B1(n143), .Y(n81) );
   OAI22XL U93 ( .A0(n155), .A1(n117), .B0(n116), .B1(n143), .Y(n82) );
@@ -5222,10 +5178,8 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_53 ( a, b, product );
   XNOR2X1 U104 ( .A(n151), .B(b[3]), .Y(n119) );
   XNOR2X1 U105 ( .A(n151), .B(b[2]), .Y(n120) );
   XNOR2X1 U106 ( .A(n151), .B(b[1]), .Y(n121) );
-  CLKINVX1 U112 ( .A(n148), .Y(n144) );
   CLKINVX1 U116 ( .A(n149), .Y(n145) );
   CLKINVX1 U120 ( .A(n150), .Y(n146) );
-  CLKINVX1 U124 ( .A(n151), .Y(n147) );
   XOR2X1 U127 ( .A(a[6]), .B(a[7]), .Y(n132) );
   XNOR2X1 U128 ( .A(a[6]), .B(a[5]), .Y(n156) );
   XOR2X1 U130 ( .A(a[4]), .B(a[5]), .Y(n133) );
@@ -5234,43 +5188,45 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_53 ( a, b, product );
   XNOR2X1 U134 ( .A(a[2]), .B(a[1]), .Y(n158) );
   XOR2X1 U136 ( .A(a[0]), .B(a[1]), .Y(n135) );
   CLKINVX1 U137 ( .A(a[0]), .Y(n159) );
-  CLKINVX1 U140 ( .A(n198), .Y(n189) );
-  CLKINVX1 U141 ( .A(n200), .Y(n190) );
-  CLKINVX1 U142 ( .A(n199), .Y(n191) );
-  CLKINVX1 U143 ( .A(n158), .Y(n142) );
-  CLKINVX1 U144 ( .A(n142), .Y(n192) );
-  CLKINVX1 U145 ( .A(n156), .Y(n140) );
-  CLKINVX1 U146 ( .A(n140), .Y(n193) );
-  CLKINVX1 U147 ( .A(n197), .Y(n194) );
-  CLKINVX1 U148 ( .A(b[0]), .Y(n131) );
-  CLKINVX1 U149 ( .A(n131), .Y(n195) );
-  NAND2BXL U150 ( .AN(n195), .B(a[1]), .Y(n123) );
-  NAND2BXL U151 ( .AN(n195), .B(a[3]), .Y(n114) );
-  CLKINVX1 U152 ( .A(n157), .Y(n141) );
-  CLKINVX1 U153 ( .A(n141), .Y(n196) );
-  NOR2BXL U154 ( .AN(n195), .B(n159), .Y(product[0]) );
-  XNOR2XL U155 ( .A(a[7]), .B(b[0]), .Y(n95) );
-  XNOR2XL U156 ( .A(a[1]), .B(b[0]), .Y(n122) );
-  NOR2BXL U157 ( .AN(n195), .B(n192), .Y(n79) );
-  XNOR2XL U158 ( .A(a[3]), .B(b[0]), .Y(n113) );
-  NOR2BXL U159 ( .AN(n195), .B(n196), .Y(n71) );
-  NAND2BXL U160 ( .AN(n195), .B(a[7]), .Y(n96) );
-  NAND2BXL U161 ( .AN(n195), .B(a[5]), .Y(n105) );
-  XNOR2XL U162 ( .A(a[5]), .B(b[0]), .Y(n104) );
-  NOR2BXL U163 ( .AN(n195), .B(n193), .Y(n63) );
-  CLKBUFX3 U164 ( .A(n159), .Y(n143) );
-  CLKBUFX3 U165 ( .A(a[1]), .Y(n151) );
-  CLKBUFX3 U166 ( .A(a[3]), .Y(n150) );
-  CLKBUFX3 U167 ( .A(a[5]), .Y(n149) );
-  CLKBUFX3 U168 ( .A(a[7]), .Y(n148) );
-  AND2X2 U169 ( .A(n132), .B(n156), .Y(n197) );
-  CLKINVX1 U170 ( .A(n197), .Y(n152) );
-  AND2X2 U171 ( .A(n133), .B(n157), .Y(n198) );
-  CLKINVX1 U172 ( .A(n198), .Y(n153) );
-  AND2X2 U173 ( .A(n134), .B(n158), .Y(n199) );
-  CLKINVX1 U174 ( .A(n199), .Y(n154) );
-  AND2X2 U175 ( .A(n135), .B(n159), .Y(n200) );
-  CLKINVX1 U176 ( .A(n200), .Y(n155) );
+  NOR2X1 U140 ( .A(n157), .B(n131), .Y(n71) );
+  NOR2X1 U141 ( .A(n156), .B(n131), .Y(n63) );
+  OAI2BB2XL U142 ( .B0(n156), .B1(n96), .A0N(n197), .A1N(n148), .Y(n52) );
+  NOR2X1 U143 ( .A(n131), .B(n159), .Y(product[0]) );
+  OAI2BB2XL U144 ( .B0(n123), .B1(n159), .A0N(n200), .A1N(n151), .Y(n55) );
+  NOR2X1 U145 ( .A(n158), .B(n131), .Y(n79) );
+  CLKINVX1 U146 ( .A(n198), .Y(n189) );
+  CLKINVX1 U147 ( .A(n200), .Y(n190) );
+  CLKINVX1 U148 ( .A(n199), .Y(n191) );
+  CLKINVX1 U149 ( .A(n158), .Y(n142) );
+  CLKINVX1 U150 ( .A(n142), .Y(n192) );
+  CLKINVX1 U151 ( .A(n156), .Y(n140) );
+  CLKINVX1 U152 ( .A(n140), .Y(n193) );
+  CLKINVX1 U153 ( .A(n197), .Y(n194) );
+  CLKINVX1 U154 ( .A(b[0]), .Y(n131) );
+  CLKINVX1 U155 ( .A(n131), .Y(n195) );
+  NAND2BXL U156 ( .AN(n195), .B(a[1]), .Y(n123) );
+  NAND2BXL U157 ( .AN(n195), .B(a[3]), .Y(n114) );
+  CLKINVX1 U158 ( .A(n157), .Y(n141) );
+  CLKINVX1 U159 ( .A(n141), .Y(n196) );
+  XNOR2XL U160 ( .A(a[7]), .B(b[0]), .Y(n95) );
+  XNOR2XL U161 ( .A(a[1]), .B(b[0]), .Y(n122) );
+  XNOR2XL U162 ( .A(a[3]), .B(b[0]), .Y(n113) );
+  NAND2BXL U163 ( .AN(n195), .B(a[7]), .Y(n96) );
+  NAND2BXL U164 ( .AN(n195), .B(a[5]), .Y(n105) );
+  XNOR2XL U165 ( .A(a[5]), .B(b[0]), .Y(n104) );
+  CLKBUFX3 U166 ( .A(n159), .Y(n143) );
+  CLKBUFX3 U167 ( .A(a[1]), .Y(n151) );
+  CLKBUFX3 U168 ( .A(a[3]), .Y(n150) );
+  CLKBUFX3 U169 ( .A(a[5]), .Y(n149) );
+  CLKBUFX3 U170 ( .A(a[7]), .Y(n148) );
+  AND2X2 U171 ( .A(n132), .B(n156), .Y(n197) );
+  CLKINVX1 U172 ( .A(n197), .Y(n152) );
+  AND2X2 U173 ( .A(n133), .B(n157), .Y(n198) );
+  CLKINVX1 U174 ( .A(n198), .Y(n153) );
+  AND2X2 U175 ( .A(n134), .B(n158), .Y(n199) );
+  CLKINVX1 U176 ( .A(n199), .Y(n154) );
+  AND2X2 U177 ( .A(n135), .B(n159), .Y(n200) );
+  CLKINVX1 U178 ( .A(n200), .Y(n155) );
 endmodule
 
 
@@ -5287,10 +5243,10 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_54 ( a, b, product );
          n87, n88, n89, n90, n91, n92, n93, n94, n95, n96, n97, n98, n99, n100,
          n101, n102, n103, n104, n105, n106, n107, n108, n109, n110, n111,
          n112, n113, n114, n115, n116, n117, n118, n119, n120, n121, n122,
-         n123, n131, n132, n133, n134, n135, n140, n141, n142, n143, n144,
-         n145, n146, n147, n148, n149, n150, n151, n152, n153, n154, n155,
-         n156, n157, n158, n159, n189, n190, n191, n192, n193, n194, n195,
-         n196, n197, n198, n199, n200;
+         n123, n131, n132, n133, n134, n135, n140, n141, n142, n143, n145,
+         n146, n148, n149, n150, n151, n152, n153, n154, n155, n156, n157,
+         n158, n159, n189, n190, n191, n192, n193, n194, n195, n196, n197,
+         n198, n199, n200;
 
   CLKINVX1 U1 ( .A(n1), .Y(product[15]) );
   ADDFXL U2 ( .A(n56), .B(n15), .CI(n2), .CO(n1), .S(product[14]) );
@@ -5329,7 +5285,6 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_54 ( a, b, product );
   ADDHXL U30 ( .A(n83), .B(n70), .CO(n46), .S(n47) );
   ADDFXL U31 ( .A(n84), .B(n71), .CI(n77), .CO(n48), .S(n49) );
   ADDHXL U32 ( .A(n85), .B(n54), .CO(n50), .S(n51) );
-  OAI22XL U33 ( .A0(n152), .A1(n144), .B0(n196), .B1(n96), .Y(n52) );
   AO21X1 U34 ( .A0(n152), .A1(n156), .B0(n88), .Y(n56) );
   OAI22XL U35 ( .A0(n152), .A1(n89), .B0(n196), .B1(n88), .Y(n15) );
   OAI22XL U36 ( .A0(n152), .A1(n90), .B0(n196), .B1(n89), .Y(n57) );
@@ -5377,7 +5332,6 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_54 ( a, b, product );
   XNOR2X1 U85 ( .A(n150), .B(b[3]), .Y(n110) );
   XNOR2X1 U86 ( .A(n150), .B(b[2]), .Y(n111) );
   XNOR2X1 U87 ( .A(n150), .B(b[1]), .Y(n112) );
-  OAI22XL U90 ( .A0(n155), .A1(n147), .B0(n123), .B1(n143), .Y(n55) );
   AO21X1 U91 ( .A0(n155), .A1(n159), .B0(n115), .Y(n80) );
   OAI22XL U92 ( .A0(n155), .A1(n116), .B0(n115), .B1(n143), .Y(n81) );
   OAI22XL U93 ( .A0(n155), .A1(n117), .B0(n116), .B1(n143), .Y(n82) );
@@ -5393,10 +5347,8 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_54 ( a, b, product );
   XNOR2X1 U104 ( .A(n151), .B(b[3]), .Y(n119) );
   XNOR2X1 U105 ( .A(n151), .B(b[2]), .Y(n120) );
   XNOR2X1 U106 ( .A(n151), .B(b[1]), .Y(n121) );
-  CLKINVX1 U112 ( .A(n148), .Y(n144) );
   CLKINVX1 U116 ( .A(n149), .Y(n145) );
   CLKINVX1 U120 ( .A(n150), .Y(n146) );
-  CLKINVX1 U124 ( .A(n151), .Y(n147) );
   XOR2X1 U127 ( .A(a[6]), .B(a[7]), .Y(n132) );
   XNOR2X1 U128 ( .A(a[6]), .B(a[5]), .Y(n156) );
   XOR2X1 U130 ( .A(a[4]), .B(a[5]), .Y(n133) );
@@ -5405,43 +5357,45 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_54 ( a, b, product );
   XNOR2X1 U134 ( .A(a[2]), .B(a[1]), .Y(n158) );
   XOR2X1 U136 ( .A(a[0]), .B(a[1]), .Y(n135) );
   CLKINVX1 U137 ( .A(a[0]), .Y(n159) );
-  CLKINVX1 U140 ( .A(n200), .Y(n189) );
-  CLKINVX1 U141 ( .A(n199), .Y(n190) );
-  CLKINVX1 U142 ( .A(n198), .Y(n191) );
-  CLKINVX1 U143 ( .A(n158), .Y(n142) );
-  CLKINVX1 U144 ( .A(n142), .Y(n192) );
-  CLKINVX1 U145 ( .A(n157), .Y(n141) );
-  CLKINVX1 U146 ( .A(n141), .Y(n193) );
-  CLKINVX1 U147 ( .A(n197), .Y(n194) );
-  CLKINVX1 U148 ( .A(b[0]), .Y(n131) );
-  CLKINVX1 U149 ( .A(n131), .Y(n195) );
-  NAND2BXL U150 ( .AN(n195), .B(a[1]), .Y(n123) );
-  NAND2BXL U151 ( .AN(n195), .B(a[3]), .Y(n114) );
-  CLKINVX1 U152 ( .A(n156), .Y(n140) );
-  CLKINVX1 U153 ( .A(n140), .Y(n196) );
-  NOR2BXL U154 ( .AN(n195), .B(n159), .Y(product[0]) );
-  XNOR2XL U155 ( .A(a[7]), .B(b[0]), .Y(n95) );
-  XNOR2XL U156 ( .A(a[1]), .B(b[0]), .Y(n122) );
-  NOR2BXL U157 ( .AN(n195), .B(n192), .Y(n79) );
-  XNOR2XL U158 ( .A(a[3]), .B(b[0]), .Y(n113) );
-  NOR2BXL U159 ( .AN(n195), .B(n193), .Y(n71) );
-  NAND2BXL U160 ( .AN(n195), .B(a[7]), .Y(n96) );
-  NAND2BXL U161 ( .AN(n195), .B(a[5]), .Y(n105) );
-  XNOR2XL U162 ( .A(a[5]), .B(b[0]), .Y(n104) );
-  NOR2BXL U163 ( .AN(n195), .B(n196), .Y(n63) );
-  CLKBUFX3 U164 ( .A(n159), .Y(n143) );
-  CLKBUFX3 U165 ( .A(a[1]), .Y(n151) );
-  CLKBUFX3 U166 ( .A(a[3]), .Y(n150) );
-  CLKBUFX3 U167 ( .A(a[5]), .Y(n149) );
-  CLKBUFX3 U168 ( .A(a[7]), .Y(n148) );
-  AND2X2 U169 ( .A(n132), .B(n156), .Y(n197) );
-  CLKINVX1 U170 ( .A(n197), .Y(n152) );
-  AND2X2 U171 ( .A(n133), .B(n157), .Y(n198) );
-  CLKINVX1 U172 ( .A(n198), .Y(n153) );
-  AND2X2 U173 ( .A(n134), .B(n158), .Y(n199) );
-  CLKINVX1 U174 ( .A(n199), .Y(n154) );
-  AND2X2 U175 ( .A(n135), .B(n159), .Y(n200) );
-  CLKINVX1 U176 ( .A(n200), .Y(n155) );
+  NOR2X1 U140 ( .A(n157), .B(n131), .Y(n71) );
+  NOR2X1 U141 ( .A(n156), .B(n131), .Y(n63) );
+  NOR2X1 U142 ( .A(n131), .B(n159), .Y(product[0]) );
+  OAI2BB2XL U143 ( .B0(n156), .B1(n96), .A0N(n197), .A1N(n148), .Y(n52) );
+  OAI2BB2XL U144 ( .B0(n123), .B1(n159), .A0N(n200), .A1N(n151), .Y(n55) );
+  NOR2X1 U145 ( .A(n158), .B(n131), .Y(n79) );
+  CLKINVX1 U146 ( .A(n200), .Y(n189) );
+  CLKINVX1 U147 ( .A(n199), .Y(n190) );
+  CLKINVX1 U148 ( .A(n198), .Y(n191) );
+  CLKINVX1 U149 ( .A(n158), .Y(n142) );
+  CLKINVX1 U150 ( .A(n142), .Y(n192) );
+  CLKINVX1 U151 ( .A(n157), .Y(n141) );
+  CLKINVX1 U152 ( .A(n141), .Y(n193) );
+  CLKINVX1 U153 ( .A(n197), .Y(n194) );
+  CLKINVX1 U154 ( .A(b[0]), .Y(n131) );
+  CLKINVX1 U155 ( .A(n131), .Y(n195) );
+  NAND2BXL U156 ( .AN(n195), .B(a[1]), .Y(n123) );
+  NAND2BXL U157 ( .AN(n195), .B(a[3]), .Y(n114) );
+  CLKINVX1 U158 ( .A(n156), .Y(n140) );
+  CLKINVX1 U159 ( .A(n140), .Y(n196) );
+  XNOR2XL U160 ( .A(a[7]), .B(b[0]), .Y(n95) );
+  XNOR2XL U161 ( .A(a[1]), .B(b[0]), .Y(n122) );
+  XNOR2XL U162 ( .A(a[3]), .B(b[0]), .Y(n113) );
+  NAND2BXL U163 ( .AN(n195), .B(a[7]), .Y(n96) );
+  NAND2BXL U164 ( .AN(n195), .B(a[5]), .Y(n105) );
+  XNOR2XL U165 ( .A(a[5]), .B(b[0]), .Y(n104) );
+  CLKBUFX3 U166 ( .A(n159), .Y(n143) );
+  CLKBUFX3 U167 ( .A(a[1]), .Y(n151) );
+  CLKBUFX3 U168 ( .A(a[3]), .Y(n150) );
+  CLKBUFX3 U169 ( .A(a[5]), .Y(n149) );
+  CLKBUFX3 U170 ( .A(a[7]), .Y(n148) );
+  AND2X2 U171 ( .A(n132), .B(n156), .Y(n197) );
+  CLKINVX1 U172 ( .A(n197), .Y(n152) );
+  AND2X2 U173 ( .A(n133), .B(n157), .Y(n198) );
+  CLKINVX1 U174 ( .A(n198), .Y(n153) );
+  AND2X2 U175 ( .A(n134), .B(n158), .Y(n199) );
+  CLKINVX1 U176 ( .A(n199), .Y(n154) );
+  AND2X2 U177 ( .A(n135), .B(n159), .Y(n200) );
+  CLKINVX1 U178 ( .A(n200), .Y(n155) );
 endmodule
 
 
@@ -5458,10 +5412,10 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_55 ( a, b, product );
          n87, n88, n89, n90, n91, n92, n93, n94, n95, n96, n97, n98, n99, n100,
          n101, n102, n103, n104, n105, n106, n107, n108, n109, n110, n111,
          n112, n113, n114, n115, n116, n117, n118, n119, n120, n121, n122,
-         n123, n131, n132, n133, n134, n135, n140, n141, n142, n143, n144,
-         n145, n146, n147, n148, n149, n150, n151, n152, n153, n154, n155,
-         n156, n157, n158, n159, n189, n190, n191, n192, n193, n194, n195,
-         n196, n197, n198, n199, n200;
+         n123, n131, n132, n133, n134, n135, n140, n141, n142, n143, n145,
+         n146, n148, n149, n150, n151, n152, n153, n154, n155, n156, n157,
+         n158, n159, n189, n190, n191, n192, n193, n194, n195, n196, n197,
+         n198, n199, n200;
 
   CLKINVX1 U1 ( .A(n1), .Y(product[15]) );
   ADDFXL U2 ( .A(n56), .B(n15), .CI(n2), .CO(n1), .S(product[14]) );
@@ -5500,7 +5454,6 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_55 ( a, b, product );
   ADDHXL U30 ( .A(n83), .B(n70), .CO(n46), .S(n47) );
   ADDFXL U31 ( .A(n84), .B(n71), .CI(n77), .CO(n48), .S(n49) );
   ADDHXL U32 ( .A(n85), .B(n54), .CO(n50), .S(n51) );
-  OAI22XL U33 ( .A0(n152), .A1(n144), .B0(n196), .B1(n96), .Y(n52) );
   AO21X1 U34 ( .A0(n152), .A1(n156), .B0(n88), .Y(n56) );
   OAI22XL U35 ( .A0(n152), .A1(n89), .B0(n196), .B1(n88), .Y(n15) );
   OAI22XL U36 ( .A0(n152), .A1(n90), .B0(n196), .B1(n89), .Y(n57) );
@@ -5548,7 +5501,6 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_55 ( a, b, product );
   XNOR2X1 U85 ( .A(n150), .B(b[3]), .Y(n110) );
   XNOR2X1 U86 ( .A(n150), .B(b[2]), .Y(n111) );
   XNOR2X1 U87 ( .A(n150), .B(b[1]), .Y(n112) );
-  OAI22XL U90 ( .A0(n155), .A1(n147), .B0(n123), .B1(n143), .Y(n55) );
   AO21X1 U91 ( .A0(n155), .A1(n159), .B0(n115), .Y(n80) );
   OAI22XL U92 ( .A0(n155), .A1(n116), .B0(n115), .B1(n143), .Y(n81) );
   OAI22XL U93 ( .A0(n155), .A1(n117), .B0(n116), .B1(n143), .Y(n82) );
@@ -5564,10 +5516,8 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_55 ( a, b, product );
   XNOR2X1 U104 ( .A(n151), .B(b[3]), .Y(n119) );
   XNOR2X1 U105 ( .A(n151), .B(b[2]), .Y(n120) );
   XNOR2X1 U106 ( .A(n151), .B(b[1]), .Y(n121) );
-  CLKINVX1 U112 ( .A(n148), .Y(n144) );
   CLKINVX1 U116 ( .A(n149), .Y(n145) );
   CLKINVX1 U120 ( .A(n150), .Y(n146) );
-  CLKINVX1 U124 ( .A(n151), .Y(n147) );
   XOR2X1 U127 ( .A(a[6]), .B(a[7]), .Y(n132) );
   XNOR2X1 U128 ( .A(a[6]), .B(a[5]), .Y(n156) );
   XOR2X1 U130 ( .A(a[4]), .B(a[5]), .Y(n133) );
@@ -5576,43 +5526,45 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_55 ( a, b, product );
   XNOR2X1 U134 ( .A(a[2]), .B(a[1]), .Y(n158) );
   XOR2X1 U136 ( .A(a[0]), .B(a[1]), .Y(n135) );
   CLKINVX1 U137 ( .A(a[0]), .Y(n159) );
-  CLKINVX1 U140 ( .A(n200), .Y(n189) );
-  CLKINVX1 U141 ( .A(n199), .Y(n190) );
-  CLKINVX1 U142 ( .A(n198), .Y(n191) );
-  CLKINVX1 U143 ( .A(n158), .Y(n142) );
-  CLKINVX1 U144 ( .A(n142), .Y(n192) );
-  CLKINVX1 U145 ( .A(n157), .Y(n141) );
-  CLKINVX1 U146 ( .A(n141), .Y(n193) );
-  CLKINVX1 U147 ( .A(n197), .Y(n194) );
-  CLKINVX1 U148 ( .A(b[0]), .Y(n131) );
-  CLKINVX1 U149 ( .A(n131), .Y(n195) );
-  NAND2BXL U150 ( .AN(n195), .B(a[1]), .Y(n123) );
-  NAND2BXL U151 ( .AN(n195), .B(a[3]), .Y(n114) );
-  CLKINVX1 U152 ( .A(n156), .Y(n140) );
-  CLKINVX1 U153 ( .A(n140), .Y(n196) );
-  NOR2BXL U154 ( .AN(n195), .B(n159), .Y(product[0]) );
-  XNOR2XL U155 ( .A(a[7]), .B(b[0]), .Y(n95) );
-  XNOR2XL U156 ( .A(a[1]), .B(b[0]), .Y(n122) );
-  NOR2BXL U157 ( .AN(n195), .B(n192), .Y(n79) );
-  XNOR2XL U158 ( .A(a[3]), .B(b[0]), .Y(n113) );
-  NOR2BXL U159 ( .AN(n195), .B(n193), .Y(n71) );
-  NAND2BXL U160 ( .AN(n195), .B(a[7]), .Y(n96) );
-  NAND2BXL U161 ( .AN(n195), .B(a[5]), .Y(n105) );
-  XNOR2XL U162 ( .A(a[5]), .B(b[0]), .Y(n104) );
-  NOR2BXL U163 ( .AN(n195), .B(n196), .Y(n63) );
-  CLKBUFX3 U164 ( .A(n159), .Y(n143) );
-  CLKBUFX3 U165 ( .A(a[1]), .Y(n151) );
-  CLKBUFX3 U166 ( .A(a[3]), .Y(n150) );
-  CLKBUFX3 U167 ( .A(a[5]), .Y(n149) );
-  CLKBUFX3 U168 ( .A(a[7]), .Y(n148) );
-  AND2X2 U169 ( .A(n132), .B(n156), .Y(n197) );
-  CLKINVX1 U170 ( .A(n197), .Y(n152) );
-  AND2X2 U171 ( .A(n133), .B(n157), .Y(n198) );
-  CLKINVX1 U172 ( .A(n198), .Y(n153) );
-  AND2X2 U173 ( .A(n134), .B(n158), .Y(n199) );
-  CLKINVX1 U174 ( .A(n199), .Y(n154) );
-  AND2X2 U175 ( .A(n135), .B(n159), .Y(n200) );
-  CLKINVX1 U176 ( .A(n200), .Y(n155) );
+  NOR2X1 U140 ( .A(n157), .B(n131), .Y(n71) );
+  NOR2X1 U141 ( .A(n156), .B(n131), .Y(n63) );
+  OAI2BB2XL U142 ( .B0(n156), .B1(n96), .A0N(n197), .A1N(n148), .Y(n52) );
+  NOR2X1 U143 ( .A(n131), .B(n159), .Y(product[0]) );
+  OAI2BB2XL U144 ( .B0(n123), .B1(n159), .A0N(n200), .A1N(n151), .Y(n55) );
+  NOR2X1 U145 ( .A(n158), .B(n131), .Y(n79) );
+  CLKINVX1 U146 ( .A(n200), .Y(n189) );
+  CLKINVX1 U147 ( .A(n199), .Y(n190) );
+  CLKINVX1 U148 ( .A(n198), .Y(n191) );
+  CLKINVX1 U149 ( .A(n158), .Y(n142) );
+  CLKINVX1 U150 ( .A(n142), .Y(n192) );
+  CLKINVX1 U151 ( .A(n157), .Y(n141) );
+  CLKINVX1 U152 ( .A(n141), .Y(n193) );
+  CLKINVX1 U153 ( .A(n197), .Y(n194) );
+  CLKINVX1 U154 ( .A(b[0]), .Y(n131) );
+  CLKINVX1 U155 ( .A(n131), .Y(n195) );
+  NAND2BXL U156 ( .AN(n195), .B(a[1]), .Y(n123) );
+  NAND2BXL U157 ( .AN(n195), .B(a[3]), .Y(n114) );
+  CLKINVX1 U158 ( .A(n156), .Y(n140) );
+  CLKINVX1 U159 ( .A(n140), .Y(n196) );
+  XNOR2XL U160 ( .A(a[7]), .B(b[0]), .Y(n95) );
+  XNOR2XL U161 ( .A(a[1]), .B(b[0]), .Y(n122) );
+  XNOR2XL U162 ( .A(a[3]), .B(b[0]), .Y(n113) );
+  NAND2BXL U163 ( .AN(n195), .B(a[7]), .Y(n96) );
+  NAND2BXL U164 ( .AN(n195), .B(a[5]), .Y(n105) );
+  XNOR2XL U165 ( .A(a[5]), .B(b[0]), .Y(n104) );
+  CLKBUFX3 U166 ( .A(n159), .Y(n143) );
+  CLKBUFX3 U167 ( .A(a[1]), .Y(n151) );
+  CLKBUFX3 U168 ( .A(a[3]), .Y(n150) );
+  CLKBUFX3 U169 ( .A(a[5]), .Y(n149) );
+  CLKBUFX3 U170 ( .A(a[7]), .Y(n148) );
+  AND2X2 U171 ( .A(n132), .B(n156), .Y(n197) );
+  CLKINVX1 U172 ( .A(n197), .Y(n152) );
+  AND2X2 U173 ( .A(n133), .B(n157), .Y(n198) );
+  CLKINVX1 U174 ( .A(n198), .Y(n153) );
+  AND2X2 U175 ( .A(n134), .B(n158), .Y(n199) );
+  CLKINVX1 U176 ( .A(n199), .Y(n154) );
+  AND2X2 U177 ( .A(n135), .B(n159), .Y(n200) );
+  CLKINVX1 U178 ( .A(n200), .Y(n155) );
 endmodule
 
 
@@ -5629,10 +5581,10 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_56 ( a, b, product );
          n87, n88, n89, n90, n91, n92, n93, n94, n95, n96, n97, n98, n99, n100,
          n101, n102, n103, n104, n105, n106, n107, n108, n109, n110, n111,
          n112, n113, n114, n115, n116, n117, n118, n119, n120, n121, n122,
-         n123, n131, n132, n133, n134, n135, n140, n141, n142, n143, n144,
-         n145, n146, n147, n148, n149, n150, n151, n152, n153, n154, n155,
-         n156, n157, n158, n159, n189, n190, n191, n192, n193, n194, n195,
-         n196, n197, n198, n199, n200;
+         n123, n131, n132, n133, n134, n135, n140, n141, n142, n143, n145,
+         n146, n148, n149, n150, n151, n152, n153, n154, n155, n156, n157,
+         n158, n159, n189, n190, n191, n192, n193, n194, n195, n196, n197,
+         n198, n199, n200;
 
   CLKINVX1 U1 ( .A(n1), .Y(product[15]) );
   ADDFXL U2 ( .A(n56), .B(n15), .CI(n2), .CO(n1), .S(product[14]) );
@@ -5671,7 +5623,6 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_56 ( a, b, product );
   ADDHXL U30 ( .A(n83), .B(n70), .CO(n46), .S(n47) );
   ADDFXL U31 ( .A(n84), .B(n71), .CI(n77), .CO(n48), .S(n49) );
   ADDHXL U32 ( .A(n85), .B(n54), .CO(n50), .S(n51) );
-  OAI22XL U33 ( .A0(n152), .A1(n144), .B0(n193), .B1(n96), .Y(n52) );
   AO21X1 U34 ( .A0(n152), .A1(n156), .B0(n88), .Y(n56) );
   OAI22XL U35 ( .A0(n152), .A1(n89), .B0(n193), .B1(n88), .Y(n15) );
   OAI22XL U36 ( .A0(n152), .A1(n90), .B0(n193), .B1(n89), .Y(n57) );
@@ -5719,7 +5670,6 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_56 ( a, b, product );
   XNOR2X1 U85 ( .A(n150), .B(b[3]), .Y(n110) );
   XNOR2X1 U86 ( .A(n150), .B(b[2]), .Y(n111) );
   XNOR2X1 U87 ( .A(n150), .B(b[1]), .Y(n112) );
-  OAI22XL U90 ( .A0(n155), .A1(n147), .B0(n123), .B1(n143), .Y(n55) );
   AO21X1 U91 ( .A0(n155), .A1(n159), .B0(n115), .Y(n80) );
   OAI22XL U92 ( .A0(n155), .A1(n116), .B0(n115), .B1(n143), .Y(n81) );
   OAI22XL U93 ( .A0(n155), .A1(n117), .B0(n116), .B1(n143), .Y(n82) );
@@ -5735,10 +5685,8 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_56 ( a, b, product );
   XNOR2X1 U104 ( .A(n151), .B(b[3]), .Y(n119) );
   XNOR2X1 U105 ( .A(n151), .B(b[2]), .Y(n120) );
   XNOR2X1 U106 ( .A(n151), .B(b[1]), .Y(n121) );
-  CLKINVX1 U112 ( .A(n148), .Y(n144) );
   CLKINVX1 U116 ( .A(n149), .Y(n145) );
   CLKINVX1 U120 ( .A(n150), .Y(n146) );
-  CLKINVX1 U124 ( .A(n151), .Y(n147) );
   XOR2X1 U127 ( .A(a[6]), .B(a[7]), .Y(n132) );
   XNOR2X1 U128 ( .A(a[6]), .B(a[5]), .Y(n156) );
   XOR2X1 U130 ( .A(a[4]), .B(a[5]), .Y(n133) );
@@ -5747,43 +5695,45 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_56 ( a, b, product );
   XNOR2X1 U134 ( .A(a[2]), .B(a[1]), .Y(n158) );
   XOR2X1 U136 ( .A(a[0]), .B(a[1]), .Y(n135) );
   CLKINVX1 U137 ( .A(a[0]), .Y(n159) );
-  CLKINVX1 U140 ( .A(n198), .Y(n189) );
-  CLKINVX1 U141 ( .A(n200), .Y(n190) );
-  CLKINVX1 U142 ( .A(n199), .Y(n191) );
-  CLKINVX1 U143 ( .A(n158), .Y(n142) );
-  CLKINVX1 U144 ( .A(n142), .Y(n192) );
-  CLKINVX1 U145 ( .A(n156), .Y(n140) );
-  CLKINVX1 U146 ( .A(n140), .Y(n193) );
-  CLKINVX1 U147 ( .A(n197), .Y(n194) );
-  CLKINVX1 U148 ( .A(b[0]), .Y(n131) );
-  CLKINVX1 U149 ( .A(n131), .Y(n195) );
-  NAND2BXL U150 ( .AN(n195), .B(a[1]), .Y(n123) );
-  NAND2BXL U151 ( .AN(n195), .B(a[3]), .Y(n114) );
-  CLKINVX1 U152 ( .A(n157), .Y(n141) );
-  CLKINVX1 U153 ( .A(n141), .Y(n196) );
-  NOR2BXL U154 ( .AN(n195), .B(n159), .Y(product[0]) );
-  XNOR2XL U155 ( .A(a[7]), .B(b[0]), .Y(n95) );
-  XNOR2XL U156 ( .A(a[1]), .B(b[0]), .Y(n122) );
-  NOR2BXL U157 ( .AN(n195), .B(n192), .Y(n79) );
-  XNOR2XL U158 ( .A(a[3]), .B(b[0]), .Y(n113) );
-  NOR2BXL U159 ( .AN(n195), .B(n196), .Y(n71) );
-  NAND2BXL U160 ( .AN(n195), .B(a[7]), .Y(n96) );
-  NAND2BXL U161 ( .AN(n195), .B(a[5]), .Y(n105) );
-  XNOR2XL U162 ( .A(a[5]), .B(b[0]), .Y(n104) );
-  NOR2BXL U163 ( .AN(n195), .B(n193), .Y(n63) );
-  CLKBUFX3 U164 ( .A(n159), .Y(n143) );
-  CLKBUFX3 U165 ( .A(a[1]), .Y(n151) );
-  CLKBUFX3 U166 ( .A(a[3]), .Y(n150) );
-  CLKBUFX3 U167 ( .A(a[5]), .Y(n149) );
-  CLKBUFX3 U168 ( .A(a[7]), .Y(n148) );
-  AND2X2 U169 ( .A(n132), .B(n156), .Y(n197) );
-  CLKINVX1 U170 ( .A(n197), .Y(n152) );
-  AND2X2 U171 ( .A(n133), .B(n157), .Y(n198) );
-  CLKINVX1 U172 ( .A(n198), .Y(n153) );
-  AND2X2 U173 ( .A(n134), .B(n158), .Y(n199) );
-  CLKINVX1 U174 ( .A(n199), .Y(n154) );
-  AND2X2 U175 ( .A(n135), .B(n159), .Y(n200) );
-  CLKINVX1 U176 ( .A(n200), .Y(n155) );
+  NOR2X1 U140 ( .A(n157), .B(n131), .Y(n71) );
+  NOR2X1 U141 ( .A(n156), .B(n131), .Y(n63) );
+  NOR2X1 U142 ( .A(n131), .B(n159), .Y(product[0]) );
+  OAI2BB2XL U143 ( .B0(n156), .B1(n96), .A0N(n197), .A1N(n148), .Y(n52) );
+  OAI2BB2XL U144 ( .B0(n123), .B1(n159), .A0N(n200), .A1N(n151), .Y(n55) );
+  NOR2X1 U145 ( .A(n158), .B(n131), .Y(n79) );
+  CLKINVX1 U146 ( .A(n198), .Y(n189) );
+  CLKINVX1 U147 ( .A(n200), .Y(n190) );
+  CLKINVX1 U148 ( .A(n199), .Y(n191) );
+  CLKINVX1 U149 ( .A(n158), .Y(n142) );
+  CLKINVX1 U150 ( .A(n142), .Y(n192) );
+  CLKINVX1 U151 ( .A(n156), .Y(n140) );
+  CLKINVX1 U152 ( .A(n140), .Y(n193) );
+  CLKINVX1 U153 ( .A(n197), .Y(n194) );
+  CLKINVX1 U154 ( .A(b[0]), .Y(n131) );
+  CLKINVX1 U155 ( .A(n131), .Y(n195) );
+  NAND2BXL U156 ( .AN(n195), .B(a[1]), .Y(n123) );
+  NAND2BXL U157 ( .AN(n195), .B(a[3]), .Y(n114) );
+  CLKINVX1 U158 ( .A(n157), .Y(n141) );
+  CLKINVX1 U159 ( .A(n141), .Y(n196) );
+  XNOR2XL U160 ( .A(a[7]), .B(b[0]), .Y(n95) );
+  XNOR2XL U161 ( .A(a[1]), .B(b[0]), .Y(n122) );
+  XNOR2XL U162 ( .A(a[3]), .B(b[0]), .Y(n113) );
+  NAND2BXL U163 ( .AN(n195), .B(a[7]), .Y(n96) );
+  NAND2BXL U164 ( .AN(n195), .B(a[5]), .Y(n105) );
+  XNOR2XL U165 ( .A(a[5]), .B(b[0]), .Y(n104) );
+  CLKBUFX3 U166 ( .A(n159), .Y(n143) );
+  CLKBUFX3 U167 ( .A(a[1]), .Y(n151) );
+  CLKBUFX3 U168 ( .A(a[3]), .Y(n150) );
+  CLKBUFX3 U169 ( .A(a[5]), .Y(n149) );
+  CLKBUFX3 U170 ( .A(a[7]), .Y(n148) );
+  AND2X2 U171 ( .A(n132), .B(n156), .Y(n197) );
+  CLKINVX1 U172 ( .A(n197), .Y(n152) );
+  AND2X2 U173 ( .A(n133), .B(n157), .Y(n198) );
+  CLKINVX1 U174 ( .A(n198), .Y(n153) );
+  AND2X2 U175 ( .A(n134), .B(n158), .Y(n199) );
+  CLKINVX1 U176 ( .A(n199), .Y(n154) );
+  AND2X2 U177 ( .A(n135), .B(n159), .Y(n200) );
+  CLKINVX1 U178 ( .A(n200), .Y(n155) );
 endmodule
 
 
@@ -5800,10 +5750,10 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_57 ( a, b, product );
          n87, n88, n89, n90, n91, n92, n93, n94, n95, n96, n97, n98, n99, n100,
          n101, n102, n103, n104, n105, n106, n107, n108, n109, n110, n111,
          n112, n113, n114, n115, n116, n117, n118, n119, n120, n121, n122,
-         n123, n131, n132, n133, n134, n135, n140, n141, n142, n143, n144,
-         n145, n146, n147, n148, n149, n150, n151, n152, n153, n154, n155,
-         n156, n157, n158, n159, n189, n190, n191, n192, n193, n194, n195,
-         n196, n197, n198, n199, n200;
+         n123, n131, n132, n133, n134, n135, n140, n141, n142, n143, n145,
+         n146, n148, n149, n150, n151, n152, n153, n154, n155, n156, n157,
+         n158, n159, n189, n190, n191, n192, n193, n194, n195, n196, n197,
+         n198, n199, n200;
 
   CLKINVX1 U1 ( .A(n1), .Y(product[15]) );
   ADDFXL U2 ( .A(n56), .B(n15), .CI(n2), .CO(n1), .S(product[14]) );
@@ -5842,7 +5792,6 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_57 ( a, b, product );
   ADDHXL U30 ( .A(n83), .B(n70), .CO(n46), .S(n47) );
   ADDFXL U31 ( .A(n84), .B(n71), .CI(n77), .CO(n48), .S(n49) );
   ADDHXL U32 ( .A(n85), .B(n54), .CO(n50), .S(n51) );
-  OAI22XL U33 ( .A0(n152), .A1(n144), .B0(n193), .B1(n96), .Y(n52) );
   AO21X1 U34 ( .A0(n152), .A1(n156), .B0(n88), .Y(n56) );
   OAI22XL U35 ( .A0(n152), .A1(n89), .B0(n193), .B1(n88), .Y(n15) );
   OAI22XL U36 ( .A0(n152), .A1(n90), .B0(n193), .B1(n89), .Y(n57) );
@@ -5890,7 +5839,6 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_57 ( a, b, product );
   XNOR2X1 U85 ( .A(n150), .B(b[3]), .Y(n110) );
   XNOR2X1 U86 ( .A(n150), .B(b[2]), .Y(n111) );
   XNOR2X1 U87 ( .A(n150), .B(b[1]), .Y(n112) );
-  OAI22XL U90 ( .A0(n155), .A1(n147), .B0(n123), .B1(n143), .Y(n55) );
   AO21X1 U91 ( .A0(n155), .A1(n159), .B0(n115), .Y(n80) );
   OAI22XL U92 ( .A0(n155), .A1(n116), .B0(n115), .B1(n143), .Y(n81) );
   OAI22XL U93 ( .A0(n155), .A1(n117), .B0(n116), .B1(n143), .Y(n82) );
@@ -5906,10 +5854,8 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_57 ( a, b, product );
   XNOR2X1 U104 ( .A(n151), .B(b[3]), .Y(n119) );
   XNOR2X1 U105 ( .A(n151), .B(b[2]), .Y(n120) );
   XNOR2X1 U106 ( .A(n151), .B(b[1]), .Y(n121) );
-  CLKINVX1 U112 ( .A(n148), .Y(n144) );
   CLKINVX1 U116 ( .A(n149), .Y(n145) );
   CLKINVX1 U120 ( .A(n150), .Y(n146) );
-  CLKINVX1 U124 ( .A(n151), .Y(n147) );
   XOR2X1 U127 ( .A(a[6]), .B(a[7]), .Y(n132) );
   XNOR2X1 U128 ( .A(a[6]), .B(a[5]), .Y(n156) );
   XOR2X1 U130 ( .A(a[4]), .B(a[5]), .Y(n133) );
@@ -5918,43 +5864,45 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_57 ( a, b, product );
   XNOR2X1 U134 ( .A(a[2]), .B(a[1]), .Y(n158) );
   XOR2X1 U136 ( .A(a[0]), .B(a[1]), .Y(n135) );
   CLKINVX1 U137 ( .A(a[0]), .Y(n159) );
-  CLKINVX1 U140 ( .A(n198), .Y(n189) );
-  CLKINVX1 U141 ( .A(n200), .Y(n190) );
-  CLKINVX1 U142 ( .A(n199), .Y(n191) );
-  CLKINVX1 U143 ( .A(n158), .Y(n142) );
-  CLKINVX1 U144 ( .A(n142), .Y(n192) );
-  CLKINVX1 U145 ( .A(n156), .Y(n140) );
-  CLKINVX1 U146 ( .A(n140), .Y(n193) );
-  CLKINVX1 U147 ( .A(n197), .Y(n194) );
-  CLKINVX1 U148 ( .A(b[0]), .Y(n131) );
-  CLKINVX1 U149 ( .A(n131), .Y(n195) );
-  NAND2BXL U150 ( .AN(n195), .B(a[1]), .Y(n123) );
-  NAND2BXL U151 ( .AN(n195), .B(a[3]), .Y(n114) );
-  CLKINVX1 U152 ( .A(n157), .Y(n141) );
-  CLKINVX1 U153 ( .A(n141), .Y(n196) );
-  NOR2BXL U154 ( .AN(n195), .B(n159), .Y(product[0]) );
-  XNOR2XL U155 ( .A(a[7]), .B(b[0]), .Y(n95) );
-  XNOR2XL U156 ( .A(a[1]), .B(b[0]), .Y(n122) );
-  NOR2BXL U157 ( .AN(n195), .B(n192), .Y(n79) );
-  XNOR2XL U158 ( .A(a[3]), .B(b[0]), .Y(n113) );
-  NOR2BXL U159 ( .AN(n195), .B(n196), .Y(n71) );
-  NAND2BXL U160 ( .AN(n195), .B(a[7]), .Y(n96) );
-  NAND2BXL U161 ( .AN(n195), .B(a[5]), .Y(n105) );
-  XNOR2XL U162 ( .A(a[5]), .B(b[0]), .Y(n104) );
-  NOR2BXL U163 ( .AN(n195), .B(n193), .Y(n63) );
-  CLKBUFX3 U164 ( .A(n159), .Y(n143) );
-  CLKBUFX3 U165 ( .A(a[1]), .Y(n151) );
-  CLKBUFX3 U166 ( .A(a[3]), .Y(n150) );
-  CLKBUFX3 U167 ( .A(a[5]), .Y(n149) );
-  CLKBUFX3 U168 ( .A(a[7]), .Y(n148) );
-  AND2X2 U169 ( .A(n132), .B(n156), .Y(n197) );
-  CLKINVX1 U170 ( .A(n197), .Y(n152) );
-  AND2X2 U171 ( .A(n133), .B(n157), .Y(n198) );
-  CLKINVX1 U172 ( .A(n198), .Y(n153) );
-  AND2X2 U173 ( .A(n134), .B(n158), .Y(n199) );
-  CLKINVX1 U174 ( .A(n199), .Y(n154) );
-  AND2X2 U175 ( .A(n135), .B(n159), .Y(n200) );
-  CLKINVX1 U176 ( .A(n200), .Y(n155) );
+  NOR2X1 U140 ( .A(n157), .B(n131), .Y(n71) );
+  NOR2X1 U141 ( .A(n156), .B(n131), .Y(n63) );
+  OAI2BB2XL U142 ( .B0(n156), .B1(n96), .A0N(n197), .A1N(n148), .Y(n52) );
+  NOR2X1 U143 ( .A(n131), .B(n159), .Y(product[0]) );
+  OAI2BB2XL U144 ( .B0(n123), .B1(n159), .A0N(n200), .A1N(n151), .Y(n55) );
+  NOR2X1 U145 ( .A(n158), .B(n131), .Y(n79) );
+  CLKINVX1 U146 ( .A(n198), .Y(n189) );
+  CLKINVX1 U147 ( .A(n200), .Y(n190) );
+  CLKINVX1 U148 ( .A(n199), .Y(n191) );
+  CLKINVX1 U149 ( .A(n158), .Y(n142) );
+  CLKINVX1 U150 ( .A(n142), .Y(n192) );
+  CLKINVX1 U151 ( .A(n156), .Y(n140) );
+  CLKINVX1 U152 ( .A(n140), .Y(n193) );
+  CLKINVX1 U153 ( .A(n197), .Y(n194) );
+  CLKINVX1 U154 ( .A(b[0]), .Y(n131) );
+  CLKINVX1 U155 ( .A(n131), .Y(n195) );
+  NAND2BXL U156 ( .AN(n195), .B(a[1]), .Y(n123) );
+  NAND2BXL U157 ( .AN(n195), .B(a[3]), .Y(n114) );
+  CLKINVX1 U158 ( .A(n157), .Y(n141) );
+  CLKINVX1 U159 ( .A(n141), .Y(n196) );
+  XNOR2XL U160 ( .A(a[7]), .B(b[0]), .Y(n95) );
+  XNOR2XL U161 ( .A(a[1]), .B(b[0]), .Y(n122) );
+  XNOR2XL U162 ( .A(a[3]), .B(b[0]), .Y(n113) );
+  NAND2BXL U163 ( .AN(n195), .B(a[7]), .Y(n96) );
+  NAND2BXL U164 ( .AN(n195), .B(a[5]), .Y(n105) );
+  XNOR2XL U165 ( .A(a[5]), .B(b[0]), .Y(n104) );
+  CLKBUFX3 U166 ( .A(n159), .Y(n143) );
+  CLKBUFX3 U167 ( .A(a[1]), .Y(n151) );
+  CLKBUFX3 U168 ( .A(a[3]), .Y(n150) );
+  CLKBUFX3 U169 ( .A(a[5]), .Y(n149) );
+  CLKBUFX3 U170 ( .A(a[7]), .Y(n148) );
+  AND2X2 U171 ( .A(n132), .B(n156), .Y(n197) );
+  CLKINVX1 U172 ( .A(n197), .Y(n152) );
+  AND2X2 U173 ( .A(n133), .B(n157), .Y(n198) );
+  CLKINVX1 U174 ( .A(n198), .Y(n153) );
+  AND2X2 U175 ( .A(n134), .B(n158), .Y(n199) );
+  CLKINVX1 U176 ( .A(n199), .Y(n154) );
+  AND2X2 U177 ( .A(n135), .B(n159), .Y(n200) );
+  CLKINVX1 U178 ( .A(n200), .Y(n155) );
 endmodule
 
 
@@ -5971,10 +5919,10 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_58 ( a, b, product );
          n87, n88, n89, n90, n91, n92, n93, n94, n95, n96, n97, n98, n99, n100,
          n101, n102, n103, n104, n105, n106, n107, n108, n109, n110, n111,
          n112, n113, n114, n115, n116, n117, n118, n119, n120, n121, n122,
-         n123, n131, n132, n133, n134, n135, n140, n141, n142, n143, n144,
-         n145, n146, n147, n148, n149, n150, n151, n152, n153, n154, n155,
-         n156, n157, n158, n159, n189, n190, n191, n192, n193, n194, n195,
-         n196, n197, n198, n199, n200;
+         n123, n131, n132, n133, n134, n135, n140, n141, n142, n143, n145,
+         n146, n148, n149, n150, n151, n152, n153, n154, n155, n156, n157,
+         n158, n159, n189, n190, n191, n192, n193, n194, n195, n196, n197,
+         n198, n199, n200;
 
   CLKINVX1 U1 ( .A(n1), .Y(product[15]) );
   ADDFXL U2 ( .A(n56), .B(n15), .CI(n2), .CO(n1), .S(product[14]) );
@@ -6013,7 +5961,6 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_58 ( a, b, product );
   ADDHXL U30 ( .A(n83), .B(n70), .CO(n46), .S(n47) );
   ADDFXL U31 ( .A(n84), .B(n71), .CI(n77), .CO(n48), .S(n49) );
   ADDHXL U32 ( .A(n85), .B(n54), .CO(n50), .S(n51) );
-  OAI22XL U33 ( .A0(n152), .A1(n144), .B0(n193), .B1(n96), .Y(n52) );
   AO21X1 U34 ( .A0(n152), .A1(n156), .B0(n88), .Y(n56) );
   OAI22XL U35 ( .A0(n152), .A1(n89), .B0(n193), .B1(n88), .Y(n15) );
   OAI22XL U36 ( .A0(n152), .A1(n90), .B0(n193), .B1(n89), .Y(n57) );
@@ -6061,7 +6008,6 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_58 ( a, b, product );
   XNOR2X1 U85 ( .A(n150), .B(b[3]), .Y(n110) );
   XNOR2X1 U86 ( .A(n150), .B(b[2]), .Y(n111) );
   XNOR2X1 U87 ( .A(n150), .B(b[1]), .Y(n112) );
-  OAI22XL U90 ( .A0(n155), .A1(n147), .B0(n123), .B1(n143), .Y(n55) );
   AO21X1 U91 ( .A0(n155), .A1(n159), .B0(n115), .Y(n80) );
   OAI22XL U92 ( .A0(n155), .A1(n116), .B0(n115), .B1(n143), .Y(n81) );
   OAI22XL U93 ( .A0(n155), .A1(n117), .B0(n116), .B1(n143), .Y(n82) );
@@ -6077,10 +6023,8 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_58 ( a, b, product );
   XNOR2X1 U104 ( .A(n151), .B(b[3]), .Y(n119) );
   XNOR2X1 U105 ( .A(n151), .B(b[2]), .Y(n120) );
   XNOR2X1 U106 ( .A(n151), .B(b[1]), .Y(n121) );
-  CLKINVX1 U112 ( .A(n148), .Y(n144) );
   CLKINVX1 U116 ( .A(n149), .Y(n145) );
   CLKINVX1 U120 ( .A(n150), .Y(n146) );
-  CLKINVX1 U124 ( .A(n151), .Y(n147) );
   XOR2X1 U127 ( .A(a[6]), .B(a[7]), .Y(n132) );
   XNOR2X1 U128 ( .A(a[6]), .B(a[5]), .Y(n156) );
   XOR2X1 U130 ( .A(a[4]), .B(a[5]), .Y(n133) );
@@ -6089,43 +6033,45 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_58 ( a, b, product );
   XNOR2X1 U134 ( .A(a[2]), .B(a[1]), .Y(n158) );
   XOR2X1 U136 ( .A(a[0]), .B(a[1]), .Y(n135) );
   CLKINVX1 U137 ( .A(a[0]), .Y(n159) );
-  CLKINVX1 U140 ( .A(n198), .Y(n189) );
-  CLKINVX1 U141 ( .A(n200), .Y(n190) );
-  CLKINVX1 U142 ( .A(n199), .Y(n191) );
-  CLKINVX1 U143 ( .A(n158), .Y(n142) );
-  CLKINVX1 U144 ( .A(n142), .Y(n192) );
-  CLKINVX1 U145 ( .A(n156), .Y(n140) );
-  CLKINVX1 U146 ( .A(n140), .Y(n193) );
-  CLKINVX1 U147 ( .A(n197), .Y(n194) );
-  CLKINVX1 U148 ( .A(b[0]), .Y(n131) );
-  CLKINVX1 U149 ( .A(n131), .Y(n195) );
-  NAND2BXL U150 ( .AN(n195), .B(a[1]), .Y(n123) );
-  NAND2BXL U151 ( .AN(n195), .B(a[3]), .Y(n114) );
-  CLKINVX1 U152 ( .A(n157), .Y(n141) );
-  CLKINVX1 U153 ( .A(n141), .Y(n196) );
-  NOR2BXL U154 ( .AN(n195), .B(n159), .Y(product[0]) );
-  XNOR2XL U155 ( .A(a[7]), .B(b[0]), .Y(n95) );
-  XNOR2XL U156 ( .A(a[1]), .B(b[0]), .Y(n122) );
-  NOR2BXL U157 ( .AN(n195), .B(n192), .Y(n79) );
-  XNOR2XL U158 ( .A(a[3]), .B(b[0]), .Y(n113) );
-  NOR2BXL U159 ( .AN(n195), .B(n196), .Y(n71) );
-  NAND2BXL U160 ( .AN(n195), .B(a[7]), .Y(n96) );
-  NAND2BXL U161 ( .AN(n195), .B(a[5]), .Y(n105) );
-  XNOR2XL U162 ( .A(a[5]), .B(b[0]), .Y(n104) );
-  NOR2BXL U163 ( .AN(n195), .B(n193), .Y(n63) );
-  CLKBUFX3 U164 ( .A(n159), .Y(n143) );
-  CLKBUFX3 U165 ( .A(a[1]), .Y(n151) );
-  CLKBUFX3 U166 ( .A(a[3]), .Y(n150) );
-  CLKBUFX3 U167 ( .A(a[5]), .Y(n149) );
-  CLKBUFX3 U168 ( .A(a[7]), .Y(n148) );
-  AND2X2 U169 ( .A(n132), .B(n156), .Y(n197) );
-  CLKINVX1 U170 ( .A(n197), .Y(n152) );
-  AND2X2 U171 ( .A(n133), .B(n157), .Y(n198) );
-  CLKINVX1 U172 ( .A(n198), .Y(n153) );
-  AND2X2 U173 ( .A(n134), .B(n158), .Y(n199) );
-  CLKINVX1 U174 ( .A(n199), .Y(n154) );
-  AND2X2 U175 ( .A(n135), .B(n159), .Y(n200) );
-  CLKINVX1 U176 ( .A(n200), .Y(n155) );
+  NOR2X1 U140 ( .A(n157), .B(n131), .Y(n71) );
+  NOR2X1 U141 ( .A(n156), .B(n131), .Y(n63) );
+  NOR2X1 U142 ( .A(n131), .B(n159), .Y(product[0]) );
+  OAI2BB2XL U143 ( .B0(n156), .B1(n96), .A0N(n197), .A1N(n148), .Y(n52) );
+  OAI2BB2XL U144 ( .B0(n123), .B1(n159), .A0N(n200), .A1N(n151), .Y(n55) );
+  NOR2X1 U145 ( .A(n158), .B(n131), .Y(n79) );
+  CLKINVX1 U146 ( .A(n198), .Y(n189) );
+  CLKINVX1 U147 ( .A(n200), .Y(n190) );
+  CLKINVX1 U148 ( .A(n199), .Y(n191) );
+  CLKINVX1 U149 ( .A(n158), .Y(n142) );
+  CLKINVX1 U150 ( .A(n142), .Y(n192) );
+  CLKINVX1 U151 ( .A(n156), .Y(n140) );
+  CLKINVX1 U152 ( .A(n140), .Y(n193) );
+  CLKINVX1 U153 ( .A(n197), .Y(n194) );
+  CLKINVX1 U154 ( .A(b[0]), .Y(n131) );
+  CLKINVX1 U155 ( .A(n131), .Y(n195) );
+  NAND2BXL U156 ( .AN(n195), .B(a[1]), .Y(n123) );
+  NAND2BXL U157 ( .AN(n195), .B(a[3]), .Y(n114) );
+  CLKINVX1 U158 ( .A(n157), .Y(n141) );
+  CLKINVX1 U159 ( .A(n141), .Y(n196) );
+  XNOR2XL U160 ( .A(a[7]), .B(b[0]), .Y(n95) );
+  XNOR2XL U161 ( .A(a[1]), .B(b[0]), .Y(n122) );
+  XNOR2XL U162 ( .A(a[3]), .B(b[0]), .Y(n113) );
+  NAND2BXL U163 ( .AN(n195), .B(a[7]), .Y(n96) );
+  NAND2BXL U164 ( .AN(n195), .B(a[5]), .Y(n105) );
+  XNOR2XL U165 ( .A(a[5]), .B(b[0]), .Y(n104) );
+  CLKBUFX3 U166 ( .A(n159), .Y(n143) );
+  CLKBUFX3 U167 ( .A(a[1]), .Y(n151) );
+  CLKBUFX3 U168 ( .A(a[3]), .Y(n150) );
+  CLKBUFX3 U169 ( .A(a[5]), .Y(n149) );
+  CLKBUFX3 U170 ( .A(a[7]), .Y(n148) );
+  AND2X2 U171 ( .A(n132), .B(n156), .Y(n197) );
+  CLKINVX1 U172 ( .A(n197), .Y(n152) );
+  AND2X2 U173 ( .A(n133), .B(n157), .Y(n198) );
+  CLKINVX1 U174 ( .A(n198), .Y(n153) );
+  AND2X2 U175 ( .A(n134), .B(n158), .Y(n199) );
+  CLKINVX1 U176 ( .A(n199), .Y(n154) );
+  AND2X2 U177 ( .A(n135), .B(n159), .Y(n200) );
+  CLKINVX1 U178 ( .A(n200), .Y(n155) );
 endmodule
 
 
@@ -6142,10 +6088,10 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_59 ( a, b, product );
          n87, n88, n89, n90, n91, n92, n93, n94, n95, n96, n97, n98, n99, n100,
          n101, n102, n103, n104, n105, n106, n107, n108, n109, n110, n111,
          n112, n113, n114, n115, n116, n117, n118, n119, n120, n121, n122,
-         n123, n131, n132, n133, n134, n135, n140, n141, n142, n143, n144,
-         n145, n146, n147, n148, n149, n150, n151, n152, n153, n154, n155,
-         n156, n157, n158, n159, n189, n190, n191, n192, n193, n194, n195,
-         n196, n197, n198, n199, n200;
+         n123, n131, n132, n133, n134, n135, n140, n141, n142, n143, n145,
+         n146, n148, n149, n150, n151, n152, n153, n154, n155, n156, n157,
+         n158, n159, n189, n190, n191, n192, n193, n194, n195, n196, n197,
+         n198, n199, n200;
 
   CLKINVX1 U1 ( .A(n1), .Y(product[15]) );
   ADDFXL U2 ( .A(n56), .B(n15), .CI(n2), .CO(n1), .S(product[14]) );
@@ -6184,7 +6130,6 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_59 ( a, b, product );
   ADDHXL U30 ( .A(n83), .B(n70), .CO(n46), .S(n47) );
   ADDFXL U31 ( .A(n84), .B(n71), .CI(n77), .CO(n48), .S(n49) );
   ADDHXL U32 ( .A(n85), .B(n54), .CO(n50), .S(n51) );
-  OAI22XL U33 ( .A0(n152), .A1(n144), .B0(n193), .B1(n96), .Y(n52) );
   AO21X1 U34 ( .A0(n152), .A1(n156), .B0(n88), .Y(n56) );
   OAI22XL U35 ( .A0(n152), .A1(n89), .B0(n193), .B1(n88), .Y(n15) );
   OAI22XL U36 ( .A0(n152), .A1(n90), .B0(n193), .B1(n89), .Y(n57) );
@@ -6232,7 +6177,6 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_59 ( a, b, product );
   XNOR2X1 U85 ( .A(n150), .B(b[3]), .Y(n110) );
   XNOR2X1 U86 ( .A(n150), .B(b[2]), .Y(n111) );
   XNOR2X1 U87 ( .A(n150), .B(b[1]), .Y(n112) );
-  OAI22XL U90 ( .A0(n155), .A1(n147), .B0(n123), .B1(n143), .Y(n55) );
   AO21X1 U91 ( .A0(n155), .A1(n159), .B0(n115), .Y(n80) );
   OAI22XL U92 ( .A0(n155), .A1(n116), .B0(n115), .B1(n143), .Y(n81) );
   OAI22XL U93 ( .A0(n155), .A1(n117), .B0(n116), .B1(n143), .Y(n82) );
@@ -6248,10 +6192,8 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_59 ( a, b, product );
   XNOR2X1 U104 ( .A(n151), .B(b[3]), .Y(n119) );
   XNOR2X1 U105 ( .A(n151), .B(b[2]), .Y(n120) );
   XNOR2X1 U106 ( .A(n151), .B(b[1]), .Y(n121) );
-  CLKINVX1 U112 ( .A(n148), .Y(n144) );
   CLKINVX1 U116 ( .A(n149), .Y(n145) );
   CLKINVX1 U120 ( .A(n150), .Y(n146) );
-  CLKINVX1 U124 ( .A(n151), .Y(n147) );
   XOR2X1 U127 ( .A(a[6]), .B(a[7]), .Y(n132) );
   XNOR2X1 U128 ( .A(a[6]), .B(a[5]), .Y(n156) );
   XOR2X1 U130 ( .A(a[4]), .B(a[5]), .Y(n133) );
@@ -6260,43 +6202,45 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_59 ( a, b, product );
   XNOR2X1 U134 ( .A(a[2]), .B(a[1]), .Y(n158) );
   XOR2X1 U136 ( .A(a[0]), .B(a[1]), .Y(n135) );
   CLKINVX1 U137 ( .A(a[0]), .Y(n159) );
-  CLKINVX1 U140 ( .A(n198), .Y(n189) );
-  CLKINVX1 U141 ( .A(n200), .Y(n190) );
-  CLKINVX1 U142 ( .A(n199), .Y(n191) );
-  CLKINVX1 U143 ( .A(n158), .Y(n142) );
-  CLKINVX1 U144 ( .A(n142), .Y(n192) );
-  CLKINVX1 U145 ( .A(n156), .Y(n140) );
-  CLKINVX1 U146 ( .A(n140), .Y(n193) );
-  CLKINVX1 U147 ( .A(n197), .Y(n194) );
-  CLKINVX1 U148 ( .A(b[0]), .Y(n131) );
-  CLKINVX1 U149 ( .A(n131), .Y(n195) );
-  NAND2BXL U150 ( .AN(n195), .B(a[1]), .Y(n123) );
-  NAND2BXL U151 ( .AN(n195), .B(a[3]), .Y(n114) );
-  CLKINVX1 U152 ( .A(n157), .Y(n141) );
-  CLKINVX1 U153 ( .A(n141), .Y(n196) );
-  NOR2BXL U154 ( .AN(n195), .B(n159), .Y(product[0]) );
-  XNOR2XL U155 ( .A(a[7]), .B(b[0]), .Y(n95) );
-  XNOR2XL U156 ( .A(a[1]), .B(b[0]), .Y(n122) );
-  NOR2BXL U157 ( .AN(n195), .B(n192), .Y(n79) );
-  XNOR2XL U158 ( .A(a[3]), .B(b[0]), .Y(n113) );
-  NOR2BXL U159 ( .AN(n195), .B(n196), .Y(n71) );
-  NAND2BXL U160 ( .AN(n195), .B(a[7]), .Y(n96) );
-  NAND2BXL U161 ( .AN(n195), .B(a[5]), .Y(n105) );
-  XNOR2XL U162 ( .A(a[5]), .B(b[0]), .Y(n104) );
-  NOR2BXL U163 ( .AN(n195), .B(n193), .Y(n63) );
-  CLKBUFX3 U164 ( .A(n159), .Y(n143) );
-  CLKBUFX3 U165 ( .A(a[1]), .Y(n151) );
-  CLKBUFX3 U166 ( .A(a[3]), .Y(n150) );
-  CLKBUFX3 U167 ( .A(a[5]), .Y(n149) );
-  CLKBUFX3 U168 ( .A(a[7]), .Y(n148) );
-  AND2X2 U169 ( .A(n132), .B(n156), .Y(n197) );
-  CLKINVX1 U170 ( .A(n197), .Y(n152) );
-  AND2X2 U171 ( .A(n133), .B(n157), .Y(n198) );
-  CLKINVX1 U172 ( .A(n198), .Y(n153) );
-  AND2X2 U173 ( .A(n134), .B(n158), .Y(n199) );
-  CLKINVX1 U174 ( .A(n199), .Y(n154) );
-  AND2X2 U175 ( .A(n135), .B(n159), .Y(n200) );
-  CLKINVX1 U176 ( .A(n200), .Y(n155) );
+  NOR2X1 U140 ( .A(n157), .B(n131), .Y(n71) );
+  NOR2X1 U141 ( .A(n156), .B(n131), .Y(n63) );
+  OAI2BB2XL U142 ( .B0(n156), .B1(n96), .A0N(n197), .A1N(n148), .Y(n52) );
+  NOR2X1 U143 ( .A(n131), .B(n159), .Y(product[0]) );
+  OAI2BB2XL U144 ( .B0(n123), .B1(n159), .A0N(n200), .A1N(n151), .Y(n55) );
+  NOR2X1 U145 ( .A(n158), .B(n131), .Y(n79) );
+  CLKINVX1 U146 ( .A(n198), .Y(n189) );
+  CLKINVX1 U147 ( .A(n200), .Y(n190) );
+  CLKINVX1 U148 ( .A(n199), .Y(n191) );
+  CLKINVX1 U149 ( .A(n158), .Y(n142) );
+  CLKINVX1 U150 ( .A(n142), .Y(n192) );
+  CLKINVX1 U151 ( .A(n156), .Y(n140) );
+  CLKINVX1 U152 ( .A(n140), .Y(n193) );
+  CLKINVX1 U153 ( .A(n197), .Y(n194) );
+  CLKINVX1 U154 ( .A(b[0]), .Y(n131) );
+  CLKINVX1 U155 ( .A(n131), .Y(n195) );
+  NAND2BXL U156 ( .AN(n195), .B(a[1]), .Y(n123) );
+  NAND2BXL U157 ( .AN(n195), .B(a[3]), .Y(n114) );
+  CLKINVX1 U158 ( .A(n157), .Y(n141) );
+  CLKINVX1 U159 ( .A(n141), .Y(n196) );
+  XNOR2XL U160 ( .A(a[7]), .B(b[0]), .Y(n95) );
+  XNOR2XL U161 ( .A(a[1]), .B(b[0]), .Y(n122) );
+  XNOR2XL U162 ( .A(a[3]), .B(b[0]), .Y(n113) );
+  NAND2BXL U163 ( .AN(n195), .B(a[7]), .Y(n96) );
+  NAND2BXL U164 ( .AN(n195), .B(a[5]), .Y(n105) );
+  XNOR2XL U165 ( .A(a[5]), .B(b[0]), .Y(n104) );
+  CLKBUFX3 U166 ( .A(n159), .Y(n143) );
+  CLKBUFX3 U167 ( .A(a[1]), .Y(n151) );
+  CLKBUFX3 U168 ( .A(a[3]), .Y(n150) );
+  CLKBUFX3 U169 ( .A(a[5]), .Y(n149) );
+  CLKBUFX3 U170 ( .A(a[7]), .Y(n148) );
+  AND2X2 U171 ( .A(n132), .B(n156), .Y(n197) );
+  CLKINVX1 U172 ( .A(n197), .Y(n152) );
+  AND2X2 U173 ( .A(n133), .B(n157), .Y(n198) );
+  CLKINVX1 U174 ( .A(n198), .Y(n153) );
+  AND2X2 U175 ( .A(n134), .B(n158), .Y(n199) );
+  CLKINVX1 U176 ( .A(n199), .Y(n154) );
+  AND2X2 U177 ( .A(n135), .B(n159), .Y(n200) );
+  CLKINVX1 U178 ( .A(n200), .Y(n155) );
 endmodule
 
 
@@ -6313,10 +6257,10 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_60 ( a, b, product );
          n87, n88, n89, n90, n91, n92, n93, n94, n95, n96, n97, n98, n99, n100,
          n101, n102, n103, n104, n105, n106, n107, n108, n109, n110, n111,
          n112, n113, n114, n115, n116, n117, n118, n119, n120, n121, n122,
-         n123, n131, n132, n133, n134, n135, n140, n141, n142, n143, n144,
-         n145, n146, n147, n148, n149, n150, n151, n152, n153, n154, n155,
-         n156, n157, n158, n159, n189, n190, n191, n192, n193, n194, n195,
-         n196, n197, n198, n199, n200;
+         n123, n131, n132, n133, n134, n135, n140, n141, n142, n143, n145,
+         n146, n148, n149, n150, n151, n152, n153, n154, n155, n156, n157,
+         n158, n159, n189, n190, n191, n192, n193, n194, n195, n196, n197,
+         n198, n199, n200;
 
   CLKINVX1 U1 ( .A(n1), .Y(product[15]) );
   ADDFXL U2 ( .A(n56), .B(n15), .CI(n2), .CO(n1), .S(product[14]) );
@@ -6355,7 +6299,6 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_60 ( a, b, product );
   ADDHXL U30 ( .A(n83), .B(n70), .CO(n46), .S(n47) );
   ADDFXL U31 ( .A(n84), .B(n71), .CI(n77), .CO(n48), .S(n49) );
   ADDHXL U32 ( .A(n85), .B(n54), .CO(n50), .S(n51) );
-  OAI22XL U33 ( .A0(n152), .A1(n144), .B0(n193), .B1(n96), .Y(n52) );
   AO21X1 U34 ( .A0(n152), .A1(n156), .B0(n88), .Y(n56) );
   OAI22XL U35 ( .A0(n152), .A1(n89), .B0(n193), .B1(n88), .Y(n15) );
   OAI22XL U36 ( .A0(n152), .A1(n90), .B0(n193), .B1(n89), .Y(n57) );
@@ -6403,7 +6346,6 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_60 ( a, b, product );
   XNOR2X1 U85 ( .A(n150), .B(b[3]), .Y(n110) );
   XNOR2X1 U86 ( .A(n150), .B(b[2]), .Y(n111) );
   XNOR2X1 U87 ( .A(n150), .B(b[1]), .Y(n112) );
-  OAI22XL U90 ( .A0(n155), .A1(n147), .B0(n123), .B1(n143), .Y(n55) );
   AO21X1 U91 ( .A0(n155), .A1(n159), .B0(n115), .Y(n80) );
   OAI22XL U92 ( .A0(n155), .A1(n116), .B0(n115), .B1(n143), .Y(n81) );
   OAI22XL U93 ( .A0(n155), .A1(n117), .B0(n116), .B1(n143), .Y(n82) );
@@ -6419,10 +6361,8 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_60 ( a, b, product );
   XNOR2X1 U104 ( .A(n151), .B(b[3]), .Y(n119) );
   XNOR2X1 U105 ( .A(n151), .B(b[2]), .Y(n120) );
   XNOR2X1 U106 ( .A(n151), .B(b[1]), .Y(n121) );
-  CLKINVX1 U112 ( .A(n148), .Y(n144) );
   CLKINVX1 U116 ( .A(n149), .Y(n145) );
   CLKINVX1 U120 ( .A(n150), .Y(n146) );
-  CLKINVX1 U124 ( .A(n151), .Y(n147) );
   XOR2X1 U127 ( .A(a[6]), .B(a[7]), .Y(n132) );
   XNOR2X1 U128 ( .A(a[6]), .B(a[5]), .Y(n156) );
   XOR2X1 U130 ( .A(a[4]), .B(a[5]), .Y(n133) );
@@ -6431,43 +6371,45 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_60 ( a, b, product );
   XNOR2X1 U134 ( .A(a[2]), .B(a[1]), .Y(n158) );
   XOR2X1 U136 ( .A(a[0]), .B(a[1]), .Y(n135) );
   CLKINVX1 U137 ( .A(a[0]), .Y(n159) );
-  CLKINVX1 U140 ( .A(n198), .Y(n189) );
-  CLKINVX1 U141 ( .A(n200), .Y(n190) );
-  CLKINVX1 U142 ( .A(n199), .Y(n191) );
-  CLKINVX1 U143 ( .A(n158), .Y(n142) );
-  CLKINVX1 U144 ( .A(n142), .Y(n192) );
-  CLKINVX1 U145 ( .A(n156), .Y(n140) );
-  CLKINVX1 U146 ( .A(n140), .Y(n193) );
-  CLKINVX1 U147 ( .A(n197), .Y(n194) );
-  CLKINVX1 U148 ( .A(b[0]), .Y(n131) );
-  CLKINVX1 U149 ( .A(n131), .Y(n195) );
-  NAND2BXL U150 ( .AN(n195), .B(a[1]), .Y(n123) );
-  NAND2BXL U151 ( .AN(n195), .B(a[3]), .Y(n114) );
-  CLKINVX1 U152 ( .A(n157), .Y(n141) );
-  CLKINVX1 U153 ( .A(n141), .Y(n196) );
-  NOR2BXL U154 ( .AN(n195), .B(n159), .Y(product[0]) );
-  XNOR2XL U155 ( .A(a[7]), .B(b[0]), .Y(n95) );
-  XNOR2XL U156 ( .A(a[1]), .B(b[0]), .Y(n122) );
-  NOR2BXL U157 ( .AN(n195), .B(n192), .Y(n79) );
-  XNOR2XL U158 ( .A(a[3]), .B(b[0]), .Y(n113) );
-  NOR2BXL U159 ( .AN(n195), .B(n196), .Y(n71) );
-  NAND2BXL U160 ( .AN(n195), .B(a[7]), .Y(n96) );
-  NAND2BXL U161 ( .AN(n195), .B(a[5]), .Y(n105) );
-  XNOR2XL U162 ( .A(a[5]), .B(b[0]), .Y(n104) );
-  NOR2BXL U163 ( .AN(n195), .B(n193), .Y(n63) );
-  CLKBUFX3 U164 ( .A(n159), .Y(n143) );
-  CLKBUFX3 U165 ( .A(a[1]), .Y(n151) );
-  CLKBUFX3 U166 ( .A(a[3]), .Y(n150) );
-  CLKBUFX3 U167 ( .A(a[5]), .Y(n149) );
-  CLKBUFX3 U168 ( .A(a[7]), .Y(n148) );
-  AND2X2 U169 ( .A(n132), .B(n156), .Y(n197) );
-  CLKINVX1 U170 ( .A(n197), .Y(n152) );
-  AND2X2 U171 ( .A(n133), .B(n157), .Y(n198) );
-  CLKINVX1 U172 ( .A(n198), .Y(n153) );
-  AND2X2 U173 ( .A(n134), .B(n158), .Y(n199) );
-  CLKINVX1 U174 ( .A(n199), .Y(n154) );
-  AND2X2 U175 ( .A(n135), .B(n159), .Y(n200) );
-  CLKINVX1 U176 ( .A(n200), .Y(n155) );
+  NOR2X1 U140 ( .A(n157), .B(n131), .Y(n71) );
+  NOR2X1 U141 ( .A(n156), .B(n131), .Y(n63) );
+  NOR2X1 U142 ( .A(n131), .B(n159), .Y(product[0]) );
+  OAI2BB2XL U143 ( .B0(n156), .B1(n96), .A0N(n197), .A1N(n148), .Y(n52) );
+  OAI2BB2XL U144 ( .B0(n123), .B1(n159), .A0N(n200), .A1N(n151), .Y(n55) );
+  NOR2X1 U145 ( .A(n158), .B(n131), .Y(n79) );
+  CLKINVX1 U146 ( .A(n198), .Y(n189) );
+  CLKINVX1 U147 ( .A(n200), .Y(n190) );
+  CLKINVX1 U148 ( .A(n199), .Y(n191) );
+  CLKINVX1 U149 ( .A(n158), .Y(n142) );
+  CLKINVX1 U150 ( .A(n142), .Y(n192) );
+  CLKINVX1 U151 ( .A(n156), .Y(n140) );
+  CLKINVX1 U152 ( .A(n140), .Y(n193) );
+  CLKINVX1 U153 ( .A(n197), .Y(n194) );
+  CLKINVX1 U154 ( .A(b[0]), .Y(n131) );
+  CLKINVX1 U155 ( .A(n131), .Y(n195) );
+  NAND2BXL U156 ( .AN(n195), .B(a[1]), .Y(n123) );
+  NAND2BXL U157 ( .AN(n195), .B(a[3]), .Y(n114) );
+  CLKINVX1 U158 ( .A(n157), .Y(n141) );
+  CLKINVX1 U159 ( .A(n141), .Y(n196) );
+  XNOR2XL U160 ( .A(a[7]), .B(b[0]), .Y(n95) );
+  XNOR2XL U161 ( .A(a[1]), .B(b[0]), .Y(n122) );
+  XNOR2XL U162 ( .A(a[3]), .B(b[0]), .Y(n113) );
+  NAND2BXL U163 ( .AN(n195), .B(a[7]), .Y(n96) );
+  NAND2BXL U164 ( .AN(n195), .B(a[5]), .Y(n105) );
+  XNOR2XL U165 ( .A(a[5]), .B(b[0]), .Y(n104) );
+  CLKBUFX3 U166 ( .A(n159), .Y(n143) );
+  CLKBUFX3 U167 ( .A(a[1]), .Y(n151) );
+  CLKBUFX3 U168 ( .A(a[3]), .Y(n150) );
+  CLKBUFX3 U169 ( .A(a[5]), .Y(n149) );
+  CLKBUFX3 U170 ( .A(a[7]), .Y(n148) );
+  AND2X2 U171 ( .A(n132), .B(n156), .Y(n197) );
+  CLKINVX1 U172 ( .A(n197), .Y(n152) );
+  AND2X2 U173 ( .A(n133), .B(n157), .Y(n198) );
+  CLKINVX1 U174 ( .A(n198), .Y(n153) );
+  AND2X2 U175 ( .A(n134), .B(n158), .Y(n199) );
+  CLKINVX1 U176 ( .A(n199), .Y(n154) );
+  AND2X2 U177 ( .A(n135), .B(n159), .Y(n200) );
+  CLKINVX1 U178 ( .A(n200), .Y(n155) );
 endmodule
 
 
@@ -6484,10 +6426,10 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_61 ( a, b, product );
          n87, n88, n89, n90, n91, n92, n93, n94, n95, n96, n97, n98, n99, n100,
          n101, n102, n103, n104, n105, n106, n107, n108, n109, n110, n111,
          n112, n113, n114, n115, n116, n117, n118, n119, n120, n121, n122,
-         n123, n131, n132, n133, n134, n135, n140, n141, n142, n143, n144,
-         n145, n146, n147, n148, n149, n150, n151, n152, n153, n154, n155,
-         n156, n157, n158, n159, n189, n190, n191, n192, n193, n194, n195,
-         n196, n197, n198, n199, n200;
+         n123, n131, n132, n133, n134, n135, n140, n141, n142, n143, n145,
+         n146, n148, n149, n150, n151, n152, n153, n154, n155, n156, n157,
+         n158, n159, n189, n190, n191, n192, n193, n194, n195, n196, n197,
+         n198, n199, n200;
 
   CLKINVX1 U1 ( .A(n1), .Y(product[15]) );
   ADDFXL U2 ( .A(n56), .B(n15), .CI(n2), .CO(n1), .S(product[14]) );
@@ -6526,7 +6468,6 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_61 ( a, b, product );
   ADDHXL U30 ( .A(n83), .B(n70), .CO(n46), .S(n47) );
   ADDFXL U31 ( .A(n84), .B(n71), .CI(n77), .CO(n48), .S(n49) );
   ADDHXL U32 ( .A(n85), .B(n54), .CO(n50), .S(n51) );
-  OAI22XL U33 ( .A0(n152), .A1(n144), .B0(n193), .B1(n96), .Y(n52) );
   AO21X1 U34 ( .A0(n152), .A1(n156), .B0(n88), .Y(n56) );
   OAI22XL U35 ( .A0(n152), .A1(n89), .B0(n193), .B1(n88), .Y(n15) );
   OAI22XL U36 ( .A0(n152), .A1(n90), .B0(n193), .B1(n89), .Y(n57) );
@@ -6574,7 +6515,6 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_61 ( a, b, product );
   XNOR2X1 U85 ( .A(n150), .B(b[3]), .Y(n110) );
   XNOR2X1 U86 ( .A(n150), .B(b[2]), .Y(n111) );
   XNOR2X1 U87 ( .A(n150), .B(b[1]), .Y(n112) );
-  OAI22XL U90 ( .A0(n155), .A1(n147), .B0(n123), .B1(n143), .Y(n55) );
   AO21X1 U91 ( .A0(n155), .A1(n159), .B0(n115), .Y(n80) );
   OAI22XL U92 ( .A0(n155), .A1(n116), .B0(n115), .B1(n143), .Y(n81) );
   OAI22XL U93 ( .A0(n155), .A1(n117), .B0(n116), .B1(n143), .Y(n82) );
@@ -6590,10 +6530,8 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_61 ( a, b, product );
   XNOR2X1 U104 ( .A(n151), .B(b[3]), .Y(n119) );
   XNOR2X1 U105 ( .A(n151), .B(b[2]), .Y(n120) );
   XNOR2X1 U106 ( .A(n151), .B(b[1]), .Y(n121) );
-  CLKINVX1 U112 ( .A(n148), .Y(n144) );
   CLKINVX1 U116 ( .A(n149), .Y(n145) );
   CLKINVX1 U120 ( .A(n150), .Y(n146) );
-  CLKINVX1 U124 ( .A(n151), .Y(n147) );
   XOR2X1 U127 ( .A(a[6]), .B(a[7]), .Y(n132) );
   XNOR2X1 U128 ( .A(a[6]), .B(a[5]), .Y(n156) );
   XOR2X1 U130 ( .A(a[4]), .B(a[5]), .Y(n133) );
@@ -6602,43 +6540,45 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_61 ( a, b, product );
   XNOR2X1 U134 ( .A(a[2]), .B(a[1]), .Y(n158) );
   XOR2X1 U136 ( .A(a[0]), .B(a[1]), .Y(n135) );
   CLKINVX1 U137 ( .A(a[0]), .Y(n159) );
-  CLKINVX1 U140 ( .A(n198), .Y(n189) );
-  CLKINVX1 U141 ( .A(n200), .Y(n190) );
-  CLKINVX1 U142 ( .A(n199), .Y(n191) );
-  CLKINVX1 U143 ( .A(n158), .Y(n142) );
-  CLKINVX1 U144 ( .A(n142), .Y(n192) );
-  CLKINVX1 U145 ( .A(n156), .Y(n140) );
-  CLKINVX1 U146 ( .A(n140), .Y(n193) );
-  CLKINVX1 U147 ( .A(n197), .Y(n194) );
-  CLKINVX1 U148 ( .A(b[0]), .Y(n131) );
-  CLKINVX1 U149 ( .A(n131), .Y(n195) );
-  NAND2BXL U150 ( .AN(n195), .B(a[1]), .Y(n123) );
-  NAND2BXL U151 ( .AN(n195), .B(a[3]), .Y(n114) );
-  CLKINVX1 U152 ( .A(n157), .Y(n141) );
-  CLKINVX1 U153 ( .A(n141), .Y(n196) );
-  NOR2BXL U154 ( .AN(n195), .B(n159), .Y(product[0]) );
-  XNOR2XL U155 ( .A(a[7]), .B(b[0]), .Y(n95) );
-  XNOR2XL U156 ( .A(a[1]), .B(b[0]), .Y(n122) );
-  NOR2BXL U157 ( .AN(n195), .B(n192), .Y(n79) );
-  XNOR2XL U158 ( .A(a[3]), .B(b[0]), .Y(n113) );
-  NOR2BXL U159 ( .AN(n195), .B(n196), .Y(n71) );
-  NAND2BXL U160 ( .AN(n195), .B(a[7]), .Y(n96) );
-  NAND2BXL U161 ( .AN(n195), .B(a[5]), .Y(n105) );
-  XNOR2XL U162 ( .A(a[5]), .B(b[0]), .Y(n104) );
-  NOR2BXL U163 ( .AN(n195), .B(n193), .Y(n63) );
-  CLKBUFX3 U164 ( .A(n159), .Y(n143) );
-  CLKBUFX3 U165 ( .A(a[1]), .Y(n151) );
-  CLKBUFX3 U166 ( .A(a[3]), .Y(n150) );
-  CLKBUFX3 U167 ( .A(a[5]), .Y(n149) );
-  CLKBUFX3 U168 ( .A(a[7]), .Y(n148) );
-  AND2X2 U169 ( .A(n132), .B(n156), .Y(n197) );
-  CLKINVX1 U170 ( .A(n197), .Y(n152) );
-  AND2X2 U171 ( .A(n133), .B(n157), .Y(n198) );
-  CLKINVX1 U172 ( .A(n198), .Y(n153) );
-  AND2X2 U173 ( .A(n134), .B(n158), .Y(n199) );
-  CLKINVX1 U174 ( .A(n199), .Y(n154) );
-  AND2X2 U175 ( .A(n135), .B(n159), .Y(n200) );
-  CLKINVX1 U176 ( .A(n200), .Y(n155) );
+  NOR2X1 U140 ( .A(n157), .B(n131), .Y(n71) );
+  NOR2X1 U141 ( .A(n156), .B(n131), .Y(n63) );
+  OAI2BB2XL U142 ( .B0(n156), .B1(n96), .A0N(n197), .A1N(n148), .Y(n52) );
+  NOR2X1 U143 ( .A(n131), .B(n159), .Y(product[0]) );
+  OAI2BB2XL U144 ( .B0(n123), .B1(n159), .A0N(n200), .A1N(n151), .Y(n55) );
+  NOR2X1 U145 ( .A(n158), .B(n131), .Y(n79) );
+  CLKINVX1 U146 ( .A(n198), .Y(n189) );
+  CLKINVX1 U147 ( .A(n200), .Y(n190) );
+  CLKINVX1 U148 ( .A(n199), .Y(n191) );
+  CLKINVX1 U149 ( .A(n158), .Y(n142) );
+  CLKINVX1 U150 ( .A(n142), .Y(n192) );
+  CLKINVX1 U151 ( .A(n156), .Y(n140) );
+  CLKINVX1 U152 ( .A(n140), .Y(n193) );
+  CLKINVX1 U153 ( .A(n197), .Y(n194) );
+  CLKINVX1 U154 ( .A(b[0]), .Y(n131) );
+  CLKINVX1 U155 ( .A(n131), .Y(n195) );
+  NAND2BXL U156 ( .AN(n195), .B(a[1]), .Y(n123) );
+  NAND2BXL U157 ( .AN(n195), .B(a[3]), .Y(n114) );
+  CLKINVX1 U158 ( .A(n157), .Y(n141) );
+  CLKINVX1 U159 ( .A(n141), .Y(n196) );
+  XNOR2XL U160 ( .A(a[7]), .B(b[0]), .Y(n95) );
+  XNOR2XL U161 ( .A(a[1]), .B(b[0]), .Y(n122) );
+  XNOR2XL U162 ( .A(a[3]), .B(b[0]), .Y(n113) );
+  NAND2BXL U163 ( .AN(n195), .B(a[7]), .Y(n96) );
+  NAND2BXL U164 ( .AN(n195), .B(a[5]), .Y(n105) );
+  XNOR2XL U165 ( .A(a[5]), .B(b[0]), .Y(n104) );
+  CLKBUFX3 U166 ( .A(n159), .Y(n143) );
+  CLKBUFX3 U167 ( .A(a[1]), .Y(n151) );
+  CLKBUFX3 U168 ( .A(a[3]), .Y(n150) );
+  CLKBUFX3 U169 ( .A(a[5]), .Y(n149) );
+  CLKBUFX3 U170 ( .A(a[7]), .Y(n148) );
+  AND2X2 U171 ( .A(n132), .B(n156), .Y(n197) );
+  CLKINVX1 U172 ( .A(n197), .Y(n152) );
+  AND2X2 U173 ( .A(n133), .B(n157), .Y(n198) );
+  CLKINVX1 U174 ( .A(n198), .Y(n153) );
+  AND2X2 U175 ( .A(n134), .B(n158), .Y(n199) );
+  CLKINVX1 U176 ( .A(n199), .Y(n154) );
+  AND2X2 U177 ( .A(n135), .B(n159), .Y(n200) );
+  CLKINVX1 U178 ( .A(n200), .Y(n155) );
 endmodule
 
 
@@ -6655,10 +6595,10 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_62 ( a, b, product );
          n87, n88, n89, n90, n91, n92, n93, n94, n95, n96, n97, n98, n99, n100,
          n101, n102, n103, n104, n105, n106, n107, n108, n109, n110, n111,
          n112, n113, n114, n115, n116, n117, n118, n119, n120, n121, n122,
-         n123, n131, n132, n133, n134, n135, n140, n141, n142, n143, n144,
-         n145, n146, n147, n148, n149, n150, n151, n152, n153, n154, n155,
-         n156, n157, n158, n159, n189, n190, n191, n192, n193, n194, n195,
-         n196, n197, n198, n199, n200;
+         n123, n131, n132, n133, n134, n135, n140, n141, n142, n143, n145,
+         n146, n148, n149, n150, n151, n152, n153, n154, n155, n156, n157,
+         n158, n159, n189, n190, n191, n192, n193, n194, n195, n196, n197,
+         n198, n199, n200;
 
   CLKINVX1 U1 ( .A(n1), .Y(product[15]) );
   ADDFXL U2 ( .A(n56), .B(n15), .CI(n2), .CO(n1), .S(product[14]) );
@@ -6697,7 +6637,6 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_62 ( a, b, product );
   ADDHXL U30 ( .A(n83), .B(n70), .CO(n46), .S(n47) );
   ADDFXL U31 ( .A(n84), .B(n71), .CI(n77), .CO(n48), .S(n49) );
   ADDHXL U32 ( .A(n85), .B(n54), .CO(n50), .S(n51) );
-  OAI22XL U33 ( .A0(n152), .A1(n144), .B0(n196), .B1(n96), .Y(n52) );
   AO21X1 U34 ( .A0(n152), .A1(n156), .B0(n88), .Y(n56) );
   OAI22XL U35 ( .A0(n152), .A1(n89), .B0(n196), .B1(n88), .Y(n15) );
   OAI22XL U36 ( .A0(n152), .A1(n90), .B0(n196), .B1(n89), .Y(n57) );
@@ -6745,7 +6684,6 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_62 ( a, b, product );
   XNOR2X1 U85 ( .A(n150), .B(b[3]), .Y(n110) );
   XNOR2X1 U86 ( .A(n150), .B(b[2]), .Y(n111) );
   XNOR2X1 U87 ( .A(n150), .B(b[1]), .Y(n112) );
-  OAI22XL U90 ( .A0(n155), .A1(n147), .B0(n123), .B1(n143), .Y(n55) );
   AO21X1 U91 ( .A0(n155), .A1(n159), .B0(n115), .Y(n80) );
   OAI22XL U92 ( .A0(n155), .A1(n116), .B0(n115), .B1(n143), .Y(n81) );
   OAI22XL U93 ( .A0(n155), .A1(n117), .B0(n116), .B1(n143), .Y(n82) );
@@ -6761,10 +6699,8 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_62 ( a, b, product );
   XNOR2X1 U104 ( .A(n151), .B(b[3]), .Y(n119) );
   XNOR2X1 U105 ( .A(n151), .B(b[2]), .Y(n120) );
   XNOR2X1 U106 ( .A(n151), .B(b[1]), .Y(n121) );
-  CLKINVX1 U112 ( .A(n148), .Y(n144) );
   CLKINVX1 U116 ( .A(n149), .Y(n145) );
   CLKINVX1 U120 ( .A(n150), .Y(n146) );
-  CLKINVX1 U124 ( .A(n151), .Y(n147) );
   XOR2X1 U127 ( .A(a[6]), .B(a[7]), .Y(n132) );
   XNOR2X1 U128 ( .A(a[6]), .B(a[5]), .Y(n156) );
   XOR2X1 U130 ( .A(a[4]), .B(a[5]), .Y(n133) );
@@ -6773,43 +6709,45 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_62 ( a, b, product );
   XNOR2X1 U134 ( .A(a[2]), .B(a[1]), .Y(n158) );
   XOR2X1 U136 ( .A(a[0]), .B(a[1]), .Y(n135) );
   CLKINVX1 U137 ( .A(a[0]), .Y(n159) );
-  CLKINVX1 U140 ( .A(n200), .Y(n189) );
-  CLKINVX1 U141 ( .A(n199), .Y(n190) );
-  CLKINVX1 U142 ( .A(n198), .Y(n191) );
-  CLKINVX1 U143 ( .A(n158), .Y(n142) );
-  CLKINVX1 U144 ( .A(n142), .Y(n192) );
-  CLKINVX1 U145 ( .A(n157), .Y(n141) );
-  CLKINVX1 U146 ( .A(n141), .Y(n193) );
-  CLKINVX1 U147 ( .A(n197), .Y(n194) );
-  CLKINVX1 U148 ( .A(b[0]), .Y(n131) );
-  CLKINVX1 U149 ( .A(n131), .Y(n195) );
-  NAND2BXL U150 ( .AN(n195), .B(a[1]), .Y(n123) );
-  NAND2BXL U151 ( .AN(n195), .B(a[3]), .Y(n114) );
-  CLKINVX1 U152 ( .A(n156), .Y(n140) );
-  CLKINVX1 U153 ( .A(n140), .Y(n196) );
-  NOR2BXL U154 ( .AN(n195), .B(n159), .Y(product[0]) );
-  XNOR2XL U155 ( .A(a[7]), .B(b[0]), .Y(n95) );
-  XNOR2XL U156 ( .A(a[1]), .B(b[0]), .Y(n122) );
-  NOR2BXL U157 ( .AN(n195), .B(n192), .Y(n79) );
-  XNOR2XL U158 ( .A(a[3]), .B(b[0]), .Y(n113) );
-  NOR2BXL U159 ( .AN(n195), .B(n193), .Y(n71) );
-  NAND2BXL U160 ( .AN(n195), .B(a[7]), .Y(n96) );
-  NAND2BXL U161 ( .AN(n195), .B(a[5]), .Y(n105) );
-  XNOR2XL U162 ( .A(a[5]), .B(b[0]), .Y(n104) );
-  NOR2BXL U163 ( .AN(n195), .B(n196), .Y(n63) );
-  CLKBUFX3 U164 ( .A(n159), .Y(n143) );
-  CLKBUFX3 U165 ( .A(a[1]), .Y(n151) );
-  CLKBUFX3 U166 ( .A(a[3]), .Y(n150) );
-  CLKBUFX3 U167 ( .A(a[5]), .Y(n149) );
-  CLKBUFX3 U168 ( .A(a[7]), .Y(n148) );
-  AND2X2 U169 ( .A(n132), .B(n156), .Y(n197) );
-  CLKINVX1 U170 ( .A(n197), .Y(n152) );
-  AND2X2 U171 ( .A(n133), .B(n157), .Y(n198) );
-  CLKINVX1 U172 ( .A(n198), .Y(n153) );
-  AND2X2 U173 ( .A(n134), .B(n158), .Y(n199) );
-  CLKINVX1 U174 ( .A(n199), .Y(n154) );
-  AND2X2 U175 ( .A(n135), .B(n159), .Y(n200) );
-  CLKINVX1 U176 ( .A(n200), .Y(n155) );
+  NOR2X1 U140 ( .A(n157), .B(n131), .Y(n71) );
+  NOR2X1 U141 ( .A(n156), .B(n131), .Y(n63) );
+  NOR2X1 U142 ( .A(n131), .B(n159), .Y(product[0]) );
+  OAI2BB2XL U143 ( .B0(n156), .B1(n96), .A0N(n197), .A1N(n148), .Y(n52) );
+  OAI2BB2XL U144 ( .B0(n123), .B1(n159), .A0N(n200), .A1N(n151), .Y(n55) );
+  NOR2X1 U145 ( .A(n158), .B(n131), .Y(n79) );
+  CLKINVX1 U146 ( .A(n200), .Y(n189) );
+  CLKINVX1 U147 ( .A(n199), .Y(n190) );
+  CLKINVX1 U148 ( .A(n198), .Y(n191) );
+  CLKINVX1 U149 ( .A(n158), .Y(n142) );
+  CLKINVX1 U150 ( .A(n142), .Y(n192) );
+  CLKINVX1 U151 ( .A(n157), .Y(n141) );
+  CLKINVX1 U152 ( .A(n141), .Y(n193) );
+  CLKINVX1 U153 ( .A(n197), .Y(n194) );
+  CLKINVX1 U154 ( .A(b[0]), .Y(n131) );
+  CLKINVX1 U155 ( .A(n131), .Y(n195) );
+  NAND2BXL U156 ( .AN(n195), .B(a[1]), .Y(n123) );
+  NAND2BXL U157 ( .AN(n195), .B(a[3]), .Y(n114) );
+  CLKINVX1 U158 ( .A(n156), .Y(n140) );
+  CLKINVX1 U159 ( .A(n140), .Y(n196) );
+  XNOR2XL U160 ( .A(a[7]), .B(b[0]), .Y(n95) );
+  XNOR2XL U161 ( .A(a[1]), .B(b[0]), .Y(n122) );
+  XNOR2XL U162 ( .A(a[3]), .B(b[0]), .Y(n113) );
+  NAND2BXL U163 ( .AN(n195), .B(a[7]), .Y(n96) );
+  NAND2BXL U164 ( .AN(n195), .B(a[5]), .Y(n105) );
+  XNOR2XL U165 ( .A(a[5]), .B(b[0]), .Y(n104) );
+  CLKBUFX3 U166 ( .A(n159), .Y(n143) );
+  CLKBUFX3 U167 ( .A(a[1]), .Y(n151) );
+  CLKBUFX3 U168 ( .A(a[3]), .Y(n150) );
+  CLKBUFX3 U169 ( .A(a[5]), .Y(n149) );
+  CLKBUFX3 U170 ( .A(a[7]), .Y(n148) );
+  AND2X2 U171 ( .A(n132), .B(n156), .Y(n197) );
+  CLKINVX1 U172 ( .A(n197), .Y(n152) );
+  AND2X2 U173 ( .A(n133), .B(n157), .Y(n198) );
+  CLKINVX1 U174 ( .A(n198), .Y(n153) );
+  AND2X2 U175 ( .A(n134), .B(n158), .Y(n199) );
+  CLKINVX1 U176 ( .A(n199), .Y(n154) );
+  AND2X2 U177 ( .A(n135), .B(n159), .Y(n200) );
+  CLKINVX1 U178 ( .A(n200), .Y(n155) );
 endmodule
 
 
@@ -6826,10 +6764,10 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_63 ( a, b, product );
          n87, n88, n89, n90, n91, n92, n93, n94, n95, n96, n97, n98, n99, n100,
          n101, n102, n103, n104, n105, n106, n107, n108, n109, n110, n111,
          n112, n113, n114, n115, n116, n117, n118, n119, n120, n121, n122,
-         n123, n131, n132, n133, n134, n135, n140, n141, n142, n143, n144,
-         n145, n146, n147, n148, n149, n150, n151, n152, n153, n154, n155,
-         n156, n157, n158, n159, n189, n190, n191, n192, n193, n194, n195,
-         n196, n197, n198, n199, n200;
+         n123, n131, n132, n133, n134, n135, n140, n141, n142, n143, n145,
+         n146, n148, n149, n150, n151, n152, n153, n154, n155, n156, n157,
+         n158, n159, n189, n190, n191, n192, n193, n194, n195, n196, n197,
+         n198, n199, n200;
 
   CLKINVX1 U1 ( .A(n1), .Y(product[15]) );
   ADDFXL U2 ( .A(n56), .B(n15), .CI(n2), .CO(n1), .S(product[14]) );
@@ -6868,7 +6806,6 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_63 ( a, b, product );
   ADDHXL U30 ( .A(n83), .B(n70), .CO(n46), .S(n47) );
   ADDFXL U31 ( .A(n84), .B(n71), .CI(n77), .CO(n48), .S(n49) );
   ADDHXL U32 ( .A(n85), .B(n54), .CO(n50), .S(n51) );
-  OAI22XL U33 ( .A0(n152), .A1(n144), .B0(n196), .B1(n96), .Y(n52) );
   AO21X1 U34 ( .A0(n152), .A1(n156), .B0(n88), .Y(n56) );
   OAI22XL U35 ( .A0(n152), .A1(n89), .B0(n196), .B1(n88), .Y(n15) );
   OAI22XL U36 ( .A0(n152), .A1(n90), .B0(n196), .B1(n89), .Y(n57) );
@@ -6916,7 +6853,6 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_63 ( a, b, product );
   XNOR2X1 U85 ( .A(n150), .B(b[3]), .Y(n110) );
   XNOR2X1 U86 ( .A(n150), .B(b[2]), .Y(n111) );
   XNOR2X1 U87 ( .A(n150), .B(b[1]), .Y(n112) );
-  OAI22XL U90 ( .A0(n155), .A1(n147), .B0(n123), .B1(n143), .Y(n55) );
   AO21X1 U91 ( .A0(n155), .A1(n159), .B0(n115), .Y(n80) );
   OAI22XL U92 ( .A0(n155), .A1(n116), .B0(n115), .B1(n143), .Y(n81) );
   OAI22XL U93 ( .A0(n155), .A1(n117), .B0(n116), .B1(n143), .Y(n82) );
@@ -6932,10 +6868,8 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_63 ( a, b, product );
   XNOR2X1 U104 ( .A(n151), .B(b[3]), .Y(n119) );
   XNOR2X1 U105 ( .A(n151), .B(b[2]), .Y(n120) );
   XNOR2X1 U106 ( .A(n151), .B(b[1]), .Y(n121) );
-  CLKINVX1 U112 ( .A(n148), .Y(n144) );
   CLKINVX1 U116 ( .A(n149), .Y(n145) );
   CLKINVX1 U120 ( .A(n150), .Y(n146) );
-  CLKINVX1 U124 ( .A(n151), .Y(n147) );
   XOR2X1 U127 ( .A(a[6]), .B(a[7]), .Y(n132) );
   XNOR2X1 U128 ( .A(a[6]), .B(a[5]), .Y(n156) );
   XOR2X1 U130 ( .A(a[4]), .B(a[5]), .Y(n133) );
@@ -6944,43 +6878,45 @@ module vec_product_BIT_WIDTH8_VEC_SIZE32_DW_mult_tc_63 ( a, b, product );
   XNOR2X1 U134 ( .A(a[2]), .B(a[1]), .Y(n158) );
   XOR2X1 U136 ( .A(a[0]), .B(a[1]), .Y(n135) );
   CLKINVX1 U137 ( .A(a[0]), .Y(n159) );
-  CLKINVX1 U140 ( .A(n200), .Y(n189) );
-  CLKINVX1 U141 ( .A(n199), .Y(n190) );
-  CLKINVX1 U142 ( .A(n198), .Y(n191) );
-  CLKINVX1 U143 ( .A(n158), .Y(n142) );
-  CLKINVX1 U144 ( .A(n142), .Y(n192) );
-  CLKINVX1 U145 ( .A(n157), .Y(n141) );
-  CLKINVX1 U146 ( .A(n141), .Y(n193) );
-  CLKINVX1 U147 ( .A(n197), .Y(n194) );
-  CLKINVX1 U148 ( .A(b[0]), .Y(n131) );
-  CLKINVX1 U149 ( .A(n131), .Y(n195) );
-  NAND2BXL U150 ( .AN(n195), .B(a[1]), .Y(n123) );
-  NAND2BXL U151 ( .AN(n195), .B(a[3]), .Y(n114) );
-  CLKINVX1 U152 ( .A(n156), .Y(n140) );
-  CLKINVX1 U153 ( .A(n140), .Y(n196) );
-  NOR2BXL U154 ( .AN(n195), .B(n159), .Y(product[0]) );
-  XNOR2XL U155 ( .A(a[7]), .B(b[0]), .Y(n95) );
-  XNOR2XL U156 ( .A(a[1]), .B(b[0]), .Y(n122) );
-  NOR2BXL U157 ( .AN(n195), .B(n192), .Y(n79) );
-  XNOR2XL U158 ( .A(a[3]), .B(b[0]), .Y(n113) );
-  NOR2BXL U159 ( .AN(n195), .B(n193), .Y(n71) );
-  NAND2BXL U160 ( .AN(n195), .B(a[7]), .Y(n96) );
-  NAND2BXL U161 ( .AN(n195), .B(a[5]), .Y(n105) );
-  XNOR2XL U162 ( .A(a[5]), .B(b[0]), .Y(n104) );
-  NOR2BXL U163 ( .AN(n195), .B(n196), .Y(n63) );
-  CLKBUFX3 U164 ( .A(n159), .Y(n143) );
-  CLKBUFX3 U165 ( .A(a[1]), .Y(n151) );
-  CLKBUFX3 U166 ( .A(a[3]), .Y(n150) );
-  CLKBUFX3 U167 ( .A(a[5]), .Y(n149) );
-  CLKBUFX3 U168 ( .A(a[7]), .Y(n148) );
-  AND2X2 U169 ( .A(n132), .B(n156), .Y(n197) );
-  CLKINVX1 U170 ( .A(n197), .Y(n152) );
-  AND2X2 U171 ( .A(n133), .B(n157), .Y(n198) );
-  CLKINVX1 U172 ( .A(n198), .Y(n153) );
-  AND2X2 U173 ( .A(n134), .B(n158), .Y(n199) );
-  CLKINVX1 U174 ( .A(n199), .Y(n154) );
-  AND2X2 U175 ( .A(n135), .B(n159), .Y(n200) );
-  CLKINVX1 U176 ( .A(n200), .Y(n155) );
+  NOR2X1 U140 ( .A(n157), .B(n131), .Y(n71) );
+  NOR2X1 U141 ( .A(n156), .B(n131), .Y(n63) );
+  OAI2BB2XL U142 ( .B0(n156), .B1(n96), .A0N(n197), .A1N(n148), .Y(n52) );
+  NOR2X1 U143 ( .A(n131), .B(n159), .Y(product[0]) );
+  OAI2BB2XL U144 ( .B0(n123), .B1(n159), .A0N(n200), .A1N(n151), .Y(n55) );
+  NOR2X1 U145 ( .A(n158), .B(n131), .Y(n79) );
+  CLKINVX1 U146 ( .A(n200), .Y(n189) );
+  CLKINVX1 U147 ( .A(n199), .Y(n190) );
+  CLKINVX1 U148 ( .A(n198), .Y(n191) );
+  CLKINVX1 U149 ( .A(n158), .Y(n142) );
+  CLKINVX1 U150 ( .A(n142), .Y(n192) );
+  CLKINVX1 U151 ( .A(n157), .Y(n141) );
+  CLKINVX1 U152 ( .A(n141), .Y(n193) );
+  CLKINVX1 U153 ( .A(n197), .Y(n194) );
+  CLKINVX1 U154 ( .A(b[0]), .Y(n131) );
+  CLKINVX1 U155 ( .A(n131), .Y(n195) );
+  NAND2BXL U156 ( .AN(n195), .B(a[1]), .Y(n123) );
+  NAND2BXL U157 ( .AN(n195), .B(a[3]), .Y(n114) );
+  CLKINVX1 U158 ( .A(n156), .Y(n140) );
+  CLKINVX1 U159 ( .A(n140), .Y(n196) );
+  XNOR2XL U160 ( .A(a[7]), .B(b[0]), .Y(n95) );
+  XNOR2XL U161 ( .A(a[1]), .B(b[0]), .Y(n122) );
+  XNOR2XL U162 ( .A(a[3]), .B(b[0]), .Y(n113) );
+  NAND2BXL U163 ( .AN(n195), .B(a[7]), .Y(n96) );
+  NAND2BXL U164 ( .AN(n195), .B(a[5]), .Y(n105) );
+  XNOR2XL U165 ( .A(a[5]), .B(b[0]), .Y(n104) );
+  CLKBUFX3 U166 ( .A(n159), .Y(n143) );
+  CLKBUFX3 U167 ( .A(a[1]), .Y(n151) );
+  CLKBUFX3 U168 ( .A(a[3]), .Y(n150) );
+  CLKBUFX3 U169 ( .A(a[5]), .Y(n149) );
+  CLKBUFX3 U170 ( .A(a[7]), .Y(n148) );
+  AND2X2 U171 ( .A(n132), .B(n156), .Y(n197) );
+  CLKINVX1 U172 ( .A(n197), .Y(n152) );
+  AND2X2 U173 ( .A(n133), .B(n157), .Y(n198) );
+  CLKINVX1 U174 ( .A(n198), .Y(n153) );
+  AND2X2 U175 ( .A(n134), .B(n158), .Y(n199) );
+  CLKINVX1 U176 ( .A(n199), .Y(n154) );
+  AND2X2 U177 ( .A(n135), .B(n159), .Y(n200) );
+  CLKINVX1 U178 ( .A(n200), .Y(n155) );
 endmodule
 
 
@@ -9351,29 +9287,29 @@ module vec_product_BIT_WIDTH4_VEC_SIZE64_DW_mult_tc_64 ( a, b, product );
   ADDHXL U13 ( .A(n25), .B(n28), .CO(n15), .S(n16) );
   ADDHXL U14 ( .A(n32), .B(n29), .CO(n17), .S(n18) );
   NOR2X1 U15 ( .A(n34), .B(n38), .Y(n19) );
-  OR2X1 U16 ( .A(n35), .B(n38), .Y(n20) );
-  OR2X1 U17 ( .A(n36), .B(n38), .Y(n21) );
   OR2X1 U18 ( .A(n37), .B(n38), .Y(n22) );
   OR2X1 U19 ( .A(n34), .B(n39), .Y(n23) );
   NOR2X1 U20 ( .A(n35), .B(n39), .Y(n24) );
   NOR2X1 U21 ( .A(n36), .B(n39), .Y(n25) );
   NOR2X1 U22 ( .A(n37), .B(n39), .Y(n26) );
-  OR2X1 U23 ( .A(n34), .B(n40), .Y(n27) );
   NOR2X1 U24 ( .A(n35), .B(n40), .Y(n28) );
   NOR2X1 U25 ( .A(n36), .B(n40), .Y(n29) );
   NOR2X1 U26 ( .A(n37), .B(n40), .Y(n30) );
-  OR2X1 U27 ( .A(n34), .B(n41), .Y(n31) );
   NOR2X1 U28 ( .A(n35), .B(n41), .Y(n32) );
   NOR2X1 U29 ( .A(n36), .B(n41), .Y(n33) );
   NOR2X1 U30 ( .A(n37), .B(n41), .Y(product[0]) );
-  CLKINVX1 U41 ( .A(b[0]), .Y(n37) );
-  CLKINVX1 U42 ( .A(b[1]), .Y(n36) );
-  CLKINVX1 U43 ( .A(b[2]), .Y(n35) );
-  CLKINVX1 U44 ( .A(b[3]), .Y(n34) );
-  CLKINVX1 U45 ( .A(a[0]), .Y(n41) );
-  CLKINVX1 U46 ( .A(a[1]), .Y(n40) );
-  CLKINVX1 U47 ( .A(a[2]), .Y(n39) );
-  CLKINVX1 U48 ( .A(a[3]), .Y(n38) );
+  NAND2X1 U41 ( .A(b[3]), .B(a[1]), .Y(n27) );
+  NAND2X1 U42 ( .A(b[3]), .B(a[0]), .Y(n31) );
+  NAND2X1 U43 ( .A(b[1]), .B(a[3]), .Y(n21) );
+  NAND2X1 U44 ( .A(b[2]), .B(a[3]), .Y(n20) );
+  CLKINVX1 U45 ( .A(b[0]), .Y(n37) );
+  CLKINVX1 U46 ( .A(b[1]), .Y(n36) );
+  CLKINVX1 U47 ( .A(b[2]), .Y(n35) );
+  CLKINVX1 U48 ( .A(b[3]), .Y(n34) );
+  CLKINVX1 U49 ( .A(a[0]), .Y(n41) );
+  CLKINVX1 U50 ( .A(a[1]), .Y(n40) );
+  CLKINVX1 U51 ( .A(a[2]), .Y(n39) );
+  CLKINVX1 U52 ( .A(a[3]), .Y(n38) );
 endmodule
 
 
@@ -9400,29 +9336,29 @@ module vec_product_BIT_WIDTH4_VEC_SIZE64_DW_mult_tc_65 ( a, b, product );
   ADDHXL U13 ( .A(n25), .B(n28), .CO(n15), .S(n16) );
   ADDHXL U14 ( .A(n32), .B(n29), .CO(n17), .S(n18) );
   NOR2X1 U15 ( .A(n34), .B(n38), .Y(n19) );
-  OR2X1 U16 ( .A(n35), .B(n38), .Y(n20) );
-  OR2X1 U17 ( .A(n36), .B(n38), .Y(n21) );
-  OR2X1 U18 ( .A(n37), .B(n38), .Y(n22) );
   OR2X1 U19 ( .A(n34), .B(n39), .Y(n23) );
   NOR2X1 U20 ( .A(n35), .B(n39), .Y(n24) );
   NOR2X1 U21 ( .A(n36), .B(n39), .Y(n25) );
   NOR2X1 U22 ( .A(n37), .B(n39), .Y(n26) );
-  OR2X1 U23 ( .A(n34), .B(n40), .Y(n27) );
   NOR2X1 U24 ( .A(n35), .B(n40), .Y(n28) );
   NOR2X1 U25 ( .A(n36), .B(n40), .Y(n29) );
   NOR2X1 U26 ( .A(n37), .B(n40), .Y(n30) );
-  OR2X1 U27 ( .A(n34), .B(n41), .Y(n31) );
   NOR2X1 U28 ( .A(n35), .B(n41), .Y(n32) );
   NOR2X1 U29 ( .A(n36), .B(n41), .Y(n33) );
   NOR2X1 U30 ( .A(n37), .B(n41), .Y(product[0]) );
-  CLKINVX1 U41 ( .A(b[0]), .Y(n37) );
-  CLKINVX1 U42 ( .A(b[1]), .Y(n36) );
-  CLKINVX1 U43 ( .A(b[2]), .Y(n35) );
-  CLKINVX1 U44 ( .A(b[3]), .Y(n34) );
-  CLKINVX1 U45 ( .A(a[0]), .Y(n41) );
-  CLKINVX1 U46 ( .A(a[1]), .Y(n40) );
-  CLKINVX1 U47 ( .A(a[2]), .Y(n39) );
-  CLKINVX1 U48 ( .A(a[3]), .Y(n38) );
+  NAND2X1 U41 ( .A(b[3]), .B(a[1]), .Y(n27) );
+  NAND2X1 U42 ( .A(b[3]), .B(a[0]), .Y(n31) );
+  NAND2X1 U43 ( .A(b[0]), .B(a[3]), .Y(n22) );
+  NAND2X1 U44 ( .A(b[1]), .B(a[3]), .Y(n21) );
+  NAND2X1 U45 ( .A(b[2]), .B(a[3]), .Y(n20) );
+  CLKINVX1 U46 ( .A(b[0]), .Y(n37) );
+  CLKINVX1 U47 ( .A(b[1]), .Y(n36) );
+  CLKINVX1 U48 ( .A(b[2]), .Y(n35) );
+  CLKINVX1 U49 ( .A(b[3]), .Y(n34) );
+  CLKINVX1 U50 ( .A(a[0]), .Y(n41) );
+  CLKINVX1 U51 ( .A(a[1]), .Y(n40) );
+  CLKINVX1 U52 ( .A(a[2]), .Y(n39) );
+  CLKINVX1 U53 ( .A(a[3]), .Y(n38) );
 endmodule
 
 
@@ -9449,29 +9385,29 @@ module vec_product_BIT_WIDTH4_VEC_SIZE64_DW_mult_tc_66 ( a, b, product );
   ADDHXL U13 ( .A(n25), .B(n28), .CO(n15), .S(n16) );
   ADDHXL U14 ( .A(n32), .B(n29), .CO(n17), .S(n18) );
   NOR2X1 U15 ( .A(n34), .B(n38), .Y(n19) );
-  OR2X1 U16 ( .A(n35), .B(n38), .Y(n20) );
-  OR2X1 U17 ( .A(n36), .B(n38), .Y(n21) );
   OR2X1 U18 ( .A(n37), .B(n38), .Y(n22) );
   OR2X1 U19 ( .A(n34), .B(n39), .Y(n23) );
   NOR2X1 U20 ( .A(n35), .B(n39), .Y(n24) );
   NOR2X1 U21 ( .A(n36), .B(n39), .Y(n25) );
   NOR2X1 U22 ( .A(n37), .B(n39), .Y(n26) );
-  OR2X1 U23 ( .A(n34), .B(n40), .Y(n27) );
   NOR2X1 U24 ( .A(n35), .B(n40), .Y(n28) );
   NOR2X1 U25 ( .A(n36), .B(n40), .Y(n29) );
   NOR2X1 U26 ( .A(n37), .B(n40), .Y(n30) );
-  OR2X1 U27 ( .A(n34), .B(n41), .Y(n31) );
   NOR2X1 U28 ( .A(n35), .B(n41), .Y(n32) );
   NOR2X1 U29 ( .A(n36), .B(n41), .Y(n33) );
   NOR2X1 U30 ( .A(n37), .B(n41), .Y(product[0]) );
-  CLKINVX1 U41 ( .A(b[0]), .Y(n37) );
-  CLKINVX1 U42 ( .A(b[1]), .Y(n36) );
-  CLKINVX1 U43 ( .A(b[2]), .Y(n35) );
-  CLKINVX1 U44 ( .A(b[3]), .Y(n34) );
-  CLKINVX1 U45 ( .A(a[0]), .Y(n41) );
-  CLKINVX1 U46 ( .A(a[1]), .Y(n40) );
-  CLKINVX1 U47 ( .A(a[2]), .Y(n39) );
-  CLKINVX1 U48 ( .A(a[3]), .Y(n38) );
+  NAND2X1 U41 ( .A(b[3]), .B(a[1]), .Y(n27) );
+  NAND2X1 U42 ( .A(b[3]), .B(a[0]), .Y(n31) );
+  NAND2X1 U43 ( .A(b[1]), .B(a[3]), .Y(n21) );
+  NAND2X1 U44 ( .A(b[2]), .B(a[3]), .Y(n20) );
+  CLKINVX1 U45 ( .A(b[0]), .Y(n37) );
+  CLKINVX1 U46 ( .A(b[1]), .Y(n36) );
+  CLKINVX1 U47 ( .A(b[2]), .Y(n35) );
+  CLKINVX1 U48 ( .A(b[3]), .Y(n34) );
+  CLKINVX1 U49 ( .A(a[0]), .Y(n41) );
+  CLKINVX1 U50 ( .A(a[1]), .Y(n40) );
+  CLKINVX1 U51 ( .A(a[2]), .Y(n39) );
+  CLKINVX1 U52 ( .A(a[3]), .Y(n38) );
 endmodule
 
 
@@ -9498,29 +9434,29 @@ module vec_product_BIT_WIDTH4_VEC_SIZE64_DW_mult_tc_67 ( a, b, product );
   ADDHXL U13 ( .A(n25), .B(n28), .CO(n15), .S(n16) );
   ADDHXL U14 ( .A(n32), .B(n29), .CO(n17), .S(n18) );
   NOR2X1 U15 ( .A(n34), .B(n38), .Y(n19) );
-  OR2X1 U16 ( .A(n35), .B(n38), .Y(n20) );
-  OR2X1 U17 ( .A(n36), .B(n38), .Y(n21) );
-  OR2X1 U18 ( .A(n37), .B(n38), .Y(n22) );
   OR2X1 U19 ( .A(n34), .B(n39), .Y(n23) );
   NOR2X1 U20 ( .A(n35), .B(n39), .Y(n24) );
   NOR2X1 U21 ( .A(n36), .B(n39), .Y(n25) );
   NOR2X1 U22 ( .A(n37), .B(n39), .Y(n26) );
-  OR2X1 U23 ( .A(n34), .B(n40), .Y(n27) );
   NOR2X1 U24 ( .A(n35), .B(n40), .Y(n28) );
   NOR2X1 U25 ( .A(n36), .B(n40), .Y(n29) );
   NOR2X1 U26 ( .A(n37), .B(n40), .Y(n30) );
-  OR2X1 U27 ( .A(n34), .B(n41), .Y(n31) );
   NOR2X1 U28 ( .A(n35), .B(n41), .Y(n32) );
   NOR2X1 U29 ( .A(n36), .B(n41), .Y(n33) );
   NOR2X1 U30 ( .A(n37), .B(n41), .Y(product[0]) );
-  CLKINVX1 U41 ( .A(b[0]), .Y(n37) );
-  CLKINVX1 U42 ( .A(b[1]), .Y(n36) );
-  CLKINVX1 U43 ( .A(b[2]), .Y(n35) );
-  CLKINVX1 U44 ( .A(b[3]), .Y(n34) );
-  CLKINVX1 U45 ( .A(a[0]), .Y(n41) );
-  CLKINVX1 U46 ( .A(a[1]), .Y(n40) );
-  CLKINVX1 U47 ( .A(a[2]), .Y(n39) );
-  CLKINVX1 U48 ( .A(a[3]), .Y(n38) );
+  NAND2X1 U41 ( .A(b[3]), .B(a[1]), .Y(n27) );
+  NAND2X1 U42 ( .A(b[3]), .B(a[0]), .Y(n31) );
+  NAND2X1 U43 ( .A(b[0]), .B(a[3]), .Y(n22) );
+  NAND2X1 U44 ( .A(b[1]), .B(a[3]), .Y(n21) );
+  NAND2X1 U45 ( .A(b[2]), .B(a[3]), .Y(n20) );
+  CLKINVX1 U46 ( .A(b[0]), .Y(n37) );
+  CLKINVX1 U47 ( .A(b[1]), .Y(n36) );
+  CLKINVX1 U48 ( .A(b[2]), .Y(n35) );
+  CLKINVX1 U49 ( .A(b[3]), .Y(n34) );
+  CLKINVX1 U50 ( .A(a[0]), .Y(n41) );
+  CLKINVX1 U51 ( .A(a[1]), .Y(n40) );
+  CLKINVX1 U52 ( .A(a[2]), .Y(n39) );
+  CLKINVX1 U53 ( .A(a[3]), .Y(n38) );
 endmodule
 
 
@@ -9547,29 +9483,29 @@ module vec_product_BIT_WIDTH4_VEC_SIZE64_DW_mult_tc_68 ( a, b, product );
   ADDHXL U13 ( .A(n25), .B(n28), .CO(n15), .S(n16) );
   ADDHXL U14 ( .A(n32), .B(n29), .CO(n17), .S(n18) );
   NOR2X1 U15 ( .A(n34), .B(n38), .Y(n19) );
-  OR2X1 U16 ( .A(n35), .B(n38), .Y(n20) );
-  OR2X1 U17 ( .A(n36), .B(n38), .Y(n21) );
   OR2X1 U18 ( .A(n37), .B(n38), .Y(n22) );
   OR2X1 U19 ( .A(n34), .B(n39), .Y(n23) );
   NOR2X1 U20 ( .A(n35), .B(n39), .Y(n24) );
   NOR2X1 U21 ( .A(n36), .B(n39), .Y(n25) );
   NOR2X1 U22 ( .A(n37), .B(n39), .Y(n26) );
-  OR2X1 U23 ( .A(n34), .B(n40), .Y(n27) );
   NOR2X1 U24 ( .A(n35), .B(n40), .Y(n28) );
   NOR2X1 U25 ( .A(n36), .B(n40), .Y(n29) );
   NOR2X1 U26 ( .A(n37), .B(n40), .Y(n30) );
-  OR2X1 U27 ( .A(n34), .B(n41), .Y(n31) );
   NOR2X1 U28 ( .A(n35), .B(n41), .Y(n32) );
   NOR2X1 U29 ( .A(n36), .B(n41), .Y(n33) );
   NOR2X1 U30 ( .A(n37), .B(n41), .Y(product[0]) );
-  CLKINVX1 U41 ( .A(b[1]), .Y(n36) );
-  CLKINVX1 U42 ( .A(b[0]), .Y(n37) );
-  CLKINVX1 U43 ( .A(b[2]), .Y(n35) );
-  CLKINVX1 U44 ( .A(b[3]), .Y(n34) );
-  CLKINVX1 U45 ( .A(a[0]), .Y(n41) );
-  CLKINVX1 U46 ( .A(a[1]), .Y(n40) );
-  CLKINVX1 U47 ( .A(a[2]), .Y(n39) );
-  CLKINVX1 U48 ( .A(a[3]), .Y(n38) );
+  NAND2X1 U41 ( .A(b[3]), .B(a[1]), .Y(n27) );
+  NAND2X1 U42 ( .A(b[3]), .B(a[0]), .Y(n31) );
+  NAND2X1 U43 ( .A(b[1]), .B(a[3]), .Y(n21) );
+  NAND2X1 U44 ( .A(b[2]), .B(a[3]), .Y(n20) );
+  CLKINVX1 U45 ( .A(b[1]), .Y(n36) );
+  CLKINVX1 U46 ( .A(b[0]), .Y(n37) );
+  CLKINVX1 U47 ( .A(b[2]), .Y(n35) );
+  CLKINVX1 U48 ( .A(b[3]), .Y(n34) );
+  CLKINVX1 U49 ( .A(a[0]), .Y(n41) );
+  CLKINVX1 U50 ( .A(a[1]), .Y(n40) );
+  CLKINVX1 U51 ( .A(a[2]), .Y(n39) );
+  CLKINVX1 U52 ( .A(a[3]), .Y(n38) );
 endmodule
 
 
@@ -9596,29 +9532,29 @@ module vec_product_BIT_WIDTH4_VEC_SIZE64_DW_mult_tc_69 ( a, b, product );
   ADDHXL U13 ( .A(n25), .B(n28), .CO(n15), .S(n16) );
   ADDHXL U14 ( .A(n32), .B(n29), .CO(n17), .S(n18) );
   NOR2X1 U15 ( .A(n34), .B(n38), .Y(n19) );
-  OR2X1 U16 ( .A(n35), .B(n38), .Y(n20) );
-  OR2X1 U17 ( .A(n36), .B(n38), .Y(n21) );
-  OR2X1 U18 ( .A(n37), .B(n38), .Y(n22) );
   OR2X1 U19 ( .A(n34), .B(n39), .Y(n23) );
   NOR2X1 U20 ( .A(n35), .B(n39), .Y(n24) );
   NOR2X1 U21 ( .A(n36), .B(n39), .Y(n25) );
   NOR2X1 U22 ( .A(n37), .B(n39), .Y(n26) );
-  OR2X1 U23 ( .A(n34), .B(n40), .Y(n27) );
   NOR2X1 U24 ( .A(n35), .B(n40), .Y(n28) );
   NOR2X1 U25 ( .A(n36), .B(n40), .Y(n29) );
   NOR2X1 U26 ( .A(n37), .B(n40), .Y(n30) );
-  OR2X1 U27 ( .A(n34), .B(n41), .Y(n31) );
   NOR2X1 U28 ( .A(n35), .B(n41), .Y(n32) );
   NOR2X1 U29 ( .A(n36), .B(n41), .Y(n33) );
   NOR2X1 U30 ( .A(n37), .B(n41), .Y(product[0]) );
-  CLKINVX1 U41 ( .A(b[1]), .Y(n36) );
-  CLKINVX1 U42 ( .A(b[0]), .Y(n37) );
-  CLKINVX1 U43 ( .A(b[2]), .Y(n35) );
-  CLKINVX1 U44 ( .A(b[3]), .Y(n34) );
-  CLKINVX1 U45 ( .A(a[0]), .Y(n41) );
-  CLKINVX1 U46 ( .A(a[1]), .Y(n40) );
-  CLKINVX1 U47 ( .A(a[2]), .Y(n39) );
-  CLKINVX1 U48 ( .A(a[3]), .Y(n38) );
+  NAND2X1 U41 ( .A(b[3]), .B(a[1]), .Y(n27) );
+  NAND2X1 U42 ( .A(b[3]), .B(a[0]), .Y(n31) );
+  NAND2X1 U43 ( .A(b[0]), .B(a[3]), .Y(n22) );
+  NAND2X1 U44 ( .A(b[1]), .B(a[3]), .Y(n21) );
+  NAND2X1 U45 ( .A(b[2]), .B(a[3]), .Y(n20) );
+  CLKINVX1 U46 ( .A(b[1]), .Y(n36) );
+  CLKINVX1 U47 ( .A(b[0]), .Y(n37) );
+  CLKINVX1 U48 ( .A(b[2]), .Y(n35) );
+  CLKINVX1 U49 ( .A(b[3]), .Y(n34) );
+  CLKINVX1 U50 ( .A(a[0]), .Y(n41) );
+  CLKINVX1 U51 ( .A(a[1]), .Y(n40) );
+  CLKINVX1 U52 ( .A(a[2]), .Y(n39) );
+  CLKINVX1 U53 ( .A(a[3]), .Y(n38) );
 endmodule
 
 
@@ -9645,29 +9581,29 @@ module vec_product_BIT_WIDTH4_VEC_SIZE64_DW_mult_tc_70 ( a, b, product );
   ADDHXL U13 ( .A(n25), .B(n28), .CO(n15), .S(n16) );
   ADDHXL U14 ( .A(n32), .B(n29), .CO(n17), .S(n18) );
   NOR2X1 U15 ( .A(n34), .B(n38), .Y(n19) );
-  OR2X1 U16 ( .A(n35), .B(n38), .Y(n20) );
-  OR2X1 U17 ( .A(n36), .B(n38), .Y(n21) );
   OR2X1 U18 ( .A(n37), .B(n38), .Y(n22) );
   OR2X1 U19 ( .A(n34), .B(n39), .Y(n23) );
   NOR2X1 U20 ( .A(n35), .B(n39), .Y(n24) );
   NOR2X1 U21 ( .A(n36), .B(n39), .Y(n25) );
   NOR2X1 U22 ( .A(n37), .B(n39), .Y(n26) );
-  OR2X1 U23 ( .A(n34), .B(n40), .Y(n27) );
   NOR2X1 U24 ( .A(n35), .B(n40), .Y(n28) );
   NOR2X1 U25 ( .A(n36), .B(n40), .Y(n29) );
   NOR2X1 U26 ( .A(n37), .B(n40), .Y(n30) );
-  OR2X1 U27 ( .A(n34), .B(n41), .Y(n31) );
   NOR2X1 U28 ( .A(n35), .B(n41), .Y(n32) );
   NOR2X1 U29 ( .A(n36), .B(n41), .Y(n33) );
   NOR2X1 U30 ( .A(n37), .B(n41), .Y(product[0]) );
-  CLKINVX1 U41 ( .A(b[0]), .Y(n37) );
-  CLKINVX1 U42 ( .A(b[1]), .Y(n36) );
-  CLKINVX1 U43 ( .A(b[2]), .Y(n35) );
-  CLKINVX1 U44 ( .A(b[3]), .Y(n34) );
-  CLKINVX1 U45 ( .A(a[0]), .Y(n41) );
-  CLKINVX1 U46 ( .A(a[1]), .Y(n40) );
-  CLKINVX1 U47 ( .A(a[2]), .Y(n39) );
-  CLKINVX1 U48 ( .A(a[3]), .Y(n38) );
+  NAND2X1 U41 ( .A(b[3]), .B(a[1]), .Y(n27) );
+  NAND2X1 U42 ( .A(b[3]), .B(a[0]), .Y(n31) );
+  NAND2X1 U43 ( .A(b[1]), .B(a[3]), .Y(n21) );
+  NAND2X1 U44 ( .A(b[2]), .B(a[3]), .Y(n20) );
+  CLKINVX1 U45 ( .A(b[0]), .Y(n37) );
+  CLKINVX1 U46 ( .A(b[1]), .Y(n36) );
+  CLKINVX1 U47 ( .A(b[2]), .Y(n35) );
+  CLKINVX1 U48 ( .A(b[3]), .Y(n34) );
+  CLKINVX1 U49 ( .A(a[0]), .Y(n41) );
+  CLKINVX1 U50 ( .A(a[1]), .Y(n40) );
+  CLKINVX1 U51 ( .A(a[2]), .Y(n39) );
+  CLKINVX1 U52 ( .A(a[3]), .Y(n38) );
 endmodule
 
 
@@ -9694,29 +9630,29 @@ module vec_product_BIT_WIDTH4_VEC_SIZE64_DW_mult_tc_71 ( a, b, product );
   ADDHXL U13 ( .A(n25), .B(n28), .CO(n15), .S(n16) );
   ADDHXL U14 ( .A(n32), .B(n29), .CO(n17), .S(n18) );
   NOR2X1 U15 ( .A(n34), .B(n38), .Y(n19) );
-  OR2X1 U16 ( .A(n35), .B(n38), .Y(n20) );
-  OR2X1 U17 ( .A(n36), .B(n38), .Y(n21) );
-  OR2X1 U18 ( .A(n37), .B(n38), .Y(n22) );
   OR2X1 U19 ( .A(n34), .B(n39), .Y(n23) );
   NOR2X1 U20 ( .A(n35), .B(n39), .Y(n24) );
   NOR2X1 U21 ( .A(n36), .B(n39), .Y(n25) );
   NOR2X1 U22 ( .A(n37), .B(n39), .Y(n26) );
-  OR2X1 U23 ( .A(n34), .B(n40), .Y(n27) );
   NOR2X1 U24 ( .A(n35), .B(n40), .Y(n28) );
   NOR2X1 U25 ( .A(n36), .B(n40), .Y(n29) );
   NOR2X1 U26 ( .A(n37), .B(n40), .Y(n30) );
-  OR2X1 U27 ( .A(n34), .B(n41), .Y(n31) );
   NOR2X1 U28 ( .A(n35), .B(n41), .Y(n32) );
   NOR2X1 U29 ( .A(n36), .B(n41), .Y(n33) );
   NOR2X1 U30 ( .A(n37), .B(n41), .Y(product[0]) );
-  CLKINVX1 U41 ( .A(b[0]), .Y(n37) );
-  CLKINVX1 U42 ( .A(b[1]), .Y(n36) );
-  CLKINVX1 U43 ( .A(b[2]), .Y(n35) );
-  CLKINVX1 U44 ( .A(b[3]), .Y(n34) );
-  CLKINVX1 U45 ( .A(a[0]), .Y(n41) );
-  CLKINVX1 U46 ( .A(a[1]), .Y(n40) );
-  CLKINVX1 U47 ( .A(a[2]), .Y(n39) );
-  CLKINVX1 U48 ( .A(a[3]), .Y(n38) );
+  NAND2X1 U41 ( .A(b[3]), .B(a[1]), .Y(n27) );
+  NAND2X1 U42 ( .A(b[3]), .B(a[0]), .Y(n31) );
+  NAND2X1 U43 ( .A(b[0]), .B(a[3]), .Y(n22) );
+  NAND2X1 U44 ( .A(b[1]), .B(a[3]), .Y(n21) );
+  NAND2X1 U45 ( .A(b[2]), .B(a[3]), .Y(n20) );
+  CLKINVX1 U46 ( .A(b[0]), .Y(n37) );
+  CLKINVX1 U47 ( .A(b[1]), .Y(n36) );
+  CLKINVX1 U48 ( .A(b[2]), .Y(n35) );
+  CLKINVX1 U49 ( .A(b[3]), .Y(n34) );
+  CLKINVX1 U50 ( .A(a[0]), .Y(n41) );
+  CLKINVX1 U51 ( .A(a[1]), .Y(n40) );
+  CLKINVX1 U52 ( .A(a[2]), .Y(n39) );
+  CLKINVX1 U53 ( .A(a[3]), .Y(n38) );
 endmodule
 
 
@@ -9743,29 +9679,29 @@ module vec_product_BIT_WIDTH4_VEC_SIZE64_DW_mult_tc_72 ( a, b, product );
   ADDHXL U13 ( .A(n25), .B(n28), .CO(n15), .S(n16) );
   ADDHXL U14 ( .A(n32), .B(n29), .CO(n17), .S(n18) );
   NOR2X1 U15 ( .A(n34), .B(n38), .Y(n19) );
-  OR2X1 U16 ( .A(n35), .B(n38), .Y(n20) );
-  OR2X1 U17 ( .A(n36), .B(n38), .Y(n21) );
   OR2X1 U18 ( .A(n37), .B(n38), .Y(n22) );
   OR2X1 U19 ( .A(n34), .B(n39), .Y(n23) );
   NOR2X1 U20 ( .A(n35), .B(n39), .Y(n24) );
   NOR2X1 U21 ( .A(n36), .B(n39), .Y(n25) );
   NOR2X1 U22 ( .A(n37), .B(n39), .Y(n26) );
-  OR2X1 U23 ( .A(n34), .B(n40), .Y(n27) );
   NOR2X1 U24 ( .A(n35), .B(n40), .Y(n28) );
   NOR2X1 U25 ( .A(n36), .B(n40), .Y(n29) );
   NOR2X1 U26 ( .A(n37), .B(n40), .Y(n30) );
-  OR2X1 U27 ( .A(n34), .B(n41), .Y(n31) );
   NOR2X1 U28 ( .A(n35), .B(n41), .Y(n32) );
   NOR2X1 U29 ( .A(n36), .B(n41), .Y(n33) );
   NOR2X1 U30 ( .A(n37), .B(n41), .Y(product[0]) );
-  CLKINVX1 U41 ( .A(b[0]), .Y(n37) );
-  CLKINVX1 U42 ( .A(b[1]), .Y(n36) );
-  CLKINVX1 U43 ( .A(b[2]), .Y(n35) );
-  CLKINVX1 U44 ( .A(b[3]), .Y(n34) );
-  CLKINVX1 U45 ( .A(a[0]), .Y(n41) );
-  CLKINVX1 U46 ( .A(a[1]), .Y(n40) );
-  CLKINVX1 U47 ( .A(a[2]), .Y(n39) );
-  CLKINVX1 U48 ( .A(a[3]), .Y(n38) );
+  NAND2X1 U41 ( .A(b[3]), .B(a[1]), .Y(n27) );
+  NAND2X1 U42 ( .A(b[3]), .B(a[0]), .Y(n31) );
+  NAND2X1 U43 ( .A(b[1]), .B(a[3]), .Y(n21) );
+  NAND2X1 U44 ( .A(b[2]), .B(a[3]), .Y(n20) );
+  CLKINVX1 U45 ( .A(b[0]), .Y(n37) );
+  CLKINVX1 U46 ( .A(b[1]), .Y(n36) );
+  CLKINVX1 U47 ( .A(b[2]), .Y(n35) );
+  CLKINVX1 U48 ( .A(b[3]), .Y(n34) );
+  CLKINVX1 U49 ( .A(a[0]), .Y(n41) );
+  CLKINVX1 U50 ( .A(a[1]), .Y(n40) );
+  CLKINVX1 U51 ( .A(a[2]), .Y(n39) );
+  CLKINVX1 U52 ( .A(a[3]), .Y(n38) );
 endmodule
 
 
@@ -9792,29 +9728,29 @@ module vec_product_BIT_WIDTH4_VEC_SIZE64_DW_mult_tc_73 ( a, b, product );
   ADDHXL U13 ( .A(n25), .B(n28), .CO(n15), .S(n16) );
   ADDHXL U14 ( .A(n32), .B(n29), .CO(n17), .S(n18) );
   NOR2X1 U15 ( .A(n34), .B(n38), .Y(n19) );
-  OR2X1 U16 ( .A(n35), .B(n38), .Y(n20) );
-  OR2X1 U17 ( .A(n36), .B(n38), .Y(n21) );
-  OR2X1 U18 ( .A(n37), .B(n38), .Y(n22) );
   OR2X1 U19 ( .A(n34), .B(n39), .Y(n23) );
   NOR2X1 U20 ( .A(n35), .B(n39), .Y(n24) );
   NOR2X1 U21 ( .A(n36), .B(n39), .Y(n25) );
   NOR2X1 U22 ( .A(n37), .B(n39), .Y(n26) );
-  OR2X1 U23 ( .A(n34), .B(n40), .Y(n27) );
   NOR2X1 U24 ( .A(n35), .B(n40), .Y(n28) );
   NOR2X1 U25 ( .A(n36), .B(n40), .Y(n29) );
   NOR2X1 U26 ( .A(n37), .B(n40), .Y(n30) );
-  OR2X1 U27 ( .A(n34), .B(n41), .Y(n31) );
   NOR2X1 U28 ( .A(n35), .B(n41), .Y(n32) );
   NOR2X1 U29 ( .A(n36), .B(n41), .Y(n33) );
   NOR2X1 U30 ( .A(n37), .B(n41), .Y(product[0]) );
-  CLKINVX1 U41 ( .A(b[0]), .Y(n37) );
-  CLKINVX1 U42 ( .A(b[1]), .Y(n36) );
-  CLKINVX1 U43 ( .A(b[2]), .Y(n35) );
-  CLKINVX1 U44 ( .A(b[3]), .Y(n34) );
-  CLKINVX1 U45 ( .A(a[0]), .Y(n41) );
-  CLKINVX1 U46 ( .A(a[1]), .Y(n40) );
-  CLKINVX1 U47 ( .A(a[2]), .Y(n39) );
-  CLKINVX1 U48 ( .A(a[3]), .Y(n38) );
+  NAND2X1 U41 ( .A(b[3]), .B(a[0]), .Y(n31) );
+  NAND2X1 U42 ( .A(b[3]), .B(a[1]), .Y(n27) );
+  NAND2X1 U43 ( .A(b[0]), .B(a[3]), .Y(n22) );
+  NAND2X1 U44 ( .A(b[1]), .B(a[3]), .Y(n21) );
+  NAND2X1 U45 ( .A(b[2]), .B(a[3]), .Y(n20) );
+  CLKINVX1 U46 ( .A(b[0]), .Y(n37) );
+  CLKINVX1 U47 ( .A(b[1]), .Y(n36) );
+  CLKINVX1 U48 ( .A(b[2]), .Y(n35) );
+  CLKINVX1 U49 ( .A(b[3]), .Y(n34) );
+  CLKINVX1 U50 ( .A(a[0]), .Y(n41) );
+  CLKINVX1 U51 ( .A(a[1]), .Y(n40) );
+  CLKINVX1 U52 ( .A(a[2]), .Y(n39) );
+  CLKINVX1 U53 ( .A(a[3]), .Y(n38) );
 endmodule
 
 
@@ -9841,29 +9777,29 @@ module vec_product_BIT_WIDTH4_VEC_SIZE64_DW_mult_tc_74 ( a, b, product );
   ADDHXL U13 ( .A(n25), .B(n28), .CO(n15), .S(n16) );
   ADDHXL U14 ( .A(n32), .B(n29), .CO(n17), .S(n18) );
   NOR2X1 U15 ( .A(n34), .B(n38), .Y(n19) );
-  OR2X1 U16 ( .A(n35), .B(n38), .Y(n20) );
-  OR2X1 U17 ( .A(n36), .B(n38), .Y(n21) );
   OR2X1 U18 ( .A(n37), .B(n38), .Y(n22) );
   OR2X1 U19 ( .A(n34), .B(n39), .Y(n23) );
   NOR2X1 U20 ( .A(n35), .B(n39), .Y(n24) );
   NOR2X1 U21 ( .A(n36), .B(n39), .Y(n25) );
   NOR2X1 U22 ( .A(n37), .B(n39), .Y(n26) );
-  OR2X1 U23 ( .A(n34), .B(n40), .Y(n27) );
   NOR2X1 U24 ( .A(n35), .B(n40), .Y(n28) );
   NOR2X1 U25 ( .A(n36), .B(n40), .Y(n29) );
   NOR2X1 U26 ( .A(n37), .B(n40), .Y(n30) );
-  OR2X1 U27 ( .A(n34), .B(n41), .Y(n31) );
   NOR2X1 U28 ( .A(n35), .B(n41), .Y(n32) );
   NOR2X1 U29 ( .A(n36), .B(n41), .Y(n33) );
   NOR2X1 U30 ( .A(n37), .B(n41), .Y(product[0]) );
-  CLKINVX1 U41 ( .A(b[1]), .Y(n36) );
-  CLKINVX1 U42 ( .A(b[0]), .Y(n37) );
-  CLKINVX1 U43 ( .A(b[2]), .Y(n35) );
-  CLKINVX1 U44 ( .A(b[3]), .Y(n34) );
-  CLKINVX1 U45 ( .A(a[0]), .Y(n41) );
-  CLKINVX1 U46 ( .A(a[1]), .Y(n40) );
-  CLKINVX1 U47 ( .A(a[2]), .Y(n39) );
-  CLKINVX1 U48 ( .A(a[3]), .Y(n38) );
+  NAND2X1 U41 ( .A(b[3]), .B(a[1]), .Y(n27) );
+  NAND2X1 U42 ( .A(b[3]), .B(a[0]), .Y(n31) );
+  NAND2X1 U43 ( .A(b[1]), .B(a[3]), .Y(n21) );
+  NAND2X1 U44 ( .A(b[2]), .B(a[3]), .Y(n20) );
+  CLKINVX1 U45 ( .A(b[1]), .Y(n36) );
+  CLKINVX1 U46 ( .A(b[0]), .Y(n37) );
+  CLKINVX1 U47 ( .A(b[2]), .Y(n35) );
+  CLKINVX1 U48 ( .A(b[3]), .Y(n34) );
+  CLKINVX1 U49 ( .A(a[0]), .Y(n41) );
+  CLKINVX1 U50 ( .A(a[1]), .Y(n40) );
+  CLKINVX1 U51 ( .A(a[2]), .Y(n39) );
+  CLKINVX1 U52 ( .A(a[3]), .Y(n38) );
 endmodule
 
 
@@ -9890,29 +9826,29 @@ module vec_product_BIT_WIDTH4_VEC_SIZE64_DW_mult_tc_75 ( a, b, product );
   ADDHXL U13 ( .A(n25), .B(n28), .CO(n15), .S(n16) );
   ADDHXL U14 ( .A(n32), .B(n29), .CO(n17), .S(n18) );
   NOR2X1 U15 ( .A(n34), .B(n38), .Y(n19) );
-  OR2X1 U16 ( .A(n35), .B(n38), .Y(n20) );
-  OR2X1 U17 ( .A(n36), .B(n38), .Y(n21) );
-  OR2X1 U18 ( .A(n37), .B(n38), .Y(n22) );
   OR2X1 U19 ( .A(n34), .B(n39), .Y(n23) );
   NOR2X1 U20 ( .A(n35), .B(n39), .Y(n24) );
   NOR2X1 U21 ( .A(n36), .B(n39), .Y(n25) );
   NOR2X1 U22 ( .A(n37), .B(n39), .Y(n26) );
-  OR2X1 U23 ( .A(n34), .B(n40), .Y(n27) );
   NOR2X1 U24 ( .A(n35), .B(n40), .Y(n28) );
   NOR2X1 U25 ( .A(n36), .B(n40), .Y(n29) );
   NOR2X1 U26 ( .A(n37), .B(n40), .Y(n30) );
-  OR2X1 U27 ( .A(n34), .B(n41), .Y(n31) );
   NOR2X1 U28 ( .A(n35), .B(n41), .Y(n32) );
   NOR2X1 U29 ( .A(n36), .B(n41), .Y(n33) );
   NOR2X1 U30 ( .A(n37), .B(n41), .Y(product[0]) );
-  CLKINVX1 U41 ( .A(b[1]), .Y(n36) );
-  CLKINVX1 U42 ( .A(b[0]), .Y(n37) );
-  CLKINVX1 U43 ( .A(b[2]), .Y(n35) );
-  CLKINVX1 U44 ( .A(b[3]), .Y(n34) );
-  CLKINVX1 U45 ( .A(a[0]), .Y(n41) );
-  CLKINVX1 U46 ( .A(a[1]), .Y(n40) );
-  CLKINVX1 U47 ( .A(a[2]), .Y(n39) );
-  CLKINVX1 U48 ( .A(a[3]), .Y(n38) );
+  NAND2X1 U41 ( .A(b[3]), .B(a[1]), .Y(n27) );
+  NAND2X1 U42 ( .A(b[3]), .B(a[0]), .Y(n31) );
+  NAND2X1 U43 ( .A(b[0]), .B(a[3]), .Y(n22) );
+  NAND2X1 U44 ( .A(b[1]), .B(a[3]), .Y(n21) );
+  NAND2X1 U45 ( .A(b[2]), .B(a[3]), .Y(n20) );
+  CLKINVX1 U46 ( .A(b[1]), .Y(n36) );
+  CLKINVX1 U47 ( .A(b[0]), .Y(n37) );
+  CLKINVX1 U48 ( .A(b[2]), .Y(n35) );
+  CLKINVX1 U49 ( .A(b[3]), .Y(n34) );
+  CLKINVX1 U50 ( .A(a[0]), .Y(n41) );
+  CLKINVX1 U51 ( .A(a[1]), .Y(n40) );
+  CLKINVX1 U52 ( .A(a[2]), .Y(n39) );
+  CLKINVX1 U53 ( .A(a[3]), .Y(n38) );
 endmodule
 
 
@@ -9939,29 +9875,29 @@ module vec_product_BIT_WIDTH4_VEC_SIZE64_DW_mult_tc_76 ( a, b, product );
   ADDHXL U13 ( .A(n25), .B(n28), .CO(n15), .S(n16) );
   ADDHXL U14 ( .A(n32), .B(n29), .CO(n17), .S(n18) );
   NOR2X1 U15 ( .A(n34), .B(n38), .Y(n19) );
-  OR2X1 U16 ( .A(n35), .B(n38), .Y(n20) );
-  OR2X1 U17 ( .A(n36), .B(n38), .Y(n21) );
   OR2X1 U18 ( .A(n37), .B(n38), .Y(n22) );
   OR2X1 U19 ( .A(n34), .B(n39), .Y(n23) );
   NOR2X1 U20 ( .A(n35), .B(n39), .Y(n24) );
   NOR2X1 U21 ( .A(n36), .B(n39), .Y(n25) );
   NOR2X1 U22 ( .A(n37), .B(n39), .Y(n26) );
-  OR2X1 U23 ( .A(n34), .B(n40), .Y(n27) );
   NOR2X1 U24 ( .A(n35), .B(n40), .Y(n28) );
   NOR2X1 U25 ( .A(n36), .B(n40), .Y(n29) );
   NOR2X1 U26 ( .A(n37), .B(n40), .Y(n30) );
-  OR2X1 U27 ( .A(n34), .B(n41), .Y(n31) );
   NOR2X1 U28 ( .A(n35), .B(n41), .Y(n32) );
   NOR2X1 U29 ( .A(n36), .B(n41), .Y(n33) );
   NOR2X1 U30 ( .A(n37), .B(n41), .Y(product[0]) );
-  CLKINVX1 U41 ( .A(b[1]), .Y(n36) );
-  CLKINVX1 U42 ( .A(b[0]), .Y(n37) );
-  CLKINVX1 U43 ( .A(b[2]), .Y(n35) );
-  CLKINVX1 U44 ( .A(b[3]), .Y(n34) );
-  CLKINVX1 U45 ( .A(a[0]), .Y(n41) );
-  CLKINVX1 U46 ( .A(a[1]), .Y(n40) );
-  CLKINVX1 U47 ( .A(a[2]), .Y(n39) );
-  CLKINVX1 U48 ( .A(a[3]), .Y(n38) );
+  NAND2X1 U41 ( .A(b[3]), .B(a[1]), .Y(n27) );
+  NAND2X1 U42 ( .A(b[3]), .B(a[0]), .Y(n31) );
+  NAND2X1 U43 ( .A(b[1]), .B(a[3]), .Y(n21) );
+  NAND2X1 U44 ( .A(b[2]), .B(a[3]), .Y(n20) );
+  CLKINVX1 U45 ( .A(b[1]), .Y(n36) );
+  CLKINVX1 U46 ( .A(b[0]), .Y(n37) );
+  CLKINVX1 U47 ( .A(b[2]), .Y(n35) );
+  CLKINVX1 U48 ( .A(b[3]), .Y(n34) );
+  CLKINVX1 U49 ( .A(a[0]), .Y(n41) );
+  CLKINVX1 U50 ( .A(a[1]), .Y(n40) );
+  CLKINVX1 U51 ( .A(a[2]), .Y(n39) );
+  CLKINVX1 U52 ( .A(a[3]), .Y(n38) );
 endmodule
 
 
@@ -9988,29 +9924,29 @@ module vec_product_BIT_WIDTH4_VEC_SIZE64_DW_mult_tc_77 ( a, b, product );
   ADDHXL U13 ( .A(n25), .B(n28), .CO(n15), .S(n16) );
   ADDHXL U14 ( .A(n32), .B(n29), .CO(n17), .S(n18) );
   NOR2X1 U15 ( .A(n34), .B(n38), .Y(n19) );
-  OR2X1 U16 ( .A(n35), .B(n38), .Y(n20) );
-  OR2X1 U17 ( .A(n36), .B(n38), .Y(n21) );
-  OR2X1 U18 ( .A(n37), .B(n38), .Y(n22) );
   OR2X1 U19 ( .A(n34), .B(n39), .Y(n23) );
   NOR2X1 U20 ( .A(n35), .B(n39), .Y(n24) );
   NOR2X1 U21 ( .A(n36), .B(n39), .Y(n25) );
   NOR2X1 U22 ( .A(n37), .B(n39), .Y(n26) );
-  OR2X1 U23 ( .A(n34), .B(n40), .Y(n27) );
   NOR2X1 U24 ( .A(n35), .B(n40), .Y(n28) );
   NOR2X1 U25 ( .A(n36), .B(n40), .Y(n29) );
   NOR2X1 U26 ( .A(n37), .B(n40), .Y(n30) );
-  OR2X1 U27 ( .A(n34), .B(n41), .Y(n31) );
   NOR2X1 U28 ( .A(n35), .B(n41), .Y(n32) );
   NOR2X1 U29 ( .A(n36), .B(n41), .Y(n33) );
   NOR2X1 U30 ( .A(n37), .B(n41), .Y(product[0]) );
-  CLKINVX1 U41 ( .A(b[1]), .Y(n36) );
-  CLKINVX1 U42 ( .A(b[0]), .Y(n37) );
-  CLKINVX1 U43 ( .A(b[2]), .Y(n35) );
-  CLKINVX1 U44 ( .A(b[3]), .Y(n34) );
-  CLKINVX1 U45 ( .A(a[0]), .Y(n41) );
-  CLKINVX1 U46 ( .A(a[1]), .Y(n40) );
-  CLKINVX1 U47 ( .A(a[2]), .Y(n39) );
-  CLKINVX1 U48 ( .A(a[3]), .Y(n38) );
+  NAND2X1 U41 ( .A(b[3]), .B(a[1]), .Y(n27) );
+  NAND2X1 U42 ( .A(b[3]), .B(a[0]), .Y(n31) );
+  NAND2X1 U43 ( .A(b[0]), .B(a[3]), .Y(n22) );
+  NAND2X1 U44 ( .A(b[2]), .B(a[3]), .Y(n20) );
+  NAND2X1 U45 ( .A(b[1]), .B(a[3]), .Y(n21) );
+  CLKINVX1 U46 ( .A(b[1]), .Y(n36) );
+  CLKINVX1 U47 ( .A(b[0]), .Y(n37) );
+  CLKINVX1 U48 ( .A(b[2]), .Y(n35) );
+  CLKINVX1 U49 ( .A(b[3]), .Y(n34) );
+  CLKINVX1 U50 ( .A(a[0]), .Y(n41) );
+  CLKINVX1 U51 ( .A(a[1]), .Y(n40) );
+  CLKINVX1 U52 ( .A(a[2]), .Y(n39) );
+  CLKINVX1 U53 ( .A(a[3]), .Y(n38) );
 endmodule
 
 
@@ -10037,29 +9973,29 @@ module vec_product_BIT_WIDTH4_VEC_SIZE64_DW_mult_tc_78 ( a, b, product );
   ADDHXL U13 ( .A(n25), .B(n28), .CO(n15), .S(n16) );
   ADDHXL U14 ( .A(n32), .B(n29), .CO(n17), .S(n18) );
   NOR2X1 U15 ( .A(n34), .B(n38), .Y(n19) );
-  OR2X1 U16 ( .A(n35), .B(n38), .Y(n20) );
-  OR2X1 U17 ( .A(n36), .B(n38), .Y(n21) );
   OR2X1 U18 ( .A(n37), .B(n38), .Y(n22) );
   OR2X1 U19 ( .A(n34), .B(n39), .Y(n23) );
   NOR2X1 U20 ( .A(n35), .B(n39), .Y(n24) );
   NOR2X1 U21 ( .A(n36), .B(n39), .Y(n25) );
   NOR2X1 U22 ( .A(n37), .B(n39), .Y(n26) );
-  OR2X1 U23 ( .A(n34), .B(n40), .Y(n27) );
   NOR2X1 U24 ( .A(n35), .B(n40), .Y(n28) );
   NOR2X1 U25 ( .A(n36), .B(n40), .Y(n29) );
   NOR2X1 U26 ( .A(n37), .B(n40), .Y(n30) );
-  OR2X1 U27 ( .A(n34), .B(n41), .Y(n31) );
   NOR2X1 U28 ( .A(n35), .B(n41), .Y(n32) );
   NOR2X1 U29 ( .A(n36), .B(n41), .Y(n33) );
   NOR2X1 U30 ( .A(n37), .B(n41), .Y(product[0]) );
-  CLKINVX1 U41 ( .A(b[0]), .Y(n37) );
-  CLKINVX1 U42 ( .A(b[1]), .Y(n36) );
-  CLKINVX1 U43 ( .A(b[2]), .Y(n35) );
-  CLKINVX1 U44 ( .A(b[3]), .Y(n34) );
-  CLKINVX1 U45 ( .A(a[0]), .Y(n41) );
-  CLKINVX1 U46 ( .A(a[1]), .Y(n40) );
-  CLKINVX1 U47 ( .A(a[2]), .Y(n39) );
-  CLKINVX1 U48 ( .A(a[3]), .Y(n38) );
+  NAND2X1 U41 ( .A(b[3]), .B(a[1]), .Y(n27) );
+  NAND2X1 U42 ( .A(b[3]), .B(a[0]), .Y(n31) );
+  NAND2X1 U43 ( .A(b[1]), .B(a[3]), .Y(n21) );
+  NAND2X1 U44 ( .A(b[2]), .B(a[3]), .Y(n20) );
+  CLKINVX1 U45 ( .A(b[0]), .Y(n37) );
+  CLKINVX1 U46 ( .A(b[1]), .Y(n36) );
+  CLKINVX1 U47 ( .A(b[2]), .Y(n35) );
+  CLKINVX1 U48 ( .A(b[3]), .Y(n34) );
+  CLKINVX1 U49 ( .A(a[0]), .Y(n41) );
+  CLKINVX1 U50 ( .A(a[1]), .Y(n40) );
+  CLKINVX1 U51 ( .A(a[2]), .Y(n39) );
+  CLKINVX1 U52 ( .A(a[3]), .Y(n38) );
 endmodule
 
 
@@ -10086,29 +10022,29 @@ module vec_product_BIT_WIDTH4_VEC_SIZE64_DW_mult_tc_79 ( a, b, product );
   ADDHXL U13 ( .A(n25), .B(n28), .CO(n15), .S(n16) );
   ADDHXL U14 ( .A(n32), .B(n29), .CO(n17), .S(n18) );
   NOR2X1 U15 ( .A(n34), .B(n38), .Y(n19) );
-  OR2X1 U16 ( .A(n35), .B(n38), .Y(n20) );
-  OR2X1 U17 ( .A(n36), .B(n38), .Y(n21) );
-  OR2X1 U18 ( .A(n37), .B(n38), .Y(n22) );
   OR2X1 U19 ( .A(n34), .B(n39), .Y(n23) );
   NOR2X1 U20 ( .A(n35), .B(n39), .Y(n24) );
   NOR2X1 U21 ( .A(n36), .B(n39), .Y(n25) );
   NOR2X1 U22 ( .A(n37), .B(n39), .Y(n26) );
-  OR2X1 U23 ( .A(n34), .B(n40), .Y(n27) );
   NOR2X1 U24 ( .A(n35), .B(n40), .Y(n28) );
   NOR2X1 U25 ( .A(n36), .B(n40), .Y(n29) );
   NOR2X1 U26 ( .A(n37), .B(n40), .Y(n30) );
-  OR2X1 U27 ( .A(n34), .B(n41), .Y(n31) );
   NOR2X1 U28 ( .A(n35), .B(n41), .Y(n32) );
   NOR2X1 U29 ( .A(n36), .B(n41), .Y(n33) );
   NOR2X1 U30 ( .A(n37), .B(n41), .Y(product[0]) );
-  CLKINVX1 U41 ( .A(b[0]), .Y(n37) );
-  CLKINVX1 U42 ( .A(b[1]), .Y(n36) );
-  CLKINVX1 U43 ( .A(b[2]), .Y(n35) );
-  CLKINVX1 U44 ( .A(b[3]), .Y(n34) );
-  CLKINVX1 U45 ( .A(a[0]), .Y(n41) );
-  CLKINVX1 U46 ( .A(a[1]), .Y(n40) );
-  CLKINVX1 U47 ( .A(a[2]), .Y(n39) );
-  CLKINVX1 U48 ( .A(a[3]), .Y(n38) );
+  NAND2X1 U41 ( .A(b[3]), .B(a[0]), .Y(n31) );
+  NAND2X1 U42 ( .A(b[3]), .B(a[1]), .Y(n27) );
+  NAND2X1 U43 ( .A(b[0]), .B(a[3]), .Y(n22) );
+  NAND2X1 U44 ( .A(b[1]), .B(a[3]), .Y(n21) );
+  NAND2X1 U45 ( .A(b[2]), .B(a[3]), .Y(n20) );
+  CLKINVX1 U46 ( .A(b[0]), .Y(n37) );
+  CLKINVX1 U47 ( .A(b[1]), .Y(n36) );
+  CLKINVX1 U48 ( .A(b[2]), .Y(n35) );
+  CLKINVX1 U49 ( .A(b[3]), .Y(n34) );
+  CLKINVX1 U50 ( .A(a[0]), .Y(n41) );
+  CLKINVX1 U51 ( .A(a[1]), .Y(n40) );
+  CLKINVX1 U52 ( .A(a[2]), .Y(n39) );
+  CLKINVX1 U53 ( .A(a[3]), .Y(n38) );
 endmodule
 
 
@@ -10135,29 +10071,29 @@ module vec_product_BIT_WIDTH4_VEC_SIZE64_DW_mult_tc_80 ( a, b, product );
   ADDHXL U13 ( .A(n25), .B(n28), .CO(n15), .S(n16) );
   ADDHXL U14 ( .A(n32), .B(n29), .CO(n17), .S(n18) );
   NOR2X1 U15 ( .A(n34), .B(n38), .Y(n19) );
-  OR2X1 U16 ( .A(n35), .B(n38), .Y(n20) );
-  OR2X1 U17 ( .A(n36), .B(n38), .Y(n21) );
   OR2X1 U18 ( .A(n37), .B(n38), .Y(n22) );
   OR2X1 U19 ( .A(n34), .B(n39), .Y(n23) );
   NOR2X1 U20 ( .A(n35), .B(n39), .Y(n24) );
   NOR2X1 U21 ( .A(n36), .B(n39), .Y(n25) );
   NOR2X1 U22 ( .A(n37), .B(n39), .Y(n26) );
-  OR2X1 U23 ( .A(n34), .B(n40), .Y(n27) );
   NOR2X1 U24 ( .A(n35), .B(n40), .Y(n28) );
   NOR2X1 U25 ( .A(n36), .B(n40), .Y(n29) );
   NOR2X1 U26 ( .A(n37), .B(n40), .Y(n30) );
-  OR2X1 U27 ( .A(n34), .B(n41), .Y(n31) );
   NOR2X1 U28 ( .A(n35), .B(n41), .Y(n32) );
   NOR2X1 U29 ( .A(n36), .B(n41), .Y(n33) );
   NOR2X1 U30 ( .A(n37), .B(n41), .Y(product[0]) );
-  CLKINVX1 U41 ( .A(b[0]), .Y(n37) );
-  CLKINVX1 U42 ( .A(b[1]), .Y(n36) );
-  CLKINVX1 U43 ( .A(b[2]), .Y(n35) );
-  CLKINVX1 U44 ( .A(b[3]), .Y(n34) );
-  CLKINVX1 U45 ( .A(a[0]), .Y(n41) );
-  CLKINVX1 U46 ( .A(a[1]), .Y(n40) );
-  CLKINVX1 U47 ( .A(a[2]), .Y(n39) );
-  CLKINVX1 U48 ( .A(a[3]), .Y(n38) );
+  NAND2X1 U41 ( .A(b[3]), .B(a[1]), .Y(n27) );
+  NAND2X1 U42 ( .A(b[3]), .B(a[0]), .Y(n31) );
+  NAND2X1 U43 ( .A(b[1]), .B(a[3]), .Y(n21) );
+  NAND2X1 U44 ( .A(b[2]), .B(a[3]), .Y(n20) );
+  CLKINVX1 U45 ( .A(b[0]), .Y(n37) );
+  CLKINVX1 U46 ( .A(b[1]), .Y(n36) );
+  CLKINVX1 U47 ( .A(b[2]), .Y(n35) );
+  CLKINVX1 U48 ( .A(b[3]), .Y(n34) );
+  CLKINVX1 U49 ( .A(a[0]), .Y(n41) );
+  CLKINVX1 U50 ( .A(a[1]), .Y(n40) );
+  CLKINVX1 U51 ( .A(a[2]), .Y(n39) );
+  CLKINVX1 U52 ( .A(a[3]), .Y(n38) );
 endmodule
 
 
@@ -10184,29 +10120,29 @@ module vec_product_BIT_WIDTH4_VEC_SIZE64_DW_mult_tc_81 ( a, b, product );
   ADDHXL U13 ( .A(n25), .B(n28), .CO(n15), .S(n16) );
   ADDHXL U14 ( .A(n32), .B(n29), .CO(n17), .S(n18) );
   NOR2X1 U15 ( .A(n34), .B(n38), .Y(n19) );
-  OR2X1 U16 ( .A(n35), .B(n38), .Y(n20) );
-  OR2X1 U17 ( .A(n36), .B(n38), .Y(n21) );
-  OR2X1 U18 ( .A(n37), .B(n38), .Y(n22) );
   OR2X1 U19 ( .A(n34), .B(n39), .Y(n23) );
   NOR2X1 U20 ( .A(n35), .B(n39), .Y(n24) );
   NOR2X1 U21 ( .A(n36), .B(n39), .Y(n25) );
   NOR2X1 U22 ( .A(n37), .B(n39), .Y(n26) );
-  OR2X1 U23 ( .A(n34), .B(n40), .Y(n27) );
   NOR2X1 U24 ( .A(n35), .B(n40), .Y(n28) );
   NOR2X1 U25 ( .A(n36), .B(n40), .Y(n29) );
   NOR2X1 U26 ( .A(n37), .B(n40), .Y(n30) );
-  OR2X1 U27 ( .A(n34), .B(n41), .Y(n31) );
   NOR2X1 U28 ( .A(n35), .B(n41), .Y(n32) );
   NOR2X1 U29 ( .A(n36), .B(n41), .Y(n33) );
   NOR2X1 U30 ( .A(n37), .B(n41), .Y(product[0]) );
-  CLKINVX1 U41 ( .A(b[0]), .Y(n37) );
-  CLKINVX1 U42 ( .A(b[1]), .Y(n36) );
-  CLKINVX1 U43 ( .A(b[2]), .Y(n35) );
-  CLKINVX1 U44 ( .A(b[3]), .Y(n34) );
-  CLKINVX1 U45 ( .A(a[0]), .Y(n41) );
-  CLKINVX1 U46 ( .A(a[1]), .Y(n40) );
-  CLKINVX1 U47 ( .A(a[2]), .Y(n39) );
-  CLKINVX1 U48 ( .A(a[3]), .Y(n38) );
+  NAND2X1 U41 ( .A(b[3]), .B(a[0]), .Y(n31) );
+  NAND2X1 U42 ( .A(b[3]), .B(a[1]), .Y(n27) );
+  NAND2X1 U43 ( .A(b[0]), .B(a[3]), .Y(n22) );
+  NAND2X1 U44 ( .A(b[1]), .B(a[3]), .Y(n21) );
+  NAND2X1 U45 ( .A(b[2]), .B(a[3]), .Y(n20) );
+  CLKINVX1 U46 ( .A(b[0]), .Y(n37) );
+  CLKINVX1 U47 ( .A(b[1]), .Y(n36) );
+  CLKINVX1 U48 ( .A(b[2]), .Y(n35) );
+  CLKINVX1 U49 ( .A(b[3]), .Y(n34) );
+  CLKINVX1 U50 ( .A(a[0]), .Y(n41) );
+  CLKINVX1 U51 ( .A(a[1]), .Y(n40) );
+  CLKINVX1 U52 ( .A(a[2]), .Y(n39) );
+  CLKINVX1 U53 ( .A(a[3]), .Y(n38) );
 endmodule
 
 
@@ -10233,29 +10169,29 @@ module vec_product_BIT_WIDTH4_VEC_SIZE64_DW_mult_tc_82 ( a, b, product );
   ADDHXL U13 ( .A(n25), .B(n28), .CO(n15), .S(n16) );
   ADDHXL U14 ( .A(n32), .B(n29), .CO(n17), .S(n18) );
   NOR2X1 U15 ( .A(n34), .B(n38), .Y(n19) );
-  OR2X1 U16 ( .A(n35), .B(n38), .Y(n20) );
-  OR2X1 U17 ( .A(n36), .B(n38), .Y(n21) );
   OR2X1 U18 ( .A(n37), .B(n38), .Y(n22) );
   OR2X1 U19 ( .A(n34), .B(n39), .Y(n23) );
   NOR2X1 U20 ( .A(n35), .B(n39), .Y(n24) );
   NOR2X1 U21 ( .A(n36), .B(n39), .Y(n25) );
   NOR2X1 U22 ( .A(n37), .B(n39), .Y(n26) );
-  OR2X1 U23 ( .A(n34), .B(n40), .Y(n27) );
   NOR2X1 U24 ( .A(n35), .B(n40), .Y(n28) );
   NOR2X1 U25 ( .A(n36), .B(n40), .Y(n29) );
   NOR2X1 U26 ( .A(n37), .B(n40), .Y(n30) );
-  OR2X1 U27 ( .A(n34), .B(n41), .Y(n31) );
   NOR2X1 U28 ( .A(n35), .B(n41), .Y(n32) );
   NOR2X1 U29 ( .A(n36), .B(n41), .Y(n33) );
   NOR2X1 U30 ( .A(n37), .B(n41), .Y(product[0]) );
-  CLKINVX1 U41 ( .A(b[1]), .Y(n36) );
-  CLKINVX1 U42 ( .A(b[0]), .Y(n37) );
-  CLKINVX1 U43 ( .A(b[2]), .Y(n35) );
-  CLKINVX1 U44 ( .A(b[3]), .Y(n34) );
-  CLKINVX1 U45 ( .A(a[0]), .Y(n41) );
-  CLKINVX1 U46 ( .A(a[1]), .Y(n40) );
-  CLKINVX1 U47 ( .A(a[2]), .Y(n39) );
-  CLKINVX1 U48 ( .A(a[3]), .Y(n38) );
+  NAND2X1 U41 ( .A(b[3]), .B(a[1]), .Y(n27) );
+  NAND2X1 U42 ( .A(b[3]), .B(a[0]), .Y(n31) );
+  NAND2X1 U43 ( .A(b[1]), .B(a[3]), .Y(n21) );
+  NAND2X1 U44 ( .A(b[2]), .B(a[3]), .Y(n20) );
+  CLKINVX1 U45 ( .A(b[1]), .Y(n36) );
+  CLKINVX1 U46 ( .A(b[0]), .Y(n37) );
+  CLKINVX1 U47 ( .A(b[2]), .Y(n35) );
+  CLKINVX1 U48 ( .A(b[3]), .Y(n34) );
+  CLKINVX1 U49 ( .A(a[0]), .Y(n41) );
+  CLKINVX1 U50 ( .A(a[1]), .Y(n40) );
+  CLKINVX1 U51 ( .A(a[2]), .Y(n39) );
+  CLKINVX1 U52 ( .A(a[3]), .Y(n38) );
 endmodule
 
 
@@ -10282,29 +10218,29 @@ module vec_product_BIT_WIDTH4_VEC_SIZE64_DW_mult_tc_83 ( a, b, product );
   ADDHXL U13 ( .A(n25), .B(n28), .CO(n15), .S(n16) );
   ADDHXL U14 ( .A(n32), .B(n29), .CO(n17), .S(n18) );
   NOR2X1 U15 ( .A(n34), .B(n38), .Y(n19) );
-  OR2X1 U16 ( .A(n35), .B(n38), .Y(n20) );
-  OR2X1 U17 ( .A(n36), .B(n38), .Y(n21) );
-  OR2X1 U18 ( .A(n37), .B(n38), .Y(n22) );
   OR2X1 U19 ( .A(n34), .B(n39), .Y(n23) );
   NOR2X1 U20 ( .A(n35), .B(n39), .Y(n24) );
   NOR2X1 U21 ( .A(n36), .B(n39), .Y(n25) );
   NOR2X1 U22 ( .A(n37), .B(n39), .Y(n26) );
-  OR2X1 U23 ( .A(n34), .B(n40), .Y(n27) );
   NOR2X1 U24 ( .A(n35), .B(n40), .Y(n28) );
   NOR2X1 U25 ( .A(n36), .B(n40), .Y(n29) );
   NOR2X1 U26 ( .A(n37), .B(n40), .Y(n30) );
-  OR2X1 U27 ( .A(n34), .B(n41), .Y(n31) );
   NOR2X1 U28 ( .A(n35), .B(n41), .Y(n32) );
   NOR2X1 U29 ( .A(n36), .B(n41), .Y(n33) );
   NOR2X1 U30 ( .A(n37), .B(n41), .Y(product[0]) );
-  CLKINVX1 U41 ( .A(b[1]), .Y(n36) );
-  CLKINVX1 U42 ( .A(b[0]), .Y(n37) );
-  CLKINVX1 U43 ( .A(b[2]), .Y(n35) );
-  CLKINVX1 U44 ( .A(b[3]), .Y(n34) );
-  CLKINVX1 U45 ( .A(a[0]), .Y(n41) );
-  CLKINVX1 U46 ( .A(a[1]), .Y(n40) );
-  CLKINVX1 U47 ( .A(a[2]), .Y(n39) );
-  CLKINVX1 U48 ( .A(a[3]), .Y(n38) );
+  NAND2X1 U41 ( .A(b[3]), .B(a[1]), .Y(n27) );
+  NAND2X1 U42 ( .A(b[3]), .B(a[0]), .Y(n31) );
+  NAND2X1 U43 ( .A(b[0]), .B(a[3]), .Y(n22) );
+  NAND2X1 U44 ( .A(b[1]), .B(a[3]), .Y(n21) );
+  NAND2X1 U45 ( .A(b[2]), .B(a[3]), .Y(n20) );
+  CLKINVX1 U46 ( .A(b[1]), .Y(n36) );
+  CLKINVX1 U47 ( .A(b[0]), .Y(n37) );
+  CLKINVX1 U48 ( .A(b[2]), .Y(n35) );
+  CLKINVX1 U49 ( .A(b[3]), .Y(n34) );
+  CLKINVX1 U50 ( .A(a[0]), .Y(n41) );
+  CLKINVX1 U51 ( .A(a[1]), .Y(n40) );
+  CLKINVX1 U52 ( .A(a[2]), .Y(n39) );
+  CLKINVX1 U53 ( .A(a[3]), .Y(n38) );
 endmodule
 
 
@@ -10331,29 +10267,29 @@ module vec_product_BIT_WIDTH4_VEC_SIZE64_DW_mult_tc_84 ( a, b, product );
   ADDHXL U13 ( .A(n25), .B(n28), .CO(n15), .S(n16) );
   ADDHXL U14 ( .A(n32), .B(n29), .CO(n17), .S(n18) );
   NOR2X1 U15 ( .A(n34), .B(n38), .Y(n19) );
-  OR2X1 U16 ( .A(n35), .B(n38), .Y(n20) );
-  OR2X1 U17 ( .A(n36), .B(n38), .Y(n21) );
   OR2X1 U18 ( .A(n37), .B(n38), .Y(n22) );
   OR2X1 U19 ( .A(n34), .B(n39), .Y(n23) );
   NOR2X1 U20 ( .A(n35), .B(n39), .Y(n24) );
   NOR2X1 U21 ( .A(n36), .B(n39), .Y(n25) );
   NOR2X1 U22 ( .A(n37), .B(n39), .Y(n26) );
-  OR2X1 U23 ( .A(n34), .B(n40), .Y(n27) );
   NOR2X1 U24 ( .A(n35), .B(n40), .Y(n28) );
   NOR2X1 U25 ( .A(n36), .B(n40), .Y(n29) );
   NOR2X1 U26 ( .A(n37), .B(n40), .Y(n30) );
-  OR2X1 U27 ( .A(n34), .B(n41), .Y(n31) );
   NOR2X1 U28 ( .A(n35), .B(n41), .Y(n32) );
   NOR2X1 U29 ( .A(n36), .B(n41), .Y(n33) );
   NOR2X1 U30 ( .A(n37), .B(n41), .Y(product[0]) );
-  CLKINVX1 U41 ( .A(b[0]), .Y(n37) );
-  CLKINVX1 U42 ( .A(b[1]), .Y(n36) );
-  CLKINVX1 U43 ( .A(b[2]), .Y(n35) );
-  CLKINVX1 U44 ( .A(b[3]), .Y(n34) );
-  CLKINVX1 U45 ( .A(a[0]), .Y(n41) );
-  CLKINVX1 U46 ( .A(a[1]), .Y(n40) );
-  CLKINVX1 U47 ( .A(a[2]), .Y(n39) );
-  CLKINVX1 U48 ( .A(a[3]), .Y(n38) );
+  NAND2X1 U41 ( .A(b[3]), .B(a[1]), .Y(n27) );
+  NAND2X1 U42 ( .A(b[3]), .B(a[0]), .Y(n31) );
+  NAND2X1 U43 ( .A(b[1]), .B(a[3]), .Y(n21) );
+  NAND2X1 U44 ( .A(b[2]), .B(a[3]), .Y(n20) );
+  CLKINVX1 U45 ( .A(b[0]), .Y(n37) );
+  CLKINVX1 U46 ( .A(b[1]), .Y(n36) );
+  CLKINVX1 U47 ( .A(b[2]), .Y(n35) );
+  CLKINVX1 U48 ( .A(b[3]), .Y(n34) );
+  CLKINVX1 U49 ( .A(a[0]), .Y(n41) );
+  CLKINVX1 U50 ( .A(a[1]), .Y(n40) );
+  CLKINVX1 U51 ( .A(a[2]), .Y(n39) );
+  CLKINVX1 U52 ( .A(a[3]), .Y(n38) );
 endmodule
 
 
@@ -10380,29 +10316,29 @@ module vec_product_BIT_WIDTH4_VEC_SIZE64_DW_mult_tc_85 ( a, b, product );
   ADDHXL U13 ( .A(n25), .B(n28), .CO(n15), .S(n16) );
   ADDHXL U14 ( .A(n32), .B(n29), .CO(n17), .S(n18) );
   NOR2X1 U15 ( .A(n34), .B(n38), .Y(n19) );
-  OR2X1 U16 ( .A(n35), .B(n38), .Y(n20) );
-  OR2X1 U17 ( .A(n36), .B(n38), .Y(n21) );
-  OR2X1 U18 ( .A(n37), .B(n38), .Y(n22) );
   OR2X1 U19 ( .A(n34), .B(n39), .Y(n23) );
   NOR2X1 U20 ( .A(n35), .B(n39), .Y(n24) );
   NOR2X1 U21 ( .A(n36), .B(n39), .Y(n25) );
   NOR2X1 U22 ( .A(n37), .B(n39), .Y(n26) );
-  OR2X1 U23 ( .A(n34), .B(n40), .Y(n27) );
   NOR2X1 U24 ( .A(n35), .B(n40), .Y(n28) );
   NOR2X1 U25 ( .A(n36), .B(n40), .Y(n29) );
   NOR2X1 U26 ( .A(n37), .B(n40), .Y(n30) );
-  OR2X1 U27 ( .A(n34), .B(n41), .Y(n31) );
   NOR2X1 U28 ( .A(n35), .B(n41), .Y(n32) );
   NOR2X1 U29 ( .A(n36), .B(n41), .Y(n33) );
   NOR2X1 U30 ( .A(n37), .B(n41), .Y(product[0]) );
-  CLKINVX1 U41 ( .A(b[0]), .Y(n37) );
-  CLKINVX1 U42 ( .A(b[1]), .Y(n36) );
-  CLKINVX1 U43 ( .A(b[2]), .Y(n35) );
-  CLKINVX1 U44 ( .A(b[3]), .Y(n34) );
-  CLKINVX1 U45 ( .A(a[0]), .Y(n41) );
-  CLKINVX1 U46 ( .A(a[1]), .Y(n40) );
-  CLKINVX1 U47 ( .A(a[2]), .Y(n39) );
-  CLKINVX1 U48 ( .A(a[3]), .Y(n38) );
+  NAND2X1 U41 ( .A(b[3]), .B(a[1]), .Y(n27) );
+  NAND2X1 U42 ( .A(b[3]), .B(a[0]), .Y(n31) );
+  NAND2X1 U43 ( .A(b[0]), .B(a[3]), .Y(n22) );
+  NAND2X1 U44 ( .A(b[1]), .B(a[3]), .Y(n21) );
+  NAND2X1 U45 ( .A(b[2]), .B(a[3]), .Y(n20) );
+  CLKINVX1 U46 ( .A(b[0]), .Y(n37) );
+  CLKINVX1 U47 ( .A(b[1]), .Y(n36) );
+  CLKINVX1 U48 ( .A(b[2]), .Y(n35) );
+  CLKINVX1 U49 ( .A(b[3]), .Y(n34) );
+  CLKINVX1 U50 ( .A(a[0]), .Y(n41) );
+  CLKINVX1 U51 ( .A(a[1]), .Y(n40) );
+  CLKINVX1 U52 ( .A(a[2]), .Y(n39) );
+  CLKINVX1 U53 ( .A(a[3]), .Y(n38) );
 endmodule
 
 
@@ -10429,29 +10365,29 @@ module vec_product_BIT_WIDTH4_VEC_SIZE64_DW_mult_tc_86 ( a, b, product );
   ADDHXL U13 ( .A(n25), .B(n28), .CO(n15), .S(n16) );
   ADDHXL U14 ( .A(n32), .B(n29), .CO(n17), .S(n18) );
   NOR2X1 U15 ( .A(n34), .B(n38), .Y(n19) );
-  OR2X1 U16 ( .A(n35), .B(n38), .Y(n20) );
-  OR2X1 U17 ( .A(n36), .B(n38), .Y(n21) );
   OR2X1 U18 ( .A(n37), .B(n38), .Y(n22) );
   OR2X1 U19 ( .A(n34), .B(n39), .Y(n23) );
   NOR2X1 U20 ( .A(n35), .B(n39), .Y(n24) );
   NOR2X1 U21 ( .A(n36), .B(n39), .Y(n25) );
   NOR2X1 U22 ( .A(n37), .B(n39), .Y(n26) );
-  OR2X1 U23 ( .A(n34), .B(n40), .Y(n27) );
   NOR2X1 U24 ( .A(n35), .B(n40), .Y(n28) );
   NOR2X1 U25 ( .A(n36), .B(n40), .Y(n29) );
   NOR2X1 U26 ( .A(n37), .B(n40), .Y(n30) );
-  OR2X1 U27 ( .A(n34), .B(n41), .Y(n31) );
   NOR2X1 U28 ( .A(n35), .B(n41), .Y(n32) );
   NOR2X1 U29 ( .A(n36), .B(n41), .Y(n33) );
   NOR2X1 U30 ( .A(n37), .B(n41), .Y(product[0]) );
-  CLKINVX1 U41 ( .A(b[0]), .Y(n37) );
-  CLKINVX1 U42 ( .A(b[1]), .Y(n36) );
-  CLKINVX1 U43 ( .A(b[2]), .Y(n35) );
-  CLKINVX1 U44 ( .A(b[3]), .Y(n34) );
-  CLKINVX1 U45 ( .A(a[0]), .Y(n41) );
-  CLKINVX1 U46 ( .A(a[1]), .Y(n40) );
-  CLKINVX1 U47 ( .A(a[2]), .Y(n39) );
-  CLKINVX1 U48 ( .A(a[3]), .Y(n38) );
+  NAND2X1 U41 ( .A(b[3]), .B(a[1]), .Y(n27) );
+  NAND2X1 U42 ( .A(b[3]), .B(a[0]), .Y(n31) );
+  NAND2X1 U43 ( .A(b[1]), .B(a[3]), .Y(n21) );
+  NAND2X1 U44 ( .A(b[2]), .B(a[3]), .Y(n20) );
+  CLKINVX1 U45 ( .A(b[0]), .Y(n37) );
+  CLKINVX1 U46 ( .A(b[1]), .Y(n36) );
+  CLKINVX1 U47 ( .A(b[2]), .Y(n35) );
+  CLKINVX1 U48 ( .A(b[3]), .Y(n34) );
+  CLKINVX1 U49 ( .A(a[0]), .Y(n41) );
+  CLKINVX1 U50 ( .A(a[1]), .Y(n40) );
+  CLKINVX1 U51 ( .A(a[2]), .Y(n39) );
+  CLKINVX1 U52 ( .A(a[3]), .Y(n38) );
 endmodule
 
 
@@ -10478,29 +10414,29 @@ module vec_product_BIT_WIDTH4_VEC_SIZE64_DW_mult_tc_87 ( a, b, product );
   ADDHXL U13 ( .A(n25), .B(n28), .CO(n15), .S(n16) );
   ADDHXL U14 ( .A(n32), .B(n29), .CO(n17), .S(n18) );
   NOR2X1 U15 ( .A(n34), .B(n38), .Y(n19) );
-  OR2X1 U16 ( .A(n35), .B(n38), .Y(n20) );
-  OR2X1 U17 ( .A(n36), .B(n38), .Y(n21) );
-  OR2X1 U18 ( .A(n37), .B(n38), .Y(n22) );
   OR2X1 U19 ( .A(n34), .B(n39), .Y(n23) );
   NOR2X1 U20 ( .A(n35), .B(n39), .Y(n24) );
   NOR2X1 U21 ( .A(n36), .B(n39), .Y(n25) );
   NOR2X1 U22 ( .A(n37), .B(n39), .Y(n26) );
-  OR2X1 U23 ( .A(n34), .B(n40), .Y(n27) );
   NOR2X1 U24 ( .A(n35), .B(n40), .Y(n28) );
   NOR2X1 U25 ( .A(n36), .B(n40), .Y(n29) );
   NOR2X1 U26 ( .A(n37), .B(n40), .Y(n30) );
-  OR2X1 U27 ( .A(n34), .B(n41), .Y(n31) );
   NOR2X1 U28 ( .A(n35), .B(n41), .Y(n32) );
   NOR2X1 U29 ( .A(n36), .B(n41), .Y(n33) );
   NOR2X1 U30 ( .A(n37), .B(n41), .Y(product[0]) );
-  CLKINVX1 U41 ( .A(b[0]), .Y(n37) );
-  CLKINVX1 U42 ( .A(b[1]), .Y(n36) );
-  CLKINVX1 U43 ( .A(b[2]), .Y(n35) );
-  CLKINVX1 U44 ( .A(b[3]), .Y(n34) );
-  CLKINVX1 U45 ( .A(a[0]), .Y(n41) );
-  CLKINVX1 U46 ( .A(a[1]), .Y(n40) );
-  CLKINVX1 U47 ( .A(a[2]), .Y(n39) );
-  CLKINVX1 U48 ( .A(a[3]), .Y(n38) );
+  NAND2X1 U41 ( .A(b[3]), .B(a[1]), .Y(n27) );
+  NAND2X1 U42 ( .A(b[3]), .B(a[0]), .Y(n31) );
+  NAND2X1 U43 ( .A(b[0]), .B(a[3]), .Y(n22) );
+  NAND2X1 U44 ( .A(b[1]), .B(a[3]), .Y(n21) );
+  NAND2X1 U45 ( .A(b[2]), .B(a[3]), .Y(n20) );
+  CLKINVX1 U46 ( .A(b[0]), .Y(n37) );
+  CLKINVX1 U47 ( .A(b[1]), .Y(n36) );
+  CLKINVX1 U48 ( .A(b[2]), .Y(n35) );
+  CLKINVX1 U49 ( .A(b[3]), .Y(n34) );
+  CLKINVX1 U50 ( .A(a[0]), .Y(n41) );
+  CLKINVX1 U51 ( .A(a[1]), .Y(n40) );
+  CLKINVX1 U52 ( .A(a[2]), .Y(n39) );
+  CLKINVX1 U53 ( .A(a[3]), .Y(n38) );
 endmodule
 
 
@@ -10527,29 +10463,29 @@ module vec_product_BIT_WIDTH4_VEC_SIZE64_DW_mult_tc_88 ( a, b, product );
   ADDHXL U13 ( .A(n25), .B(n28), .CO(n15), .S(n16) );
   ADDHXL U14 ( .A(n32), .B(n29), .CO(n17), .S(n18) );
   NOR2X1 U15 ( .A(n34), .B(n38), .Y(n19) );
-  OR2X1 U16 ( .A(n35), .B(n38), .Y(n20) );
-  OR2X1 U17 ( .A(n36), .B(n38), .Y(n21) );
   OR2X1 U18 ( .A(n37), .B(n38), .Y(n22) );
   OR2X1 U19 ( .A(n34), .B(n39), .Y(n23) );
   NOR2X1 U20 ( .A(n35), .B(n39), .Y(n24) );
   NOR2X1 U21 ( .A(n36), .B(n39), .Y(n25) );
   NOR2X1 U22 ( .A(n37), .B(n39), .Y(n26) );
-  OR2X1 U23 ( .A(n34), .B(n40), .Y(n27) );
   NOR2X1 U24 ( .A(n35), .B(n40), .Y(n28) );
   NOR2X1 U25 ( .A(n36), .B(n40), .Y(n29) );
   NOR2X1 U26 ( .A(n37), .B(n40), .Y(n30) );
-  OR2X1 U27 ( .A(n34), .B(n41), .Y(n31) );
   NOR2X1 U28 ( .A(n35), .B(n41), .Y(n32) );
   NOR2X1 U29 ( .A(n36), .B(n41), .Y(n33) );
   NOR2X1 U30 ( .A(n37), .B(n41), .Y(product[0]) );
-  CLKINVX1 U41 ( .A(b[0]), .Y(n37) );
-  CLKINVX1 U42 ( .A(b[1]), .Y(n36) );
-  CLKINVX1 U43 ( .A(b[2]), .Y(n35) );
-  CLKINVX1 U44 ( .A(b[3]), .Y(n34) );
-  CLKINVX1 U45 ( .A(a[0]), .Y(n41) );
-  CLKINVX1 U46 ( .A(a[1]), .Y(n40) );
-  CLKINVX1 U47 ( .A(a[2]), .Y(n39) );
-  CLKINVX1 U48 ( .A(a[3]), .Y(n38) );
+  NAND2X1 U41 ( .A(b[3]), .B(a[1]), .Y(n27) );
+  NAND2X1 U42 ( .A(b[3]), .B(a[0]), .Y(n31) );
+  NAND2X1 U43 ( .A(b[1]), .B(a[3]), .Y(n21) );
+  NAND2X1 U44 ( .A(b[2]), .B(a[3]), .Y(n20) );
+  CLKINVX1 U45 ( .A(b[0]), .Y(n37) );
+  CLKINVX1 U46 ( .A(b[1]), .Y(n36) );
+  CLKINVX1 U47 ( .A(b[2]), .Y(n35) );
+  CLKINVX1 U48 ( .A(b[3]), .Y(n34) );
+  CLKINVX1 U49 ( .A(a[0]), .Y(n41) );
+  CLKINVX1 U50 ( .A(a[1]), .Y(n40) );
+  CLKINVX1 U51 ( .A(a[2]), .Y(n39) );
+  CLKINVX1 U52 ( .A(a[3]), .Y(n38) );
 endmodule
 
 
@@ -10576,29 +10512,29 @@ module vec_product_BIT_WIDTH4_VEC_SIZE64_DW_mult_tc_89 ( a, b, product );
   ADDHXL U13 ( .A(n25), .B(n28), .CO(n15), .S(n16) );
   ADDHXL U14 ( .A(n32), .B(n29), .CO(n17), .S(n18) );
   NOR2X1 U15 ( .A(n34), .B(n38), .Y(n19) );
-  OR2X1 U16 ( .A(n35), .B(n38), .Y(n20) );
-  OR2X1 U17 ( .A(n36), .B(n38), .Y(n21) );
-  OR2X1 U18 ( .A(n37), .B(n38), .Y(n22) );
   OR2X1 U19 ( .A(n34), .B(n39), .Y(n23) );
   NOR2X1 U20 ( .A(n35), .B(n39), .Y(n24) );
   NOR2X1 U21 ( .A(n36), .B(n39), .Y(n25) );
   NOR2X1 U22 ( .A(n37), .B(n39), .Y(n26) );
-  OR2X1 U23 ( .A(n34), .B(n40), .Y(n27) );
   NOR2X1 U24 ( .A(n35), .B(n40), .Y(n28) );
   NOR2X1 U25 ( .A(n36), .B(n40), .Y(n29) );
   NOR2X1 U26 ( .A(n37), .B(n40), .Y(n30) );
-  OR2X1 U27 ( .A(n34), .B(n41), .Y(n31) );
   NOR2X1 U28 ( .A(n35), .B(n41), .Y(n32) );
   NOR2X1 U29 ( .A(n36), .B(n41), .Y(n33) );
   NOR2X1 U30 ( .A(n37), .B(n41), .Y(product[0]) );
-  CLKINVX1 U41 ( .A(b[0]), .Y(n37) );
-  CLKINVX1 U42 ( .A(b[1]), .Y(n36) );
-  CLKINVX1 U43 ( .A(b[2]), .Y(n35) );
-  CLKINVX1 U44 ( .A(b[3]), .Y(n34) );
-  CLKINVX1 U45 ( .A(a[0]), .Y(n41) );
-  CLKINVX1 U46 ( .A(a[1]), .Y(n40) );
-  CLKINVX1 U47 ( .A(a[2]), .Y(n39) );
-  CLKINVX1 U48 ( .A(a[3]), .Y(n38) );
+  NAND2X1 U41 ( .A(b[3]), .B(a[1]), .Y(n27) );
+  NAND2X1 U42 ( .A(b[3]), .B(a[0]), .Y(n31) );
+  NAND2X1 U43 ( .A(b[0]), .B(a[3]), .Y(n22) );
+  NAND2X1 U44 ( .A(b[1]), .B(a[3]), .Y(n21) );
+  NAND2X1 U45 ( .A(b[2]), .B(a[3]), .Y(n20) );
+  CLKINVX1 U46 ( .A(b[0]), .Y(n37) );
+  CLKINVX1 U47 ( .A(b[1]), .Y(n36) );
+  CLKINVX1 U48 ( .A(b[2]), .Y(n35) );
+  CLKINVX1 U49 ( .A(b[3]), .Y(n34) );
+  CLKINVX1 U50 ( .A(a[0]), .Y(n41) );
+  CLKINVX1 U51 ( .A(a[1]), .Y(n40) );
+  CLKINVX1 U52 ( .A(a[2]), .Y(n39) );
+  CLKINVX1 U53 ( .A(a[3]), .Y(n38) );
 endmodule
 
 
@@ -10625,29 +10561,29 @@ module vec_product_BIT_WIDTH4_VEC_SIZE64_DW_mult_tc_90 ( a, b, product );
   ADDHXL U13 ( .A(n25), .B(n28), .CO(n15), .S(n16) );
   ADDHXL U14 ( .A(n32), .B(n29), .CO(n17), .S(n18) );
   NOR2X1 U15 ( .A(n34), .B(n38), .Y(n19) );
-  OR2X1 U16 ( .A(n35), .B(n38), .Y(n20) );
-  OR2X1 U17 ( .A(n36), .B(n38), .Y(n21) );
   OR2X1 U18 ( .A(n37), .B(n38), .Y(n22) );
   OR2X1 U19 ( .A(n34), .B(n39), .Y(n23) );
   NOR2X1 U20 ( .A(n35), .B(n39), .Y(n24) );
   NOR2X1 U21 ( .A(n36), .B(n39), .Y(n25) );
   NOR2X1 U22 ( .A(n37), .B(n39), .Y(n26) );
-  OR2X1 U23 ( .A(n34), .B(n40), .Y(n27) );
   NOR2X1 U24 ( .A(n35), .B(n40), .Y(n28) );
   NOR2X1 U25 ( .A(n36), .B(n40), .Y(n29) );
   NOR2X1 U26 ( .A(n37), .B(n40), .Y(n30) );
-  OR2X1 U27 ( .A(n34), .B(n41), .Y(n31) );
   NOR2X1 U28 ( .A(n35), .B(n41), .Y(n32) );
   NOR2X1 U29 ( .A(n36), .B(n41), .Y(n33) );
   NOR2X1 U30 ( .A(n37), .B(n41), .Y(product[0]) );
-  CLKINVX1 U41 ( .A(b[1]), .Y(n36) );
-  CLKINVX1 U42 ( .A(b[0]), .Y(n37) );
-  CLKINVX1 U43 ( .A(b[2]), .Y(n35) );
-  CLKINVX1 U44 ( .A(b[3]), .Y(n34) );
-  CLKINVX1 U45 ( .A(a[0]), .Y(n41) );
-  CLKINVX1 U46 ( .A(a[1]), .Y(n40) );
-  CLKINVX1 U47 ( .A(a[2]), .Y(n39) );
-  CLKINVX1 U48 ( .A(a[3]), .Y(n38) );
+  NAND2X1 U41 ( .A(b[3]), .B(a[1]), .Y(n27) );
+  NAND2X1 U42 ( .A(b[3]), .B(a[0]), .Y(n31) );
+  NAND2X1 U43 ( .A(b[1]), .B(a[3]), .Y(n21) );
+  NAND2X1 U44 ( .A(b[2]), .B(a[3]), .Y(n20) );
+  CLKINVX1 U45 ( .A(b[1]), .Y(n36) );
+  CLKINVX1 U46 ( .A(b[0]), .Y(n37) );
+  CLKINVX1 U47 ( .A(b[2]), .Y(n35) );
+  CLKINVX1 U48 ( .A(b[3]), .Y(n34) );
+  CLKINVX1 U49 ( .A(a[0]), .Y(n41) );
+  CLKINVX1 U50 ( .A(a[1]), .Y(n40) );
+  CLKINVX1 U51 ( .A(a[2]), .Y(n39) );
+  CLKINVX1 U52 ( .A(a[3]), .Y(n38) );
 endmodule
 
 
@@ -10674,29 +10610,29 @@ module vec_product_BIT_WIDTH4_VEC_SIZE64_DW_mult_tc_91 ( a, b, product );
   ADDHXL U13 ( .A(n25), .B(n28), .CO(n15), .S(n16) );
   ADDHXL U14 ( .A(n32), .B(n29), .CO(n17), .S(n18) );
   NOR2X1 U15 ( .A(n34), .B(n38), .Y(n19) );
-  OR2X1 U16 ( .A(n35), .B(n38), .Y(n20) );
-  OR2X1 U17 ( .A(n36), .B(n38), .Y(n21) );
-  OR2X1 U18 ( .A(n37), .B(n38), .Y(n22) );
   OR2X1 U19 ( .A(n34), .B(n39), .Y(n23) );
   NOR2X1 U20 ( .A(n35), .B(n39), .Y(n24) );
   NOR2X1 U21 ( .A(n36), .B(n39), .Y(n25) );
   NOR2X1 U22 ( .A(n37), .B(n39), .Y(n26) );
-  OR2X1 U23 ( .A(n34), .B(n40), .Y(n27) );
   NOR2X1 U24 ( .A(n35), .B(n40), .Y(n28) );
   NOR2X1 U25 ( .A(n36), .B(n40), .Y(n29) );
   NOR2X1 U26 ( .A(n37), .B(n40), .Y(n30) );
-  OR2X1 U27 ( .A(n34), .B(n41), .Y(n31) );
   NOR2X1 U28 ( .A(n35), .B(n41), .Y(n32) );
   NOR2X1 U29 ( .A(n36), .B(n41), .Y(n33) );
   NOR2X1 U30 ( .A(n37), .B(n41), .Y(product[0]) );
-  CLKINVX1 U41 ( .A(b[1]), .Y(n36) );
-  CLKINVX1 U42 ( .A(b[0]), .Y(n37) );
-  CLKINVX1 U43 ( .A(b[2]), .Y(n35) );
-  CLKINVX1 U44 ( .A(b[3]), .Y(n34) );
-  CLKINVX1 U45 ( .A(a[0]), .Y(n41) );
-  CLKINVX1 U46 ( .A(a[1]), .Y(n40) );
-  CLKINVX1 U47 ( .A(a[2]), .Y(n39) );
-  CLKINVX1 U48 ( .A(a[3]), .Y(n38) );
+  NAND2X1 U41 ( .A(b[3]), .B(a[1]), .Y(n27) );
+  NAND2X1 U42 ( .A(b[3]), .B(a[0]), .Y(n31) );
+  NAND2X1 U43 ( .A(b[0]), .B(a[3]), .Y(n22) );
+  NAND2X1 U44 ( .A(b[2]), .B(a[3]), .Y(n20) );
+  NAND2X1 U45 ( .A(b[1]), .B(a[3]), .Y(n21) );
+  CLKINVX1 U46 ( .A(b[1]), .Y(n36) );
+  CLKINVX1 U47 ( .A(b[0]), .Y(n37) );
+  CLKINVX1 U48 ( .A(b[2]), .Y(n35) );
+  CLKINVX1 U49 ( .A(b[3]), .Y(n34) );
+  CLKINVX1 U50 ( .A(a[0]), .Y(n41) );
+  CLKINVX1 U51 ( .A(a[1]), .Y(n40) );
+  CLKINVX1 U52 ( .A(a[2]), .Y(n39) );
+  CLKINVX1 U53 ( .A(a[3]), .Y(n38) );
 endmodule
 
 
@@ -10723,29 +10659,29 @@ module vec_product_BIT_WIDTH4_VEC_SIZE64_DW_mult_tc_92 ( a, b, product );
   ADDHXL U13 ( .A(n25), .B(n28), .CO(n15), .S(n16) );
   ADDHXL U14 ( .A(n32), .B(n29), .CO(n17), .S(n18) );
   NOR2X1 U15 ( .A(n34), .B(n38), .Y(n19) );
-  OR2X1 U16 ( .A(n35), .B(n38), .Y(n20) );
-  OR2X1 U17 ( .A(n36), .B(n38), .Y(n21) );
   OR2X1 U18 ( .A(n37), .B(n38), .Y(n22) );
   OR2X1 U19 ( .A(n34), .B(n39), .Y(n23) );
   NOR2X1 U20 ( .A(n35), .B(n39), .Y(n24) );
   NOR2X1 U21 ( .A(n36), .B(n39), .Y(n25) );
   NOR2X1 U22 ( .A(n37), .B(n39), .Y(n26) );
-  OR2X1 U23 ( .A(n34), .B(n40), .Y(n27) );
   NOR2X1 U24 ( .A(n35), .B(n40), .Y(n28) );
   NOR2X1 U25 ( .A(n36), .B(n40), .Y(n29) );
   NOR2X1 U26 ( .A(n37), .B(n40), .Y(n30) );
-  OR2X1 U27 ( .A(n34), .B(n41), .Y(n31) );
   NOR2X1 U28 ( .A(n35), .B(n41), .Y(n32) );
   NOR2X1 U29 ( .A(n36), .B(n41), .Y(n33) );
   NOR2X1 U30 ( .A(n37), .B(n41), .Y(product[0]) );
-  CLKINVX1 U41 ( .A(b[0]), .Y(n37) );
-  CLKINVX1 U42 ( .A(b[1]), .Y(n36) );
-  CLKINVX1 U43 ( .A(b[2]), .Y(n35) );
-  CLKINVX1 U44 ( .A(b[3]), .Y(n34) );
-  CLKINVX1 U45 ( .A(a[0]), .Y(n41) );
-  CLKINVX1 U46 ( .A(a[1]), .Y(n40) );
-  CLKINVX1 U47 ( .A(a[2]), .Y(n39) );
-  CLKINVX1 U48 ( .A(a[3]), .Y(n38) );
+  NAND2X1 U41 ( .A(b[3]), .B(a[1]), .Y(n27) );
+  NAND2X1 U42 ( .A(b[3]), .B(a[0]), .Y(n31) );
+  NAND2X1 U43 ( .A(b[1]), .B(a[3]), .Y(n21) );
+  NAND2X1 U44 ( .A(b[2]), .B(a[3]), .Y(n20) );
+  CLKINVX1 U45 ( .A(b[0]), .Y(n37) );
+  CLKINVX1 U46 ( .A(b[1]), .Y(n36) );
+  CLKINVX1 U47 ( .A(b[2]), .Y(n35) );
+  CLKINVX1 U48 ( .A(b[3]), .Y(n34) );
+  CLKINVX1 U49 ( .A(a[0]), .Y(n41) );
+  CLKINVX1 U50 ( .A(a[1]), .Y(n40) );
+  CLKINVX1 U51 ( .A(a[2]), .Y(n39) );
+  CLKINVX1 U52 ( .A(a[3]), .Y(n38) );
 endmodule
 
 
@@ -10772,29 +10708,29 @@ module vec_product_BIT_WIDTH4_VEC_SIZE64_DW_mult_tc_93 ( a, b, product );
   ADDHXL U13 ( .A(n25), .B(n28), .CO(n15), .S(n16) );
   ADDHXL U14 ( .A(n32), .B(n29), .CO(n17), .S(n18) );
   NOR2X1 U15 ( .A(n34), .B(n38), .Y(n19) );
-  OR2X1 U16 ( .A(n35), .B(n38), .Y(n20) );
-  OR2X1 U17 ( .A(n36), .B(n38), .Y(n21) );
-  OR2X1 U18 ( .A(n37), .B(n38), .Y(n22) );
   OR2X1 U19 ( .A(n34), .B(n39), .Y(n23) );
   NOR2X1 U20 ( .A(n35), .B(n39), .Y(n24) );
   NOR2X1 U21 ( .A(n36), .B(n39), .Y(n25) );
   NOR2X1 U22 ( .A(n37), .B(n39), .Y(n26) );
-  OR2X1 U23 ( .A(n34), .B(n40), .Y(n27) );
   NOR2X1 U24 ( .A(n35), .B(n40), .Y(n28) );
   NOR2X1 U25 ( .A(n36), .B(n40), .Y(n29) );
   NOR2X1 U26 ( .A(n37), .B(n40), .Y(n30) );
-  OR2X1 U27 ( .A(n34), .B(n41), .Y(n31) );
   NOR2X1 U28 ( .A(n35), .B(n41), .Y(n32) );
   NOR2X1 U29 ( .A(n36), .B(n41), .Y(n33) );
   NOR2X1 U30 ( .A(n37), .B(n41), .Y(product[0]) );
-  CLKINVX1 U41 ( .A(b[0]), .Y(n37) );
-  CLKINVX1 U42 ( .A(b[1]), .Y(n36) );
-  CLKINVX1 U43 ( .A(b[2]), .Y(n35) );
-  CLKINVX1 U44 ( .A(b[3]), .Y(n34) );
-  CLKINVX1 U45 ( .A(a[0]), .Y(n41) );
-  CLKINVX1 U46 ( .A(a[1]), .Y(n40) );
-  CLKINVX1 U47 ( .A(a[2]), .Y(n39) );
-  CLKINVX1 U48 ( .A(a[3]), .Y(n38) );
+  NAND2X1 U41 ( .A(b[3]), .B(a[1]), .Y(n27) );
+  NAND2X1 U42 ( .A(b[3]), .B(a[0]), .Y(n31) );
+  NAND2X1 U43 ( .A(b[0]), .B(a[3]), .Y(n22) );
+  NAND2X1 U44 ( .A(b[1]), .B(a[3]), .Y(n21) );
+  NAND2X1 U45 ( .A(b[2]), .B(a[3]), .Y(n20) );
+  CLKINVX1 U46 ( .A(b[0]), .Y(n37) );
+  CLKINVX1 U47 ( .A(b[1]), .Y(n36) );
+  CLKINVX1 U48 ( .A(b[2]), .Y(n35) );
+  CLKINVX1 U49 ( .A(b[3]), .Y(n34) );
+  CLKINVX1 U50 ( .A(a[0]), .Y(n41) );
+  CLKINVX1 U51 ( .A(a[1]), .Y(n40) );
+  CLKINVX1 U52 ( .A(a[2]), .Y(n39) );
+  CLKINVX1 U53 ( .A(a[3]), .Y(n38) );
 endmodule
 
 
@@ -10821,29 +10757,29 @@ module vec_product_BIT_WIDTH4_VEC_SIZE64_DW_mult_tc_94 ( a, b, product );
   ADDHXL U13 ( .A(n25), .B(n28), .CO(n15), .S(n16) );
   ADDHXL U14 ( .A(n32), .B(n29), .CO(n17), .S(n18) );
   NOR2X1 U15 ( .A(n34), .B(n38), .Y(n19) );
-  OR2X1 U16 ( .A(n35), .B(n38), .Y(n20) );
-  OR2X1 U17 ( .A(n36), .B(n38), .Y(n21) );
   OR2X1 U18 ( .A(n37), .B(n38), .Y(n22) );
   OR2X1 U19 ( .A(n34), .B(n39), .Y(n23) );
   NOR2X1 U20 ( .A(n35), .B(n39), .Y(n24) );
   NOR2X1 U21 ( .A(n36), .B(n39), .Y(n25) );
   NOR2X1 U22 ( .A(n37), .B(n39), .Y(n26) );
-  OR2X1 U23 ( .A(n34), .B(n40), .Y(n27) );
   NOR2X1 U24 ( .A(n35), .B(n40), .Y(n28) );
   NOR2X1 U25 ( .A(n36), .B(n40), .Y(n29) );
   NOR2X1 U26 ( .A(n37), .B(n40), .Y(n30) );
-  OR2X1 U27 ( .A(n34), .B(n41), .Y(n31) );
   NOR2X1 U28 ( .A(n35), .B(n41), .Y(n32) );
   NOR2X1 U29 ( .A(n36), .B(n41), .Y(n33) );
   NOR2X1 U30 ( .A(n37), .B(n41), .Y(product[0]) );
-  CLKINVX1 U41 ( .A(b[0]), .Y(n37) );
-  CLKINVX1 U42 ( .A(b[1]), .Y(n36) );
-  CLKINVX1 U43 ( .A(b[2]), .Y(n35) );
-  CLKINVX1 U44 ( .A(b[3]), .Y(n34) );
-  CLKINVX1 U45 ( .A(a[0]), .Y(n41) );
-  CLKINVX1 U46 ( .A(a[1]), .Y(n40) );
-  CLKINVX1 U47 ( .A(a[2]), .Y(n39) );
-  CLKINVX1 U48 ( .A(a[3]), .Y(n38) );
+  NAND2X1 U41 ( .A(b[3]), .B(a[1]), .Y(n27) );
+  NAND2X1 U42 ( .A(b[3]), .B(a[0]), .Y(n31) );
+  NAND2X1 U43 ( .A(b[1]), .B(a[3]), .Y(n21) );
+  NAND2X1 U44 ( .A(b[2]), .B(a[3]), .Y(n20) );
+  CLKINVX1 U45 ( .A(b[0]), .Y(n37) );
+  CLKINVX1 U46 ( .A(b[1]), .Y(n36) );
+  CLKINVX1 U47 ( .A(b[2]), .Y(n35) );
+  CLKINVX1 U48 ( .A(b[3]), .Y(n34) );
+  CLKINVX1 U49 ( .A(a[0]), .Y(n41) );
+  CLKINVX1 U50 ( .A(a[1]), .Y(n40) );
+  CLKINVX1 U51 ( .A(a[2]), .Y(n39) );
+  CLKINVX1 U52 ( .A(a[3]), .Y(n38) );
 endmodule
 
 
@@ -10870,29 +10806,29 @@ module vec_product_BIT_WIDTH4_VEC_SIZE64_DW_mult_tc_95 ( a, b, product );
   ADDHXL U13 ( .A(n25), .B(n28), .CO(n15), .S(n16) );
   ADDHXL U14 ( .A(n32), .B(n29), .CO(n17), .S(n18) );
   NOR2X1 U15 ( .A(n34), .B(n38), .Y(n19) );
-  OR2X1 U16 ( .A(n35), .B(n38), .Y(n20) );
-  OR2X1 U17 ( .A(n36), .B(n38), .Y(n21) );
-  OR2X1 U18 ( .A(n37), .B(n38), .Y(n22) );
   OR2X1 U19 ( .A(n34), .B(n39), .Y(n23) );
   NOR2X1 U20 ( .A(n35), .B(n39), .Y(n24) );
   NOR2X1 U21 ( .A(n36), .B(n39), .Y(n25) );
   NOR2X1 U22 ( .A(n37), .B(n39), .Y(n26) );
-  OR2X1 U23 ( .A(n34), .B(n40), .Y(n27) );
   NOR2X1 U24 ( .A(n35), .B(n40), .Y(n28) );
   NOR2X1 U25 ( .A(n36), .B(n40), .Y(n29) );
   NOR2X1 U26 ( .A(n37), .B(n40), .Y(n30) );
-  OR2X1 U27 ( .A(n34), .B(n41), .Y(n31) );
   NOR2X1 U28 ( .A(n35), .B(n41), .Y(n32) );
   NOR2X1 U29 ( .A(n36), .B(n41), .Y(n33) );
   NOR2X1 U30 ( .A(n37), .B(n41), .Y(product[0]) );
-  CLKINVX1 U41 ( .A(b[0]), .Y(n37) );
-  CLKINVX1 U42 ( .A(b[1]), .Y(n36) );
-  CLKINVX1 U43 ( .A(b[2]), .Y(n35) );
-  CLKINVX1 U44 ( .A(b[3]), .Y(n34) );
-  CLKINVX1 U45 ( .A(a[0]), .Y(n41) );
-  CLKINVX1 U46 ( .A(a[1]), .Y(n40) );
-  CLKINVX1 U47 ( .A(a[2]), .Y(n39) );
-  CLKINVX1 U48 ( .A(a[3]), .Y(n38) );
+  NAND2X1 U41 ( .A(b[3]), .B(a[1]), .Y(n27) );
+  NAND2X1 U42 ( .A(b[3]), .B(a[0]), .Y(n31) );
+  NAND2X1 U43 ( .A(b[0]), .B(a[3]), .Y(n22) );
+  NAND2X1 U44 ( .A(b[1]), .B(a[3]), .Y(n21) );
+  NAND2X1 U45 ( .A(b[2]), .B(a[3]), .Y(n20) );
+  CLKINVX1 U46 ( .A(b[0]), .Y(n37) );
+  CLKINVX1 U47 ( .A(b[1]), .Y(n36) );
+  CLKINVX1 U48 ( .A(b[2]), .Y(n35) );
+  CLKINVX1 U49 ( .A(b[3]), .Y(n34) );
+  CLKINVX1 U50 ( .A(a[0]), .Y(n41) );
+  CLKINVX1 U51 ( .A(a[1]), .Y(n40) );
+  CLKINVX1 U52 ( .A(a[2]), .Y(n39) );
+  CLKINVX1 U53 ( .A(a[3]), .Y(n38) );
 endmodule
 
 
@@ -10919,29 +10855,29 @@ module vec_product_BIT_WIDTH4_VEC_SIZE64_DW_mult_tc_96 ( a, b, product );
   ADDHXL U13 ( .A(n25), .B(n28), .CO(n15), .S(n16) );
   ADDHXL U14 ( .A(n32), .B(n29), .CO(n17), .S(n18) );
   NOR2X1 U15 ( .A(n34), .B(n38), .Y(n19) );
-  OR2X1 U16 ( .A(n35), .B(n38), .Y(n20) );
-  OR2X1 U17 ( .A(n36), .B(n38), .Y(n21) );
   OR2X1 U18 ( .A(n37), .B(n38), .Y(n22) );
   OR2X1 U19 ( .A(n34), .B(n39), .Y(n23) );
   NOR2X1 U20 ( .A(n35), .B(n39), .Y(n24) );
   NOR2X1 U21 ( .A(n36), .B(n39), .Y(n25) );
   NOR2X1 U22 ( .A(n37), .B(n39), .Y(n26) );
-  OR2X1 U23 ( .A(n34), .B(n40), .Y(n27) );
   NOR2X1 U24 ( .A(n35), .B(n40), .Y(n28) );
   NOR2X1 U25 ( .A(n36), .B(n40), .Y(n29) );
   NOR2X1 U26 ( .A(n37), .B(n40), .Y(n30) );
-  OR2X1 U27 ( .A(n34), .B(n41), .Y(n31) );
   NOR2X1 U28 ( .A(n35), .B(n41), .Y(n32) );
   NOR2X1 U29 ( .A(n36), .B(n41), .Y(n33) );
   NOR2X1 U30 ( .A(n37), .B(n41), .Y(product[0]) );
-  CLKINVX1 U41 ( .A(b[0]), .Y(n37) );
-  CLKINVX1 U42 ( .A(b[1]), .Y(n36) );
-  CLKINVX1 U43 ( .A(b[2]), .Y(n35) );
-  CLKINVX1 U44 ( .A(b[3]), .Y(n34) );
-  CLKINVX1 U45 ( .A(a[0]), .Y(n41) );
-  CLKINVX1 U46 ( .A(a[1]), .Y(n40) );
-  CLKINVX1 U47 ( .A(a[2]), .Y(n39) );
-  CLKINVX1 U48 ( .A(a[3]), .Y(n38) );
+  NAND2X1 U41 ( .A(b[3]), .B(a[1]), .Y(n27) );
+  NAND2X1 U42 ( .A(b[3]), .B(a[0]), .Y(n31) );
+  NAND2X1 U43 ( .A(b[1]), .B(a[3]), .Y(n21) );
+  NAND2X1 U44 ( .A(b[2]), .B(a[3]), .Y(n20) );
+  CLKINVX1 U45 ( .A(b[0]), .Y(n37) );
+  CLKINVX1 U46 ( .A(b[1]), .Y(n36) );
+  CLKINVX1 U47 ( .A(b[2]), .Y(n35) );
+  CLKINVX1 U48 ( .A(b[3]), .Y(n34) );
+  CLKINVX1 U49 ( .A(a[0]), .Y(n41) );
+  CLKINVX1 U50 ( .A(a[1]), .Y(n40) );
+  CLKINVX1 U51 ( .A(a[2]), .Y(n39) );
+  CLKINVX1 U52 ( .A(a[3]), .Y(n38) );
 endmodule
 
 
@@ -10968,29 +10904,29 @@ module vec_product_BIT_WIDTH4_VEC_SIZE64_DW_mult_tc_97 ( a, b, product );
   ADDHXL U13 ( .A(n25), .B(n28), .CO(n15), .S(n16) );
   ADDHXL U14 ( .A(n32), .B(n29), .CO(n17), .S(n18) );
   NOR2X1 U15 ( .A(n34), .B(n38), .Y(n19) );
-  OR2X1 U16 ( .A(n35), .B(n38), .Y(n20) );
-  OR2X1 U17 ( .A(n36), .B(n38), .Y(n21) );
-  OR2X1 U18 ( .A(n37), .B(n38), .Y(n22) );
   OR2X1 U19 ( .A(n34), .B(n39), .Y(n23) );
   NOR2X1 U20 ( .A(n35), .B(n39), .Y(n24) );
   NOR2X1 U21 ( .A(n36), .B(n39), .Y(n25) );
   NOR2X1 U22 ( .A(n37), .B(n39), .Y(n26) );
-  OR2X1 U23 ( .A(n34), .B(n40), .Y(n27) );
   NOR2X1 U24 ( .A(n35), .B(n40), .Y(n28) );
   NOR2X1 U25 ( .A(n36), .B(n40), .Y(n29) );
   NOR2X1 U26 ( .A(n37), .B(n40), .Y(n30) );
-  OR2X1 U27 ( .A(n34), .B(n41), .Y(n31) );
   NOR2X1 U28 ( .A(n35), .B(n41), .Y(n32) );
   NOR2X1 U29 ( .A(n36), .B(n41), .Y(n33) );
   NOR2X1 U30 ( .A(n37), .B(n41), .Y(product[0]) );
-  CLKINVX1 U41 ( .A(b[0]), .Y(n37) );
-  CLKINVX1 U42 ( .A(b[1]), .Y(n36) );
-  CLKINVX1 U43 ( .A(b[2]), .Y(n35) );
-  CLKINVX1 U44 ( .A(b[3]), .Y(n34) );
-  CLKINVX1 U45 ( .A(a[0]), .Y(n41) );
-  CLKINVX1 U46 ( .A(a[1]), .Y(n40) );
-  CLKINVX1 U47 ( .A(a[2]), .Y(n39) );
-  CLKINVX1 U48 ( .A(a[3]), .Y(n38) );
+  NAND2X1 U41 ( .A(b[3]), .B(a[0]), .Y(n31) );
+  NAND2X1 U42 ( .A(b[3]), .B(a[1]), .Y(n27) );
+  NAND2X1 U43 ( .A(b[0]), .B(a[3]), .Y(n22) );
+  NAND2X1 U44 ( .A(b[1]), .B(a[3]), .Y(n21) );
+  NAND2X1 U45 ( .A(b[2]), .B(a[3]), .Y(n20) );
+  CLKINVX1 U46 ( .A(b[0]), .Y(n37) );
+  CLKINVX1 U47 ( .A(b[1]), .Y(n36) );
+  CLKINVX1 U48 ( .A(b[2]), .Y(n35) );
+  CLKINVX1 U49 ( .A(b[3]), .Y(n34) );
+  CLKINVX1 U50 ( .A(a[0]), .Y(n41) );
+  CLKINVX1 U51 ( .A(a[1]), .Y(n40) );
+  CLKINVX1 U52 ( .A(a[2]), .Y(n39) );
+  CLKINVX1 U53 ( .A(a[3]), .Y(n38) );
 endmodule
 
 
@@ -11017,29 +10953,29 @@ module vec_product_BIT_WIDTH4_VEC_SIZE64_DW_mult_tc_98 ( a, b, product );
   ADDHXL U13 ( .A(n25), .B(n28), .CO(n15), .S(n16) );
   ADDHXL U14 ( .A(n32), .B(n29), .CO(n17), .S(n18) );
   NOR2X1 U15 ( .A(n34), .B(n38), .Y(n19) );
-  OR2X1 U16 ( .A(n35), .B(n38), .Y(n20) );
-  OR2X1 U17 ( .A(n36), .B(n38), .Y(n21) );
   OR2X1 U18 ( .A(n37), .B(n38), .Y(n22) );
   OR2X1 U19 ( .A(n34), .B(n39), .Y(n23) );
   NOR2X1 U20 ( .A(n35), .B(n39), .Y(n24) );
   NOR2X1 U21 ( .A(n36), .B(n39), .Y(n25) );
   NOR2X1 U22 ( .A(n37), .B(n39), .Y(n26) );
-  OR2X1 U23 ( .A(n34), .B(n40), .Y(n27) );
   NOR2X1 U24 ( .A(n35), .B(n40), .Y(n28) );
   NOR2X1 U25 ( .A(n36), .B(n40), .Y(n29) );
   NOR2X1 U26 ( .A(n37), .B(n40), .Y(n30) );
-  OR2X1 U27 ( .A(n34), .B(n41), .Y(n31) );
   NOR2X1 U28 ( .A(n35), .B(n41), .Y(n32) );
   NOR2X1 U29 ( .A(n36), .B(n41), .Y(n33) );
   NOR2X1 U30 ( .A(n37), .B(n41), .Y(product[0]) );
-  CLKINVX1 U41 ( .A(b[1]), .Y(n36) );
-  CLKINVX1 U42 ( .A(b[0]), .Y(n37) );
-  CLKINVX1 U43 ( .A(b[2]), .Y(n35) );
-  CLKINVX1 U44 ( .A(b[3]), .Y(n34) );
-  CLKINVX1 U45 ( .A(a[0]), .Y(n41) );
-  CLKINVX1 U46 ( .A(a[1]), .Y(n40) );
-  CLKINVX1 U47 ( .A(a[2]), .Y(n39) );
-  CLKINVX1 U48 ( .A(a[3]), .Y(n38) );
+  NAND2X1 U41 ( .A(b[3]), .B(a[1]), .Y(n27) );
+  NAND2X1 U42 ( .A(b[3]), .B(a[0]), .Y(n31) );
+  NAND2X1 U43 ( .A(b[1]), .B(a[3]), .Y(n21) );
+  NAND2X1 U44 ( .A(b[2]), .B(a[3]), .Y(n20) );
+  CLKINVX1 U45 ( .A(b[1]), .Y(n36) );
+  CLKINVX1 U46 ( .A(b[0]), .Y(n37) );
+  CLKINVX1 U47 ( .A(b[2]), .Y(n35) );
+  CLKINVX1 U48 ( .A(b[3]), .Y(n34) );
+  CLKINVX1 U49 ( .A(a[0]), .Y(n41) );
+  CLKINVX1 U50 ( .A(a[1]), .Y(n40) );
+  CLKINVX1 U51 ( .A(a[2]), .Y(n39) );
+  CLKINVX1 U52 ( .A(a[3]), .Y(n38) );
 endmodule
 
 
@@ -11066,29 +11002,29 @@ module vec_product_BIT_WIDTH4_VEC_SIZE64_DW_mult_tc_99 ( a, b, product );
   ADDHXL U13 ( .A(n25), .B(n28), .CO(n15), .S(n16) );
   ADDHXL U14 ( .A(n32), .B(n29), .CO(n17), .S(n18) );
   NOR2X1 U15 ( .A(n34), .B(n38), .Y(n19) );
-  OR2X1 U16 ( .A(n35), .B(n38), .Y(n20) );
-  OR2X1 U17 ( .A(n36), .B(n38), .Y(n21) );
-  OR2X1 U18 ( .A(n37), .B(n38), .Y(n22) );
   OR2X1 U19 ( .A(n34), .B(n39), .Y(n23) );
   NOR2X1 U20 ( .A(n35), .B(n39), .Y(n24) );
   NOR2X1 U21 ( .A(n36), .B(n39), .Y(n25) );
   NOR2X1 U22 ( .A(n37), .B(n39), .Y(n26) );
-  OR2X1 U23 ( .A(n34), .B(n40), .Y(n27) );
   NOR2X1 U24 ( .A(n35), .B(n40), .Y(n28) );
   NOR2X1 U25 ( .A(n36), .B(n40), .Y(n29) );
   NOR2X1 U26 ( .A(n37), .B(n40), .Y(n30) );
-  OR2X1 U27 ( .A(n34), .B(n41), .Y(n31) );
   NOR2X1 U28 ( .A(n35), .B(n41), .Y(n32) );
   NOR2X1 U29 ( .A(n36), .B(n41), .Y(n33) );
   NOR2X1 U30 ( .A(n37), .B(n41), .Y(product[0]) );
-  CLKINVX1 U41 ( .A(b[1]), .Y(n36) );
-  CLKINVX1 U42 ( .A(b[0]), .Y(n37) );
-  CLKINVX1 U43 ( .A(b[2]), .Y(n35) );
-  CLKINVX1 U44 ( .A(b[3]), .Y(n34) );
-  CLKINVX1 U45 ( .A(a[0]), .Y(n41) );
-  CLKINVX1 U46 ( .A(a[1]), .Y(n40) );
-  CLKINVX1 U47 ( .A(a[2]), .Y(n39) );
-  CLKINVX1 U48 ( .A(a[3]), .Y(n38) );
+  NAND2X1 U41 ( .A(b[3]), .B(a[1]), .Y(n27) );
+  NAND2X1 U42 ( .A(b[3]), .B(a[0]), .Y(n31) );
+  NAND2X1 U43 ( .A(b[0]), .B(a[3]), .Y(n22) );
+  NAND2X1 U44 ( .A(b[1]), .B(a[3]), .Y(n21) );
+  NAND2X1 U45 ( .A(b[2]), .B(a[3]), .Y(n20) );
+  CLKINVX1 U46 ( .A(b[1]), .Y(n36) );
+  CLKINVX1 U47 ( .A(b[0]), .Y(n37) );
+  CLKINVX1 U48 ( .A(b[2]), .Y(n35) );
+  CLKINVX1 U49 ( .A(b[3]), .Y(n34) );
+  CLKINVX1 U50 ( .A(a[0]), .Y(n41) );
+  CLKINVX1 U51 ( .A(a[1]), .Y(n40) );
+  CLKINVX1 U52 ( .A(a[2]), .Y(n39) );
+  CLKINVX1 U53 ( .A(a[3]), .Y(n38) );
 endmodule
 
 
@@ -11115,29 +11051,29 @@ module vec_product_BIT_WIDTH4_VEC_SIZE64_DW_mult_tc_100 ( a, b, product );
   ADDHXL U13 ( .A(n25), .B(n28), .CO(n15), .S(n16) );
   ADDHXL U14 ( .A(n32), .B(n29), .CO(n17), .S(n18) );
   NOR2X1 U15 ( .A(n34), .B(n38), .Y(n19) );
-  OR2X1 U16 ( .A(n35), .B(n38), .Y(n20) );
-  OR2X1 U17 ( .A(n36), .B(n38), .Y(n21) );
   OR2X1 U18 ( .A(n37), .B(n38), .Y(n22) );
   OR2X1 U19 ( .A(n34), .B(n39), .Y(n23) );
   NOR2X1 U20 ( .A(n35), .B(n39), .Y(n24) );
   NOR2X1 U21 ( .A(n36), .B(n39), .Y(n25) );
   NOR2X1 U22 ( .A(n37), .B(n39), .Y(n26) );
-  OR2X1 U23 ( .A(n34), .B(n40), .Y(n27) );
   NOR2X1 U24 ( .A(n35), .B(n40), .Y(n28) );
   NOR2X1 U25 ( .A(n36), .B(n40), .Y(n29) );
   NOR2X1 U26 ( .A(n37), .B(n40), .Y(n30) );
-  OR2X1 U27 ( .A(n34), .B(n41), .Y(n31) );
   NOR2X1 U28 ( .A(n35), .B(n41), .Y(n32) );
   NOR2X1 U29 ( .A(n36), .B(n41), .Y(n33) );
   NOR2X1 U30 ( .A(n37), .B(n41), .Y(product[0]) );
-  CLKINVX1 U41 ( .A(b[0]), .Y(n37) );
-  CLKINVX1 U42 ( .A(b[1]), .Y(n36) );
-  CLKINVX1 U43 ( .A(b[2]), .Y(n35) );
-  CLKINVX1 U44 ( .A(b[3]), .Y(n34) );
-  CLKINVX1 U45 ( .A(a[0]), .Y(n41) );
-  CLKINVX1 U46 ( .A(a[1]), .Y(n40) );
-  CLKINVX1 U47 ( .A(a[2]), .Y(n39) );
-  CLKINVX1 U48 ( .A(a[3]), .Y(n38) );
+  NAND2X1 U41 ( .A(b[3]), .B(a[1]), .Y(n27) );
+  NAND2X1 U42 ( .A(b[3]), .B(a[0]), .Y(n31) );
+  NAND2X1 U43 ( .A(b[1]), .B(a[3]), .Y(n21) );
+  NAND2X1 U44 ( .A(b[2]), .B(a[3]), .Y(n20) );
+  CLKINVX1 U45 ( .A(b[0]), .Y(n37) );
+  CLKINVX1 U46 ( .A(b[1]), .Y(n36) );
+  CLKINVX1 U47 ( .A(b[2]), .Y(n35) );
+  CLKINVX1 U48 ( .A(b[3]), .Y(n34) );
+  CLKINVX1 U49 ( .A(a[0]), .Y(n41) );
+  CLKINVX1 U50 ( .A(a[1]), .Y(n40) );
+  CLKINVX1 U51 ( .A(a[2]), .Y(n39) );
+  CLKINVX1 U52 ( .A(a[3]), .Y(n38) );
 endmodule
 
 
@@ -11164,29 +11100,29 @@ module vec_product_BIT_WIDTH4_VEC_SIZE64_DW_mult_tc_101 ( a, b, product );
   ADDHXL U13 ( .A(n25), .B(n28), .CO(n15), .S(n16) );
   ADDHXL U14 ( .A(n32), .B(n29), .CO(n17), .S(n18) );
   NOR2X1 U15 ( .A(n34), .B(n38), .Y(n19) );
-  OR2X1 U16 ( .A(n35), .B(n38), .Y(n20) );
-  OR2X1 U17 ( .A(n36), .B(n38), .Y(n21) );
-  OR2X1 U18 ( .A(n37), .B(n38), .Y(n22) );
   OR2X1 U19 ( .A(n34), .B(n39), .Y(n23) );
   NOR2X1 U20 ( .A(n35), .B(n39), .Y(n24) );
   NOR2X1 U21 ( .A(n36), .B(n39), .Y(n25) );
   NOR2X1 U22 ( .A(n37), .B(n39), .Y(n26) );
-  OR2X1 U23 ( .A(n34), .B(n40), .Y(n27) );
   NOR2X1 U24 ( .A(n35), .B(n40), .Y(n28) );
   NOR2X1 U25 ( .A(n36), .B(n40), .Y(n29) );
   NOR2X1 U26 ( .A(n37), .B(n40), .Y(n30) );
-  OR2X1 U27 ( .A(n34), .B(n41), .Y(n31) );
   NOR2X1 U28 ( .A(n35), .B(n41), .Y(n32) );
   NOR2X1 U29 ( .A(n36), .B(n41), .Y(n33) );
   NOR2X1 U30 ( .A(n37), .B(n41), .Y(product[0]) );
-  CLKINVX1 U41 ( .A(b[0]), .Y(n37) );
-  CLKINVX1 U42 ( .A(b[1]), .Y(n36) );
-  CLKINVX1 U43 ( .A(b[2]), .Y(n35) );
-  CLKINVX1 U44 ( .A(b[3]), .Y(n34) );
-  CLKINVX1 U45 ( .A(a[0]), .Y(n41) );
-  CLKINVX1 U46 ( .A(a[1]), .Y(n40) );
-  CLKINVX1 U47 ( .A(a[2]), .Y(n39) );
-  CLKINVX1 U48 ( .A(a[3]), .Y(n38) );
+  NAND2X1 U41 ( .A(b[3]), .B(a[1]), .Y(n27) );
+  NAND2X1 U42 ( .A(b[3]), .B(a[0]), .Y(n31) );
+  NAND2X1 U43 ( .A(b[0]), .B(a[3]), .Y(n22) );
+  NAND2X1 U44 ( .A(b[1]), .B(a[3]), .Y(n21) );
+  NAND2X1 U45 ( .A(b[2]), .B(a[3]), .Y(n20) );
+  CLKINVX1 U46 ( .A(b[0]), .Y(n37) );
+  CLKINVX1 U47 ( .A(b[1]), .Y(n36) );
+  CLKINVX1 U48 ( .A(b[2]), .Y(n35) );
+  CLKINVX1 U49 ( .A(b[3]), .Y(n34) );
+  CLKINVX1 U50 ( .A(a[0]), .Y(n41) );
+  CLKINVX1 U51 ( .A(a[1]), .Y(n40) );
+  CLKINVX1 U52 ( .A(a[2]), .Y(n39) );
+  CLKINVX1 U53 ( .A(a[3]), .Y(n38) );
 endmodule
 
 
@@ -11213,29 +11149,29 @@ module vec_product_BIT_WIDTH4_VEC_SIZE64_DW_mult_tc_102 ( a, b, product );
   ADDHXL U13 ( .A(n25), .B(n28), .CO(n15), .S(n16) );
   ADDHXL U14 ( .A(n32), .B(n29), .CO(n17), .S(n18) );
   NOR2X1 U15 ( .A(n34), .B(n38), .Y(n19) );
-  OR2X1 U16 ( .A(n35), .B(n38), .Y(n20) );
-  OR2X1 U17 ( .A(n36), .B(n38), .Y(n21) );
   OR2X1 U18 ( .A(n37), .B(n38), .Y(n22) );
   OR2X1 U19 ( .A(n34), .B(n39), .Y(n23) );
   NOR2X1 U20 ( .A(n35), .B(n39), .Y(n24) );
   NOR2X1 U21 ( .A(n36), .B(n39), .Y(n25) );
   NOR2X1 U22 ( .A(n37), .B(n39), .Y(n26) );
-  OR2X1 U23 ( .A(n34), .B(n40), .Y(n27) );
   NOR2X1 U24 ( .A(n35), .B(n40), .Y(n28) );
   NOR2X1 U25 ( .A(n36), .B(n40), .Y(n29) );
   NOR2X1 U26 ( .A(n37), .B(n40), .Y(n30) );
-  OR2X1 U27 ( .A(n34), .B(n41), .Y(n31) );
   NOR2X1 U28 ( .A(n35), .B(n41), .Y(n32) );
   NOR2X1 U29 ( .A(n36), .B(n41), .Y(n33) );
   NOR2X1 U30 ( .A(n37), .B(n41), .Y(product[0]) );
-  CLKINVX1 U41 ( .A(b[0]), .Y(n37) );
-  CLKINVX1 U42 ( .A(b[1]), .Y(n36) );
-  CLKINVX1 U43 ( .A(b[2]), .Y(n35) );
-  CLKINVX1 U44 ( .A(b[3]), .Y(n34) );
-  CLKINVX1 U45 ( .A(a[0]), .Y(n41) );
-  CLKINVX1 U46 ( .A(a[1]), .Y(n40) );
-  CLKINVX1 U47 ( .A(a[2]), .Y(n39) );
-  CLKINVX1 U48 ( .A(a[3]), .Y(n38) );
+  NAND2X1 U41 ( .A(b[3]), .B(a[1]), .Y(n27) );
+  NAND2X1 U42 ( .A(b[3]), .B(a[0]), .Y(n31) );
+  NAND2X1 U43 ( .A(b[1]), .B(a[3]), .Y(n21) );
+  NAND2X1 U44 ( .A(b[2]), .B(a[3]), .Y(n20) );
+  CLKINVX1 U45 ( .A(b[0]), .Y(n37) );
+  CLKINVX1 U46 ( .A(b[1]), .Y(n36) );
+  CLKINVX1 U47 ( .A(b[2]), .Y(n35) );
+  CLKINVX1 U48 ( .A(b[3]), .Y(n34) );
+  CLKINVX1 U49 ( .A(a[0]), .Y(n41) );
+  CLKINVX1 U50 ( .A(a[1]), .Y(n40) );
+  CLKINVX1 U51 ( .A(a[2]), .Y(n39) );
+  CLKINVX1 U52 ( .A(a[3]), .Y(n38) );
 endmodule
 
 
@@ -11262,29 +11198,29 @@ module vec_product_BIT_WIDTH4_VEC_SIZE64_DW_mult_tc_103 ( a, b, product );
   ADDHXL U13 ( .A(n25), .B(n28), .CO(n15), .S(n16) );
   ADDHXL U14 ( .A(n32), .B(n29), .CO(n17), .S(n18) );
   NOR2X1 U15 ( .A(n34), .B(n38), .Y(n19) );
-  OR2X1 U16 ( .A(n35), .B(n38), .Y(n20) );
-  OR2X1 U17 ( .A(n36), .B(n38), .Y(n21) );
-  OR2X1 U18 ( .A(n37), .B(n38), .Y(n22) );
   OR2X1 U19 ( .A(n34), .B(n39), .Y(n23) );
   NOR2X1 U20 ( .A(n35), .B(n39), .Y(n24) );
   NOR2X1 U21 ( .A(n36), .B(n39), .Y(n25) );
   NOR2X1 U22 ( .A(n37), .B(n39), .Y(n26) );
-  OR2X1 U23 ( .A(n34), .B(n40), .Y(n27) );
   NOR2X1 U24 ( .A(n35), .B(n40), .Y(n28) );
   NOR2X1 U25 ( .A(n36), .B(n40), .Y(n29) );
   NOR2X1 U26 ( .A(n37), .B(n40), .Y(n30) );
-  OR2X1 U27 ( .A(n34), .B(n41), .Y(n31) );
   NOR2X1 U28 ( .A(n35), .B(n41), .Y(n32) );
   NOR2X1 U29 ( .A(n36), .B(n41), .Y(n33) );
   NOR2X1 U30 ( .A(n37), .B(n41), .Y(product[0]) );
-  CLKINVX1 U41 ( .A(b[0]), .Y(n37) );
-  CLKINVX1 U42 ( .A(b[1]), .Y(n36) );
-  CLKINVX1 U43 ( .A(b[2]), .Y(n35) );
-  CLKINVX1 U44 ( .A(b[3]), .Y(n34) );
-  CLKINVX1 U45 ( .A(a[0]), .Y(n41) );
-  CLKINVX1 U46 ( .A(a[1]), .Y(n40) );
-  CLKINVX1 U47 ( .A(a[2]), .Y(n39) );
-  CLKINVX1 U48 ( .A(a[3]), .Y(n38) );
+  NAND2X1 U41 ( .A(b[3]), .B(a[1]), .Y(n27) );
+  NAND2X1 U42 ( .A(b[3]), .B(a[0]), .Y(n31) );
+  NAND2X1 U43 ( .A(b[0]), .B(a[3]), .Y(n22) );
+  NAND2X1 U44 ( .A(b[1]), .B(a[3]), .Y(n21) );
+  NAND2X1 U45 ( .A(b[2]), .B(a[3]), .Y(n20) );
+  CLKINVX1 U46 ( .A(b[0]), .Y(n37) );
+  CLKINVX1 U47 ( .A(b[1]), .Y(n36) );
+  CLKINVX1 U48 ( .A(b[2]), .Y(n35) );
+  CLKINVX1 U49 ( .A(b[3]), .Y(n34) );
+  CLKINVX1 U50 ( .A(a[0]), .Y(n41) );
+  CLKINVX1 U51 ( .A(a[1]), .Y(n40) );
+  CLKINVX1 U52 ( .A(a[2]), .Y(n39) );
+  CLKINVX1 U53 ( .A(a[3]), .Y(n38) );
 endmodule
 
 
@@ -11311,29 +11247,29 @@ module vec_product_BIT_WIDTH4_VEC_SIZE64_DW_mult_tc_104 ( a, b, product );
   ADDHXL U13 ( .A(n25), .B(n28), .CO(n15), .S(n16) );
   ADDHXL U14 ( .A(n32), .B(n29), .CO(n17), .S(n18) );
   NOR2X1 U15 ( .A(n34), .B(n38), .Y(n19) );
-  OR2X1 U16 ( .A(n35), .B(n38), .Y(n20) );
-  OR2X1 U17 ( .A(n36), .B(n38), .Y(n21) );
   OR2X1 U18 ( .A(n37), .B(n38), .Y(n22) );
   OR2X1 U19 ( .A(n34), .B(n39), .Y(n23) );
   NOR2X1 U20 ( .A(n35), .B(n39), .Y(n24) );
   NOR2X1 U21 ( .A(n36), .B(n39), .Y(n25) );
   NOR2X1 U22 ( .A(n37), .B(n39), .Y(n26) );
-  OR2X1 U23 ( .A(n34), .B(n40), .Y(n27) );
   NOR2X1 U24 ( .A(n35), .B(n40), .Y(n28) );
   NOR2X1 U25 ( .A(n36), .B(n40), .Y(n29) );
   NOR2X1 U26 ( .A(n37), .B(n40), .Y(n30) );
-  OR2X1 U27 ( .A(n34), .B(n41), .Y(n31) );
   NOR2X1 U28 ( .A(n35), .B(n41), .Y(n32) );
   NOR2X1 U29 ( .A(n36), .B(n41), .Y(n33) );
   NOR2X1 U30 ( .A(n37), .B(n41), .Y(product[0]) );
-  CLKINVX1 U41 ( .A(b[0]), .Y(n37) );
-  CLKINVX1 U42 ( .A(b[1]), .Y(n36) );
-  CLKINVX1 U43 ( .A(b[2]), .Y(n35) );
-  CLKINVX1 U44 ( .A(b[3]), .Y(n34) );
-  CLKINVX1 U45 ( .A(a[0]), .Y(n41) );
-  CLKINVX1 U46 ( .A(a[1]), .Y(n40) );
-  CLKINVX1 U47 ( .A(a[2]), .Y(n39) );
-  CLKINVX1 U48 ( .A(a[3]), .Y(n38) );
+  NAND2X1 U41 ( .A(b[3]), .B(a[1]), .Y(n27) );
+  NAND2X1 U42 ( .A(b[3]), .B(a[0]), .Y(n31) );
+  NAND2X1 U43 ( .A(b[1]), .B(a[3]), .Y(n21) );
+  NAND2X1 U44 ( .A(b[2]), .B(a[3]), .Y(n20) );
+  CLKINVX1 U45 ( .A(b[0]), .Y(n37) );
+  CLKINVX1 U46 ( .A(b[1]), .Y(n36) );
+  CLKINVX1 U47 ( .A(b[2]), .Y(n35) );
+  CLKINVX1 U48 ( .A(b[3]), .Y(n34) );
+  CLKINVX1 U49 ( .A(a[0]), .Y(n41) );
+  CLKINVX1 U50 ( .A(a[1]), .Y(n40) );
+  CLKINVX1 U51 ( .A(a[2]), .Y(n39) );
+  CLKINVX1 U52 ( .A(a[3]), .Y(n38) );
 endmodule
 
 
@@ -11360,29 +11296,29 @@ module vec_product_BIT_WIDTH4_VEC_SIZE64_DW_mult_tc_105 ( a, b, product );
   ADDHXL U13 ( .A(n25), .B(n28), .CO(n15), .S(n16) );
   ADDHXL U14 ( .A(n32), .B(n29), .CO(n17), .S(n18) );
   NOR2X1 U15 ( .A(n34), .B(n38), .Y(n19) );
-  OR2X1 U16 ( .A(n35), .B(n38), .Y(n20) );
-  OR2X1 U17 ( .A(n36), .B(n38), .Y(n21) );
-  OR2X1 U18 ( .A(n37), .B(n38), .Y(n22) );
   OR2X1 U19 ( .A(n34), .B(n39), .Y(n23) );
   NOR2X1 U20 ( .A(n35), .B(n39), .Y(n24) );
   NOR2X1 U21 ( .A(n36), .B(n39), .Y(n25) );
   NOR2X1 U22 ( .A(n37), .B(n39), .Y(n26) );
-  OR2X1 U23 ( .A(n34), .B(n40), .Y(n27) );
   NOR2X1 U24 ( .A(n35), .B(n40), .Y(n28) );
   NOR2X1 U25 ( .A(n36), .B(n40), .Y(n29) );
   NOR2X1 U26 ( .A(n37), .B(n40), .Y(n30) );
-  OR2X1 U27 ( .A(n34), .B(n41), .Y(n31) );
   NOR2X1 U28 ( .A(n35), .B(n41), .Y(n32) );
   NOR2X1 U29 ( .A(n36), .B(n41), .Y(n33) );
   NOR2X1 U30 ( .A(n37), .B(n41), .Y(product[0]) );
-  CLKINVX1 U41 ( .A(b[0]), .Y(n37) );
-  CLKINVX1 U42 ( .A(b[1]), .Y(n36) );
-  CLKINVX1 U43 ( .A(b[2]), .Y(n35) );
-  CLKINVX1 U44 ( .A(b[3]), .Y(n34) );
-  CLKINVX1 U45 ( .A(a[0]), .Y(n41) );
-  CLKINVX1 U46 ( .A(a[1]), .Y(n40) );
-  CLKINVX1 U47 ( .A(a[2]), .Y(n39) );
-  CLKINVX1 U48 ( .A(a[3]), .Y(n38) );
+  NAND2X1 U41 ( .A(b[3]), .B(a[1]), .Y(n27) );
+  NAND2X1 U42 ( .A(b[3]), .B(a[0]), .Y(n31) );
+  NAND2X1 U43 ( .A(b[0]), .B(a[3]), .Y(n22) );
+  NAND2X1 U44 ( .A(b[1]), .B(a[3]), .Y(n21) );
+  NAND2X1 U45 ( .A(b[2]), .B(a[3]), .Y(n20) );
+  CLKINVX1 U46 ( .A(b[0]), .Y(n37) );
+  CLKINVX1 U47 ( .A(b[1]), .Y(n36) );
+  CLKINVX1 U48 ( .A(b[2]), .Y(n35) );
+  CLKINVX1 U49 ( .A(b[3]), .Y(n34) );
+  CLKINVX1 U50 ( .A(a[0]), .Y(n41) );
+  CLKINVX1 U51 ( .A(a[1]), .Y(n40) );
+  CLKINVX1 U52 ( .A(a[2]), .Y(n39) );
+  CLKINVX1 U53 ( .A(a[3]), .Y(n38) );
 endmodule
 
 
@@ -11409,29 +11345,29 @@ module vec_product_BIT_WIDTH4_VEC_SIZE64_DW_mult_tc_106 ( a, b, product );
   ADDHXL U13 ( .A(n25), .B(n28), .CO(n15), .S(n16) );
   ADDHXL U14 ( .A(n32), .B(n29), .CO(n17), .S(n18) );
   NOR2X1 U15 ( .A(n34), .B(n38), .Y(n19) );
-  OR2X1 U16 ( .A(n35), .B(n38), .Y(n20) );
-  OR2X1 U17 ( .A(n36), .B(n38), .Y(n21) );
   OR2X1 U18 ( .A(n37), .B(n38), .Y(n22) );
   OR2X1 U19 ( .A(n34), .B(n39), .Y(n23) );
   NOR2X1 U20 ( .A(n35), .B(n39), .Y(n24) );
   NOR2X1 U21 ( .A(n36), .B(n39), .Y(n25) );
   NOR2X1 U22 ( .A(n37), .B(n39), .Y(n26) );
-  OR2X1 U23 ( .A(n34), .B(n40), .Y(n27) );
   NOR2X1 U24 ( .A(n35), .B(n40), .Y(n28) );
   NOR2X1 U25 ( .A(n36), .B(n40), .Y(n29) );
   NOR2X1 U26 ( .A(n37), .B(n40), .Y(n30) );
-  OR2X1 U27 ( .A(n34), .B(n41), .Y(n31) );
   NOR2X1 U28 ( .A(n35), .B(n41), .Y(n32) );
   NOR2X1 U29 ( .A(n36), .B(n41), .Y(n33) );
   NOR2X1 U30 ( .A(n37), .B(n41), .Y(product[0]) );
-  CLKINVX1 U41 ( .A(b[1]), .Y(n36) );
-  CLKINVX1 U42 ( .A(b[0]), .Y(n37) );
-  CLKINVX1 U43 ( .A(b[2]), .Y(n35) );
-  CLKINVX1 U44 ( .A(b[3]), .Y(n34) );
-  CLKINVX1 U45 ( .A(a[0]), .Y(n41) );
-  CLKINVX1 U46 ( .A(a[1]), .Y(n40) );
-  CLKINVX1 U47 ( .A(a[2]), .Y(n39) );
-  CLKINVX1 U48 ( .A(a[3]), .Y(n38) );
+  NAND2X1 U41 ( .A(b[3]), .B(a[1]), .Y(n27) );
+  NAND2X1 U42 ( .A(b[3]), .B(a[0]), .Y(n31) );
+  NAND2X1 U43 ( .A(b[1]), .B(a[3]), .Y(n21) );
+  NAND2X1 U44 ( .A(b[2]), .B(a[3]), .Y(n20) );
+  CLKINVX1 U45 ( .A(b[1]), .Y(n36) );
+  CLKINVX1 U46 ( .A(b[0]), .Y(n37) );
+  CLKINVX1 U47 ( .A(b[2]), .Y(n35) );
+  CLKINVX1 U48 ( .A(b[3]), .Y(n34) );
+  CLKINVX1 U49 ( .A(a[0]), .Y(n41) );
+  CLKINVX1 U50 ( .A(a[1]), .Y(n40) );
+  CLKINVX1 U51 ( .A(a[2]), .Y(n39) );
+  CLKINVX1 U52 ( .A(a[3]), .Y(n38) );
 endmodule
 
 
@@ -11458,29 +11394,29 @@ module vec_product_BIT_WIDTH4_VEC_SIZE64_DW_mult_tc_107 ( a, b, product );
   ADDHXL U13 ( .A(n25), .B(n28), .CO(n15), .S(n16) );
   ADDHXL U14 ( .A(n32), .B(n29), .CO(n17), .S(n18) );
   NOR2X1 U15 ( .A(n34), .B(n38), .Y(n19) );
-  OR2X1 U16 ( .A(n35), .B(n38), .Y(n20) );
-  OR2X1 U17 ( .A(n36), .B(n38), .Y(n21) );
-  OR2X1 U18 ( .A(n37), .B(n38), .Y(n22) );
   OR2X1 U19 ( .A(n34), .B(n39), .Y(n23) );
   NOR2X1 U20 ( .A(n35), .B(n39), .Y(n24) );
   NOR2X1 U21 ( .A(n36), .B(n39), .Y(n25) );
   NOR2X1 U22 ( .A(n37), .B(n39), .Y(n26) );
-  OR2X1 U23 ( .A(n34), .B(n40), .Y(n27) );
   NOR2X1 U24 ( .A(n35), .B(n40), .Y(n28) );
   NOR2X1 U25 ( .A(n36), .B(n40), .Y(n29) );
   NOR2X1 U26 ( .A(n37), .B(n40), .Y(n30) );
-  OR2X1 U27 ( .A(n34), .B(n41), .Y(n31) );
   NOR2X1 U28 ( .A(n35), .B(n41), .Y(n32) );
   NOR2X1 U29 ( .A(n36), .B(n41), .Y(n33) );
   NOR2X1 U30 ( .A(n37), .B(n41), .Y(product[0]) );
-  CLKINVX1 U41 ( .A(b[1]), .Y(n36) );
-  CLKINVX1 U42 ( .A(b[0]), .Y(n37) );
-  CLKINVX1 U43 ( .A(b[2]), .Y(n35) );
-  CLKINVX1 U44 ( .A(b[3]), .Y(n34) );
-  CLKINVX1 U45 ( .A(a[0]), .Y(n41) );
-  CLKINVX1 U46 ( .A(a[1]), .Y(n40) );
-  CLKINVX1 U47 ( .A(a[2]), .Y(n39) );
-  CLKINVX1 U48 ( .A(a[3]), .Y(n38) );
+  NAND2X1 U41 ( .A(b[3]), .B(a[1]), .Y(n27) );
+  NAND2X1 U42 ( .A(b[3]), .B(a[0]), .Y(n31) );
+  NAND2X1 U43 ( .A(b[0]), .B(a[3]), .Y(n22) );
+  NAND2X1 U44 ( .A(b[2]), .B(a[3]), .Y(n20) );
+  NAND2X1 U45 ( .A(b[1]), .B(a[3]), .Y(n21) );
+  CLKINVX1 U46 ( .A(b[1]), .Y(n36) );
+  CLKINVX1 U47 ( .A(b[0]), .Y(n37) );
+  CLKINVX1 U48 ( .A(b[2]), .Y(n35) );
+  CLKINVX1 U49 ( .A(b[3]), .Y(n34) );
+  CLKINVX1 U50 ( .A(a[0]), .Y(n41) );
+  CLKINVX1 U51 ( .A(a[1]), .Y(n40) );
+  CLKINVX1 U52 ( .A(a[2]), .Y(n39) );
+  CLKINVX1 U53 ( .A(a[3]), .Y(n38) );
 endmodule
 
 
@@ -11507,29 +11443,29 @@ module vec_product_BIT_WIDTH4_VEC_SIZE64_DW_mult_tc_108 ( a, b, product );
   ADDHXL U13 ( .A(n25), .B(n28), .CO(n15), .S(n16) );
   ADDHXL U14 ( .A(n32), .B(n29), .CO(n17), .S(n18) );
   NOR2X1 U15 ( .A(n34), .B(n38), .Y(n19) );
-  OR2X1 U16 ( .A(n35), .B(n38), .Y(n20) );
-  OR2X1 U17 ( .A(n36), .B(n38), .Y(n21) );
   OR2X1 U18 ( .A(n37), .B(n38), .Y(n22) );
   OR2X1 U19 ( .A(n34), .B(n39), .Y(n23) );
   NOR2X1 U20 ( .A(n35), .B(n39), .Y(n24) );
   NOR2X1 U21 ( .A(n36), .B(n39), .Y(n25) );
   NOR2X1 U22 ( .A(n37), .B(n39), .Y(n26) );
-  OR2X1 U23 ( .A(n34), .B(n40), .Y(n27) );
   NOR2X1 U24 ( .A(n35), .B(n40), .Y(n28) );
   NOR2X1 U25 ( .A(n36), .B(n40), .Y(n29) );
   NOR2X1 U26 ( .A(n37), .B(n40), .Y(n30) );
-  OR2X1 U27 ( .A(n34), .B(n41), .Y(n31) );
   NOR2X1 U28 ( .A(n35), .B(n41), .Y(n32) );
   NOR2X1 U29 ( .A(n36), .B(n41), .Y(n33) );
   NOR2X1 U30 ( .A(n37), .B(n41), .Y(product[0]) );
-  CLKINVX1 U41 ( .A(b[0]), .Y(n37) );
-  CLKINVX1 U42 ( .A(b[1]), .Y(n36) );
-  CLKINVX1 U43 ( .A(b[2]), .Y(n35) );
-  CLKINVX1 U44 ( .A(b[3]), .Y(n34) );
-  CLKINVX1 U45 ( .A(a[0]), .Y(n41) );
-  CLKINVX1 U46 ( .A(a[1]), .Y(n40) );
-  CLKINVX1 U47 ( .A(a[2]), .Y(n39) );
-  CLKINVX1 U48 ( .A(a[3]), .Y(n38) );
+  NAND2X1 U41 ( .A(b[3]), .B(a[1]), .Y(n27) );
+  NAND2X1 U42 ( .A(b[3]), .B(a[0]), .Y(n31) );
+  NAND2X1 U43 ( .A(b[1]), .B(a[3]), .Y(n21) );
+  NAND2X1 U44 ( .A(b[2]), .B(a[3]), .Y(n20) );
+  CLKINVX1 U45 ( .A(b[0]), .Y(n37) );
+  CLKINVX1 U46 ( .A(b[1]), .Y(n36) );
+  CLKINVX1 U47 ( .A(b[2]), .Y(n35) );
+  CLKINVX1 U48 ( .A(b[3]), .Y(n34) );
+  CLKINVX1 U49 ( .A(a[0]), .Y(n41) );
+  CLKINVX1 U50 ( .A(a[1]), .Y(n40) );
+  CLKINVX1 U51 ( .A(a[2]), .Y(n39) );
+  CLKINVX1 U52 ( .A(a[3]), .Y(n38) );
 endmodule
 
 
@@ -11556,29 +11492,29 @@ module vec_product_BIT_WIDTH4_VEC_SIZE64_DW_mult_tc_109 ( a, b, product );
   ADDHXL U13 ( .A(n25), .B(n28), .CO(n15), .S(n16) );
   ADDHXL U14 ( .A(n32), .B(n29), .CO(n17), .S(n18) );
   NOR2X1 U15 ( .A(n34), .B(n38), .Y(n19) );
-  OR2X1 U16 ( .A(n35), .B(n38), .Y(n20) );
-  OR2X1 U17 ( .A(n36), .B(n38), .Y(n21) );
-  OR2X1 U18 ( .A(n37), .B(n38), .Y(n22) );
   OR2X1 U19 ( .A(n34), .B(n39), .Y(n23) );
   NOR2X1 U20 ( .A(n35), .B(n39), .Y(n24) );
   NOR2X1 U21 ( .A(n36), .B(n39), .Y(n25) );
   NOR2X1 U22 ( .A(n37), .B(n39), .Y(n26) );
-  OR2X1 U23 ( .A(n34), .B(n40), .Y(n27) );
   NOR2X1 U24 ( .A(n35), .B(n40), .Y(n28) );
   NOR2X1 U25 ( .A(n36), .B(n40), .Y(n29) );
   NOR2X1 U26 ( .A(n37), .B(n40), .Y(n30) );
-  OR2X1 U27 ( .A(n34), .B(n41), .Y(n31) );
   NOR2X1 U28 ( .A(n35), .B(n41), .Y(n32) );
   NOR2X1 U29 ( .A(n36), .B(n41), .Y(n33) );
   NOR2X1 U30 ( .A(n37), .B(n41), .Y(product[0]) );
-  CLKINVX1 U41 ( .A(b[0]), .Y(n37) );
-  CLKINVX1 U42 ( .A(b[1]), .Y(n36) );
-  CLKINVX1 U43 ( .A(b[2]), .Y(n35) );
-  CLKINVX1 U44 ( .A(b[3]), .Y(n34) );
-  CLKINVX1 U45 ( .A(a[0]), .Y(n41) );
-  CLKINVX1 U46 ( .A(a[1]), .Y(n40) );
-  CLKINVX1 U47 ( .A(a[2]), .Y(n39) );
-  CLKINVX1 U48 ( .A(a[3]), .Y(n38) );
+  NAND2X1 U41 ( .A(b[3]), .B(a[1]), .Y(n27) );
+  NAND2X1 U42 ( .A(b[3]), .B(a[0]), .Y(n31) );
+  NAND2X1 U43 ( .A(b[0]), .B(a[3]), .Y(n22) );
+  NAND2X1 U44 ( .A(b[1]), .B(a[3]), .Y(n21) );
+  NAND2X1 U45 ( .A(b[2]), .B(a[3]), .Y(n20) );
+  CLKINVX1 U46 ( .A(b[0]), .Y(n37) );
+  CLKINVX1 U47 ( .A(b[1]), .Y(n36) );
+  CLKINVX1 U48 ( .A(b[2]), .Y(n35) );
+  CLKINVX1 U49 ( .A(b[3]), .Y(n34) );
+  CLKINVX1 U50 ( .A(a[0]), .Y(n41) );
+  CLKINVX1 U51 ( .A(a[1]), .Y(n40) );
+  CLKINVX1 U52 ( .A(a[2]), .Y(n39) );
+  CLKINVX1 U53 ( .A(a[3]), .Y(n38) );
 endmodule
 
 
@@ -11605,29 +11541,29 @@ module vec_product_BIT_WIDTH4_VEC_SIZE64_DW_mult_tc_110 ( a, b, product );
   ADDHXL U13 ( .A(n25), .B(n28), .CO(n15), .S(n16) );
   ADDHXL U14 ( .A(n32), .B(n29), .CO(n17), .S(n18) );
   NOR2X1 U15 ( .A(n34), .B(n38), .Y(n19) );
-  OR2X1 U16 ( .A(n35), .B(n38), .Y(n20) );
-  OR2X1 U17 ( .A(n36), .B(n38), .Y(n21) );
   OR2X1 U18 ( .A(n37), .B(n38), .Y(n22) );
   OR2X1 U19 ( .A(n34), .B(n39), .Y(n23) );
   NOR2X1 U20 ( .A(n35), .B(n39), .Y(n24) );
   NOR2X1 U21 ( .A(n36), .B(n39), .Y(n25) );
   NOR2X1 U22 ( .A(n37), .B(n39), .Y(n26) );
-  OR2X1 U23 ( .A(n34), .B(n40), .Y(n27) );
   NOR2X1 U24 ( .A(n35), .B(n40), .Y(n28) );
   NOR2X1 U25 ( .A(n36), .B(n40), .Y(n29) );
   NOR2X1 U26 ( .A(n37), .B(n40), .Y(n30) );
-  OR2X1 U27 ( .A(n34), .B(n41), .Y(n31) );
   NOR2X1 U28 ( .A(n35), .B(n41), .Y(n32) );
   NOR2X1 U29 ( .A(n36), .B(n41), .Y(n33) );
   NOR2X1 U30 ( .A(n37), .B(n41), .Y(product[0]) );
-  CLKINVX1 U41 ( .A(b[0]), .Y(n37) );
-  CLKINVX1 U42 ( .A(b[1]), .Y(n36) );
-  CLKINVX1 U43 ( .A(b[2]), .Y(n35) );
-  CLKINVX1 U44 ( .A(b[3]), .Y(n34) );
-  CLKINVX1 U45 ( .A(a[0]), .Y(n41) );
-  CLKINVX1 U46 ( .A(a[1]), .Y(n40) );
-  CLKINVX1 U47 ( .A(a[2]), .Y(n39) );
-  CLKINVX1 U48 ( .A(a[3]), .Y(n38) );
+  NAND2X1 U41 ( .A(b[3]), .B(a[1]), .Y(n27) );
+  NAND2X1 U42 ( .A(b[3]), .B(a[0]), .Y(n31) );
+  NAND2X1 U43 ( .A(b[1]), .B(a[3]), .Y(n21) );
+  NAND2X1 U44 ( .A(b[2]), .B(a[3]), .Y(n20) );
+  CLKINVX1 U45 ( .A(b[0]), .Y(n37) );
+  CLKINVX1 U46 ( .A(b[1]), .Y(n36) );
+  CLKINVX1 U47 ( .A(b[2]), .Y(n35) );
+  CLKINVX1 U48 ( .A(b[3]), .Y(n34) );
+  CLKINVX1 U49 ( .A(a[0]), .Y(n41) );
+  CLKINVX1 U50 ( .A(a[1]), .Y(n40) );
+  CLKINVX1 U51 ( .A(a[2]), .Y(n39) );
+  CLKINVX1 U52 ( .A(a[3]), .Y(n38) );
 endmodule
 
 
@@ -11654,29 +11590,29 @@ module vec_product_BIT_WIDTH4_VEC_SIZE64_DW_mult_tc_111 ( a, b, product );
   ADDHXL U13 ( .A(n25), .B(n28), .CO(n15), .S(n16) );
   ADDHXL U14 ( .A(n32), .B(n29), .CO(n17), .S(n18) );
   NOR2X1 U15 ( .A(n34), .B(n38), .Y(n19) );
-  OR2X1 U16 ( .A(n35), .B(n38), .Y(n20) );
-  OR2X1 U17 ( .A(n36), .B(n38), .Y(n21) );
-  OR2X1 U18 ( .A(n37), .B(n38), .Y(n22) );
   OR2X1 U19 ( .A(n34), .B(n39), .Y(n23) );
   NOR2X1 U20 ( .A(n35), .B(n39), .Y(n24) );
   NOR2X1 U21 ( .A(n36), .B(n39), .Y(n25) );
   NOR2X1 U22 ( .A(n37), .B(n39), .Y(n26) );
-  OR2X1 U23 ( .A(n34), .B(n40), .Y(n27) );
   NOR2X1 U24 ( .A(n35), .B(n40), .Y(n28) );
   NOR2X1 U25 ( .A(n36), .B(n40), .Y(n29) );
   NOR2X1 U26 ( .A(n37), .B(n40), .Y(n30) );
-  OR2X1 U27 ( .A(n34), .B(n41), .Y(n31) );
   NOR2X1 U28 ( .A(n35), .B(n41), .Y(n32) );
   NOR2X1 U29 ( .A(n36), .B(n41), .Y(n33) );
   NOR2X1 U30 ( .A(n37), .B(n41), .Y(product[0]) );
-  CLKINVX1 U41 ( .A(b[0]), .Y(n37) );
-  CLKINVX1 U42 ( .A(b[1]), .Y(n36) );
-  CLKINVX1 U43 ( .A(b[2]), .Y(n35) );
-  CLKINVX1 U44 ( .A(b[3]), .Y(n34) );
-  CLKINVX1 U45 ( .A(a[0]), .Y(n41) );
-  CLKINVX1 U46 ( .A(a[1]), .Y(n40) );
-  CLKINVX1 U47 ( .A(a[2]), .Y(n39) );
-  CLKINVX1 U48 ( .A(a[3]), .Y(n38) );
+  NAND2X1 U41 ( .A(b[3]), .B(a[1]), .Y(n27) );
+  NAND2X1 U42 ( .A(b[3]), .B(a[0]), .Y(n31) );
+  NAND2X1 U43 ( .A(b[0]), .B(a[3]), .Y(n22) );
+  NAND2X1 U44 ( .A(b[1]), .B(a[3]), .Y(n21) );
+  NAND2X1 U45 ( .A(b[2]), .B(a[3]), .Y(n20) );
+  CLKINVX1 U46 ( .A(b[0]), .Y(n37) );
+  CLKINVX1 U47 ( .A(b[1]), .Y(n36) );
+  CLKINVX1 U48 ( .A(b[2]), .Y(n35) );
+  CLKINVX1 U49 ( .A(b[3]), .Y(n34) );
+  CLKINVX1 U50 ( .A(a[0]), .Y(n41) );
+  CLKINVX1 U51 ( .A(a[1]), .Y(n40) );
+  CLKINVX1 U52 ( .A(a[2]), .Y(n39) );
+  CLKINVX1 U53 ( .A(a[3]), .Y(n38) );
 endmodule
 
 
@@ -11703,29 +11639,29 @@ module vec_product_BIT_WIDTH4_VEC_SIZE64_DW_mult_tc_112 ( a, b, product );
   ADDHXL U13 ( .A(n25), .B(n28), .CO(n15), .S(n16) );
   ADDHXL U14 ( .A(n32), .B(n29), .CO(n17), .S(n18) );
   NOR2X1 U15 ( .A(n34), .B(n38), .Y(n19) );
-  OR2X1 U16 ( .A(n35), .B(n38), .Y(n20) );
-  OR2X1 U17 ( .A(n36), .B(n38), .Y(n21) );
   OR2X1 U18 ( .A(n37), .B(n38), .Y(n22) );
   OR2X1 U19 ( .A(n34), .B(n39), .Y(n23) );
   NOR2X1 U20 ( .A(n35), .B(n39), .Y(n24) );
   NOR2X1 U21 ( .A(n36), .B(n39), .Y(n25) );
   NOR2X1 U22 ( .A(n37), .B(n39), .Y(n26) );
-  OR2X1 U23 ( .A(n34), .B(n40), .Y(n27) );
   NOR2X1 U24 ( .A(n35), .B(n40), .Y(n28) );
   NOR2X1 U25 ( .A(n36), .B(n40), .Y(n29) );
   NOR2X1 U26 ( .A(n37), .B(n40), .Y(n30) );
-  OR2X1 U27 ( .A(n34), .B(n41), .Y(n31) );
   NOR2X1 U28 ( .A(n35), .B(n41), .Y(n32) );
   NOR2X1 U29 ( .A(n36), .B(n41), .Y(n33) );
   NOR2X1 U30 ( .A(n37), .B(n41), .Y(product[0]) );
-  CLKINVX1 U41 ( .A(b[1]), .Y(n36) );
-  CLKINVX1 U42 ( .A(b[0]), .Y(n37) );
-  CLKINVX1 U43 ( .A(b[2]), .Y(n35) );
-  CLKINVX1 U44 ( .A(b[3]), .Y(n34) );
-  CLKINVX1 U45 ( .A(a[0]), .Y(n41) );
-  CLKINVX1 U46 ( .A(a[1]), .Y(n40) );
-  CLKINVX1 U47 ( .A(a[2]), .Y(n39) );
-  CLKINVX1 U48 ( .A(a[3]), .Y(n38) );
+  NAND2X1 U41 ( .A(b[3]), .B(a[1]), .Y(n27) );
+  NAND2X1 U42 ( .A(b[3]), .B(a[0]), .Y(n31) );
+  NAND2X1 U43 ( .A(b[1]), .B(a[3]), .Y(n21) );
+  NAND2X1 U44 ( .A(b[2]), .B(a[3]), .Y(n20) );
+  CLKINVX1 U45 ( .A(b[1]), .Y(n36) );
+  CLKINVX1 U46 ( .A(b[0]), .Y(n37) );
+  CLKINVX1 U47 ( .A(b[2]), .Y(n35) );
+  CLKINVX1 U48 ( .A(b[3]), .Y(n34) );
+  CLKINVX1 U49 ( .A(a[0]), .Y(n41) );
+  CLKINVX1 U50 ( .A(a[1]), .Y(n40) );
+  CLKINVX1 U51 ( .A(a[2]), .Y(n39) );
+  CLKINVX1 U52 ( .A(a[3]), .Y(n38) );
 endmodule
 
 
@@ -11752,29 +11688,29 @@ module vec_product_BIT_WIDTH4_VEC_SIZE64_DW_mult_tc_113 ( a, b, product );
   ADDHXL U13 ( .A(n25), .B(n28), .CO(n15), .S(n16) );
   ADDHXL U14 ( .A(n32), .B(n29), .CO(n17), .S(n18) );
   NOR2X1 U15 ( .A(n34), .B(n38), .Y(n19) );
-  OR2X1 U16 ( .A(n35), .B(n38), .Y(n20) );
-  OR2X1 U17 ( .A(n36), .B(n38), .Y(n21) );
-  OR2X1 U18 ( .A(n37), .B(n38), .Y(n22) );
   OR2X1 U19 ( .A(n34), .B(n39), .Y(n23) );
   NOR2X1 U20 ( .A(n35), .B(n39), .Y(n24) );
   NOR2X1 U21 ( .A(n36), .B(n39), .Y(n25) );
   NOR2X1 U22 ( .A(n37), .B(n39), .Y(n26) );
-  OR2X1 U23 ( .A(n34), .B(n40), .Y(n27) );
   NOR2X1 U24 ( .A(n35), .B(n40), .Y(n28) );
   NOR2X1 U25 ( .A(n36), .B(n40), .Y(n29) );
   NOR2X1 U26 ( .A(n37), .B(n40), .Y(n30) );
-  OR2X1 U27 ( .A(n34), .B(n41), .Y(n31) );
   NOR2X1 U28 ( .A(n35), .B(n41), .Y(n32) );
   NOR2X1 U29 ( .A(n36), .B(n41), .Y(n33) );
   NOR2X1 U30 ( .A(n37), .B(n41), .Y(product[0]) );
-  CLKINVX1 U41 ( .A(b[1]), .Y(n36) );
-  CLKINVX1 U42 ( .A(b[0]), .Y(n37) );
-  CLKINVX1 U43 ( .A(b[2]), .Y(n35) );
-  CLKINVX1 U44 ( .A(b[3]), .Y(n34) );
-  CLKINVX1 U45 ( .A(a[0]), .Y(n41) );
-  CLKINVX1 U46 ( .A(a[1]), .Y(n40) );
-  CLKINVX1 U47 ( .A(a[2]), .Y(n39) );
-  CLKINVX1 U48 ( .A(a[3]), .Y(n38) );
+  NAND2X1 U41 ( .A(b[3]), .B(a[1]), .Y(n27) );
+  NAND2X1 U42 ( .A(b[3]), .B(a[0]), .Y(n31) );
+  NAND2X1 U43 ( .A(b[0]), .B(a[3]), .Y(n22) );
+  NAND2X1 U44 ( .A(b[1]), .B(a[3]), .Y(n21) );
+  NAND2X1 U45 ( .A(b[2]), .B(a[3]), .Y(n20) );
+  CLKINVX1 U46 ( .A(b[1]), .Y(n36) );
+  CLKINVX1 U47 ( .A(b[0]), .Y(n37) );
+  CLKINVX1 U48 ( .A(b[2]), .Y(n35) );
+  CLKINVX1 U49 ( .A(b[3]), .Y(n34) );
+  CLKINVX1 U50 ( .A(a[0]), .Y(n41) );
+  CLKINVX1 U51 ( .A(a[1]), .Y(n40) );
+  CLKINVX1 U52 ( .A(a[2]), .Y(n39) );
+  CLKINVX1 U53 ( .A(a[3]), .Y(n38) );
 endmodule
 
 
@@ -11801,29 +11737,29 @@ module vec_product_BIT_WIDTH4_VEC_SIZE64_DW_mult_tc_114 ( a, b, product );
   ADDHXL U13 ( .A(n25), .B(n28), .CO(n15), .S(n16) );
   ADDHXL U14 ( .A(n32), .B(n29), .CO(n17), .S(n18) );
   NOR2X1 U15 ( .A(n34), .B(n38), .Y(n19) );
-  OR2X1 U16 ( .A(n35), .B(n38), .Y(n20) );
-  OR2X1 U17 ( .A(n36), .B(n38), .Y(n21) );
   OR2X1 U18 ( .A(n37), .B(n38), .Y(n22) );
   OR2X1 U19 ( .A(n34), .B(n39), .Y(n23) );
   NOR2X1 U20 ( .A(n35), .B(n39), .Y(n24) );
   NOR2X1 U21 ( .A(n36), .B(n39), .Y(n25) );
   NOR2X1 U22 ( .A(n37), .B(n39), .Y(n26) );
-  OR2X1 U23 ( .A(n34), .B(n40), .Y(n27) );
   NOR2X1 U24 ( .A(n35), .B(n40), .Y(n28) );
   NOR2X1 U25 ( .A(n36), .B(n40), .Y(n29) );
   NOR2X1 U26 ( .A(n37), .B(n40), .Y(n30) );
-  OR2X1 U27 ( .A(n34), .B(n41), .Y(n31) );
   NOR2X1 U28 ( .A(n35), .B(n41), .Y(n32) );
   NOR2X1 U29 ( .A(n36), .B(n41), .Y(n33) );
   NOR2X1 U30 ( .A(n37), .B(n41), .Y(product[0]) );
-  CLKINVX1 U41 ( .A(b[0]), .Y(n37) );
-  CLKINVX1 U42 ( .A(b[1]), .Y(n36) );
-  CLKINVX1 U43 ( .A(b[2]), .Y(n35) );
-  CLKINVX1 U44 ( .A(b[3]), .Y(n34) );
-  CLKINVX1 U45 ( .A(a[0]), .Y(n41) );
-  CLKINVX1 U46 ( .A(a[1]), .Y(n40) );
-  CLKINVX1 U47 ( .A(a[2]), .Y(n39) );
-  CLKINVX1 U48 ( .A(a[3]), .Y(n38) );
+  NAND2X1 U41 ( .A(b[3]), .B(a[1]), .Y(n27) );
+  NAND2X1 U42 ( .A(b[3]), .B(a[0]), .Y(n31) );
+  NAND2X1 U43 ( .A(b[1]), .B(a[3]), .Y(n21) );
+  NAND2X1 U44 ( .A(b[2]), .B(a[3]), .Y(n20) );
+  CLKINVX1 U45 ( .A(b[0]), .Y(n37) );
+  CLKINVX1 U46 ( .A(b[1]), .Y(n36) );
+  CLKINVX1 U47 ( .A(b[2]), .Y(n35) );
+  CLKINVX1 U48 ( .A(b[3]), .Y(n34) );
+  CLKINVX1 U49 ( .A(a[0]), .Y(n41) );
+  CLKINVX1 U50 ( .A(a[1]), .Y(n40) );
+  CLKINVX1 U51 ( .A(a[2]), .Y(n39) );
+  CLKINVX1 U52 ( .A(a[3]), .Y(n38) );
 endmodule
 
 
@@ -11850,29 +11786,29 @@ module vec_product_BIT_WIDTH4_VEC_SIZE64_DW_mult_tc_115 ( a, b, product );
   ADDHXL U13 ( .A(n25), .B(n28), .CO(n15), .S(n16) );
   ADDHXL U14 ( .A(n32), .B(n29), .CO(n17), .S(n18) );
   NOR2X1 U15 ( .A(n34), .B(n38), .Y(n19) );
-  OR2X1 U16 ( .A(n35), .B(n38), .Y(n20) );
-  OR2X1 U17 ( .A(n36), .B(n38), .Y(n21) );
-  OR2X1 U18 ( .A(n37), .B(n38), .Y(n22) );
   OR2X1 U19 ( .A(n34), .B(n39), .Y(n23) );
   NOR2X1 U20 ( .A(n35), .B(n39), .Y(n24) );
   NOR2X1 U21 ( .A(n36), .B(n39), .Y(n25) );
   NOR2X1 U22 ( .A(n37), .B(n39), .Y(n26) );
-  OR2X1 U23 ( .A(n34), .B(n40), .Y(n27) );
   NOR2X1 U24 ( .A(n35), .B(n40), .Y(n28) );
   NOR2X1 U25 ( .A(n36), .B(n40), .Y(n29) );
   NOR2X1 U26 ( .A(n37), .B(n40), .Y(n30) );
-  OR2X1 U27 ( .A(n34), .B(n41), .Y(n31) );
   NOR2X1 U28 ( .A(n35), .B(n41), .Y(n32) );
   NOR2X1 U29 ( .A(n36), .B(n41), .Y(n33) );
   NOR2X1 U30 ( .A(n37), .B(n41), .Y(product[0]) );
-  CLKINVX1 U41 ( .A(b[0]), .Y(n37) );
-  CLKINVX1 U42 ( .A(b[1]), .Y(n36) );
-  CLKINVX1 U43 ( .A(b[2]), .Y(n35) );
-  CLKINVX1 U44 ( .A(b[3]), .Y(n34) );
-  CLKINVX1 U45 ( .A(a[0]), .Y(n41) );
-  CLKINVX1 U46 ( .A(a[1]), .Y(n40) );
-  CLKINVX1 U47 ( .A(a[2]), .Y(n39) );
-  CLKINVX1 U48 ( .A(a[3]), .Y(n38) );
+  NAND2X1 U41 ( .A(b[3]), .B(a[1]), .Y(n27) );
+  NAND2X1 U42 ( .A(b[3]), .B(a[0]), .Y(n31) );
+  NAND2X1 U43 ( .A(b[0]), .B(a[3]), .Y(n22) );
+  NAND2X1 U44 ( .A(b[1]), .B(a[3]), .Y(n21) );
+  NAND2X1 U45 ( .A(b[2]), .B(a[3]), .Y(n20) );
+  CLKINVX1 U46 ( .A(b[0]), .Y(n37) );
+  CLKINVX1 U47 ( .A(b[1]), .Y(n36) );
+  CLKINVX1 U48 ( .A(b[2]), .Y(n35) );
+  CLKINVX1 U49 ( .A(b[3]), .Y(n34) );
+  CLKINVX1 U50 ( .A(a[0]), .Y(n41) );
+  CLKINVX1 U51 ( .A(a[1]), .Y(n40) );
+  CLKINVX1 U52 ( .A(a[2]), .Y(n39) );
+  CLKINVX1 U53 ( .A(a[3]), .Y(n38) );
 endmodule
 
 
@@ -11899,29 +11835,29 @@ module vec_product_BIT_WIDTH4_VEC_SIZE64_DW_mult_tc_116 ( a, b, product );
   ADDHXL U13 ( .A(n25), .B(n28), .CO(n15), .S(n16) );
   ADDHXL U14 ( .A(n32), .B(n29), .CO(n17), .S(n18) );
   NOR2X1 U15 ( .A(n34), .B(n38), .Y(n19) );
-  OR2X1 U16 ( .A(n35), .B(n38), .Y(n20) );
-  OR2X1 U17 ( .A(n36), .B(n38), .Y(n21) );
   OR2X1 U18 ( .A(n37), .B(n38), .Y(n22) );
   OR2X1 U19 ( .A(n34), .B(n39), .Y(n23) );
   NOR2X1 U20 ( .A(n35), .B(n39), .Y(n24) );
   NOR2X1 U21 ( .A(n36), .B(n39), .Y(n25) );
   NOR2X1 U22 ( .A(n37), .B(n39), .Y(n26) );
-  OR2X1 U23 ( .A(n34), .B(n40), .Y(n27) );
   NOR2X1 U24 ( .A(n35), .B(n40), .Y(n28) );
   NOR2X1 U25 ( .A(n36), .B(n40), .Y(n29) );
   NOR2X1 U26 ( .A(n37), .B(n40), .Y(n30) );
-  OR2X1 U27 ( .A(n34), .B(n41), .Y(n31) );
   NOR2X1 U28 ( .A(n35), .B(n41), .Y(n32) );
   NOR2X1 U29 ( .A(n36), .B(n41), .Y(n33) );
   NOR2X1 U30 ( .A(n37), .B(n41), .Y(product[0]) );
-  CLKINVX1 U41 ( .A(b[0]), .Y(n37) );
-  CLKINVX1 U42 ( .A(b[1]), .Y(n36) );
-  CLKINVX1 U43 ( .A(b[2]), .Y(n35) );
-  CLKINVX1 U44 ( .A(b[3]), .Y(n34) );
-  CLKINVX1 U45 ( .A(a[0]), .Y(n41) );
-  CLKINVX1 U46 ( .A(a[1]), .Y(n40) );
-  CLKINVX1 U47 ( .A(a[2]), .Y(n39) );
-  CLKINVX1 U48 ( .A(a[3]), .Y(n38) );
+  NAND2X1 U41 ( .A(b[3]), .B(a[1]), .Y(n27) );
+  NAND2X1 U42 ( .A(b[3]), .B(a[0]), .Y(n31) );
+  NAND2X1 U43 ( .A(b[1]), .B(a[3]), .Y(n21) );
+  NAND2X1 U44 ( .A(b[2]), .B(a[3]), .Y(n20) );
+  CLKINVX1 U45 ( .A(b[0]), .Y(n37) );
+  CLKINVX1 U46 ( .A(b[1]), .Y(n36) );
+  CLKINVX1 U47 ( .A(b[2]), .Y(n35) );
+  CLKINVX1 U48 ( .A(b[3]), .Y(n34) );
+  CLKINVX1 U49 ( .A(a[0]), .Y(n41) );
+  CLKINVX1 U50 ( .A(a[1]), .Y(n40) );
+  CLKINVX1 U51 ( .A(a[2]), .Y(n39) );
+  CLKINVX1 U52 ( .A(a[3]), .Y(n38) );
 endmodule
 
 
@@ -11948,29 +11884,29 @@ module vec_product_BIT_WIDTH4_VEC_SIZE64_DW_mult_tc_117 ( a, b, product );
   ADDHXL U13 ( .A(n25), .B(n28), .CO(n15), .S(n16) );
   ADDHXL U14 ( .A(n32), .B(n29), .CO(n17), .S(n18) );
   NOR2X1 U15 ( .A(n34), .B(n38), .Y(n19) );
-  OR2X1 U16 ( .A(n35), .B(n38), .Y(n20) );
-  OR2X1 U17 ( .A(n36), .B(n38), .Y(n21) );
-  OR2X1 U18 ( .A(n37), .B(n38), .Y(n22) );
   OR2X1 U19 ( .A(n34), .B(n39), .Y(n23) );
   NOR2X1 U20 ( .A(n35), .B(n39), .Y(n24) );
   NOR2X1 U21 ( .A(n36), .B(n39), .Y(n25) );
   NOR2X1 U22 ( .A(n37), .B(n39), .Y(n26) );
-  OR2X1 U23 ( .A(n34), .B(n40), .Y(n27) );
   NOR2X1 U24 ( .A(n35), .B(n40), .Y(n28) );
   NOR2X1 U25 ( .A(n36), .B(n40), .Y(n29) );
   NOR2X1 U26 ( .A(n37), .B(n40), .Y(n30) );
-  OR2X1 U27 ( .A(n34), .B(n41), .Y(n31) );
   NOR2X1 U28 ( .A(n35), .B(n41), .Y(n32) );
   NOR2X1 U29 ( .A(n36), .B(n41), .Y(n33) );
   NOR2X1 U30 ( .A(n37), .B(n41), .Y(product[0]) );
-  CLKINVX1 U41 ( .A(b[0]), .Y(n37) );
-  CLKINVX1 U42 ( .A(b[1]), .Y(n36) );
-  CLKINVX1 U43 ( .A(b[2]), .Y(n35) );
-  CLKINVX1 U44 ( .A(b[3]), .Y(n34) );
-  CLKINVX1 U45 ( .A(a[0]), .Y(n41) );
-  CLKINVX1 U46 ( .A(a[1]), .Y(n40) );
-  CLKINVX1 U47 ( .A(a[2]), .Y(n39) );
-  CLKINVX1 U48 ( .A(a[3]), .Y(n38) );
+  NAND2X1 U41 ( .A(b[3]), .B(a[0]), .Y(n31) );
+  NAND2X1 U42 ( .A(b[3]), .B(a[1]), .Y(n27) );
+  NAND2X1 U43 ( .A(b[0]), .B(a[3]), .Y(n22) );
+  NAND2X1 U44 ( .A(b[1]), .B(a[3]), .Y(n21) );
+  NAND2X1 U45 ( .A(b[2]), .B(a[3]), .Y(n20) );
+  CLKINVX1 U46 ( .A(b[0]), .Y(n37) );
+  CLKINVX1 U47 ( .A(b[1]), .Y(n36) );
+  CLKINVX1 U48 ( .A(b[2]), .Y(n35) );
+  CLKINVX1 U49 ( .A(b[3]), .Y(n34) );
+  CLKINVX1 U50 ( .A(a[0]), .Y(n41) );
+  CLKINVX1 U51 ( .A(a[1]), .Y(n40) );
+  CLKINVX1 U52 ( .A(a[2]), .Y(n39) );
+  CLKINVX1 U53 ( .A(a[3]), .Y(n38) );
 endmodule
 
 
@@ -11997,29 +11933,29 @@ module vec_product_BIT_WIDTH4_VEC_SIZE64_DW_mult_tc_118 ( a, b, product );
   ADDHXL U13 ( .A(n25), .B(n28), .CO(n15), .S(n16) );
   ADDHXL U14 ( .A(n32), .B(n29), .CO(n17), .S(n18) );
   NOR2X1 U15 ( .A(n34), .B(n38), .Y(n19) );
-  OR2X1 U16 ( .A(n35), .B(n38), .Y(n20) );
-  OR2X1 U17 ( .A(n36), .B(n38), .Y(n21) );
   OR2X1 U18 ( .A(n37), .B(n38), .Y(n22) );
   OR2X1 U19 ( .A(n34), .B(n39), .Y(n23) );
   NOR2X1 U20 ( .A(n35), .B(n39), .Y(n24) );
   NOR2X1 U21 ( .A(n36), .B(n39), .Y(n25) );
   NOR2X1 U22 ( .A(n37), .B(n39), .Y(n26) );
-  OR2X1 U23 ( .A(n34), .B(n40), .Y(n27) );
   NOR2X1 U24 ( .A(n35), .B(n40), .Y(n28) );
   NOR2X1 U25 ( .A(n36), .B(n40), .Y(n29) );
   NOR2X1 U26 ( .A(n37), .B(n40), .Y(n30) );
-  OR2X1 U27 ( .A(n34), .B(n41), .Y(n31) );
   NOR2X1 U28 ( .A(n35), .B(n41), .Y(n32) );
   NOR2X1 U29 ( .A(n36), .B(n41), .Y(n33) );
   NOR2X1 U30 ( .A(n37), .B(n41), .Y(product[0]) );
-  CLKINVX1 U41 ( .A(b[0]), .Y(n37) );
-  CLKINVX1 U42 ( .A(b[1]), .Y(n36) );
-  CLKINVX1 U43 ( .A(b[2]), .Y(n35) );
-  CLKINVX1 U44 ( .A(b[3]), .Y(n34) );
-  CLKINVX1 U45 ( .A(a[0]), .Y(n41) );
-  CLKINVX1 U46 ( .A(a[1]), .Y(n40) );
-  CLKINVX1 U47 ( .A(a[2]), .Y(n39) );
-  CLKINVX1 U48 ( .A(a[3]), .Y(n38) );
+  NAND2X1 U41 ( .A(b[3]), .B(a[1]), .Y(n27) );
+  NAND2X1 U42 ( .A(b[3]), .B(a[0]), .Y(n31) );
+  NAND2X1 U43 ( .A(b[1]), .B(a[3]), .Y(n21) );
+  NAND2X1 U44 ( .A(b[2]), .B(a[3]), .Y(n20) );
+  CLKINVX1 U45 ( .A(b[0]), .Y(n37) );
+  CLKINVX1 U46 ( .A(b[1]), .Y(n36) );
+  CLKINVX1 U47 ( .A(b[2]), .Y(n35) );
+  CLKINVX1 U48 ( .A(b[3]), .Y(n34) );
+  CLKINVX1 U49 ( .A(a[0]), .Y(n41) );
+  CLKINVX1 U50 ( .A(a[1]), .Y(n40) );
+  CLKINVX1 U51 ( .A(a[2]), .Y(n39) );
+  CLKINVX1 U52 ( .A(a[3]), .Y(n38) );
 endmodule
 
 
@@ -12046,29 +11982,29 @@ module vec_product_BIT_WIDTH4_VEC_SIZE64_DW_mult_tc_119 ( a, b, product );
   ADDHXL U13 ( .A(n25), .B(n28), .CO(n15), .S(n16) );
   ADDHXL U14 ( .A(n32), .B(n29), .CO(n17), .S(n18) );
   NOR2X1 U15 ( .A(n34), .B(n38), .Y(n19) );
-  OR2X1 U16 ( .A(n35), .B(n38), .Y(n20) );
-  OR2X1 U17 ( .A(n36), .B(n38), .Y(n21) );
-  OR2X1 U18 ( .A(n37), .B(n38), .Y(n22) );
   OR2X1 U19 ( .A(n34), .B(n39), .Y(n23) );
   NOR2X1 U20 ( .A(n35), .B(n39), .Y(n24) );
   NOR2X1 U21 ( .A(n36), .B(n39), .Y(n25) );
   NOR2X1 U22 ( .A(n37), .B(n39), .Y(n26) );
-  OR2X1 U23 ( .A(n34), .B(n40), .Y(n27) );
   NOR2X1 U24 ( .A(n35), .B(n40), .Y(n28) );
   NOR2X1 U25 ( .A(n36), .B(n40), .Y(n29) );
   NOR2X1 U26 ( .A(n37), .B(n40), .Y(n30) );
-  OR2X1 U27 ( .A(n34), .B(n41), .Y(n31) );
   NOR2X1 U28 ( .A(n35), .B(n41), .Y(n32) );
   NOR2X1 U29 ( .A(n36), .B(n41), .Y(n33) );
   NOR2X1 U30 ( .A(n37), .B(n41), .Y(product[0]) );
-  CLKINVX1 U41 ( .A(b[0]), .Y(n37) );
-  CLKINVX1 U42 ( .A(b[1]), .Y(n36) );
-  CLKINVX1 U43 ( .A(b[2]), .Y(n35) );
-  CLKINVX1 U44 ( .A(b[3]), .Y(n34) );
-  CLKINVX1 U45 ( .A(a[0]), .Y(n41) );
-  CLKINVX1 U46 ( .A(a[1]), .Y(n40) );
-  CLKINVX1 U47 ( .A(a[2]), .Y(n39) );
-  CLKINVX1 U48 ( .A(a[3]), .Y(n38) );
+  NAND2X1 U41 ( .A(b[3]), .B(a[1]), .Y(n27) );
+  NAND2X1 U42 ( .A(b[3]), .B(a[0]), .Y(n31) );
+  NAND2X1 U43 ( .A(b[0]), .B(a[3]), .Y(n22) );
+  NAND2X1 U44 ( .A(b[1]), .B(a[3]), .Y(n21) );
+  NAND2X1 U45 ( .A(b[2]), .B(a[3]), .Y(n20) );
+  CLKINVX1 U46 ( .A(b[0]), .Y(n37) );
+  CLKINVX1 U47 ( .A(b[1]), .Y(n36) );
+  CLKINVX1 U48 ( .A(b[2]), .Y(n35) );
+  CLKINVX1 U49 ( .A(b[3]), .Y(n34) );
+  CLKINVX1 U50 ( .A(a[0]), .Y(n41) );
+  CLKINVX1 U51 ( .A(a[1]), .Y(n40) );
+  CLKINVX1 U52 ( .A(a[2]), .Y(n39) );
+  CLKINVX1 U53 ( .A(a[3]), .Y(n38) );
 endmodule
 
 
@@ -12095,29 +12031,29 @@ module vec_product_BIT_WIDTH4_VEC_SIZE64_DW_mult_tc_120 ( a, b, product );
   ADDHXL U13 ( .A(n25), .B(n28), .CO(n15), .S(n16) );
   ADDHXL U14 ( .A(n32), .B(n29), .CO(n17), .S(n18) );
   NOR2X1 U15 ( .A(n34), .B(n38), .Y(n19) );
-  OR2X1 U16 ( .A(n35), .B(n38), .Y(n20) );
-  OR2X1 U17 ( .A(n36), .B(n38), .Y(n21) );
   OR2X1 U18 ( .A(n37), .B(n38), .Y(n22) );
   OR2X1 U19 ( .A(n34), .B(n39), .Y(n23) );
   NOR2X1 U20 ( .A(n35), .B(n39), .Y(n24) );
   NOR2X1 U21 ( .A(n36), .B(n39), .Y(n25) );
   NOR2X1 U22 ( .A(n37), .B(n39), .Y(n26) );
-  OR2X1 U23 ( .A(n34), .B(n40), .Y(n27) );
   NOR2X1 U24 ( .A(n35), .B(n40), .Y(n28) );
   NOR2X1 U25 ( .A(n36), .B(n40), .Y(n29) );
   NOR2X1 U26 ( .A(n37), .B(n40), .Y(n30) );
-  OR2X1 U27 ( .A(n34), .B(n41), .Y(n31) );
   NOR2X1 U28 ( .A(n35), .B(n41), .Y(n32) );
   NOR2X1 U29 ( .A(n36), .B(n41), .Y(n33) );
   NOR2X1 U30 ( .A(n37), .B(n41), .Y(product[0]) );
-  CLKINVX1 U41 ( .A(b[0]), .Y(n37) );
-  CLKINVX1 U42 ( .A(b[1]), .Y(n36) );
-  CLKINVX1 U43 ( .A(b[2]), .Y(n35) );
-  CLKINVX1 U44 ( .A(b[3]), .Y(n34) );
-  CLKINVX1 U45 ( .A(a[0]), .Y(n41) );
-  CLKINVX1 U46 ( .A(a[1]), .Y(n40) );
-  CLKINVX1 U47 ( .A(a[2]), .Y(n39) );
-  CLKINVX1 U48 ( .A(a[3]), .Y(n38) );
+  NAND2X1 U41 ( .A(b[3]), .B(a[1]), .Y(n27) );
+  NAND2X1 U42 ( .A(b[3]), .B(a[0]), .Y(n31) );
+  NAND2X1 U43 ( .A(b[1]), .B(a[3]), .Y(n21) );
+  NAND2X1 U44 ( .A(b[2]), .B(a[3]), .Y(n20) );
+  CLKINVX1 U45 ( .A(b[0]), .Y(n37) );
+  CLKINVX1 U46 ( .A(b[1]), .Y(n36) );
+  CLKINVX1 U47 ( .A(b[2]), .Y(n35) );
+  CLKINVX1 U48 ( .A(b[3]), .Y(n34) );
+  CLKINVX1 U49 ( .A(a[0]), .Y(n41) );
+  CLKINVX1 U50 ( .A(a[1]), .Y(n40) );
+  CLKINVX1 U51 ( .A(a[2]), .Y(n39) );
+  CLKINVX1 U52 ( .A(a[3]), .Y(n38) );
 endmodule
 
 
@@ -12144,29 +12080,29 @@ module vec_product_BIT_WIDTH4_VEC_SIZE64_DW_mult_tc_121 ( a, b, product );
   ADDHXL U13 ( .A(n25), .B(n28), .CO(n15), .S(n16) );
   ADDHXL U14 ( .A(n32), .B(n29), .CO(n17), .S(n18) );
   NOR2X1 U15 ( .A(n34), .B(n38), .Y(n19) );
-  OR2X1 U16 ( .A(n35), .B(n38), .Y(n20) );
-  OR2X1 U17 ( .A(n36), .B(n38), .Y(n21) );
-  OR2X1 U18 ( .A(n37), .B(n38), .Y(n22) );
   OR2X1 U19 ( .A(n34), .B(n39), .Y(n23) );
   NOR2X1 U20 ( .A(n35), .B(n39), .Y(n24) );
   NOR2X1 U21 ( .A(n36), .B(n39), .Y(n25) );
   NOR2X1 U22 ( .A(n37), .B(n39), .Y(n26) );
-  OR2X1 U23 ( .A(n34), .B(n40), .Y(n27) );
   NOR2X1 U24 ( .A(n35), .B(n40), .Y(n28) );
   NOR2X1 U25 ( .A(n36), .B(n40), .Y(n29) );
   NOR2X1 U26 ( .A(n37), .B(n40), .Y(n30) );
-  OR2X1 U27 ( .A(n34), .B(n41), .Y(n31) );
   NOR2X1 U28 ( .A(n35), .B(n41), .Y(n32) );
   NOR2X1 U29 ( .A(n36), .B(n41), .Y(n33) );
   NOR2X1 U30 ( .A(n37), .B(n41), .Y(product[0]) );
-  CLKINVX1 U41 ( .A(b[0]), .Y(n37) );
-  CLKINVX1 U42 ( .A(b[1]), .Y(n36) );
-  CLKINVX1 U43 ( .A(b[2]), .Y(n35) );
-  CLKINVX1 U44 ( .A(b[3]), .Y(n34) );
-  CLKINVX1 U45 ( .A(a[0]), .Y(n41) );
-  CLKINVX1 U46 ( .A(a[1]), .Y(n40) );
-  CLKINVX1 U47 ( .A(a[2]), .Y(n39) );
-  CLKINVX1 U48 ( .A(a[3]), .Y(n38) );
+  NAND2X1 U41 ( .A(b[3]), .B(a[1]), .Y(n27) );
+  NAND2X1 U42 ( .A(b[3]), .B(a[0]), .Y(n31) );
+  NAND2X1 U43 ( .A(b[0]), .B(a[3]), .Y(n22) );
+  NAND2X1 U44 ( .A(b[2]), .B(a[3]), .Y(n20) );
+  NAND2X1 U45 ( .A(b[1]), .B(a[3]), .Y(n21) );
+  CLKINVX1 U46 ( .A(b[0]), .Y(n37) );
+  CLKINVX1 U47 ( .A(b[1]), .Y(n36) );
+  CLKINVX1 U48 ( .A(b[2]), .Y(n35) );
+  CLKINVX1 U49 ( .A(b[3]), .Y(n34) );
+  CLKINVX1 U50 ( .A(a[0]), .Y(n41) );
+  CLKINVX1 U51 ( .A(a[1]), .Y(n40) );
+  CLKINVX1 U52 ( .A(a[2]), .Y(n39) );
+  CLKINVX1 U53 ( .A(a[3]), .Y(n38) );
 endmodule
 
 
@@ -12193,29 +12129,29 @@ module vec_product_BIT_WIDTH4_VEC_SIZE64_DW_mult_tc_122 ( a, b, product );
   ADDHXL U13 ( .A(n25), .B(n28), .CO(n15), .S(n16) );
   ADDHXL U14 ( .A(n32), .B(n29), .CO(n17), .S(n18) );
   NOR2X1 U15 ( .A(n34), .B(n38), .Y(n19) );
-  OR2X1 U16 ( .A(n35), .B(n38), .Y(n20) );
-  OR2X1 U17 ( .A(n36), .B(n38), .Y(n21) );
   OR2X1 U18 ( .A(n37), .B(n38), .Y(n22) );
   OR2X1 U19 ( .A(n34), .B(n39), .Y(n23) );
   NOR2X1 U20 ( .A(n35), .B(n39), .Y(n24) );
   NOR2X1 U21 ( .A(n36), .B(n39), .Y(n25) );
   NOR2X1 U22 ( .A(n37), .B(n39), .Y(n26) );
-  OR2X1 U23 ( .A(n34), .B(n40), .Y(n27) );
   NOR2X1 U24 ( .A(n35), .B(n40), .Y(n28) );
   NOR2X1 U25 ( .A(n36), .B(n40), .Y(n29) );
   NOR2X1 U26 ( .A(n37), .B(n40), .Y(n30) );
-  OR2X1 U27 ( .A(n34), .B(n41), .Y(n31) );
   NOR2X1 U28 ( .A(n35), .B(n41), .Y(n32) );
   NOR2X1 U29 ( .A(n36), .B(n41), .Y(n33) );
   NOR2X1 U30 ( .A(n37), .B(n41), .Y(product[0]) );
-  CLKINVX1 U41 ( .A(b[1]), .Y(n36) );
-  CLKINVX1 U42 ( .A(b[0]), .Y(n37) );
-  CLKINVX1 U43 ( .A(b[2]), .Y(n35) );
-  CLKINVX1 U44 ( .A(b[3]), .Y(n34) );
-  CLKINVX1 U45 ( .A(a[0]), .Y(n41) );
-  CLKINVX1 U46 ( .A(a[1]), .Y(n40) );
-  CLKINVX1 U47 ( .A(a[2]), .Y(n39) );
-  CLKINVX1 U48 ( .A(a[3]), .Y(n38) );
+  NAND2X1 U41 ( .A(b[3]), .B(a[1]), .Y(n27) );
+  NAND2X1 U42 ( .A(b[3]), .B(a[0]), .Y(n31) );
+  NAND2X1 U43 ( .A(b[1]), .B(a[3]), .Y(n21) );
+  NAND2X1 U44 ( .A(b[2]), .B(a[3]), .Y(n20) );
+  CLKINVX1 U45 ( .A(b[1]), .Y(n36) );
+  CLKINVX1 U46 ( .A(b[0]), .Y(n37) );
+  CLKINVX1 U47 ( .A(b[2]), .Y(n35) );
+  CLKINVX1 U48 ( .A(b[3]), .Y(n34) );
+  CLKINVX1 U49 ( .A(a[0]), .Y(n41) );
+  CLKINVX1 U50 ( .A(a[1]), .Y(n40) );
+  CLKINVX1 U51 ( .A(a[2]), .Y(n39) );
+  CLKINVX1 U52 ( .A(a[3]), .Y(n38) );
 endmodule
 
 
@@ -12242,29 +12178,29 @@ module vec_product_BIT_WIDTH4_VEC_SIZE64_DW_mult_tc_123 ( a, b, product );
   ADDHXL U13 ( .A(n25), .B(n28), .CO(n15), .S(n16) );
   ADDHXL U14 ( .A(n32), .B(n29), .CO(n17), .S(n18) );
   NOR2X1 U15 ( .A(n34), .B(n38), .Y(n19) );
-  OR2X1 U16 ( .A(n35), .B(n38), .Y(n20) );
-  OR2X1 U17 ( .A(n36), .B(n38), .Y(n21) );
-  OR2X1 U18 ( .A(n37), .B(n38), .Y(n22) );
   OR2X1 U19 ( .A(n34), .B(n39), .Y(n23) );
   NOR2X1 U20 ( .A(n35), .B(n39), .Y(n24) );
   NOR2X1 U21 ( .A(n36), .B(n39), .Y(n25) );
   NOR2X1 U22 ( .A(n37), .B(n39), .Y(n26) );
-  OR2X1 U23 ( .A(n34), .B(n40), .Y(n27) );
   NOR2X1 U24 ( .A(n35), .B(n40), .Y(n28) );
   NOR2X1 U25 ( .A(n36), .B(n40), .Y(n29) );
   NOR2X1 U26 ( .A(n37), .B(n40), .Y(n30) );
-  OR2X1 U27 ( .A(n34), .B(n41), .Y(n31) );
   NOR2X1 U28 ( .A(n35), .B(n41), .Y(n32) );
   NOR2X1 U29 ( .A(n36), .B(n41), .Y(n33) );
   NOR2X1 U30 ( .A(n37), .B(n41), .Y(product[0]) );
-  CLKINVX1 U41 ( .A(b[1]), .Y(n36) );
-  CLKINVX1 U42 ( .A(b[0]), .Y(n37) );
-  CLKINVX1 U43 ( .A(b[2]), .Y(n35) );
-  CLKINVX1 U44 ( .A(b[3]), .Y(n34) );
-  CLKINVX1 U45 ( .A(a[0]), .Y(n41) );
-  CLKINVX1 U46 ( .A(a[1]), .Y(n40) );
-  CLKINVX1 U47 ( .A(a[2]), .Y(n39) );
-  CLKINVX1 U48 ( .A(a[3]), .Y(n38) );
+  NAND2X1 U41 ( .A(b[3]), .B(a[1]), .Y(n27) );
+  NAND2X1 U42 ( .A(b[3]), .B(a[0]), .Y(n31) );
+  NAND2X1 U43 ( .A(b[0]), .B(a[3]), .Y(n22) );
+  NAND2X1 U44 ( .A(b[1]), .B(a[3]), .Y(n21) );
+  NAND2X1 U45 ( .A(b[2]), .B(a[3]), .Y(n20) );
+  CLKINVX1 U46 ( .A(b[1]), .Y(n36) );
+  CLKINVX1 U47 ( .A(b[0]), .Y(n37) );
+  CLKINVX1 U48 ( .A(b[2]), .Y(n35) );
+  CLKINVX1 U49 ( .A(b[3]), .Y(n34) );
+  CLKINVX1 U50 ( .A(a[0]), .Y(n41) );
+  CLKINVX1 U51 ( .A(a[1]), .Y(n40) );
+  CLKINVX1 U52 ( .A(a[2]), .Y(n39) );
+  CLKINVX1 U53 ( .A(a[3]), .Y(n38) );
 endmodule
 
 
@@ -12291,29 +12227,29 @@ module vec_product_BIT_WIDTH4_VEC_SIZE64_DW_mult_tc_124 ( a, b, product );
   ADDHXL U13 ( .A(n25), .B(n28), .CO(n15), .S(n16) );
   ADDHXL U14 ( .A(n32), .B(n29), .CO(n17), .S(n18) );
   NOR2X1 U15 ( .A(n34), .B(n38), .Y(n19) );
-  OR2X1 U16 ( .A(n35), .B(n38), .Y(n20) );
-  OR2X1 U17 ( .A(n36), .B(n38), .Y(n21) );
   OR2X1 U18 ( .A(n37), .B(n38), .Y(n22) );
   OR2X1 U19 ( .A(n34), .B(n39), .Y(n23) );
   NOR2X1 U20 ( .A(n35), .B(n39), .Y(n24) );
   NOR2X1 U21 ( .A(n36), .B(n39), .Y(n25) );
   NOR2X1 U22 ( .A(n37), .B(n39), .Y(n26) );
-  OR2X1 U23 ( .A(n34), .B(n40), .Y(n27) );
   NOR2X1 U24 ( .A(n35), .B(n40), .Y(n28) );
   NOR2X1 U25 ( .A(n36), .B(n40), .Y(n29) );
   NOR2X1 U26 ( .A(n37), .B(n40), .Y(n30) );
-  OR2X1 U27 ( .A(n34), .B(n41), .Y(n31) );
   NOR2X1 U28 ( .A(n35), .B(n41), .Y(n32) );
   NOR2X1 U29 ( .A(n36), .B(n41), .Y(n33) );
   NOR2X1 U30 ( .A(n37), .B(n41), .Y(product[0]) );
-  CLKINVX1 U41 ( .A(b[0]), .Y(n37) );
-  CLKINVX1 U42 ( .A(b[1]), .Y(n36) );
-  CLKINVX1 U43 ( .A(b[2]), .Y(n35) );
-  CLKINVX1 U44 ( .A(b[3]), .Y(n34) );
-  CLKINVX1 U45 ( .A(a[0]), .Y(n41) );
-  CLKINVX1 U46 ( .A(a[1]), .Y(n40) );
-  CLKINVX1 U47 ( .A(a[2]), .Y(n39) );
-  CLKINVX1 U48 ( .A(a[3]), .Y(n38) );
+  NAND2X1 U41 ( .A(b[3]), .B(a[1]), .Y(n27) );
+  NAND2X1 U42 ( .A(b[3]), .B(a[0]), .Y(n31) );
+  NAND2X1 U43 ( .A(b[1]), .B(a[3]), .Y(n21) );
+  NAND2X1 U44 ( .A(b[2]), .B(a[3]), .Y(n20) );
+  CLKINVX1 U45 ( .A(b[0]), .Y(n37) );
+  CLKINVX1 U46 ( .A(b[1]), .Y(n36) );
+  CLKINVX1 U47 ( .A(b[2]), .Y(n35) );
+  CLKINVX1 U48 ( .A(b[3]), .Y(n34) );
+  CLKINVX1 U49 ( .A(a[0]), .Y(n41) );
+  CLKINVX1 U50 ( .A(a[1]), .Y(n40) );
+  CLKINVX1 U51 ( .A(a[2]), .Y(n39) );
+  CLKINVX1 U52 ( .A(a[3]), .Y(n38) );
 endmodule
 
 
@@ -12340,29 +12276,29 @@ module vec_product_BIT_WIDTH4_VEC_SIZE64_DW_mult_tc_125 ( a, b, product );
   ADDHXL U13 ( .A(n25), .B(n28), .CO(n15), .S(n16) );
   ADDHXL U14 ( .A(n32), .B(n29), .CO(n17), .S(n18) );
   NOR2X1 U15 ( .A(n34), .B(n38), .Y(n19) );
-  OR2X1 U16 ( .A(n35), .B(n38), .Y(n20) );
-  OR2X1 U17 ( .A(n36), .B(n38), .Y(n21) );
-  OR2X1 U18 ( .A(n37), .B(n38), .Y(n22) );
   OR2X1 U19 ( .A(n34), .B(n39), .Y(n23) );
   NOR2X1 U20 ( .A(n35), .B(n39), .Y(n24) );
   NOR2X1 U21 ( .A(n36), .B(n39), .Y(n25) );
   NOR2X1 U22 ( .A(n37), .B(n39), .Y(n26) );
-  OR2X1 U23 ( .A(n34), .B(n40), .Y(n27) );
   NOR2X1 U24 ( .A(n35), .B(n40), .Y(n28) );
   NOR2X1 U25 ( .A(n36), .B(n40), .Y(n29) );
   NOR2X1 U26 ( .A(n37), .B(n40), .Y(n30) );
-  OR2X1 U27 ( .A(n34), .B(n41), .Y(n31) );
   NOR2X1 U28 ( .A(n35), .B(n41), .Y(n32) );
   NOR2X1 U29 ( .A(n36), .B(n41), .Y(n33) );
   NOR2X1 U30 ( .A(n37), .B(n41), .Y(product[0]) );
-  CLKINVX1 U41 ( .A(b[0]), .Y(n37) );
-  CLKINVX1 U42 ( .A(b[1]), .Y(n36) );
-  CLKINVX1 U43 ( .A(b[2]), .Y(n35) );
-  CLKINVX1 U44 ( .A(b[3]), .Y(n34) );
-  CLKINVX1 U45 ( .A(a[0]), .Y(n41) );
-  CLKINVX1 U46 ( .A(a[1]), .Y(n40) );
-  CLKINVX1 U47 ( .A(a[2]), .Y(n39) );
-  CLKINVX1 U48 ( .A(a[3]), .Y(n38) );
+  NAND2X1 U41 ( .A(b[3]), .B(a[1]), .Y(n27) );
+  NAND2X1 U42 ( .A(b[3]), .B(a[0]), .Y(n31) );
+  NAND2X1 U43 ( .A(b[0]), .B(a[3]), .Y(n22) );
+  NAND2X1 U44 ( .A(b[1]), .B(a[3]), .Y(n21) );
+  NAND2X1 U45 ( .A(b[2]), .B(a[3]), .Y(n20) );
+  CLKINVX1 U46 ( .A(b[0]), .Y(n37) );
+  CLKINVX1 U47 ( .A(b[1]), .Y(n36) );
+  CLKINVX1 U48 ( .A(b[2]), .Y(n35) );
+  CLKINVX1 U49 ( .A(b[3]), .Y(n34) );
+  CLKINVX1 U50 ( .A(a[0]), .Y(n41) );
+  CLKINVX1 U51 ( .A(a[1]), .Y(n40) );
+  CLKINVX1 U52 ( .A(a[2]), .Y(n39) );
+  CLKINVX1 U53 ( .A(a[3]), .Y(n38) );
 endmodule
 
 
@@ -12389,29 +12325,29 @@ module vec_product_BIT_WIDTH4_VEC_SIZE64_DW_mult_tc_126 ( a, b, product );
   ADDHXL U13 ( .A(n25), .B(n28), .CO(n15), .S(n16) );
   ADDHXL U14 ( .A(n32), .B(n29), .CO(n17), .S(n18) );
   NOR2X1 U15 ( .A(n34), .B(n38), .Y(n19) );
-  OR2X1 U16 ( .A(n35), .B(n38), .Y(n20) );
-  OR2X1 U17 ( .A(n36), .B(n38), .Y(n21) );
   OR2X1 U18 ( .A(n37), .B(n38), .Y(n22) );
   OR2X1 U19 ( .A(n34), .B(n39), .Y(n23) );
   NOR2X1 U20 ( .A(n35), .B(n39), .Y(n24) );
   NOR2X1 U21 ( .A(n36), .B(n39), .Y(n25) );
   NOR2X1 U22 ( .A(n37), .B(n39), .Y(n26) );
-  OR2X1 U23 ( .A(n34), .B(n40), .Y(n27) );
   NOR2X1 U24 ( .A(n35), .B(n40), .Y(n28) );
   NOR2X1 U25 ( .A(n36), .B(n40), .Y(n29) );
   NOR2X1 U26 ( .A(n37), .B(n40), .Y(n30) );
-  OR2X1 U27 ( .A(n34), .B(n41), .Y(n31) );
   NOR2X1 U28 ( .A(n35), .B(n41), .Y(n32) );
   NOR2X1 U29 ( .A(n36), .B(n41), .Y(n33) );
   NOR2X1 U30 ( .A(n37), .B(n41), .Y(product[0]) );
-  CLKINVX1 U41 ( .A(b[0]), .Y(n37) );
-  CLKINVX1 U42 ( .A(b[1]), .Y(n36) );
-  CLKINVX1 U43 ( .A(b[2]), .Y(n35) );
-  CLKINVX1 U44 ( .A(b[3]), .Y(n34) );
-  CLKINVX1 U45 ( .A(a[0]), .Y(n41) );
-  CLKINVX1 U46 ( .A(a[1]), .Y(n40) );
-  CLKINVX1 U47 ( .A(a[2]), .Y(n39) );
-  CLKINVX1 U48 ( .A(a[3]), .Y(n38) );
+  NAND2X1 U41 ( .A(b[3]), .B(a[1]), .Y(n27) );
+  NAND2X1 U42 ( .A(b[3]), .B(a[0]), .Y(n31) );
+  NAND2X1 U43 ( .A(b[1]), .B(a[3]), .Y(n21) );
+  NAND2X1 U44 ( .A(b[2]), .B(a[3]), .Y(n20) );
+  CLKINVX1 U45 ( .A(b[0]), .Y(n37) );
+  CLKINVX1 U46 ( .A(b[1]), .Y(n36) );
+  CLKINVX1 U47 ( .A(b[2]), .Y(n35) );
+  CLKINVX1 U48 ( .A(b[3]), .Y(n34) );
+  CLKINVX1 U49 ( .A(a[0]), .Y(n41) );
+  CLKINVX1 U50 ( .A(a[1]), .Y(n40) );
+  CLKINVX1 U51 ( .A(a[2]), .Y(n39) );
+  CLKINVX1 U52 ( .A(a[3]), .Y(n38) );
 endmodule
 
 
@@ -12438,29 +12374,29 @@ module vec_product_BIT_WIDTH4_VEC_SIZE64_DW_mult_tc_127 ( a, b, product );
   ADDHXL U13 ( .A(n25), .B(n28), .CO(n15), .S(n16) );
   ADDHXL U14 ( .A(n32), .B(n29), .CO(n17), .S(n18) );
   NOR2X1 U15 ( .A(n34), .B(n38), .Y(n19) );
-  OR2X1 U16 ( .A(n35), .B(n38), .Y(n20) );
-  OR2X1 U17 ( .A(n36), .B(n38), .Y(n21) );
-  OR2X1 U18 ( .A(n37), .B(n38), .Y(n22) );
   OR2X1 U19 ( .A(n34), .B(n39), .Y(n23) );
   NOR2X1 U20 ( .A(n35), .B(n39), .Y(n24) );
   NOR2X1 U21 ( .A(n36), .B(n39), .Y(n25) );
   NOR2X1 U22 ( .A(n37), .B(n39), .Y(n26) );
-  OR2X1 U23 ( .A(n34), .B(n40), .Y(n27) );
   NOR2X1 U24 ( .A(n35), .B(n40), .Y(n28) );
   NOR2X1 U25 ( .A(n36), .B(n40), .Y(n29) );
   NOR2X1 U26 ( .A(n37), .B(n40), .Y(n30) );
-  OR2X1 U27 ( .A(n34), .B(n41), .Y(n31) );
   NOR2X1 U28 ( .A(n35), .B(n41), .Y(n32) );
   NOR2X1 U29 ( .A(n36), .B(n41), .Y(n33) );
   NOR2X1 U30 ( .A(n37), .B(n41), .Y(product[0]) );
-  CLKINVX1 U41 ( .A(b[0]), .Y(n37) );
-  CLKINVX1 U42 ( .A(b[1]), .Y(n36) );
-  CLKINVX1 U43 ( .A(b[2]), .Y(n35) );
-  CLKINVX1 U44 ( .A(b[3]), .Y(n34) );
-  CLKINVX1 U45 ( .A(a[0]), .Y(n41) );
-  CLKINVX1 U46 ( .A(a[1]), .Y(n40) );
-  CLKINVX1 U47 ( .A(a[2]), .Y(n39) );
-  CLKINVX1 U48 ( .A(a[3]), .Y(n38) );
+  NAND2X1 U41 ( .A(b[3]), .B(a[1]), .Y(n27) );
+  NAND2X1 U42 ( .A(b[3]), .B(a[0]), .Y(n31) );
+  NAND2X1 U43 ( .A(b[0]), .B(a[3]), .Y(n22) );
+  NAND2X1 U44 ( .A(b[1]), .B(a[3]), .Y(n21) );
+  NAND2X1 U45 ( .A(b[2]), .B(a[3]), .Y(n20) );
+  CLKINVX1 U46 ( .A(b[0]), .Y(n37) );
+  CLKINVX1 U47 ( .A(b[1]), .Y(n36) );
+  CLKINVX1 U48 ( .A(b[2]), .Y(n35) );
+  CLKINVX1 U49 ( .A(b[3]), .Y(n34) );
+  CLKINVX1 U50 ( .A(a[0]), .Y(n41) );
+  CLKINVX1 U51 ( .A(a[1]), .Y(n40) );
+  CLKINVX1 U52 ( .A(a[2]), .Y(n39) );
+  CLKINVX1 U53 ( .A(a[3]), .Y(n38) );
 endmodule
 
 
@@ -12778,7 +12714,7 @@ module vec_product_BIT_WIDTH4_VEC_SIZE64 ( i_a, i_b, o_product );
          n841, n842, n843, n844, n845, n846, n847, n848, n849, n850, n851,
          n852, n853, n854, n855, n856, n857, n858, n859, n860, n861, n862,
          n863, n864, n865, n866, n867, n868, n869, n870, n871, n872, n873,
-         n874, n875, n876, n877, n878, n879, n880, n881;
+         n874, n875;
 
   vec_product_BIT_WIDTH4_VEC_SIZE64_DW01_add_0_DW01_add_4 add_0_root_add_61_G6 ( 
         .A({n288, n289, n290, n291, n292, n293, n294, n295, n296, n297, n299, 
@@ -13433,788 +13369,782 @@ module vec_product_BIT_WIDTH4_VEC_SIZE64 ( i_a, i_b, o_product );
         i_a[255:252]), .b(i_b[255:252]), .product({\mult[63][7] , 
         \mult[63][6] , \mult[63][5] , \mult[63][4] , \mult[63][3] , 
         \mult[63][2] , \mult[63][1] , \mult[63][0] }) );
-  XNOR2X1 U2 ( .A(n2), .B(n6), .Y(\tree_sums[4][2][7] ) );
-  XNOR2X1 U6 ( .A(n8), .B(n9), .Y(\tree_sums[4][2][6] ) );
-  XNOR2X1 U8 ( .A(\mult[58][6] ), .B(\mult[59][6] ), .Y(n8) );
-  XNOR2X1 U9 ( .A(n11), .B(n13), .Y(\tree_sums[4][2][5] ) );
-  XNOR2X1 U11 ( .A(\mult[58][5] ), .B(\mult[59][5] ), .Y(n11) );
-  XNOR2X1 U13 ( .A(n19), .B(n24), .Y(\tree_sums[4][2][4] ) );
-  XNOR2X1 U19 ( .A(\mult[58][4] ), .B(\mult[59][4] ), .Y(n19) );
-  XNOR2X1 U24 ( .A(n26), .B(n31), .Y(\tree_sums[4][2][3] ) );
-  XNOR2X1 U26 ( .A(\mult[58][3] ), .B(\mult[59][3] ), .Y(n26) );
-  XNOR2X1 U31 ( .A(n35), .B(n36), .Y(\tree_sums[4][2][2] ) );
-  XNOR2X1 U35 ( .A(\mult[58][2] ), .B(\mult[59][2] ), .Y(n35) );
-  XOR2X1 U36 ( .A(n38), .B(n39), .Y(\tree_sums[4][2][1] ) );
-  XNOR2X1 U38 ( .A(\mult[58][1] ), .B(\mult[59][1] ), .Y(n39) );
-  XNOR2X1 U39 ( .A(n45), .B(n47), .Y(\tree_sums[4][2][9] ) );
-  CLKINVX1 U45 ( .A(n2), .Y(n47) );
-  NOR2BX1 U47 ( .AN(n48), .B(n49), .Y(n2) );
-  OAI21XL U48 ( .A0(n6), .A1(n49), .B0(n48), .Y(n45) );
-  NAND2X1 U49 ( .A(\mult[59][7] ), .B(\mult[58][7] ), .Y(n48) );
-  NOR2X1 U55 ( .A(\mult[59][7] ), .B(\mult[58][7] ), .Y(n49) );
-  AOI2BB2X1 U64 ( .B0(n55), .B1(\mult[59][6] ), .A0N(n95), .A1N(n96), .Y(n6)
+  XNOR2X1 U2 ( .A(n868), .B(n845), .Y(n867) );
+  OAI21XL U6 ( .A0(n2), .A1(n97), .B0(n96), .Y(\tree_sums[4][2][9] ) );
+  CLKINVX1 U8 ( .A(n24), .Y(n2) );
+  OAI21XL U9 ( .A0(n6), .A1(n502), .B0(n501), .Y(\tree_sums[3][5][9] ) );
+  CLKINVX1 U11 ( .A(n488), .Y(n6) );
+  OAI21XL U13 ( .A0(n8), .A1(n452), .B0(n451), .Y(\tree_sums[3][7][9] ) );
+  CLKINVX1 U19 ( .A(n438), .Y(n8) );
+  OAI21XL U24 ( .A0(n9), .A1(n527), .B0(n526), .Y(\tree_sums[3][4][9] ) );
+  CLKINVX1 U26 ( .A(n513), .Y(n9) );
+  OAI21XL U31 ( .A0(n11), .A1(n477), .B0(n476), .Y(\tree_sums[3][6][9] ) );
+  CLKINVX1 U35 ( .A(n463), .Y(n11) );
+  OAI21XL U36 ( .A0(n13), .A1(n842), .B0(n843), .Y(
+        \add_15_root_add_61_G6/SUM[9] ) );
+  CLKINVX1 U38 ( .A(n820), .Y(n13) );
+  XNOR2X1 U39 ( .A(n19), .B(n24), .Y(\tree_sums[4][2][7] ) );
+  XNOR2X1 U45 ( .A(n26), .B(n31), .Y(\tree_sums[4][2][6] ) );
+  XNOR2X1 U47 ( .A(\mult[58][6] ), .B(\mult[59][6] ), .Y(n26) );
+  XNOR2X1 U48 ( .A(n35), .B(n36), .Y(\tree_sums[4][2][5] ) );
+  XNOR2X1 U49 ( .A(\mult[58][5] ), .B(\mult[59][5] ), .Y(n35) );
+  XNOR2X1 U55 ( .A(n38), .B(n39), .Y(\tree_sums[4][2][4] ) );
+  XNOR2X1 U64 ( .A(\mult[58][4] ), .B(\mult[59][4] ), .Y(n38) );
+  XNOR2X1 U65 ( .A(n45), .B(n47), .Y(\tree_sums[4][2][3] ) );
+  XNOR2X1 U66 ( .A(\mult[58][3] ), .B(\mult[59][3] ), .Y(n45) );
+  XNOR2X1 U67 ( .A(n48), .B(n49), .Y(\tree_sums[4][2][2] ) );
+  XNOR2X1 U68 ( .A(\mult[58][2] ), .B(\mult[59][2] ), .Y(n48) );
+  XOR2X1 U69 ( .A(n55), .B(n95), .Y(\tree_sums[4][2][1] ) );
+  XNOR2X1 U70 ( .A(\mult[58][1] ), .B(\mult[59][1] ), .Y(n95) );
+  NOR2BX1 U71 ( .AN(n96), .B(n97), .Y(n19) );
+  NAND2X1 U72 ( .A(\mult[59][7] ), .B(\mult[58][7] ), .Y(n96) );
+  NOR2X1 U73 ( .A(\mult[59][7] ), .B(\mult[58][7] ), .Y(n97) );
+  AOI2BB2X1 U74 ( .B0(n99), .B1(\mult[59][6] ), .A0N(n100), .A1N(n101), .Y(n24) );
+  NAND2X1 U75 ( .A(n101), .B(n100), .Y(n99) );
+  CLKINVX1 U76 ( .A(n31), .Y(n100) );
+  OAI2BB1X1 U77 ( .A0N(n36), .A1N(\mult[58][5] ), .B0(n102), .Y(n31) );
+  OAI21XL U78 ( .A0(\mult[58][5] ), .A1(n36), .B0(\mult[59][5] ), .Y(n102) );
+  OAI2BB1X1 U79 ( .A0N(n39), .A1N(\mult[58][4] ), .B0(n103), .Y(n36) );
+  OAI21XL U80 ( .A0(\mult[58][4] ), .A1(n39), .B0(\mult[59][4] ), .Y(n103) );
+  AO22X1 U81 ( .A0(n47), .A1(\mult[58][3] ), .B0(n104), .B1(\mult[59][3] ), 
+        .Y(n39) );
+  OR2X1 U82 ( .A(\mult[58][3] ), .B(n47), .Y(n104) );
+  OAI2BB1X1 U83 ( .A0N(n49), .A1N(\mult[58][2] ), .B0(n105), .Y(n47) );
+  OAI21XL U84 ( .A0(\mult[58][2] ), .A1(n49), .B0(\mult[59][2] ), .Y(n105) );
+  OAI21XL U85 ( .A0(n55), .A1(n106), .B0(n107), .Y(n49) );
+  OAI2BB1X1 U86 ( .A0N(n55), .A1N(n106), .B0(\mult[59][1] ), .Y(n107) );
+  CLKINVX1 U87 ( .A(\mult[58][1] ), .Y(n106) );
+  NAND2X1 U88 ( .A(\mult[59][0] ), .B(\mult[58][0] ), .Y(n55) );
+  CLKINVX1 U89 ( .A(\mult[58][6] ), .Y(n101) );
+  XOR2X1 U90 ( .A(\mult[59][0] ), .B(\mult[58][0] ), .Y(\tree_sums[4][2][0] )
          );
-  NAND2X1 U65 ( .A(n96), .B(n95), .Y(n55) );
-  CLKINVX1 U66 ( .A(n9), .Y(n95) );
-  OAI2BB1X1 U67 ( .A0N(n13), .A1N(\mult[58][5] ), .B0(n97), .Y(n9) );
-  OAI21XL U68 ( .A0(\mult[58][5] ), .A1(n13), .B0(\mult[59][5] ), .Y(n97) );
-  OAI2BB1X1 U69 ( .A0N(n24), .A1N(\mult[58][4] ), .B0(n99), .Y(n13) );
-  OAI21XL U70 ( .A0(\mult[58][4] ), .A1(n24), .B0(\mult[59][4] ), .Y(n99) );
-  AO22X1 U71 ( .A0(n31), .A1(\mult[58][3] ), .B0(n100), .B1(\mult[59][3] ), 
-        .Y(n24) );
-  OR2X1 U72 ( .A(\mult[58][3] ), .B(n31), .Y(n100) );
-  OAI2BB1X1 U73 ( .A0N(n36), .A1N(\mult[58][2] ), .B0(n101), .Y(n31) );
-  OAI21XL U74 ( .A0(\mult[58][2] ), .A1(n36), .B0(\mult[59][2] ), .Y(n101) );
-  OAI21XL U75 ( .A0(n38), .A1(n102), .B0(n103), .Y(n36) );
-  OAI2BB1X1 U76 ( .A0N(n38), .A1N(n102), .B0(\mult[59][1] ), .Y(n103) );
-  CLKINVX1 U77 ( .A(\mult[58][1] ), .Y(n102) );
-  NAND2X1 U78 ( .A(\mult[59][0] ), .B(\mult[58][0] ), .Y(n38) );
-  CLKINVX1 U79 ( .A(\mult[58][6] ), .Y(n96) );
-  XOR2X1 U80 ( .A(\mult[59][0] ), .B(\mult[58][0] ), .Y(\tree_sums[4][2][0] )
+  XOR2X1 U91 ( .A(n108), .B(n110), .Y(\tree_sums[4][1][8] ) );
+  XOR2X1 U92 ( .A(\tree_sums[1][16][13] ), .B(n356), .Y(n108) );
+  XOR2X1 U93 ( .A(n357), .B(n359), .Y(\tree_sums[4][1][7] ) );
+  XOR2X1 U94 ( .A(\tree_sums[1][16][7] ), .B(n360), .Y(n357) );
+  XOR2X1 U95 ( .A(n361), .B(n362), .Y(\tree_sums[4][1][6] ) );
+  XOR2X1 U96 ( .A(\tree_sums[1][16][6] ), .B(n363), .Y(n362) );
+  XOR2X1 U97 ( .A(n364), .B(n365), .Y(\tree_sums[4][1][5] ) );
+  XOR2X1 U98 ( .A(\tree_sums[1][16][5] ), .B(n366), .Y(n365) );
+  XOR2X1 U99 ( .A(n367), .B(n368), .Y(\tree_sums[4][1][4] ) );
+  XOR2X1 U100 ( .A(\tree_sums[1][16][4] ), .B(n370), .Y(n368) );
+  XOR2X1 U101 ( .A(n391), .B(n392), .Y(\tree_sums[4][1][3] ) );
+  XOR2X1 U102 ( .A(\tree_sums[1][16][3] ), .B(n393), .Y(n392) );
+  XOR2X1 U103 ( .A(n394), .B(n395), .Y(\tree_sums[4][1][2] ) );
+  XOR2X1 U104 ( .A(\tree_sums[1][16][2] ), .B(n396), .Y(n395) );
+  XOR2X1 U105 ( .A(n397), .B(n398), .Y(\tree_sums[4][1][1] ) );
+  XOR2X1 U106 ( .A(n399), .B(\tree_sums[1][16][1] ), .Y(n398) );
+  OAI21XL U107 ( .A0(n400), .A1(n356), .B0(n401), .Y(\tree_sums[4][1][9] ) );
+  NAND2X1 U108 ( .A(\tree_sums[1][16][13] ), .B(n110), .Y(n401) );
+  OAI2BB1X1 U109 ( .A0N(n360), .A1N(n359), .B0(n402), .Y(n356) );
+  OAI21XL U110 ( .A0(n359), .A1(n360), .B0(\tree_sums[1][16][7] ), .Y(n402) );
+  MXI2X1 U111 ( .A(n403), .B(n404), .S0(n405), .Y(n359) );
+  OAI21XL U112 ( .A0(n363), .A1(n361), .B0(n406), .Y(n360) );
+  OAI2BB1X1 U113 ( .A0N(n361), .A1N(n363), .B0(\tree_sums[1][16][6] ), .Y(n406) );
+  XOR2X1 U114 ( .A(n407), .B(n408), .Y(n361) );
+  XNOR2X1 U115 ( .A(\mult[54][6] ), .B(\mult[55][6] ), .Y(n407) );
+  AOI2BB2X1 U116 ( .B0(n409), .B1(\tree_sums[1][16][5] ), .A0N(n366), .A1N(
+        n364), .Y(n363) );
+  NAND2X1 U117 ( .A(n364), .B(n366), .Y(n409) );
+  OA21XL U118 ( .A0(n370), .A1(n367), .B0(n410), .Y(n366) );
+  OAI2BB1X1 U119 ( .A0N(n367), .A1N(n370), .B0(\tree_sums[1][16][4] ), .Y(n410) );
+  XOR2X1 U120 ( .A(n411), .B(n412), .Y(n367) );
+  XNOR2X1 U121 ( .A(\mult[54][4] ), .B(\mult[55][4] ), .Y(n411) );
+  OA21XL U122 ( .A0(n393), .A1(n391), .B0(n413), .Y(n370) );
+  OAI2BB1X1 U123 ( .A0N(n391), .A1N(n393), .B0(\tree_sums[1][16][3] ), .Y(n413) );
+  XOR2X1 U124 ( .A(n414), .B(n415), .Y(n391) );
+  XNOR2X1 U125 ( .A(\mult[54][3] ), .B(\mult[55][3] ), .Y(n414) );
+  AOI2BB2X1 U126 ( .B0(n416), .B1(\tree_sums[1][16][2] ), .A0N(n396), .A1N(
+        n394), .Y(n393) );
+  NAND2X1 U127 ( .A(n394), .B(n396), .Y(n416) );
+  OA21XL U128 ( .A0(n397), .A1(n399), .B0(n417), .Y(n396) );
+  OAI2BB1X1 U129 ( .A0N(n399), .A1N(n397), .B0(\tree_sums[1][16][1] ), .Y(n417) );
+  NAND2X1 U130 ( .A(\tree_sums[1][16][0] ), .B(n418), .Y(n399) );
+  XOR2X1 U131 ( .A(n419), .B(n420), .Y(n397) );
+  XNOR2X1 U132 ( .A(\mult[55][1] ), .B(n421), .Y(n420) );
+  XOR2X1 U133 ( .A(n422), .B(n423), .Y(n394) );
+  XNOR2X1 U134 ( .A(\mult[54][2] ), .B(\mult[55][2] ), .Y(n422) );
+  XOR2X1 U135 ( .A(n424), .B(n425), .Y(n364) );
+  XNOR2X1 U136 ( .A(\mult[54][5] ), .B(\mult[55][5] ), .Y(n424) );
+  NOR2X1 U137 ( .A(n110), .B(\tree_sums[1][16][13] ), .Y(n400) );
+  MXI2X1 U138 ( .A(n403), .B(n404), .S0(n426), .Y(n110) );
+  OA21XL U139 ( .A0(n405), .A1(n427), .B0(n428), .Y(n426) );
+  AOI2BB2X1 U140 ( .B0(n429), .B1(\mult[55][6] ), .A0N(n430), .A1N(n431), .Y(
+        n405) );
+  NAND2X1 U141 ( .A(n431), .B(n430), .Y(n429) );
+  CLKINVX1 U142 ( .A(n408), .Y(n430) );
+  OAI2BB1X1 U143 ( .A0N(n425), .A1N(\mult[54][5] ), .B0(n432), .Y(n408) );
+  OAI21XL U144 ( .A0(\mult[54][5] ), .A1(n425), .B0(\mult[55][5] ), .Y(n432)
          );
-  XOR2X1 U81 ( .A(n104), .B(n105), .Y(\tree_sums[4][1][8] ) );
-  XOR2X1 U82 ( .A(\tree_sums[1][16][13] ), .B(n106), .Y(n104) );
-  XOR2X1 U83 ( .A(n107), .B(n108), .Y(\tree_sums[4][1][7] ) );
-  XOR2X1 U84 ( .A(\tree_sums[1][16][7] ), .B(n110), .Y(n107) );
-  XOR2X1 U85 ( .A(n356), .B(n357), .Y(\tree_sums[4][1][6] ) );
-  XOR2X1 U86 ( .A(\tree_sums[1][16][6] ), .B(n359), .Y(n357) );
-  XOR2X1 U87 ( .A(n360), .B(n361), .Y(\tree_sums[4][1][5] ) );
-  XOR2X1 U88 ( .A(\tree_sums[1][16][5] ), .B(n362), .Y(n361) );
-  XOR2X1 U89 ( .A(n363), .B(n364), .Y(\tree_sums[4][1][4] ) );
-  XOR2X1 U90 ( .A(\tree_sums[1][16][4] ), .B(n365), .Y(n364) );
-  XOR2X1 U91 ( .A(n366), .B(n367), .Y(\tree_sums[4][1][3] ) );
-  XOR2X1 U92 ( .A(\tree_sums[1][16][3] ), .B(n368), .Y(n367) );
-  XOR2X1 U93 ( .A(n370), .B(n391), .Y(\tree_sums[4][1][2] ) );
-  XOR2X1 U94 ( .A(\tree_sums[1][16][2] ), .B(n392), .Y(n391) );
-  XOR2X1 U95 ( .A(n393), .B(n394), .Y(\tree_sums[4][1][1] ) );
-  XOR2X1 U96 ( .A(n395), .B(\tree_sums[1][16][1] ), .Y(n394) );
-  OAI21XL U97 ( .A0(n396), .A1(n106), .B0(n397), .Y(\tree_sums[4][1][9] ) );
-  NAND2X1 U98 ( .A(\tree_sums[1][16][13] ), .B(n105), .Y(n397) );
-  OAI2BB1X1 U99 ( .A0N(n110), .A1N(n108), .B0(n398), .Y(n106) );
-  OAI21XL U100 ( .A0(n108), .A1(n110), .B0(\tree_sums[1][16][7] ), .Y(n398) );
-  MXI2X1 U101 ( .A(n399), .B(n400), .S0(n401), .Y(n108) );
-  OAI21XL U102 ( .A0(n359), .A1(n356), .B0(n402), .Y(n110) );
-  OAI2BB1X1 U103 ( .A0N(n356), .A1N(n359), .B0(\tree_sums[1][16][6] ), .Y(n402) );
-  XOR2X1 U104 ( .A(n403), .B(n404), .Y(n356) );
-  XNOR2X1 U105 ( .A(\mult[54][6] ), .B(\mult[55][6] ), .Y(n403) );
-  AOI2BB2X1 U106 ( .B0(n405), .B1(\tree_sums[1][16][5] ), .A0N(n362), .A1N(
-        n360), .Y(n359) );
-  NAND2X1 U107 ( .A(n360), .B(n362), .Y(n405) );
-  OA21XL U108 ( .A0(n365), .A1(n363), .B0(n406), .Y(n362) );
-  OAI2BB1X1 U109 ( .A0N(n363), .A1N(n365), .B0(\tree_sums[1][16][4] ), .Y(n406) );
-  XOR2X1 U110 ( .A(n407), .B(n408), .Y(n363) );
-  XNOR2X1 U111 ( .A(\mult[54][4] ), .B(\mult[55][4] ), .Y(n407) );
-  OA21XL U112 ( .A0(n368), .A1(n366), .B0(n409), .Y(n365) );
-  OAI2BB1X1 U113 ( .A0N(n366), .A1N(n368), .B0(\tree_sums[1][16][3] ), .Y(n409) );
-  XOR2X1 U114 ( .A(n410), .B(n411), .Y(n366) );
-  XNOR2X1 U115 ( .A(\mult[54][3] ), .B(\mult[55][3] ), .Y(n410) );
-  AOI2BB2X1 U116 ( .B0(n412), .B1(\tree_sums[1][16][2] ), .A0N(n392), .A1N(
-        n370), .Y(n368) );
-  NAND2X1 U117 ( .A(n370), .B(n392), .Y(n412) );
-  OA21XL U118 ( .A0(n393), .A1(n395), .B0(n413), .Y(n392) );
-  OAI2BB1X1 U119 ( .A0N(n395), .A1N(n393), .B0(\tree_sums[1][16][1] ), .Y(n413) );
-  NAND2X1 U120 ( .A(\tree_sums[1][16][0] ), .B(n414), .Y(n395) );
-  XOR2X1 U121 ( .A(n415), .B(n416), .Y(n393) );
-  XNOR2X1 U122 ( .A(\mult[55][1] ), .B(n417), .Y(n416) );
-  XOR2X1 U123 ( .A(n418), .B(n419), .Y(n370) );
-  XNOR2X1 U124 ( .A(\mult[54][2] ), .B(\mult[55][2] ), .Y(n418) );
-  XOR2X1 U125 ( .A(n420), .B(n421), .Y(n360) );
-  XNOR2X1 U126 ( .A(\mult[54][5] ), .B(\mult[55][5] ), .Y(n420) );
-  NOR2X1 U127 ( .A(n105), .B(\tree_sums[1][16][13] ), .Y(n396) );
-  MXI2X1 U128 ( .A(n399), .B(n400), .S0(n422), .Y(n105) );
-  OA21XL U129 ( .A0(n401), .A1(n423), .B0(n424), .Y(n422) );
-  AOI2BB2X1 U130 ( .B0(n425), .B1(\mult[55][6] ), .A0N(n426), .A1N(n427), .Y(
-        n401) );
-  NAND2X1 U131 ( .A(n427), .B(n426), .Y(n425) );
-  CLKINVX1 U132 ( .A(n404), .Y(n426) );
-  OAI2BB1X1 U133 ( .A0N(n421), .A1N(\mult[54][5] ), .B0(n428), .Y(n404) );
-  OAI21XL U134 ( .A0(\mult[54][5] ), .A1(n421), .B0(\mult[55][5] ), .Y(n428)
+  OAI2BB1X1 U145 ( .A0N(n412), .A1N(\mult[54][4] ), .B0(n433), .Y(n425) );
+  OAI21XL U146 ( .A0(\mult[54][4] ), .A1(n412), .B0(\mult[55][4] ), .Y(n433)
          );
-  OAI2BB1X1 U135 ( .A0N(n408), .A1N(\mult[54][4] ), .B0(n429), .Y(n421) );
-  OAI21XL U136 ( .A0(\mult[54][4] ), .A1(n408), .B0(\mult[55][4] ), .Y(n429)
+  AO22X1 U147 ( .A0(n415), .A1(\mult[54][3] ), .B0(n434), .B1(\mult[55][3] ), 
+        .Y(n412) );
+  OR2X1 U148 ( .A(\mult[54][3] ), .B(n415), .Y(n434) );
+  OAI2BB1X1 U149 ( .A0N(n423), .A1N(\mult[54][2] ), .B0(n435), .Y(n415) );
+  OAI21XL U150 ( .A0(\mult[54][2] ), .A1(n423), .B0(\mult[55][2] ), .Y(n435)
          );
-  AO22X1 U137 ( .A0(n411), .A1(\mult[54][3] ), .B0(n430), .B1(\mult[55][3] ), 
-        .Y(n408) );
-  OR2X1 U138 ( .A(\mult[54][3] ), .B(n411), .Y(n430) );
-  OAI2BB1X1 U139 ( .A0N(n419), .A1N(\mult[54][2] ), .B0(n431), .Y(n411) );
-  OAI21XL U140 ( .A0(\mult[54][2] ), .A1(n419), .B0(\mult[55][2] ), .Y(n431)
+  OAI21XL U151 ( .A0(n419), .A1(n421), .B0(n436), .Y(n423) );
+  OAI2BB1X1 U152 ( .A0N(n419), .A1N(n421), .B0(\mult[55][1] ), .Y(n436) );
+  CLKINVX1 U153 ( .A(\mult[54][1] ), .Y(n421) );
+  NAND2X1 U154 ( .A(\mult[55][0] ), .B(\mult[54][0] ), .Y(n419) );
+  CLKINVX1 U155 ( .A(\mult[54][6] ), .Y(n431) );
+  XNOR2X1 U156 ( .A(\mult[54][7] ), .B(\mult[55][7] ), .Y(n404) );
+  NOR2BX1 U157 ( .AN(n428), .B(n427), .Y(n403) );
+  NOR2X1 U158 ( .A(\mult[55][7] ), .B(\mult[54][7] ), .Y(n427) );
+  NAND2X1 U159 ( .A(\mult[55][7] ), .B(\mult[54][7] ), .Y(n428) );
+  XOR2X1 U160 ( .A(\tree_sums[1][16][0] ), .B(n418), .Y(\tree_sums[4][1][0] )
          );
-  OAI21XL U141 ( .A0(n415), .A1(n417), .B0(n432), .Y(n419) );
-  OAI2BB1X1 U142 ( .A0N(n415), .A1N(n417), .B0(\mult[55][1] ), .Y(n432) );
-  CLKINVX1 U143 ( .A(\mult[54][1] ), .Y(n417) );
-  NAND2X1 U144 ( .A(\mult[55][0] ), .B(\mult[54][0] ), .Y(n415) );
-  CLKINVX1 U145 ( .A(\mult[54][6] ), .Y(n427) );
-  XNOR2X1 U146 ( .A(\mult[54][7] ), .B(\mult[55][7] ), .Y(n400) );
-  NOR2BX1 U147 ( .AN(n424), .B(n423), .Y(n399) );
-  NOR2X1 U148 ( .A(\mult[55][7] ), .B(\mult[54][7] ), .Y(n423) );
-  NAND2X1 U149 ( .A(\mult[55][7] ), .B(\mult[54][7] ), .Y(n424) );
-  XOR2X1 U150 ( .A(\tree_sums[1][16][0] ), .B(n414), .Y(\tree_sums[4][1][0] )
+  XOR2X1 U161 ( .A(\mult[54][0] ), .B(\mult[55][0] ), .Y(n418) );
+  XNOR2X1 U162 ( .A(n437), .B(n438), .Y(\tree_sums[3][7][7] ) );
+  XNOR2X1 U163 ( .A(n439), .B(n440), .Y(\tree_sums[3][7][6] ) );
+  XNOR2X1 U164 ( .A(\mult[12][6] ), .B(\mult[13][6] ), .Y(n439) );
+  XNOR2X1 U165 ( .A(n441), .B(n442), .Y(\tree_sums[3][7][5] ) );
+  XNOR2X1 U166 ( .A(\mult[12][5] ), .B(\mult[13][5] ), .Y(n441) );
+  XNOR2X1 U167 ( .A(n443), .B(n444), .Y(\tree_sums[3][7][4] ) );
+  XNOR2X1 U168 ( .A(\mult[12][4] ), .B(\mult[13][4] ), .Y(n443) );
+  XNOR2X1 U169 ( .A(n445), .B(n446), .Y(\tree_sums[3][7][3] ) );
+  XNOR2X1 U170 ( .A(\mult[12][3] ), .B(\mult[13][3] ), .Y(n445) );
+  XNOR2X1 U171 ( .A(n447), .B(n448), .Y(\tree_sums[3][7][2] ) );
+  XNOR2X1 U172 ( .A(\mult[12][2] ), .B(\mult[13][2] ), .Y(n447) );
+  XOR2X1 U173 ( .A(n449), .B(n450), .Y(\tree_sums[3][7][1] ) );
+  XNOR2X1 U174 ( .A(\mult[12][1] ), .B(\mult[13][1] ), .Y(n450) );
+  NOR2BX1 U175 ( .AN(n451), .B(n452), .Y(n437) );
+  NAND2X1 U176 ( .A(\mult[13][7] ), .B(\mult[12][7] ), .Y(n451) );
+  NOR2X1 U177 ( .A(\mult[13][7] ), .B(\mult[12][7] ), .Y(n452) );
+  AOI2BB2X1 U178 ( .B0(n453), .B1(\mult[13][6] ), .A0N(n454), .A1N(n455), .Y(
+        n438) );
+  NAND2X1 U179 ( .A(n455), .B(n454), .Y(n453) );
+  CLKINVX1 U180 ( .A(n440), .Y(n454) );
+  OAI2BB1X1 U181 ( .A0N(n442), .A1N(\mult[12][5] ), .B0(n456), .Y(n440) );
+  OAI21XL U182 ( .A0(\mult[12][5] ), .A1(n442), .B0(\mult[13][5] ), .Y(n456)
          );
-  XOR2X1 U151 ( .A(\mult[54][0] ), .B(\mult[55][0] ), .Y(n414) );
-  XNOR2X1 U152 ( .A(n433), .B(n434), .Y(\tree_sums[3][7][7] ) );
-  XNOR2X1 U153 ( .A(n435), .B(n436), .Y(\tree_sums[3][7][6] ) );
-  XNOR2X1 U154 ( .A(\mult[12][6] ), .B(\mult[13][6] ), .Y(n435) );
-  XNOR2X1 U155 ( .A(n437), .B(n438), .Y(\tree_sums[3][7][5] ) );
-  XNOR2X1 U156 ( .A(\mult[12][5] ), .B(\mult[13][5] ), .Y(n437) );
-  XNOR2X1 U157 ( .A(n439), .B(n440), .Y(\tree_sums[3][7][4] ) );
-  XNOR2X1 U158 ( .A(\mult[12][4] ), .B(\mult[13][4] ), .Y(n439) );
-  XNOR2X1 U159 ( .A(n441), .B(n442), .Y(\tree_sums[3][7][3] ) );
-  XNOR2X1 U160 ( .A(\mult[12][3] ), .B(\mult[13][3] ), .Y(n441) );
-  XNOR2X1 U161 ( .A(n443), .B(n444), .Y(\tree_sums[3][7][2] ) );
-  XNOR2X1 U162 ( .A(\mult[12][2] ), .B(\mult[13][2] ), .Y(n443) );
-  XOR2X1 U163 ( .A(n445), .B(n446), .Y(\tree_sums[3][7][1] ) );
-  XNOR2X1 U164 ( .A(\mult[12][1] ), .B(\mult[13][1] ), .Y(n446) );
-  XNOR2X1 U165 ( .A(n447), .B(n448), .Y(\tree_sums[3][7][9] ) );
-  CLKINVX1 U166 ( .A(n433), .Y(n448) );
-  NOR2BX1 U167 ( .AN(n449), .B(n450), .Y(n433) );
-  OAI21XL U168 ( .A0(n434), .A1(n450), .B0(n449), .Y(n447) );
-  NAND2X1 U169 ( .A(\mult[13][7] ), .B(\mult[12][7] ), .Y(n449) );
-  NOR2X1 U170 ( .A(\mult[13][7] ), .B(\mult[12][7] ), .Y(n450) );
-  AOI2BB2X1 U171 ( .B0(n451), .B1(\mult[13][6] ), .A0N(n452), .A1N(n453), .Y(
-        n434) );
-  NAND2X1 U172 ( .A(n453), .B(n452), .Y(n451) );
-  CLKINVX1 U173 ( .A(n436), .Y(n452) );
-  OAI2BB1X1 U174 ( .A0N(n438), .A1N(\mult[12][5] ), .B0(n454), .Y(n436) );
-  OAI21XL U175 ( .A0(\mult[12][5] ), .A1(n438), .B0(\mult[13][5] ), .Y(n454)
+  OAI2BB1X1 U183 ( .A0N(n444), .A1N(\mult[12][4] ), .B0(n457), .Y(n442) );
+  OAI21XL U184 ( .A0(\mult[12][4] ), .A1(n444), .B0(\mult[13][4] ), .Y(n457)
          );
-  OAI2BB1X1 U176 ( .A0N(n440), .A1N(\mult[12][4] ), .B0(n455), .Y(n438) );
-  OAI21XL U177 ( .A0(\mult[12][4] ), .A1(n440), .B0(\mult[13][4] ), .Y(n455)
+  AO22X1 U185 ( .A0(n446), .A1(\mult[12][3] ), .B0(n458), .B1(\mult[13][3] ), 
+        .Y(n444) );
+  OR2X1 U186 ( .A(\mult[12][3] ), .B(n446), .Y(n458) );
+  OAI2BB1X1 U187 ( .A0N(n448), .A1N(\mult[12][2] ), .B0(n459), .Y(n446) );
+  OAI21XL U188 ( .A0(\mult[12][2] ), .A1(n448), .B0(\mult[13][2] ), .Y(n459)
          );
-  AO22X1 U178 ( .A0(n442), .A1(\mult[12][3] ), .B0(n456), .B1(\mult[13][3] ), 
-        .Y(n440) );
-  OR2X1 U179 ( .A(\mult[12][3] ), .B(n442), .Y(n456) );
-  OAI2BB1X1 U180 ( .A0N(n444), .A1N(\mult[12][2] ), .B0(n457), .Y(n442) );
-  OAI21XL U181 ( .A0(\mult[12][2] ), .A1(n444), .B0(\mult[13][2] ), .Y(n457)
+  OAI21XL U189 ( .A0(n449), .A1(n460), .B0(n461), .Y(n448) );
+  OAI2BB1X1 U190 ( .A0N(n449), .A1N(n460), .B0(\mult[13][1] ), .Y(n461) );
+  CLKINVX1 U191 ( .A(\mult[12][1] ), .Y(n460) );
+  NAND2X1 U192 ( .A(\mult[13][0] ), .B(\mult[12][0] ), .Y(n449) );
+  CLKINVX1 U193 ( .A(\mult[12][6] ), .Y(n455) );
+  XOR2X1 U194 ( .A(\mult[13][0] ), .B(\mult[12][0] ), .Y(\tree_sums[3][7][0] )
          );
-  OAI21XL U182 ( .A0(n445), .A1(n458), .B0(n459), .Y(n444) );
-  OAI2BB1X1 U183 ( .A0N(n445), .A1N(n458), .B0(\mult[13][1] ), .Y(n459) );
-  CLKINVX1 U184 ( .A(\mult[12][1] ), .Y(n458) );
-  NAND2X1 U185 ( .A(\mult[13][0] ), .B(\mult[12][0] ), .Y(n445) );
-  CLKINVX1 U186 ( .A(\mult[12][6] ), .Y(n453) );
-  XOR2X1 U187 ( .A(\mult[13][0] ), .B(\mult[12][0] ), .Y(\tree_sums[3][7][0] )
+  XNOR2X1 U195 ( .A(n462), .B(n463), .Y(\tree_sums[3][6][7] ) );
+  XNOR2X1 U196 ( .A(n464), .B(n465), .Y(\tree_sums[3][6][6] ) );
+  XNOR2X1 U197 ( .A(\mult[26][6] ), .B(\mult[27][6] ), .Y(n464) );
+  XNOR2X1 U198 ( .A(n466), .B(n467), .Y(\tree_sums[3][6][5] ) );
+  XNOR2X1 U199 ( .A(\mult[26][5] ), .B(\mult[27][5] ), .Y(n466) );
+  XNOR2X1 U200 ( .A(n468), .B(n469), .Y(\tree_sums[3][6][4] ) );
+  XNOR2X1 U201 ( .A(\mult[26][4] ), .B(\mult[27][4] ), .Y(n468) );
+  XNOR2X1 U202 ( .A(n470), .B(n471), .Y(\tree_sums[3][6][3] ) );
+  XNOR2X1 U203 ( .A(\mult[26][3] ), .B(\mult[27][3] ), .Y(n470) );
+  XNOR2X1 U204 ( .A(n472), .B(n473), .Y(\tree_sums[3][6][2] ) );
+  XNOR2X1 U205 ( .A(\mult[26][2] ), .B(\mult[27][2] ), .Y(n472) );
+  XOR2X1 U206 ( .A(n474), .B(n475), .Y(\tree_sums[3][6][1] ) );
+  XNOR2X1 U207 ( .A(\mult[26][1] ), .B(\mult[27][1] ), .Y(n475) );
+  NOR2BX1 U208 ( .AN(n476), .B(n477), .Y(n462) );
+  NAND2X1 U209 ( .A(\mult[27][7] ), .B(\mult[26][7] ), .Y(n476) );
+  NOR2X1 U210 ( .A(\mult[27][7] ), .B(\mult[26][7] ), .Y(n477) );
+  AOI2BB2X1 U211 ( .B0(n478), .B1(\mult[27][6] ), .A0N(n479), .A1N(n480), .Y(
+        n463) );
+  NAND2X1 U212 ( .A(n480), .B(n479), .Y(n478) );
+  CLKINVX1 U213 ( .A(n465), .Y(n479) );
+  OAI2BB1X1 U214 ( .A0N(n467), .A1N(\mult[26][5] ), .B0(n481), .Y(n465) );
+  OAI21XL U215 ( .A0(\mult[26][5] ), .A1(n467), .B0(\mult[27][5] ), .Y(n481)
          );
-  XNOR2X1 U188 ( .A(n460), .B(n461), .Y(\tree_sums[3][6][7] ) );
-  XNOR2X1 U189 ( .A(n462), .B(n463), .Y(\tree_sums[3][6][6] ) );
-  XNOR2X1 U190 ( .A(\mult[26][6] ), .B(\mult[27][6] ), .Y(n462) );
-  XNOR2X1 U191 ( .A(n464), .B(n465), .Y(\tree_sums[3][6][5] ) );
-  XNOR2X1 U192 ( .A(\mult[26][5] ), .B(\mult[27][5] ), .Y(n464) );
-  XNOR2X1 U193 ( .A(n466), .B(n467), .Y(\tree_sums[3][6][4] ) );
-  XNOR2X1 U194 ( .A(\mult[26][4] ), .B(\mult[27][4] ), .Y(n466) );
-  XNOR2X1 U195 ( .A(n468), .B(n469), .Y(\tree_sums[3][6][3] ) );
-  XNOR2X1 U196 ( .A(\mult[26][3] ), .B(\mult[27][3] ), .Y(n468) );
-  XNOR2X1 U197 ( .A(n470), .B(n471), .Y(\tree_sums[3][6][2] ) );
-  XNOR2X1 U198 ( .A(\mult[26][2] ), .B(\mult[27][2] ), .Y(n470) );
-  XOR2X1 U199 ( .A(n472), .B(n473), .Y(\tree_sums[3][6][1] ) );
-  XNOR2X1 U200 ( .A(\mult[26][1] ), .B(\mult[27][1] ), .Y(n473) );
-  XNOR2X1 U201 ( .A(n474), .B(n475), .Y(\tree_sums[3][6][9] ) );
-  CLKINVX1 U202 ( .A(n460), .Y(n475) );
-  NOR2BX1 U203 ( .AN(n476), .B(n477), .Y(n460) );
-  OAI21XL U204 ( .A0(n461), .A1(n477), .B0(n476), .Y(n474) );
-  NAND2X1 U205 ( .A(\mult[27][7] ), .B(\mult[26][7] ), .Y(n476) );
-  NOR2X1 U206 ( .A(\mult[27][7] ), .B(\mult[26][7] ), .Y(n477) );
-  AOI2BB2X1 U207 ( .B0(n478), .B1(\mult[27][6] ), .A0N(n479), .A1N(n480), .Y(
-        n461) );
-  NAND2X1 U208 ( .A(n480), .B(n479), .Y(n478) );
-  CLKINVX1 U209 ( .A(n463), .Y(n479) );
-  OAI2BB1X1 U210 ( .A0N(n465), .A1N(\mult[26][5] ), .B0(n481), .Y(n463) );
-  OAI21XL U211 ( .A0(\mult[26][5] ), .A1(n465), .B0(\mult[27][5] ), .Y(n481)
+  OAI2BB1X1 U216 ( .A0N(n469), .A1N(\mult[26][4] ), .B0(n482), .Y(n467) );
+  OAI21XL U217 ( .A0(\mult[26][4] ), .A1(n469), .B0(\mult[27][4] ), .Y(n482)
          );
-  OAI2BB1X1 U212 ( .A0N(n467), .A1N(\mult[26][4] ), .B0(n482), .Y(n465) );
-  OAI21XL U213 ( .A0(\mult[26][4] ), .A1(n467), .B0(\mult[27][4] ), .Y(n482)
+  AO22X1 U218 ( .A0(n471), .A1(\mult[26][3] ), .B0(n483), .B1(\mult[27][3] ), 
+        .Y(n469) );
+  OR2X1 U219 ( .A(\mult[26][3] ), .B(n471), .Y(n483) );
+  OAI2BB1X1 U220 ( .A0N(n473), .A1N(\mult[26][2] ), .B0(n484), .Y(n471) );
+  OAI21XL U221 ( .A0(\mult[26][2] ), .A1(n473), .B0(\mult[27][2] ), .Y(n484)
          );
-  AO22X1 U214 ( .A0(n469), .A1(\mult[26][3] ), .B0(n483), .B1(\mult[27][3] ), 
-        .Y(n467) );
-  OR2X1 U215 ( .A(\mult[26][3] ), .B(n469), .Y(n483) );
-  OAI2BB1X1 U216 ( .A0N(n471), .A1N(\mult[26][2] ), .B0(n484), .Y(n469) );
-  OAI21XL U217 ( .A0(\mult[26][2] ), .A1(n471), .B0(\mult[27][2] ), .Y(n484)
+  OAI21XL U222 ( .A0(n474), .A1(n485), .B0(n486), .Y(n473) );
+  OAI2BB1X1 U223 ( .A0N(n474), .A1N(n485), .B0(\mult[27][1] ), .Y(n486) );
+  CLKINVX1 U224 ( .A(\mult[26][1] ), .Y(n485) );
+  NAND2X1 U225 ( .A(\mult[27][0] ), .B(\mult[26][0] ), .Y(n474) );
+  CLKINVX1 U226 ( .A(\mult[26][6] ), .Y(n480) );
+  XOR2X1 U227 ( .A(\mult[27][0] ), .B(\mult[26][0] ), .Y(\tree_sums[3][6][0] )
          );
-  OAI21XL U218 ( .A0(n472), .A1(n485), .B0(n486), .Y(n471) );
-  OAI2BB1X1 U219 ( .A0N(n472), .A1N(n485), .B0(\mult[27][1] ), .Y(n486) );
-  CLKINVX1 U220 ( .A(\mult[26][1] ), .Y(n485) );
-  NAND2X1 U221 ( .A(\mult[27][0] ), .B(\mult[26][0] ), .Y(n472) );
-  CLKINVX1 U222 ( .A(\mult[26][6] ), .Y(n480) );
-  XOR2X1 U223 ( .A(\mult[27][0] ), .B(\mult[26][0] ), .Y(\tree_sums[3][6][0] )
-         );
-  XNOR2X1 U224 ( .A(n487), .B(n488), .Y(\tree_sums[3][5][7] ) );
-  XNOR2X1 U225 ( .A(n489), .B(n490), .Y(\tree_sums[3][5][6] ) );
-  XNOR2X1 U226 ( .A(\mult[42][6] ), .B(\mult[43][6] ), .Y(n489) );
-  XNOR2X1 U227 ( .A(n491), .B(n492), .Y(\tree_sums[3][5][5] ) );
-  XNOR2X1 U228 ( .A(\mult[42][5] ), .B(\mult[43][5] ), .Y(n491) );
-  XNOR2X1 U229 ( .A(n493), .B(n494), .Y(\tree_sums[3][5][4] ) );
-  XNOR2X1 U230 ( .A(\mult[42][4] ), .B(\mult[43][4] ), .Y(n493) );
-  XNOR2X1 U231 ( .A(n495), .B(n496), .Y(\tree_sums[3][5][3] ) );
-  XNOR2X1 U232 ( .A(\mult[42][3] ), .B(\mult[43][3] ), .Y(n495) );
-  XNOR2X1 U233 ( .A(n497), .B(n498), .Y(\tree_sums[3][5][2] ) );
-  XNOR2X1 U234 ( .A(\mult[42][2] ), .B(\mult[43][2] ), .Y(n497) );
-  XOR2X1 U235 ( .A(n499), .B(n500), .Y(\tree_sums[3][5][1] ) );
-  XNOR2X1 U236 ( .A(\mult[42][1] ), .B(\mult[43][1] ), .Y(n500) );
-  XNOR2X1 U237 ( .A(n501), .B(n502), .Y(\tree_sums[3][5][9] ) );
-  CLKINVX1 U238 ( .A(n487), .Y(n502) );
-  NOR2BX1 U239 ( .AN(n503), .B(n504), .Y(n487) );
-  OAI21XL U240 ( .A0(n488), .A1(n504), .B0(n503), .Y(n501) );
-  NAND2X1 U241 ( .A(\mult[43][7] ), .B(\mult[42][7] ), .Y(n503) );
-  NOR2X1 U242 ( .A(\mult[43][7] ), .B(\mult[42][7] ), .Y(n504) );
-  AOI2BB2X1 U243 ( .B0(n505), .B1(\mult[43][6] ), .A0N(n506), .A1N(n507), .Y(
+  XNOR2X1 U228 ( .A(n487), .B(n488), .Y(\tree_sums[3][5][7] ) );
+  XNOR2X1 U229 ( .A(n489), .B(n490), .Y(\tree_sums[3][5][6] ) );
+  XNOR2X1 U230 ( .A(\mult[42][6] ), .B(\mult[43][6] ), .Y(n489) );
+  XNOR2X1 U231 ( .A(n491), .B(n492), .Y(\tree_sums[3][5][5] ) );
+  XNOR2X1 U232 ( .A(\mult[42][5] ), .B(\mult[43][5] ), .Y(n491) );
+  XNOR2X1 U233 ( .A(n493), .B(n494), .Y(\tree_sums[3][5][4] ) );
+  XNOR2X1 U234 ( .A(\mult[42][4] ), .B(\mult[43][4] ), .Y(n493) );
+  XNOR2X1 U235 ( .A(n495), .B(n496), .Y(\tree_sums[3][5][3] ) );
+  XNOR2X1 U236 ( .A(\mult[42][3] ), .B(\mult[43][3] ), .Y(n495) );
+  XNOR2X1 U237 ( .A(n497), .B(n498), .Y(\tree_sums[3][5][2] ) );
+  XNOR2X1 U238 ( .A(\mult[42][2] ), .B(\mult[43][2] ), .Y(n497) );
+  XOR2X1 U239 ( .A(n499), .B(n500), .Y(\tree_sums[3][5][1] ) );
+  XNOR2X1 U240 ( .A(\mult[42][1] ), .B(\mult[43][1] ), .Y(n500) );
+  NOR2BX1 U241 ( .AN(n501), .B(n502), .Y(n487) );
+  NAND2X1 U242 ( .A(\mult[43][7] ), .B(\mult[42][7] ), .Y(n501) );
+  NOR2X1 U243 ( .A(\mult[43][7] ), .B(\mult[42][7] ), .Y(n502) );
+  AOI2BB2X1 U244 ( .B0(n503), .B1(\mult[43][6] ), .A0N(n504), .A1N(n505), .Y(
         n488) );
-  NAND2X1 U244 ( .A(n507), .B(n506), .Y(n505) );
-  CLKINVX1 U245 ( .A(n490), .Y(n506) );
-  OAI2BB1X1 U246 ( .A0N(n492), .A1N(\mult[42][5] ), .B0(n508), .Y(n490) );
-  OAI21XL U247 ( .A0(\mult[42][5] ), .A1(n492), .B0(\mult[43][5] ), .Y(n508)
+  NAND2X1 U245 ( .A(n505), .B(n504), .Y(n503) );
+  CLKINVX1 U246 ( .A(n490), .Y(n504) );
+  OAI2BB1X1 U247 ( .A0N(n492), .A1N(\mult[42][5] ), .B0(n506), .Y(n490) );
+  OAI21XL U248 ( .A0(\mult[42][5] ), .A1(n492), .B0(\mult[43][5] ), .Y(n506)
          );
-  OAI2BB1X1 U248 ( .A0N(n494), .A1N(\mult[42][4] ), .B0(n509), .Y(n492) );
-  OAI21XL U249 ( .A0(\mult[42][4] ), .A1(n494), .B0(\mult[43][4] ), .Y(n509)
+  OAI2BB1X1 U249 ( .A0N(n494), .A1N(\mult[42][4] ), .B0(n507), .Y(n492) );
+  OAI21XL U250 ( .A0(\mult[42][4] ), .A1(n494), .B0(\mult[43][4] ), .Y(n507)
          );
-  AO22X1 U250 ( .A0(n496), .A1(\mult[42][3] ), .B0(n510), .B1(\mult[43][3] ), 
+  AO22X1 U251 ( .A0(n496), .A1(\mult[42][3] ), .B0(n508), .B1(\mult[43][3] ), 
         .Y(n494) );
-  OR2X1 U251 ( .A(\mult[42][3] ), .B(n496), .Y(n510) );
-  OAI2BB1X1 U252 ( .A0N(n498), .A1N(\mult[42][2] ), .B0(n511), .Y(n496) );
-  OAI21XL U253 ( .A0(\mult[42][2] ), .A1(n498), .B0(\mult[43][2] ), .Y(n511)
+  OR2X1 U252 ( .A(\mult[42][3] ), .B(n496), .Y(n508) );
+  OAI2BB1X1 U253 ( .A0N(n498), .A1N(\mult[42][2] ), .B0(n509), .Y(n496) );
+  OAI21XL U254 ( .A0(\mult[42][2] ), .A1(n498), .B0(\mult[43][2] ), .Y(n509)
          );
-  OAI21XL U254 ( .A0(n499), .A1(n512), .B0(n513), .Y(n498) );
-  OAI2BB1X1 U255 ( .A0N(n499), .A1N(n512), .B0(\mult[43][1] ), .Y(n513) );
-  CLKINVX1 U256 ( .A(\mult[42][1] ), .Y(n512) );
-  NAND2X1 U257 ( .A(\mult[43][0] ), .B(\mult[42][0] ), .Y(n499) );
-  CLKINVX1 U258 ( .A(\mult[42][6] ), .Y(n507) );
-  XOR2X1 U259 ( .A(\mult[43][0] ), .B(\mult[42][0] ), .Y(\tree_sums[3][5][0] )
+  OAI21XL U255 ( .A0(n499), .A1(n510), .B0(n511), .Y(n498) );
+  OAI2BB1X1 U256 ( .A0N(n499), .A1N(n510), .B0(\mult[43][1] ), .Y(n511) );
+  CLKINVX1 U257 ( .A(\mult[42][1] ), .Y(n510) );
+  NAND2X1 U258 ( .A(\mult[43][0] ), .B(\mult[42][0] ), .Y(n499) );
+  CLKINVX1 U259 ( .A(\mult[42][6] ), .Y(n505) );
+  XOR2X1 U260 ( .A(\mult[43][0] ), .B(\mult[42][0] ), .Y(\tree_sums[3][5][0] )
          );
-  XNOR2X1 U260 ( .A(n514), .B(n515), .Y(\tree_sums[3][4][7] ) );
-  XNOR2X1 U261 ( .A(n516), .B(n517), .Y(\tree_sums[3][4][6] ) );
-  XNOR2X1 U262 ( .A(\mult[56][6] ), .B(\mult[57][6] ), .Y(n516) );
-  XNOR2X1 U263 ( .A(n518), .B(n519), .Y(\tree_sums[3][4][5] ) );
-  XNOR2X1 U264 ( .A(\mult[56][5] ), .B(\mult[57][5] ), .Y(n518) );
-  XNOR2X1 U265 ( .A(n520), .B(n521), .Y(\tree_sums[3][4][4] ) );
-  XNOR2X1 U266 ( .A(\mult[56][4] ), .B(\mult[57][4] ), .Y(n520) );
-  XNOR2X1 U267 ( .A(n522), .B(n523), .Y(\tree_sums[3][4][3] ) );
-  XNOR2X1 U268 ( .A(\mult[56][3] ), .B(\mult[57][3] ), .Y(n522) );
-  XNOR2X1 U269 ( .A(n524), .B(n525), .Y(\tree_sums[3][4][2] ) );
-  XNOR2X1 U270 ( .A(\mult[56][2] ), .B(\mult[57][2] ), .Y(n524) );
-  XOR2X1 U271 ( .A(n526), .B(n527), .Y(\tree_sums[3][4][1] ) );
-  XNOR2X1 U272 ( .A(\mult[56][1] ), .B(\mult[57][1] ), .Y(n527) );
-  XNOR2X1 U273 ( .A(n528), .B(n529), .Y(\tree_sums[3][4][9] ) );
-  CLKINVX1 U274 ( .A(n514), .Y(n529) );
-  NOR2BX1 U275 ( .AN(n530), .B(n531), .Y(n514) );
-  OAI21XL U276 ( .A0(n515), .A1(n531), .B0(n530), .Y(n528) );
-  NAND2X1 U277 ( .A(\mult[57][7] ), .B(\mult[56][7] ), .Y(n530) );
-  NOR2X1 U278 ( .A(\mult[57][7] ), .B(\mult[56][7] ), .Y(n531) );
-  AOI2BB2X1 U279 ( .B0(n532), .B1(\mult[57][6] ), .A0N(n533), .A1N(n534), .Y(
-        n515) );
-  NAND2X1 U280 ( .A(n534), .B(n533), .Y(n532) );
-  CLKINVX1 U281 ( .A(n517), .Y(n533) );
-  OAI2BB1X1 U282 ( .A0N(n519), .A1N(\mult[56][5] ), .B0(n535), .Y(n517) );
-  OAI21XL U283 ( .A0(\mult[56][5] ), .A1(n519), .B0(\mult[57][5] ), .Y(n535)
+  XNOR2X1 U261 ( .A(n512), .B(n513), .Y(\tree_sums[3][4][7] ) );
+  XNOR2X1 U262 ( .A(n514), .B(n515), .Y(\tree_sums[3][4][6] ) );
+  XNOR2X1 U263 ( .A(\mult[56][6] ), .B(\mult[57][6] ), .Y(n514) );
+  XNOR2X1 U264 ( .A(n516), .B(n517), .Y(\tree_sums[3][4][5] ) );
+  XNOR2X1 U265 ( .A(\mult[56][5] ), .B(\mult[57][5] ), .Y(n516) );
+  XNOR2X1 U266 ( .A(n518), .B(n519), .Y(\tree_sums[3][4][4] ) );
+  XNOR2X1 U267 ( .A(\mult[56][4] ), .B(\mult[57][4] ), .Y(n518) );
+  XNOR2X1 U268 ( .A(n520), .B(n521), .Y(\tree_sums[3][4][3] ) );
+  XNOR2X1 U269 ( .A(\mult[56][3] ), .B(\mult[57][3] ), .Y(n520) );
+  XNOR2X1 U270 ( .A(n522), .B(n523), .Y(\tree_sums[3][4][2] ) );
+  XNOR2X1 U271 ( .A(\mult[56][2] ), .B(\mult[57][2] ), .Y(n522) );
+  XOR2X1 U272 ( .A(n524), .B(n525), .Y(\tree_sums[3][4][1] ) );
+  XNOR2X1 U273 ( .A(\mult[56][1] ), .B(\mult[57][1] ), .Y(n525) );
+  NOR2BX1 U274 ( .AN(n526), .B(n527), .Y(n512) );
+  NAND2X1 U275 ( .A(\mult[57][7] ), .B(\mult[56][7] ), .Y(n526) );
+  NOR2X1 U276 ( .A(\mult[57][7] ), .B(\mult[56][7] ), .Y(n527) );
+  AOI2BB2X1 U277 ( .B0(n528), .B1(\mult[57][6] ), .A0N(n529), .A1N(n530), .Y(
+        n513) );
+  NAND2X1 U278 ( .A(n530), .B(n529), .Y(n528) );
+  CLKINVX1 U279 ( .A(n515), .Y(n529) );
+  OAI2BB1X1 U280 ( .A0N(n517), .A1N(\mult[56][5] ), .B0(n531), .Y(n515) );
+  OAI21XL U281 ( .A0(\mult[56][5] ), .A1(n517), .B0(\mult[57][5] ), .Y(n531)
          );
-  OAI2BB1X1 U284 ( .A0N(n521), .A1N(\mult[56][4] ), .B0(n536), .Y(n519) );
-  OAI21XL U285 ( .A0(\mult[56][4] ), .A1(n521), .B0(\mult[57][4] ), .Y(n536)
+  OAI2BB1X1 U282 ( .A0N(n519), .A1N(\mult[56][4] ), .B0(n532), .Y(n517) );
+  OAI21XL U283 ( .A0(\mult[56][4] ), .A1(n519), .B0(\mult[57][4] ), .Y(n532)
          );
-  AO22X1 U286 ( .A0(n523), .A1(\mult[56][3] ), .B0(n537), .B1(\mult[57][3] ), 
-        .Y(n521) );
-  OR2X1 U287 ( .A(\mult[56][3] ), .B(n523), .Y(n537) );
-  OAI2BB1X1 U288 ( .A0N(n525), .A1N(\mult[56][2] ), .B0(n538), .Y(n523) );
-  OAI21XL U289 ( .A0(\mult[56][2] ), .A1(n525), .B0(\mult[57][2] ), .Y(n538)
+  AO22X1 U284 ( .A0(n521), .A1(\mult[56][3] ), .B0(n533), .B1(\mult[57][3] ), 
+        .Y(n519) );
+  OR2X1 U285 ( .A(\mult[56][3] ), .B(n521), .Y(n533) );
+  OAI2BB1X1 U286 ( .A0N(n523), .A1N(\mult[56][2] ), .B0(n534), .Y(n521) );
+  OAI21XL U287 ( .A0(\mult[56][2] ), .A1(n523), .B0(\mult[57][2] ), .Y(n534)
          );
-  OAI21XL U290 ( .A0(n526), .A1(n539), .B0(n540), .Y(n525) );
-  OAI2BB1X1 U291 ( .A0N(n526), .A1N(n539), .B0(\mult[57][1] ), .Y(n540) );
-  CLKINVX1 U292 ( .A(\mult[56][1] ), .Y(n539) );
-  NAND2X1 U293 ( .A(\mult[57][0] ), .B(\mult[56][0] ), .Y(n526) );
-  CLKINVX1 U294 ( .A(\mult[56][6] ), .Y(n534) );
-  XOR2X1 U295 ( .A(\mult[57][0] ), .B(\mult[56][0] ), .Y(\tree_sums[3][4][0] )
+  OAI21XL U288 ( .A0(n524), .A1(n535), .B0(n536), .Y(n523) );
+  OAI2BB1X1 U289 ( .A0N(n524), .A1N(n535), .B0(\mult[57][1] ), .Y(n536) );
+  CLKINVX1 U290 ( .A(\mult[56][1] ), .Y(n535) );
+  NAND2X1 U291 ( .A(\mult[57][0] ), .B(\mult[56][0] ), .Y(n524) );
+  CLKINVX1 U292 ( .A(\mult[56][6] ), .Y(n530) );
+  XOR2X1 U293 ( .A(\mult[57][0] ), .B(\mult[56][0] ), .Y(\tree_sums[3][4][0] )
          );
-  MXI2X1 U296 ( .A(n541), .B(n542), .S0(n543), .Y(\tree_sums[3][3][8] ) );
-  XNOR2X1 U297 ( .A(n544), .B(n545), .Y(\tree_sums[3][3][7] ) );
-  XNOR2X1 U298 ( .A(\tree_sums[1][24][7] ), .B(\tree_sums[1][25][7] ), .Y(n544) );
-  XNOR2X1 U299 ( .A(n546), .B(n547), .Y(\tree_sums[3][3][6] ) );
-  XNOR2X1 U300 ( .A(\tree_sums[1][24][6] ), .B(\tree_sums[1][25][6] ), .Y(n546) );
-  XNOR2X1 U301 ( .A(n548), .B(n549), .Y(\tree_sums[3][3][5] ) );
-  XNOR2X1 U302 ( .A(\tree_sums[1][24][5] ), .B(\tree_sums[1][25][5] ), .Y(n548) );
-  XNOR2X1 U303 ( .A(n550), .B(n551), .Y(\tree_sums[3][3][4] ) );
-  XNOR2X1 U304 ( .A(\tree_sums[1][24][4] ), .B(\tree_sums[1][25][4] ), .Y(n550) );
-  XNOR2X1 U305 ( .A(n552), .B(n553), .Y(\tree_sums[3][3][3] ) );
-  XNOR2X1 U306 ( .A(\tree_sums[1][24][3] ), .B(\tree_sums[1][25][3] ), .Y(n552) );
-  XNOR2X1 U307 ( .A(n554), .B(n555), .Y(\tree_sums[3][3][2] ) );
-  XNOR2X1 U308 ( .A(\tree_sums[1][24][2] ), .B(\tree_sums[1][25][2] ), .Y(n554) );
-  XOR2X1 U309 ( .A(n556), .B(n557), .Y(\tree_sums[3][3][1] ) );
-  XNOR2X1 U310 ( .A(\tree_sums[1][24][1] ), .B(\tree_sums[1][25][1] ), .Y(n557) );
-  MXI2X1 U311 ( .A(n541), .B(n542), .S0(n558), .Y(\tree_sums[3][3][9] ) );
-  OA21XL U312 ( .A0(n543), .A1(n559), .B0(n560), .Y(n558) );
-  AOI21X1 U313 ( .A0(n545), .A1(\tree_sums[1][24][7] ), .B0(n561), .Y(n543) );
-  OA21XL U314 ( .A0(\tree_sums[1][24][7] ), .A1(n545), .B0(
-        \tree_sums[1][25][7] ), .Y(n561) );
-  AO22X1 U315 ( .A0(n547), .A1(\tree_sums[1][24][6] ), .B0(n562), .B1(
-        \tree_sums[1][25][6] ), .Y(n545) );
-  OR2X1 U316 ( .A(\tree_sums[1][24][6] ), .B(n547), .Y(n562) );
-  OAI2BB1X1 U317 ( .A0N(n549), .A1N(\tree_sums[1][24][5] ), .B0(n563), .Y(n547) );
-  OAI21XL U318 ( .A0(\tree_sums[1][24][5] ), .A1(n549), .B0(
-        \tree_sums[1][25][5] ), .Y(n563) );
-  OAI2BB1X1 U319 ( .A0N(n551), .A1N(\tree_sums[1][24][4] ), .B0(n564), .Y(n549) );
-  OAI21XL U320 ( .A0(\tree_sums[1][24][4] ), .A1(n551), .B0(
-        \tree_sums[1][25][4] ), .Y(n564) );
-  AO22X1 U321 ( .A0(n553), .A1(\tree_sums[1][24][3] ), .B0(n565), .B1(
-        \tree_sums[1][25][3] ), .Y(n551) );
-  OR2X1 U322 ( .A(\tree_sums[1][24][3] ), .B(n553), .Y(n565) );
-  OAI2BB1X1 U323 ( .A0N(n555), .A1N(\tree_sums[1][24][2] ), .B0(n566), .Y(n553) );
-  OAI21XL U324 ( .A0(\tree_sums[1][24][2] ), .A1(n555), .B0(
-        \tree_sums[1][25][2] ), .Y(n566) );
-  OAI21XL U325 ( .A0(n556), .A1(n567), .B0(n568), .Y(n555) );
-  OAI2BB1X1 U326 ( .A0N(n556), .A1N(n567), .B0(\tree_sums[1][25][1] ), .Y(n568) );
-  CLKINVX1 U327 ( .A(\tree_sums[1][24][1] ), .Y(n567) );
-  NAND2X1 U328 ( .A(\tree_sums[1][25][0] ), .B(\tree_sums[1][24][0] ), .Y(n556) );
-  XNOR2X1 U329 ( .A(\tree_sums[1][24][13] ), .B(\tree_sums[1][25][13] ), .Y(
-        n542) );
-  NOR2BX1 U330 ( .AN(n560), .B(n559), .Y(n541) );
-  NOR2X1 U331 ( .A(\tree_sums[1][25][13] ), .B(\tree_sums[1][24][13] ), .Y(
-        n559) );
-  NAND2X1 U332 ( .A(\tree_sums[1][25][13] ), .B(\tree_sums[1][24][13] ), .Y(
-        n560) );
-  XOR2X1 U333 ( .A(\tree_sums[1][25][0] ), .B(\tree_sums[1][24][0] ), .Y(
+  MXI2X1 U294 ( .A(n537), .B(n538), .S0(n539), .Y(\tree_sums[3][3][8] ) );
+  XNOR2X1 U295 ( .A(n540), .B(n541), .Y(\tree_sums[3][3][7] ) );
+  XNOR2X1 U296 ( .A(\tree_sums[1][24][7] ), .B(\tree_sums[1][25][7] ), .Y(n540) );
+  XNOR2X1 U297 ( .A(n542), .B(n543), .Y(\tree_sums[3][3][6] ) );
+  XNOR2X1 U298 ( .A(\tree_sums[1][24][6] ), .B(\tree_sums[1][25][6] ), .Y(n542) );
+  XNOR2X1 U299 ( .A(n544), .B(n545), .Y(\tree_sums[3][3][5] ) );
+  XNOR2X1 U300 ( .A(\tree_sums[1][24][5] ), .B(\tree_sums[1][25][5] ), .Y(n544) );
+  XNOR2X1 U301 ( .A(n546), .B(n547), .Y(\tree_sums[3][3][4] ) );
+  XNOR2X1 U302 ( .A(\tree_sums[1][24][4] ), .B(\tree_sums[1][25][4] ), .Y(n546) );
+  XNOR2X1 U303 ( .A(n548), .B(n549), .Y(\tree_sums[3][3][3] ) );
+  XNOR2X1 U304 ( .A(\tree_sums[1][24][3] ), .B(\tree_sums[1][25][3] ), .Y(n548) );
+  XNOR2X1 U305 ( .A(n550), .B(n551), .Y(\tree_sums[3][3][2] ) );
+  XNOR2X1 U306 ( .A(\tree_sums[1][24][2] ), .B(\tree_sums[1][25][2] ), .Y(n550) );
+  XOR2X1 U307 ( .A(n552), .B(n553), .Y(\tree_sums[3][3][1] ) );
+  XNOR2X1 U308 ( .A(\tree_sums[1][24][1] ), .B(\tree_sums[1][25][1] ), .Y(n553) );
+  MXI2X1 U309 ( .A(n537), .B(n538), .S0(n554), .Y(\tree_sums[3][3][9] ) );
+  OA21XL U310 ( .A0(n539), .A1(n555), .B0(n556), .Y(n554) );
+  AOI21X1 U311 ( .A0(n541), .A1(\tree_sums[1][24][7] ), .B0(n557), .Y(n539) );
+  OA21XL U312 ( .A0(\tree_sums[1][24][7] ), .A1(n541), .B0(
+        \tree_sums[1][25][7] ), .Y(n557) );
+  AO22X1 U313 ( .A0(n543), .A1(\tree_sums[1][24][6] ), .B0(n558), .B1(
+        \tree_sums[1][25][6] ), .Y(n541) );
+  OR2X1 U314 ( .A(\tree_sums[1][24][6] ), .B(n543), .Y(n558) );
+  OAI2BB1X1 U315 ( .A0N(n545), .A1N(\tree_sums[1][24][5] ), .B0(n559), .Y(n543) );
+  OAI21XL U316 ( .A0(\tree_sums[1][24][5] ), .A1(n545), .B0(
+        \tree_sums[1][25][5] ), .Y(n559) );
+  OAI2BB1X1 U317 ( .A0N(n547), .A1N(\tree_sums[1][24][4] ), .B0(n560), .Y(n545) );
+  OAI21XL U318 ( .A0(\tree_sums[1][24][4] ), .A1(n547), .B0(
+        \tree_sums[1][25][4] ), .Y(n560) );
+  AO22X1 U319 ( .A0(n549), .A1(\tree_sums[1][24][3] ), .B0(n561), .B1(
+        \tree_sums[1][25][3] ), .Y(n547) );
+  OR2X1 U320 ( .A(\tree_sums[1][24][3] ), .B(n549), .Y(n561) );
+  OAI2BB1X1 U321 ( .A0N(n551), .A1N(\tree_sums[1][24][2] ), .B0(n562), .Y(n549) );
+  OAI21XL U322 ( .A0(\tree_sums[1][24][2] ), .A1(n551), .B0(
+        \tree_sums[1][25][2] ), .Y(n562) );
+  OAI21XL U323 ( .A0(n552), .A1(n563), .B0(n564), .Y(n551) );
+  OAI2BB1X1 U324 ( .A0N(n552), .A1N(n563), .B0(\tree_sums[1][25][1] ), .Y(n564) );
+  CLKINVX1 U325 ( .A(\tree_sums[1][24][1] ), .Y(n563) );
+  NAND2X1 U326 ( .A(\tree_sums[1][25][0] ), .B(\tree_sums[1][24][0] ), .Y(n552) );
+  XNOR2X1 U327 ( .A(\tree_sums[1][24][13] ), .B(\tree_sums[1][25][13] ), .Y(
+        n538) );
+  NOR2BX1 U328 ( .AN(n556), .B(n555), .Y(n537) );
+  NOR2X1 U329 ( .A(\tree_sums[1][25][13] ), .B(\tree_sums[1][24][13] ), .Y(
+        n555) );
+  NAND2X1 U330 ( .A(\tree_sums[1][25][13] ), .B(\tree_sums[1][24][13] ), .Y(
+        n556) );
+  XOR2X1 U331 ( .A(\tree_sums[1][25][0] ), .B(\tree_sums[1][24][0] ), .Y(
         \tree_sums[3][3][0] ) );
-  MXI2X1 U334 ( .A(n569), .B(n570), .S0(n571), .Y(\tree_sums[2][9][7] ) );
-  XNOR2X1 U335 ( .A(n572), .B(n573), .Y(\tree_sums[2][9][6] ) );
-  XNOR2X1 U336 ( .A(\mult[48][6] ), .B(\mult[49][6] ), .Y(n572) );
-  XNOR2X1 U337 ( .A(n574), .B(n575), .Y(\tree_sums[2][9][5] ) );
-  XNOR2X1 U338 ( .A(\mult[48][5] ), .B(\mult[49][5] ), .Y(n574) );
-  XNOR2X1 U339 ( .A(n576), .B(n577), .Y(\tree_sums[2][9][4] ) );
-  XNOR2X1 U340 ( .A(\mult[48][4] ), .B(\mult[49][4] ), .Y(n576) );
-  XNOR2X1 U341 ( .A(n578), .B(n579), .Y(\tree_sums[2][9][3] ) );
-  XNOR2X1 U342 ( .A(\mult[48][3] ), .B(\mult[49][3] ), .Y(n578) );
-  XNOR2X1 U343 ( .A(n580), .B(n581), .Y(\tree_sums[2][9][2] ) );
-  XNOR2X1 U344 ( .A(\mult[48][2] ), .B(\mult[49][2] ), .Y(n580) );
-  XOR2X1 U345 ( .A(n582), .B(n583), .Y(\tree_sums[2][9][1] ) );
-  XNOR2X1 U346 ( .A(\mult[48][1] ), .B(\mult[49][1] ), .Y(n583) );
-  MXI2X1 U347 ( .A(n569), .B(n570), .S0(n584), .Y(\tree_sums[2][9][8] ) );
-  OA21XL U348 ( .A0(n571), .A1(n585), .B0(n586), .Y(n584) );
-  AOI2BB2X1 U349 ( .B0(n587), .B1(\mult[49][6] ), .A0N(n588), .A1N(n589), .Y(
-        n571) );
-  NAND2X1 U350 ( .A(n589), .B(n588), .Y(n587) );
-  CLKINVX1 U351 ( .A(n573), .Y(n588) );
-  OAI2BB1X1 U352 ( .A0N(n575), .A1N(\mult[48][5] ), .B0(n590), .Y(n573) );
-  OAI21XL U353 ( .A0(\mult[48][5] ), .A1(n575), .B0(\mult[49][5] ), .Y(n590)
+  MXI2X1 U332 ( .A(n565), .B(n566), .S0(n567), .Y(\tree_sums[2][9][7] ) );
+  XNOR2X1 U333 ( .A(n568), .B(n569), .Y(\tree_sums[2][9][6] ) );
+  XNOR2X1 U334 ( .A(\mult[48][6] ), .B(\mult[49][6] ), .Y(n568) );
+  XNOR2X1 U335 ( .A(n570), .B(n571), .Y(\tree_sums[2][9][5] ) );
+  XNOR2X1 U336 ( .A(\mult[48][5] ), .B(\mult[49][5] ), .Y(n570) );
+  XNOR2X1 U337 ( .A(n572), .B(n573), .Y(\tree_sums[2][9][4] ) );
+  XNOR2X1 U338 ( .A(\mult[48][4] ), .B(\mult[49][4] ), .Y(n572) );
+  XNOR2X1 U339 ( .A(n574), .B(n575), .Y(\tree_sums[2][9][3] ) );
+  XNOR2X1 U340 ( .A(\mult[48][3] ), .B(\mult[49][3] ), .Y(n574) );
+  XNOR2X1 U341 ( .A(n576), .B(n577), .Y(\tree_sums[2][9][2] ) );
+  XNOR2X1 U342 ( .A(\mult[48][2] ), .B(\mult[49][2] ), .Y(n576) );
+  XOR2X1 U343 ( .A(n578), .B(n579), .Y(\tree_sums[2][9][1] ) );
+  XNOR2X1 U344 ( .A(\mult[48][1] ), .B(\mult[49][1] ), .Y(n579) );
+  MXI2X1 U345 ( .A(n565), .B(n566), .S0(n580), .Y(\tree_sums[2][9][8] ) );
+  OA21XL U346 ( .A0(n567), .A1(n581), .B0(n582), .Y(n580) );
+  AOI2BB2X1 U347 ( .B0(n583), .B1(\mult[49][6] ), .A0N(n584), .A1N(n585), .Y(
+        n567) );
+  NAND2X1 U348 ( .A(n585), .B(n584), .Y(n583) );
+  CLKINVX1 U349 ( .A(n569), .Y(n584) );
+  OAI2BB1X1 U350 ( .A0N(n571), .A1N(\mult[48][5] ), .B0(n586), .Y(n569) );
+  OAI21XL U351 ( .A0(\mult[48][5] ), .A1(n571), .B0(\mult[49][5] ), .Y(n586)
          );
-  OAI2BB1X1 U354 ( .A0N(n577), .A1N(\mult[48][4] ), .B0(n591), .Y(n575) );
-  OAI21XL U355 ( .A0(\mult[48][4] ), .A1(n577), .B0(\mult[49][4] ), .Y(n591)
+  OAI2BB1X1 U352 ( .A0N(n573), .A1N(\mult[48][4] ), .B0(n587), .Y(n571) );
+  OAI21XL U353 ( .A0(\mult[48][4] ), .A1(n573), .B0(\mult[49][4] ), .Y(n587)
          );
-  AO22X1 U356 ( .A0(n579), .A1(\mult[48][3] ), .B0(n592), .B1(\mult[49][3] ), 
-        .Y(n577) );
-  OR2X1 U357 ( .A(\mult[48][3] ), .B(n579), .Y(n592) );
-  OAI2BB1X1 U358 ( .A0N(n581), .A1N(\mult[48][2] ), .B0(n593), .Y(n579) );
-  OAI21XL U359 ( .A0(\mult[48][2] ), .A1(n581), .B0(\mult[49][2] ), .Y(n593)
+  AO22X1 U354 ( .A0(n575), .A1(\mult[48][3] ), .B0(n588), .B1(\mult[49][3] ), 
+        .Y(n573) );
+  OR2X1 U355 ( .A(\mult[48][3] ), .B(n575), .Y(n588) );
+  OAI2BB1X1 U356 ( .A0N(n577), .A1N(\mult[48][2] ), .B0(n589), .Y(n575) );
+  OAI21XL U357 ( .A0(\mult[48][2] ), .A1(n577), .B0(\mult[49][2] ), .Y(n589)
          );
-  OAI21XL U360 ( .A0(n582), .A1(n594), .B0(n595), .Y(n581) );
-  OAI2BB1X1 U361 ( .A0N(n582), .A1N(n594), .B0(\mult[49][1] ), .Y(n595) );
-  CLKINVX1 U362 ( .A(\mult[48][1] ), .Y(n594) );
-  NAND2X1 U363 ( .A(\mult[49][0] ), .B(\mult[48][0] ), .Y(n582) );
-  CLKINVX1 U364 ( .A(\mult[48][6] ), .Y(n589) );
-  XNOR2X1 U365 ( .A(\mult[48][7] ), .B(\mult[49][7] ), .Y(n570) );
-  NOR2BX1 U366 ( .AN(n586), .B(n585), .Y(n569) );
-  NOR2X1 U367 ( .A(\mult[49][7] ), .B(\mult[48][7] ), .Y(n585) );
-  NAND2X1 U368 ( .A(\mult[49][7] ), .B(\mult[48][7] ), .Y(n586) );
-  XOR2X1 U369 ( .A(\mult[49][0] ), .B(\mult[48][0] ), .Y(\tree_sums[2][9][0] )
+  OAI21XL U358 ( .A0(n578), .A1(n590), .B0(n591), .Y(n577) );
+  OAI2BB1X1 U359 ( .A0N(n578), .A1N(n590), .B0(\mult[49][1] ), .Y(n591) );
+  CLKINVX1 U360 ( .A(\mult[48][1] ), .Y(n590) );
+  NAND2X1 U361 ( .A(\mult[49][0] ), .B(\mult[48][0] ), .Y(n578) );
+  CLKINVX1 U362 ( .A(\mult[48][6] ), .Y(n585) );
+  XNOR2X1 U363 ( .A(\mult[48][7] ), .B(\mult[49][7] ), .Y(n566) );
+  NOR2BX1 U364 ( .AN(n582), .B(n581), .Y(n565) );
+  NOR2X1 U365 ( .A(\mult[49][7] ), .B(\mult[48][7] ), .Y(n581) );
+  NAND2X1 U366 ( .A(\mult[49][7] ), .B(\mult[48][7] ), .Y(n582) );
+  XOR2X1 U367 ( .A(\mult[49][0] ), .B(\mult[48][0] ), .Y(\tree_sums[2][9][0] )
          );
-  MXI2X1 U370 ( .A(n596), .B(n597), .S0(n598), .Y(\tree_sums[2][15][7] ) );
-  XNOR2X1 U371 ( .A(n599), .B(n600), .Y(\tree_sums[2][15][6] ) );
-  XNOR2X1 U372 ( .A(\mult[4][6] ), .B(\mult[5][6] ), .Y(n599) );
-  XNOR2X1 U373 ( .A(n601), .B(n602), .Y(\tree_sums[2][15][5] ) );
-  XNOR2X1 U374 ( .A(\mult[4][5] ), .B(\mult[5][5] ), .Y(n601) );
-  XNOR2X1 U375 ( .A(n603), .B(n604), .Y(\tree_sums[2][15][4] ) );
-  XNOR2X1 U376 ( .A(\mult[4][4] ), .B(\mult[5][4] ), .Y(n603) );
-  XNOR2X1 U377 ( .A(n605), .B(n606), .Y(\tree_sums[2][15][3] ) );
-  XNOR2X1 U378 ( .A(\mult[4][3] ), .B(\mult[5][3] ), .Y(n605) );
-  XNOR2X1 U379 ( .A(n607), .B(n608), .Y(\tree_sums[2][15][2] ) );
-  XNOR2X1 U380 ( .A(\mult[4][2] ), .B(\mult[5][2] ), .Y(n607) );
-  XOR2X1 U381 ( .A(n609), .B(n610), .Y(\tree_sums[2][15][1] ) );
-  XNOR2X1 U382 ( .A(\mult[4][1] ), .B(\mult[5][1] ), .Y(n610) );
-  MXI2X1 U383 ( .A(n596), .B(n597), .S0(n611), .Y(\tree_sums[2][15][8] ) );
-  OA21XL U384 ( .A0(n598), .A1(n612), .B0(n613), .Y(n611) );
-  AOI2BB2X1 U385 ( .B0(n614), .B1(\mult[5][6] ), .A0N(n615), .A1N(n616), .Y(
-        n598) );
-  NAND2X1 U386 ( .A(n616), .B(n615), .Y(n614) );
-  CLKINVX1 U387 ( .A(n600), .Y(n615) );
-  OAI2BB1X1 U388 ( .A0N(n602), .A1N(\mult[4][5] ), .B0(n617), .Y(n600) );
-  OAI21XL U389 ( .A0(\mult[4][5] ), .A1(n602), .B0(\mult[5][5] ), .Y(n617) );
-  OAI2BB1X1 U390 ( .A0N(n604), .A1N(\mult[4][4] ), .B0(n618), .Y(n602) );
-  OAI21XL U391 ( .A0(\mult[4][4] ), .A1(n604), .B0(\mult[5][4] ), .Y(n618) );
-  AO22X1 U392 ( .A0(n606), .A1(\mult[4][3] ), .B0(n619), .B1(\mult[5][3] ), 
-        .Y(n604) );
-  OR2X1 U393 ( .A(\mult[4][3] ), .B(n606), .Y(n619) );
-  OAI2BB1X1 U394 ( .A0N(n608), .A1N(\mult[4][2] ), .B0(n620), .Y(n606) );
-  OAI21XL U395 ( .A0(\mult[4][2] ), .A1(n608), .B0(\mult[5][2] ), .Y(n620) );
-  OAI21XL U396 ( .A0(n609), .A1(n621), .B0(n622), .Y(n608) );
-  OAI2BB1X1 U397 ( .A0N(n609), .A1N(n621), .B0(\mult[5][1] ), .Y(n622) );
-  CLKINVX1 U398 ( .A(\mult[4][1] ), .Y(n621) );
-  NAND2X1 U399 ( .A(\mult[5][0] ), .B(\mult[4][0] ), .Y(n609) );
-  CLKINVX1 U400 ( .A(\mult[4][6] ), .Y(n616) );
-  XNOR2X1 U401 ( .A(\mult[4][7] ), .B(\mult[5][7] ), .Y(n597) );
-  NOR2BX1 U402 ( .AN(n613), .B(n612), .Y(n596) );
-  NOR2X1 U403 ( .A(\mult[5][7] ), .B(\mult[4][7] ), .Y(n612) );
-  NAND2X1 U404 ( .A(\mult[5][7] ), .B(\mult[4][7] ), .Y(n613) );
-  XOR2X1 U405 ( .A(\mult[5][0] ), .B(\mult[4][0] ), .Y(\tree_sums[2][15][0] )
+  MXI2X1 U368 ( .A(n592), .B(n593), .S0(n594), .Y(\tree_sums[2][15][7] ) );
+  XNOR2X1 U369 ( .A(n595), .B(n596), .Y(\tree_sums[2][15][6] ) );
+  XNOR2X1 U370 ( .A(\mult[4][6] ), .B(\mult[5][6] ), .Y(n595) );
+  XNOR2X1 U371 ( .A(n597), .B(n598), .Y(\tree_sums[2][15][5] ) );
+  XNOR2X1 U372 ( .A(\mult[4][5] ), .B(\mult[5][5] ), .Y(n597) );
+  XNOR2X1 U373 ( .A(n599), .B(n600), .Y(\tree_sums[2][15][4] ) );
+  XNOR2X1 U374 ( .A(\mult[4][4] ), .B(\mult[5][4] ), .Y(n599) );
+  XNOR2X1 U375 ( .A(n601), .B(n602), .Y(\tree_sums[2][15][3] ) );
+  XNOR2X1 U376 ( .A(\mult[4][3] ), .B(\mult[5][3] ), .Y(n601) );
+  XNOR2X1 U377 ( .A(n603), .B(n604), .Y(\tree_sums[2][15][2] ) );
+  XNOR2X1 U378 ( .A(\mult[4][2] ), .B(\mult[5][2] ), .Y(n603) );
+  XOR2X1 U379 ( .A(n605), .B(n606), .Y(\tree_sums[2][15][1] ) );
+  XNOR2X1 U380 ( .A(\mult[4][1] ), .B(\mult[5][1] ), .Y(n606) );
+  MXI2X1 U381 ( .A(n592), .B(n593), .S0(n607), .Y(\tree_sums[2][15][8] ) );
+  OA21XL U382 ( .A0(n594), .A1(n608), .B0(n609), .Y(n607) );
+  AOI2BB2X1 U383 ( .B0(n610), .B1(\mult[5][6] ), .A0N(n611), .A1N(n612), .Y(
+        n594) );
+  NAND2X1 U384 ( .A(n612), .B(n611), .Y(n610) );
+  CLKINVX1 U385 ( .A(n596), .Y(n611) );
+  OAI2BB1X1 U386 ( .A0N(n598), .A1N(\mult[4][5] ), .B0(n613), .Y(n596) );
+  OAI21XL U387 ( .A0(\mult[4][5] ), .A1(n598), .B0(\mult[5][5] ), .Y(n613) );
+  OAI2BB1X1 U388 ( .A0N(n600), .A1N(\mult[4][4] ), .B0(n614), .Y(n598) );
+  OAI21XL U389 ( .A0(\mult[4][4] ), .A1(n600), .B0(\mult[5][4] ), .Y(n614) );
+  AO22X1 U390 ( .A0(n602), .A1(\mult[4][3] ), .B0(n615), .B1(\mult[5][3] ), 
+        .Y(n600) );
+  OR2X1 U391 ( .A(\mult[4][3] ), .B(n602), .Y(n615) );
+  OAI2BB1X1 U392 ( .A0N(n604), .A1N(\mult[4][2] ), .B0(n616), .Y(n602) );
+  OAI21XL U393 ( .A0(\mult[4][2] ), .A1(n604), .B0(\mult[5][2] ), .Y(n616) );
+  OAI21XL U394 ( .A0(n605), .A1(n617), .B0(n618), .Y(n604) );
+  OAI2BB1X1 U395 ( .A0N(n605), .A1N(n617), .B0(\mult[5][1] ), .Y(n618) );
+  CLKINVX1 U396 ( .A(\mult[4][1] ), .Y(n617) );
+  NAND2X1 U397 ( .A(\mult[5][0] ), .B(\mult[4][0] ), .Y(n605) );
+  CLKINVX1 U398 ( .A(\mult[4][6] ), .Y(n612) );
+  XNOR2X1 U399 ( .A(\mult[4][7] ), .B(\mult[5][7] ), .Y(n593) );
+  NOR2BX1 U400 ( .AN(n609), .B(n608), .Y(n592) );
+  NOR2X1 U401 ( .A(\mult[5][7] ), .B(\mult[4][7] ), .Y(n608) );
+  NAND2X1 U402 ( .A(\mult[5][7] ), .B(\mult[4][7] ), .Y(n609) );
+  XOR2X1 U403 ( .A(\mult[5][0] ), .B(\mult[4][0] ), .Y(\tree_sums[2][15][0] )
          );
-  MXI2X1 U406 ( .A(n623), .B(n624), .S0(n625), .Y(\tree_sums[2][14][7] ) );
-  XNOR2X1 U407 ( .A(n626), .B(n627), .Y(\tree_sums[2][14][6] ) );
-  XNOR2X1 U408 ( .A(\mult[10][6] ), .B(\mult[11][6] ), .Y(n626) );
-  XNOR2X1 U409 ( .A(n628), .B(n629), .Y(\tree_sums[2][14][5] ) );
-  XNOR2X1 U410 ( .A(\mult[10][5] ), .B(\mult[11][5] ), .Y(n628) );
-  XNOR2X1 U411 ( .A(n630), .B(n631), .Y(\tree_sums[2][14][4] ) );
-  XNOR2X1 U412 ( .A(\mult[10][4] ), .B(\mult[11][4] ), .Y(n630) );
-  XNOR2X1 U413 ( .A(n632), .B(n633), .Y(\tree_sums[2][14][3] ) );
-  XNOR2X1 U414 ( .A(\mult[10][3] ), .B(\mult[11][3] ), .Y(n632) );
-  XNOR2X1 U415 ( .A(n634), .B(n635), .Y(\tree_sums[2][14][2] ) );
-  XNOR2X1 U416 ( .A(\mult[10][2] ), .B(\mult[11][2] ), .Y(n634) );
-  XOR2X1 U417 ( .A(n636), .B(n637), .Y(\tree_sums[2][14][1] ) );
-  XNOR2X1 U418 ( .A(\mult[10][1] ), .B(\mult[11][1] ), .Y(n637) );
-  MXI2X1 U419 ( .A(n623), .B(n624), .S0(n638), .Y(\tree_sums[2][14][8] ) );
-  OA21XL U420 ( .A0(n625), .A1(n639), .B0(n640), .Y(n638) );
-  AOI2BB2X1 U421 ( .B0(n641), .B1(\mult[11][6] ), .A0N(n642), .A1N(n643), .Y(
-        n625) );
-  NAND2X1 U422 ( .A(n643), .B(n642), .Y(n641) );
-  CLKINVX1 U423 ( .A(n627), .Y(n642) );
-  OAI2BB1X1 U424 ( .A0N(n629), .A1N(\mult[10][5] ), .B0(n644), .Y(n627) );
-  OAI21XL U425 ( .A0(\mult[10][5] ), .A1(n629), .B0(\mult[11][5] ), .Y(n644)
+  MXI2X1 U404 ( .A(n619), .B(n620), .S0(n621), .Y(\tree_sums[2][14][7] ) );
+  XNOR2X1 U405 ( .A(n622), .B(n623), .Y(\tree_sums[2][14][6] ) );
+  XNOR2X1 U406 ( .A(\mult[10][6] ), .B(\mult[11][6] ), .Y(n622) );
+  XNOR2X1 U407 ( .A(n624), .B(n625), .Y(\tree_sums[2][14][5] ) );
+  XNOR2X1 U408 ( .A(\mult[10][5] ), .B(\mult[11][5] ), .Y(n624) );
+  XNOR2X1 U409 ( .A(n626), .B(n627), .Y(\tree_sums[2][14][4] ) );
+  XNOR2X1 U410 ( .A(\mult[10][4] ), .B(\mult[11][4] ), .Y(n626) );
+  XNOR2X1 U411 ( .A(n628), .B(n629), .Y(\tree_sums[2][14][3] ) );
+  XNOR2X1 U412 ( .A(\mult[10][3] ), .B(\mult[11][3] ), .Y(n628) );
+  XNOR2X1 U413 ( .A(n630), .B(n631), .Y(\tree_sums[2][14][2] ) );
+  XNOR2X1 U414 ( .A(\mult[10][2] ), .B(\mult[11][2] ), .Y(n630) );
+  XOR2X1 U415 ( .A(n632), .B(n633), .Y(\tree_sums[2][14][1] ) );
+  XNOR2X1 U416 ( .A(\mult[10][1] ), .B(\mult[11][1] ), .Y(n633) );
+  MXI2X1 U417 ( .A(n619), .B(n620), .S0(n634), .Y(\tree_sums[2][14][8] ) );
+  OA21XL U418 ( .A0(n621), .A1(n635), .B0(n636), .Y(n634) );
+  AOI2BB2X1 U419 ( .B0(n637), .B1(\mult[11][6] ), .A0N(n638), .A1N(n639), .Y(
+        n621) );
+  NAND2X1 U420 ( .A(n639), .B(n638), .Y(n637) );
+  CLKINVX1 U421 ( .A(n623), .Y(n638) );
+  OAI2BB1X1 U422 ( .A0N(n625), .A1N(\mult[10][5] ), .B0(n640), .Y(n623) );
+  OAI21XL U423 ( .A0(\mult[10][5] ), .A1(n625), .B0(\mult[11][5] ), .Y(n640)
          );
-  OAI2BB1X1 U426 ( .A0N(n631), .A1N(\mult[10][4] ), .B0(n645), .Y(n629) );
-  OAI21XL U427 ( .A0(\mult[10][4] ), .A1(n631), .B0(\mult[11][4] ), .Y(n645)
+  OAI2BB1X1 U424 ( .A0N(n627), .A1N(\mult[10][4] ), .B0(n641), .Y(n625) );
+  OAI21XL U425 ( .A0(\mult[10][4] ), .A1(n627), .B0(\mult[11][4] ), .Y(n641)
          );
-  AO22X1 U428 ( .A0(n633), .A1(\mult[10][3] ), .B0(n646), .B1(\mult[11][3] ), 
-        .Y(n631) );
-  OR2X1 U429 ( .A(\mult[10][3] ), .B(n633), .Y(n646) );
-  OAI2BB1X1 U430 ( .A0N(n635), .A1N(\mult[10][2] ), .B0(n647), .Y(n633) );
-  OAI21XL U431 ( .A0(\mult[10][2] ), .A1(n635), .B0(\mult[11][2] ), .Y(n647)
+  AO22X1 U426 ( .A0(n629), .A1(\mult[10][3] ), .B0(n642), .B1(\mult[11][3] ), 
+        .Y(n627) );
+  OR2X1 U427 ( .A(\mult[10][3] ), .B(n629), .Y(n642) );
+  OAI2BB1X1 U428 ( .A0N(n631), .A1N(\mult[10][2] ), .B0(n643), .Y(n629) );
+  OAI21XL U429 ( .A0(\mult[10][2] ), .A1(n631), .B0(\mult[11][2] ), .Y(n643)
          );
-  OAI21XL U432 ( .A0(n636), .A1(n648), .B0(n649), .Y(n635) );
-  OAI2BB1X1 U433 ( .A0N(n636), .A1N(n648), .B0(\mult[11][1] ), .Y(n649) );
-  CLKINVX1 U434 ( .A(\mult[10][1] ), .Y(n648) );
-  NAND2X1 U435 ( .A(\mult[11][0] ), .B(\mult[10][0] ), .Y(n636) );
-  CLKINVX1 U436 ( .A(\mult[10][6] ), .Y(n643) );
-  XNOR2X1 U437 ( .A(\mult[10][7] ), .B(\mult[11][7] ), .Y(n624) );
-  NOR2BX1 U438 ( .AN(n640), .B(n639), .Y(n623) );
-  NOR2X1 U439 ( .A(\mult[11][7] ), .B(\mult[10][7] ), .Y(n639) );
-  NAND2X1 U440 ( .A(\mult[11][7] ), .B(\mult[10][7] ), .Y(n640) );
-  XOR2X1 U441 ( .A(\mult[11][0] ), .B(\mult[10][0] ), .Y(\tree_sums[2][14][0] ) );
-  MXI2X1 U442 ( .A(n650), .B(n651), .S0(n652), .Y(\tree_sums[2][13][7] ) );
-  XNOR2X1 U443 ( .A(n653), .B(n654), .Y(\tree_sums[2][13][6] ) );
-  XNOR2X1 U444 ( .A(\mult[18][6] ), .B(\mult[19][6] ), .Y(n653) );
-  XNOR2X1 U445 ( .A(n655), .B(n656), .Y(\tree_sums[2][13][5] ) );
-  XNOR2X1 U446 ( .A(\mult[18][5] ), .B(\mult[19][5] ), .Y(n655) );
-  XNOR2X1 U447 ( .A(n657), .B(n658), .Y(\tree_sums[2][13][4] ) );
-  XNOR2X1 U448 ( .A(\mult[18][4] ), .B(\mult[19][4] ), .Y(n657) );
-  XNOR2X1 U449 ( .A(n659), .B(n660), .Y(\tree_sums[2][13][3] ) );
-  XNOR2X1 U450 ( .A(\mult[18][3] ), .B(\mult[19][3] ), .Y(n659) );
-  XNOR2X1 U451 ( .A(n661), .B(n662), .Y(\tree_sums[2][13][2] ) );
-  XNOR2X1 U452 ( .A(\mult[18][2] ), .B(\mult[19][2] ), .Y(n661) );
-  XOR2X1 U453 ( .A(n663), .B(n664), .Y(\tree_sums[2][13][1] ) );
-  XNOR2X1 U454 ( .A(\mult[18][1] ), .B(\mult[19][1] ), .Y(n664) );
-  MXI2X1 U455 ( .A(n650), .B(n651), .S0(n665), .Y(\tree_sums[2][13][8] ) );
-  OA21XL U456 ( .A0(n652), .A1(n666), .B0(n667), .Y(n665) );
-  AOI2BB2X1 U457 ( .B0(n668), .B1(\mult[19][6] ), .A0N(n669), .A1N(n670), .Y(
-        n652) );
-  NAND2X1 U458 ( .A(n670), .B(n669), .Y(n668) );
-  CLKINVX1 U459 ( .A(n654), .Y(n669) );
-  OAI2BB1X1 U460 ( .A0N(n656), .A1N(\mult[18][5] ), .B0(n671), .Y(n654) );
-  OAI21XL U461 ( .A0(\mult[18][5] ), .A1(n656), .B0(\mult[19][5] ), .Y(n671)
+  OAI21XL U430 ( .A0(n632), .A1(n644), .B0(n645), .Y(n631) );
+  OAI2BB1X1 U431 ( .A0N(n632), .A1N(n644), .B0(\mult[11][1] ), .Y(n645) );
+  CLKINVX1 U432 ( .A(\mult[10][1] ), .Y(n644) );
+  NAND2X1 U433 ( .A(\mult[11][0] ), .B(\mult[10][0] ), .Y(n632) );
+  CLKINVX1 U434 ( .A(\mult[10][6] ), .Y(n639) );
+  XNOR2X1 U435 ( .A(\mult[10][7] ), .B(\mult[11][7] ), .Y(n620) );
+  NOR2BX1 U436 ( .AN(n636), .B(n635), .Y(n619) );
+  NOR2X1 U437 ( .A(\mult[11][7] ), .B(\mult[10][7] ), .Y(n635) );
+  NAND2X1 U438 ( .A(\mult[11][7] ), .B(\mult[10][7] ), .Y(n636) );
+  XOR2X1 U439 ( .A(\mult[11][0] ), .B(\mult[10][0] ), .Y(\tree_sums[2][14][0] ) );
+  MXI2X1 U440 ( .A(n646), .B(n647), .S0(n648), .Y(\tree_sums[2][13][7] ) );
+  XNOR2X1 U441 ( .A(n649), .B(n650), .Y(\tree_sums[2][13][6] ) );
+  XNOR2X1 U442 ( .A(\mult[18][6] ), .B(\mult[19][6] ), .Y(n649) );
+  XNOR2X1 U443 ( .A(n651), .B(n652), .Y(\tree_sums[2][13][5] ) );
+  XNOR2X1 U444 ( .A(\mult[18][5] ), .B(\mult[19][5] ), .Y(n651) );
+  XNOR2X1 U445 ( .A(n653), .B(n654), .Y(\tree_sums[2][13][4] ) );
+  XNOR2X1 U446 ( .A(\mult[18][4] ), .B(\mult[19][4] ), .Y(n653) );
+  XNOR2X1 U447 ( .A(n655), .B(n656), .Y(\tree_sums[2][13][3] ) );
+  XNOR2X1 U448 ( .A(\mult[18][3] ), .B(\mult[19][3] ), .Y(n655) );
+  XNOR2X1 U449 ( .A(n657), .B(n658), .Y(\tree_sums[2][13][2] ) );
+  XNOR2X1 U450 ( .A(\mult[18][2] ), .B(\mult[19][2] ), .Y(n657) );
+  XOR2X1 U451 ( .A(n659), .B(n660), .Y(\tree_sums[2][13][1] ) );
+  XNOR2X1 U452 ( .A(\mult[18][1] ), .B(\mult[19][1] ), .Y(n660) );
+  MXI2X1 U453 ( .A(n646), .B(n647), .S0(n661), .Y(\tree_sums[2][13][8] ) );
+  OA21XL U454 ( .A0(n648), .A1(n662), .B0(n663), .Y(n661) );
+  AOI2BB2X1 U455 ( .B0(n664), .B1(\mult[19][6] ), .A0N(n665), .A1N(n666), .Y(
+        n648) );
+  NAND2X1 U456 ( .A(n666), .B(n665), .Y(n664) );
+  CLKINVX1 U457 ( .A(n650), .Y(n665) );
+  OAI2BB1X1 U458 ( .A0N(n652), .A1N(\mult[18][5] ), .B0(n667), .Y(n650) );
+  OAI21XL U459 ( .A0(\mult[18][5] ), .A1(n652), .B0(\mult[19][5] ), .Y(n667)
          );
-  OAI2BB1X1 U462 ( .A0N(n658), .A1N(\mult[18][4] ), .B0(n672), .Y(n656) );
-  OAI21XL U463 ( .A0(\mult[18][4] ), .A1(n658), .B0(\mult[19][4] ), .Y(n672)
+  OAI2BB1X1 U460 ( .A0N(n654), .A1N(\mult[18][4] ), .B0(n668), .Y(n652) );
+  OAI21XL U461 ( .A0(\mult[18][4] ), .A1(n654), .B0(\mult[19][4] ), .Y(n668)
          );
-  AO22X1 U464 ( .A0(n660), .A1(\mult[18][3] ), .B0(n673), .B1(\mult[19][3] ), 
-        .Y(n658) );
-  OR2X1 U465 ( .A(\mult[18][3] ), .B(n660), .Y(n673) );
-  OAI2BB1X1 U466 ( .A0N(n662), .A1N(\mult[18][2] ), .B0(n674), .Y(n660) );
-  OAI21XL U467 ( .A0(\mult[18][2] ), .A1(n662), .B0(\mult[19][2] ), .Y(n674)
+  AO22X1 U462 ( .A0(n656), .A1(\mult[18][3] ), .B0(n669), .B1(\mult[19][3] ), 
+        .Y(n654) );
+  OR2X1 U463 ( .A(\mult[18][3] ), .B(n656), .Y(n669) );
+  OAI2BB1X1 U464 ( .A0N(n658), .A1N(\mult[18][2] ), .B0(n670), .Y(n656) );
+  OAI21XL U465 ( .A0(\mult[18][2] ), .A1(n658), .B0(\mult[19][2] ), .Y(n670)
          );
-  OAI21XL U468 ( .A0(n663), .A1(n675), .B0(n676), .Y(n662) );
-  OAI2BB1X1 U469 ( .A0N(n663), .A1N(n675), .B0(\mult[19][1] ), .Y(n676) );
-  CLKINVX1 U470 ( .A(\mult[18][1] ), .Y(n675) );
-  NAND2X1 U471 ( .A(\mult[19][0] ), .B(\mult[18][0] ), .Y(n663) );
-  CLKINVX1 U472 ( .A(\mult[18][6] ), .Y(n670) );
-  XNOR2X1 U473 ( .A(\mult[18][7] ), .B(\mult[19][7] ), .Y(n651) );
-  NOR2BX1 U474 ( .AN(n667), .B(n666), .Y(n650) );
-  NOR2X1 U475 ( .A(\mult[19][7] ), .B(\mult[18][7] ), .Y(n666) );
-  NAND2X1 U476 ( .A(\mult[19][7] ), .B(\mult[18][7] ), .Y(n667) );
-  XOR2X1 U477 ( .A(\mult[19][0] ), .B(\mult[18][0] ), .Y(\tree_sums[2][13][0] ) );
-  MXI2X1 U478 ( .A(n677), .B(n678), .S0(n679), .Y(\tree_sums[2][12][7] ) );
-  XNOR2X1 U479 ( .A(n680), .B(n681), .Y(\tree_sums[2][12][6] ) );
-  XNOR2X1 U480 ( .A(\mult[24][6] ), .B(\mult[25][6] ), .Y(n680) );
-  XNOR2X1 U481 ( .A(n682), .B(n683), .Y(\tree_sums[2][12][5] ) );
-  XNOR2X1 U482 ( .A(\mult[24][5] ), .B(\mult[25][5] ), .Y(n682) );
-  XNOR2X1 U483 ( .A(n684), .B(n685), .Y(\tree_sums[2][12][4] ) );
-  XNOR2X1 U484 ( .A(\mult[24][4] ), .B(\mult[25][4] ), .Y(n684) );
-  XNOR2X1 U485 ( .A(n686), .B(n687), .Y(\tree_sums[2][12][3] ) );
-  XNOR2X1 U486 ( .A(\mult[24][3] ), .B(\mult[25][3] ), .Y(n686) );
-  XNOR2X1 U487 ( .A(n688), .B(n689), .Y(\tree_sums[2][12][2] ) );
-  XNOR2X1 U488 ( .A(\mult[24][2] ), .B(\mult[25][2] ), .Y(n688) );
-  XOR2X1 U489 ( .A(n690), .B(n691), .Y(\tree_sums[2][12][1] ) );
-  XNOR2X1 U490 ( .A(\mult[24][1] ), .B(\mult[25][1] ), .Y(n691) );
-  MXI2X1 U491 ( .A(n677), .B(n678), .S0(n692), .Y(\tree_sums[2][12][8] ) );
-  OA21XL U492 ( .A0(n679), .A1(n693), .B0(n694), .Y(n692) );
-  AOI2BB2X1 U493 ( .B0(n695), .B1(\mult[25][6] ), .A0N(n696), .A1N(n697), .Y(
-        n679) );
-  NAND2X1 U494 ( .A(n697), .B(n696), .Y(n695) );
-  CLKINVX1 U495 ( .A(n681), .Y(n696) );
-  OAI2BB1X1 U496 ( .A0N(n683), .A1N(\mult[24][5] ), .B0(n698), .Y(n681) );
-  OAI21XL U497 ( .A0(\mult[24][5] ), .A1(n683), .B0(\mult[25][5] ), .Y(n698)
+  OAI21XL U466 ( .A0(n659), .A1(n671), .B0(n672), .Y(n658) );
+  OAI2BB1X1 U467 ( .A0N(n659), .A1N(n671), .B0(\mult[19][1] ), .Y(n672) );
+  CLKINVX1 U468 ( .A(\mult[18][1] ), .Y(n671) );
+  NAND2X1 U469 ( .A(\mult[19][0] ), .B(\mult[18][0] ), .Y(n659) );
+  CLKINVX1 U470 ( .A(\mult[18][6] ), .Y(n666) );
+  XNOR2X1 U471 ( .A(\mult[18][7] ), .B(\mult[19][7] ), .Y(n647) );
+  NOR2BX1 U472 ( .AN(n663), .B(n662), .Y(n646) );
+  NOR2X1 U473 ( .A(\mult[19][7] ), .B(\mult[18][7] ), .Y(n662) );
+  NAND2X1 U474 ( .A(\mult[19][7] ), .B(\mult[18][7] ), .Y(n663) );
+  XOR2X1 U475 ( .A(\mult[19][0] ), .B(\mult[18][0] ), .Y(\tree_sums[2][13][0] ) );
+  MXI2X1 U476 ( .A(n673), .B(n674), .S0(n675), .Y(\tree_sums[2][12][7] ) );
+  XNOR2X1 U477 ( .A(n676), .B(n677), .Y(\tree_sums[2][12][6] ) );
+  XNOR2X1 U478 ( .A(\mult[24][6] ), .B(\mult[25][6] ), .Y(n676) );
+  XNOR2X1 U479 ( .A(n678), .B(n679), .Y(\tree_sums[2][12][5] ) );
+  XNOR2X1 U480 ( .A(\mult[24][5] ), .B(\mult[25][5] ), .Y(n678) );
+  XNOR2X1 U481 ( .A(n680), .B(n681), .Y(\tree_sums[2][12][4] ) );
+  XNOR2X1 U482 ( .A(\mult[24][4] ), .B(\mult[25][4] ), .Y(n680) );
+  XNOR2X1 U483 ( .A(n682), .B(n683), .Y(\tree_sums[2][12][3] ) );
+  XNOR2X1 U484 ( .A(\mult[24][3] ), .B(\mult[25][3] ), .Y(n682) );
+  XNOR2X1 U485 ( .A(n684), .B(n685), .Y(\tree_sums[2][12][2] ) );
+  XNOR2X1 U486 ( .A(\mult[24][2] ), .B(\mult[25][2] ), .Y(n684) );
+  XOR2X1 U487 ( .A(n686), .B(n687), .Y(\tree_sums[2][12][1] ) );
+  XNOR2X1 U488 ( .A(\mult[24][1] ), .B(\mult[25][1] ), .Y(n687) );
+  MXI2X1 U489 ( .A(n673), .B(n674), .S0(n688), .Y(\tree_sums[2][12][8] ) );
+  OA21XL U490 ( .A0(n675), .A1(n689), .B0(n690), .Y(n688) );
+  AOI2BB2X1 U491 ( .B0(n691), .B1(\mult[25][6] ), .A0N(n692), .A1N(n693), .Y(
+        n675) );
+  NAND2X1 U492 ( .A(n693), .B(n692), .Y(n691) );
+  CLKINVX1 U493 ( .A(n677), .Y(n692) );
+  OAI2BB1X1 U494 ( .A0N(n679), .A1N(\mult[24][5] ), .B0(n694), .Y(n677) );
+  OAI21XL U495 ( .A0(\mult[24][5] ), .A1(n679), .B0(\mult[25][5] ), .Y(n694)
          );
-  OAI2BB1X1 U498 ( .A0N(n685), .A1N(\mult[24][4] ), .B0(n699), .Y(n683) );
-  OAI21XL U499 ( .A0(\mult[24][4] ), .A1(n685), .B0(\mult[25][4] ), .Y(n699)
+  OAI2BB1X1 U496 ( .A0N(n681), .A1N(\mult[24][4] ), .B0(n695), .Y(n679) );
+  OAI21XL U497 ( .A0(\mult[24][4] ), .A1(n681), .B0(\mult[25][4] ), .Y(n695)
          );
-  AO22X1 U500 ( .A0(n687), .A1(\mult[24][3] ), .B0(n700), .B1(\mult[25][3] ), 
-        .Y(n685) );
-  OR2X1 U501 ( .A(\mult[24][3] ), .B(n687), .Y(n700) );
-  OAI2BB1X1 U502 ( .A0N(n689), .A1N(\mult[24][2] ), .B0(n701), .Y(n687) );
-  OAI21XL U503 ( .A0(\mult[24][2] ), .A1(n689), .B0(\mult[25][2] ), .Y(n701)
+  AO22X1 U498 ( .A0(n683), .A1(\mult[24][3] ), .B0(n696), .B1(\mult[25][3] ), 
+        .Y(n681) );
+  OR2X1 U499 ( .A(\mult[24][3] ), .B(n683), .Y(n696) );
+  OAI2BB1X1 U500 ( .A0N(n685), .A1N(\mult[24][2] ), .B0(n697), .Y(n683) );
+  OAI21XL U501 ( .A0(\mult[24][2] ), .A1(n685), .B0(\mult[25][2] ), .Y(n697)
          );
-  OAI21XL U504 ( .A0(n690), .A1(n702), .B0(n703), .Y(n689) );
-  OAI2BB1X1 U505 ( .A0N(n690), .A1N(n702), .B0(\mult[25][1] ), .Y(n703) );
-  CLKINVX1 U506 ( .A(\mult[24][1] ), .Y(n702) );
-  NAND2X1 U507 ( .A(\mult[25][0] ), .B(\mult[24][0] ), .Y(n690) );
-  CLKINVX1 U508 ( .A(\mult[24][6] ), .Y(n697) );
-  XNOR2X1 U509 ( .A(\mult[24][7] ), .B(\mult[25][7] ), .Y(n678) );
-  NOR2BX1 U510 ( .AN(n694), .B(n693), .Y(n677) );
-  NOR2X1 U511 ( .A(\mult[25][7] ), .B(\mult[24][7] ), .Y(n693) );
-  NAND2X1 U512 ( .A(\mult[25][7] ), .B(\mult[24][7] ), .Y(n694) );
-  XOR2X1 U513 ( .A(\mult[25][0] ), .B(\mult[24][0] ), .Y(\tree_sums[2][12][0] ) );
-  MXI2X1 U514 ( .A(n704), .B(n705), .S0(n706), .Y(\tree_sums[2][11][7] ) );
-  XNOR2X1 U515 ( .A(n707), .B(n708), .Y(\tree_sums[2][11][6] ) );
-  XNOR2X1 U516 ( .A(\mult[34][6] ), .B(\mult[35][6] ), .Y(n707) );
-  XNOR2X1 U517 ( .A(n709), .B(n710), .Y(\tree_sums[2][11][5] ) );
-  XNOR2X1 U518 ( .A(\mult[34][5] ), .B(\mult[35][5] ), .Y(n709) );
-  XNOR2X1 U519 ( .A(n711), .B(n712), .Y(\tree_sums[2][11][4] ) );
-  XNOR2X1 U520 ( .A(\mult[34][4] ), .B(\mult[35][4] ), .Y(n711) );
-  XNOR2X1 U521 ( .A(n713), .B(n714), .Y(\tree_sums[2][11][3] ) );
-  XNOR2X1 U522 ( .A(\mult[34][3] ), .B(\mult[35][3] ), .Y(n713) );
-  XNOR2X1 U523 ( .A(n715), .B(n716), .Y(\tree_sums[2][11][2] ) );
-  XNOR2X1 U524 ( .A(\mult[34][2] ), .B(\mult[35][2] ), .Y(n715) );
-  XOR2X1 U525 ( .A(n717), .B(n718), .Y(\tree_sums[2][11][1] ) );
-  XNOR2X1 U526 ( .A(\mult[34][1] ), .B(\mult[35][1] ), .Y(n718) );
-  MXI2X1 U527 ( .A(n704), .B(n705), .S0(n719), .Y(\tree_sums[2][11][8] ) );
-  OA21XL U528 ( .A0(n706), .A1(n720), .B0(n721), .Y(n719) );
-  AOI2BB2X1 U529 ( .B0(n722), .B1(\mult[35][6] ), .A0N(n723), .A1N(n724), .Y(
-        n706) );
-  NAND2X1 U530 ( .A(n724), .B(n723), .Y(n722) );
-  CLKINVX1 U531 ( .A(n708), .Y(n723) );
-  OAI2BB1X1 U532 ( .A0N(n710), .A1N(\mult[34][5] ), .B0(n725), .Y(n708) );
-  OAI21XL U533 ( .A0(\mult[34][5] ), .A1(n710), .B0(\mult[35][5] ), .Y(n725)
+  OAI21XL U502 ( .A0(n686), .A1(n698), .B0(n699), .Y(n685) );
+  OAI2BB1X1 U503 ( .A0N(n686), .A1N(n698), .B0(\mult[25][1] ), .Y(n699) );
+  CLKINVX1 U504 ( .A(\mult[24][1] ), .Y(n698) );
+  NAND2X1 U505 ( .A(\mult[25][0] ), .B(\mult[24][0] ), .Y(n686) );
+  CLKINVX1 U506 ( .A(\mult[24][6] ), .Y(n693) );
+  XNOR2X1 U507 ( .A(\mult[24][7] ), .B(\mult[25][7] ), .Y(n674) );
+  NOR2BX1 U508 ( .AN(n690), .B(n689), .Y(n673) );
+  NOR2X1 U509 ( .A(\mult[25][7] ), .B(\mult[24][7] ), .Y(n689) );
+  NAND2X1 U510 ( .A(\mult[25][7] ), .B(\mult[24][7] ), .Y(n690) );
+  XOR2X1 U511 ( .A(\mult[25][0] ), .B(\mult[24][0] ), .Y(\tree_sums[2][12][0] ) );
+  MXI2X1 U512 ( .A(n700), .B(n701), .S0(n702), .Y(\tree_sums[2][11][7] ) );
+  XNOR2X1 U513 ( .A(n703), .B(n704), .Y(\tree_sums[2][11][6] ) );
+  XNOR2X1 U514 ( .A(\mult[34][6] ), .B(\mult[35][6] ), .Y(n703) );
+  XNOR2X1 U515 ( .A(n705), .B(n706), .Y(\tree_sums[2][11][5] ) );
+  XNOR2X1 U516 ( .A(\mult[34][5] ), .B(\mult[35][5] ), .Y(n705) );
+  XNOR2X1 U517 ( .A(n707), .B(n708), .Y(\tree_sums[2][11][4] ) );
+  XNOR2X1 U518 ( .A(\mult[34][4] ), .B(\mult[35][4] ), .Y(n707) );
+  XNOR2X1 U519 ( .A(n709), .B(n710), .Y(\tree_sums[2][11][3] ) );
+  XNOR2X1 U520 ( .A(\mult[34][3] ), .B(\mult[35][3] ), .Y(n709) );
+  XNOR2X1 U521 ( .A(n711), .B(n712), .Y(\tree_sums[2][11][2] ) );
+  XNOR2X1 U522 ( .A(\mult[34][2] ), .B(\mult[35][2] ), .Y(n711) );
+  XOR2X1 U523 ( .A(n713), .B(n714), .Y(\tree_sums[2][11][1] ) );
+  XNOR2X1 U524 ( .A(\mult[34][1] ), .B(\mult[35][1] ), .Y(n714) );
+  MXI2X1 U525 ( .A(n700), .B(n701), .S0(n715), .Y(\tree_sums[2][11][8] ) );
+  OA21XL U526 ( .A0(n702), .A1(n716), .B0(n717), .Y(n715) );
+  AOI2BB2X1 U527 ( .B0(n718), .B1(\mult[35][6] ), .A0N(n719), .A1N(n720), .Y(
+        n702) );
+  NAND2X1 U528 ( .A(n720), .B(n719), .Y(n718) );
+  CLKINVX1 U529 ( .A(n704), .Y(n719) );
+  OAI2BB1X1 U530 ( .A0N(n706), .A1N(\mult[34][5] ), .B0(n721), .Y(n704) );
+  OAI21XL U531 ( .A0(\mult[34][5] ), .A1(n706), .B0(\mult[35][5] ), .Y(n721)
          );
-  OAI2BB1X1 U534 ( .A0N(n712), .A1N(\mult[34][4] ), .B0(n726), .Y(n710) );
-  OAI21XL U535 ( .A0(\mult[34][4] ), .A1(n712), .B0(\mult[35][4] ), .Y(n726)
+  OAI2BB1X1 U532 ( .A0N(n708), .A1N(\mult[34][4] ), .B0(n722), .Y(n706) );
+  OAI21XL U533 ( .A0(\mult[34][4] ), .A1(n708), .B0(\mult[35][4] ), .Y(n722)
          );
-  AO22X1 U536 ( .A0(n714), .A1(\mult[34][3] ), .B0(n727), .B1(\mult[35][3] ), 
-        .Y(n712) );
-  OR2X1 U537 ( .A(\mult[34][3] ), .B(n714), .Y(n727) );
-  OAI2BB1X1 U538 ( .A0N(n716), .A1N(\mult[34][2] ), .B0(n728), .Y(n714) );
-  OAI21XL U539 ( .A0(\mult[34][2] ), .A1(n716), .B0(\mult[35][2] ), .Y(n728)
+  AO22X1 U534 ( .A0(n710), .A1(\mult[34][3] ), .B0(n723), .B1(\mult[35][3] ), 
+        .Y(n708) );
+  OR2X1 U535 ( .A(\mult[34][3] ), .B(n710), .Y(n723) );
+  OAI2BB1X1 U536 ( .A0N(n712), .A1N(\mult[34][2] ), .B0(n724), .Y(n710) );
+  OAI21XL U537 ( .A0(\mult[34][2] ), .A1(n712), .B0(\mult[35][2] ), .Y(n724)
          );
-  OAI21XL U540 ( .A0(n717), .A1(n729), .B0(n730), .Y(n716) );
-  OAI2BB1X1 U541 ( .A0N(n717), .A1N(n729), .B0(\mult[35][1] ), .Y(n730) );
-  CLKINVX1 U542 ( .A(\mult[34][1] ), .Y(n729) );
-  NAND2X1 U543 ( .A(\mult[35][0] ), .B(\mult[34][0] ), .Y(n717) );
-  CLKINVX1 U544 ( .A(\mult[34][6] ), .Y(n724) );
-  XNOR2X1 U545 ( .A(\mult[34][7] ), .B(\mult[35][7] ), .Y(n705) );
-  NOR2BX1 U546 ( .AN(n721), .B(n720), .Y(n704) );
-  NOR2X1 U547 ( .A(\mult[35][7] ), .B(\mult[34][7] ), .Y(n720) );
-  NAND2X1 U548 ( .A(\mult[35][7] ), .B(\mult[34][7] ), .Y(n721) );
-  XOR2X1 U549 ( .A(\mult[35][0] ), .B(\mult[34][0] ), .Y(\tree_sums[2][11][0] ) );
-  MXI2X1 U550 ( .A(n731), .B(n732), .S0(n733), .Y(\tree_sums[2][10][7] ) );
-  XNOR2X1 U551 ( .A(n734), .B(n735), .Y(\tree_sums[2][10][6] ) );
-  XNOR2X1 U552 ( .A(\mult[40][6] ), .B(\mult[41][6] ), .Y(n734) );
-  XNOR2X1 U553 ( .A(n736), .B(n737), .Y(\tree_sums[2][10][5] ) );
-  XNOR2X1 U554 ( .A(\mult[40][5] ), .B(\mult[41][5] ), .Y(n736) );
-  XNOR2X1 U555 ( .A(n738), .B(n739), .Y(\tree_sums[2][10][4] ) );
-  XNOR2X1 U556 ( .A(\mult[40][4] ), .B(\mult[41][4] ), .Y(n738) );
-  XNOR2X1 U557 ( .A(n740), .B(n741), .Y(\tree_sums[2][10][3] ) );
-  XNOR2X1 U558 ( .A(\mult[40][3] ), .B(\mult[41][3] ), .Y(n740) );
-  XNOR2X1 U559 ( .A(n742), .B(n743), .Y(\tree_sums[2][10][2] ) );
-  XNOR2X1 U560 ( .A(\mult[40][2] ), .B(\mult[41][2] ), .Y(n742) );
-  XOR2X1 U561 ( .A(n744), .B(n745), .Y(\tree_sums[2][10][1] ) );
-  XNOR2X1 U562 ( .A(\mult[40][1] ), .B(\mult[41][1] ), .Y(n745) );
-  MXI2X1 U563 ( .A(n731), .B(n732), .S0(n746), .Y(\tree_sums[2][10][8] ) );
-  OA21XL U564 ( .A0(n733), .A1(n747), .B0(n748), .Y(n746) );
-  AOI2BB2X1 U565 ( .B0(n749), .B1(\mult[41][6] ), .A0N(n750), .A1N(n751), .Y(
-        n733) );
-  NAND2X1 U566 ( .A(n751), .B(n750), .Y(n749) );
-  CLKINVX1 U567 ( .A(n735), .Y(n750) );
-  OAI2BB1X1 U568 ( .A0N(n737), .A1N(\mult[40][5] ), .B0(n752), .Y(n735) );
-  OAI21XL U569 ( .A0(\mult[40][5] ), .A1(n737), .B0(\mult[41][5] ), .Y(n752)
+  OAI21XL U538 ( .A0(n713), .A1(n725), .B0(n726), .Y(n712) );
+  OAI2BB1X1 U539 ( .A0N(n713), .A1N(n725), .B0(\mult[35][1] ), .Y(n726) );
+  CLKINVX1 U540 ( .A(\mult[34][1] ), .Y(n725) );
+  NAND2X1 U541 ( .A(\mult[35][0] ), .B(\mult[34][0] ), .Y(n713) );
+  CLKINVX1 U542 ( .A(\mult[34][6] ), .Y(n720) );
+  XNOR2X1 U543 ( .A(\mult[34][7] ), .B(\mult[35][7] ), .Y(n701) );
+  NOR2BX1 U544 ( .AN(n717), .B(n716), .Y(n700) );
+  NOR2X1 U545 ( .A(\mult[35][7] ), .B(\mult[34][7] ), .Y(n716) );
+  NAND2X1 U546 ( .A(\mult[35][7] ), .B(\mult[34][7] ), .Y(n717) );
+  XOR2X1 U547 ( .A(\mult[35][0] ), .B(\mult[34][0] ), .Y(\tree_sums[2][11][0] ) );
+  MXI2X1 U548 ( .A(n727), .B(n728), .S0(n729), .Y(\tree_sums[2][10][7] ) );
+  XNOR2X1 U549 ( .A(n730), .B(n731), .Y(\tree_sums[2][10][6] ) );
+  XNOR2X1 U550 ( .A(\mult[40][6] ), .B(\mult[41][6] ), .Y(n730) );
+  XNOR2X1 U551 ( .A(n732), .B(n733), .Y(\tree_sums[2][10][5] ) );
+  XNOR2X1 U552 ( .A(\mult[40][5] ), .B(\mult[41][5] ), .Y(n732) );
+  XNOR2X1 U553 ( .A(n734), .B(n735), .Y(\tree_sums[2][10][4] ) );
+  XNOR2X1 U554 ( .A(\mult[40][4] ), .B(\mult[41][4] ), .Y(n734) );
+  XNOR2X1 U555 ( .A(n736), .B(n737), .Y(\tree_sums[2][10][3] ) );
+  XNOR2X1 U556 ( .A(\mult[40][3] ), .B(\mult[41][3] ), .Y(n736) );
+  XNOR2X1 U557 ( .A(n738), .B(n739), .Y(\tree_sums[2][10][2] ) );
+  XNOR2X1 U558 ( .A(\mult[40][2] ), .B(\mult[41][2] ), .Y(n738) );
+  XOR2X1 U559 ( .A(n740), .B(n741), .Y(\tree_sums[2][10][1] ) );
+  XNOR2X1 U560 ( .A(\mult[40][1] ), .B(\mult[41][1] ), .Y(n741) );
+  MXI2X1 U561 ( .A(n727), .B(n728), .S0(n742), .Y(\tree_sums[2][10][8] ) );
+  OA21XL U562 ( .A0(n729), .A1(n743), .B0(n744), .Y(n742) );
+  AOI2BB2X1 U563 ( .B0(n745), .B1(\mult[41][6] ), .A0N(n746), .A1N(n747), .Y(
+        n729) );
+  NAND2X1 U564 ( .A(n747), .B(n746), .Y(n745) );
+  CLKINVX1 U565 ( .A(n731), .Y(n746) );
+  OAI2BB1X1 U566 ( .A0N(n733), .A1N(\mult[40][5] ), .B0(n748), .Y(n731) );
+  OAI21XL U567 ( .A0(\mult[40][5] ), .A1(n733), .B0(\mult[41][5] ), .Y(n748)
          );
-  OAI2BB1X1 U570 ( .A0N(n739), .A1N(\mult[40][4] ), .B0(n753), .Y(n737) );
-  OAI21XL U571 ( .A0(\mult[40][4] ), .A1(n739), .B0(\mult[41][4] ), .Y(n753)
+  OAI2BB1X1 U568 ( .A0N(n735), .A1N(\mult[40][4] ), .B0(n749), .Y(n733) );
+  OAI21XL U569 ( .A0(\mult[40][4] ), .A1(n735), .B0(\mult[41][4] ), .Y(n749)
          );
-  AO22X1 U572 ( .A0(n741), .A1(\mult[40][3] ), .B0(n754), .B1(\mult[41][3] ), 
-        .Y(n739) );
-  OR2X1 U573 ( .A(\mult[40][3] ), .B(n741), .Y(n754) );
-  OAI2BB1X1 U574 ( .A0N(n743), .A1N(\mult[40][2] ), .B0(n755), .Y(n741) );
-  OAI21XL U575 ( .A0(\mult[40][2] ), .A1(n743), .B0(\mult[41][2] ), .Y(n755)
+  AO22X1 U570 ( .A0(n737), .A1(\mult[40][3] ), .B0(n750), .B1(\mult[41][3] ), 
+        .Y(n735) );
+  OR2X1 U571 ( .A(\mult[40][3] ), .B(n737), .Y(n750) );
+  OAI2BB1X1 U572 ( .A0N(n739), .A1N(\mult[40][2] ), .B0(n751), .Y(n737) );
+  OAI21XL U573 ( .A0(\mult[40][2] ), .A1(n739), .B0(\mult[41][2] ), .Y(n751)
          );
-  OAI21XL U576 ( .A0(n744), .A1(n756), .B0(n757), .Y(n743) );
-  OAI2BB1X1 U577 ( .A0N(n744), .A1N(n756), .B0(\mult[41][1] ), .Y(n757) );
-  CLKINVX1 U578 ( .A(\mult[40][1] ), .Y(n756) );
-  NAND2X1 U579 ( .A(\mult[41][0] ), .B(\mult[40][0] ), .Y(n744) );
-  CLKINVX1 U580 ( .A(\mult[40][6] ), .Y(n751) );
-  XNOR2X1 U581 ( .A(\mult[40][7] ), .B(\mult[41][7] ), .Y(n732) );
-  NOR2BX1 U582 ( .AN(n748), .B(n747), .Y(n731) );
-  NOR2X1 U583 ( .A(\mult[41][7] ), .B(\mult[40][7] ), .Y(n747) );
-  NAND2X1 U584 ( .A(\mult[41][7] ), .B(\mult[40][7] ), .Y(n748) );
-  XOR2X1 U585 ( .A(\mult[41][0] ), .B(\mult[40][0] ), .Y(\tree_sums[2][10][0] ) );
-  XOR2X1 U586 ( .A(n758), .B(n759), .Y(\add_23_root_add_61_G6/SUM[8] ) );
-  XNOR2X1 U587 ( .A(n760), .B(n761), .Y(n759) );
-  XOR2X1 U588 ( .A(n762), .B(n763), .Y(\add_23_root_add_61_G6/SUM[7] ) );
-  XOR2X1 U589 ( .A(\tree_sums[1][23][7] ), .B(n764), .Y(n763) );
-  XOR2X1 U590 ( .A(n765), .B(n766), .Y(\add_23_root_add_61_G6/SUM[6] ) );
-  XOR2X1 U591 ( .A(\tree_sums[1][23][6] ), .B(n767), .Y(n766) );
-  XOR2X1 U592 ( .A(n768), .B(n769), .Y(\add_23_root_add_61_G6/SUM[5] ) );
-  XOR2X1 U593 ( .A(\tree_sums[1][23][5] ), .B(n770), .Y(n769) );
-  XOR2X1 U594 ( .A(n771), .B(n772), .Y(\add_23_root_add_61_G6/SUM[4] ) );
-  XOR2X1 U595 ( .A(\tree_sums[1][23][4] ), .B(n773), .Y(n772) );
-  XOR2X1 U596 ( .A(n774), .B(n775), .Y(\add_23_root_add_61_G6/SUM[3] ) );
-  XOR2X1 U597 ( .A(\tree_sums[1][23][3] ), .B(n776), .Y(n775) );
-  XOR2X1 U598 ( .A(n777), .B(n778), .Y(\add_23_root_add_61_G6/SUM[2] ) );
-  XOR2X1 U599 ( .A(\tree_sums[1][23][2] ), .B(n779), .Y(n778) );
-  XOR2X1 U600 ( .A(n780), .B(n781), .Y(\add_23_root_add_61_G6/SUM[1] ) );
-  XOR2X1 U601 ( .A(n782), .B(\tree_sums[1][23][1] ), .Y(n781) );
-  XOR2X1 U602 ( .A(n783), .B(n784), .Y(\add_23_root_add_61_G6/SUM[12] ) );
-  XNOR2X1 U603 ( .A(n785), .B(n786), .Y(n784) );
-  XNOR2X1 U604 ( .A(n787), .B(n760), .Y(n785) );
-  XOR2X1 U605 ( .A(n788), .B(n789), .Y(\add_23_root_add_61_G6/SUM[9] ) );
-  XOR2X1 U606 ( .A(n786), .B(n783), .Y(n789) );
-  OA22X1 U607 ( .A0(n761), .A1(n758), .B0(n790), .B1(n760), .Y(n783) );
-  CLKINVX1 U608 ( .A(\tree_sums[1][23][13] ), .Y(n760) );
-  AND2X1 U609 ( .A(n758), .B(n761), .Y(n790) );
-  XNOR2X1 U610 ( .A(n787), .B(n786), .Y(n758) );
-  OA21XL U611 ( .A0(n764), .A1(n762), .B0(n791), .Y(n761) );
-  OAI2BB1X1 U612 ( .A0N(n762), .A1N(n764), .B0(\tree_sums[1][23][7] ), .Y(n791) );
-  XOR2X1 U613 ( .A(n786), .B(n792), .Y(n762) );
-  OA21XL U614 ( .A0(n767), .A1(n765), .B0(n793), .Y(n764) );
-  OAI2BB1X1 U615 ( .A0N(n765), .A1N(n767), .B0(\tree_sums[1][23][6] ), .Y(n793) );
-  XOR2X1 U616 ( .A(n794), .B(n795), .Y(n765) );
-  XNOR2X1 U617 ( .A(\mult[28][6] ), .B(\mult[29][6] ), .Y(n794) );
-  AOI2BB2X1 U618 ( .B0(n796), .B1(\tree_sums[1][23][5] ), .A0N(n770), .A1N(
-        n768), .Y(n767) );
-  NAND2X1 U619 ( .A(n768), .B(n770), .Y(n796) );
-  OA21XL U620 ( .A0(n773), .A1(n771), .B0(n797), .Y(n770) );
-  OAI2BB1X1 U621 ( .A0N(n771), .A1N(n773), .B0(\tree_sums[1][23][4] ), .Y(n797) );
-  XOR2X1 U622 ( .A(n798), .B(n799), .Y(n771) );
-  XNOR2X1 U623 ( .A(\mult[28][4] ), .B(\mult[29][4] ), .Y(n798) );
-  OA21XL U624 ( .A0(n776), .A1(n774), .B0(n800), .Y(n773) );
-  OAI2BB1X1 U625 ( .A0N(n774), .A1N(n776), .B0(\tree_sums[1][23][3] ), .Y(n800) );
-  XOR2X1 U626 ( .A(n801), .B(n802), .Y(n774) );
-  XNOR2X1 U627 ( .A(\mult[28][3] ), .B(\mult[29][3] ), .Y(n801) );
-  AOI2BB2X1 U628 ( .B0(n803), .B1(\tree_sums[1][23][2] ), .A0N(n779), .A1N(
-        n777), .Y(n776) );
-  NAND2X1 U629 ( .A(n777), .B(n779), .Y(n803) );
-  OA21XL U630 ( .A0(n780), .A1(n782), .B0(n804), .Y(n779) );
-  OAI2BB1X1 U631 ( .A0N(n782), .A1N(n780), .B0(\tree_sums[1][23][1] ), .Y(n804) );
-  NAND2X1 U632 ( .A(\tree_sums[1][23][0] ), .B(n805), .Y(n782) );
-  XOR2X1 U633 ( .A(n806), .B(n807), .Y(n780) );
-  XNOR2X1 U634 ( .A(\mult[29][1] ), .B(n808), .Y(n807) );
-  XOR2X1 U635 ( .A(n809), .B(n810), .Y(n777) );
-  XNOR2X1 U636 ( .A(\mult[28][2] ), .B(\mult[29][2] ), .Y(n809) );
-  XOR2X1 U637 ( .A(n811), .B(n812), .Y(n768) );
-  XNOR2X1 U638 ( .A(\mult[28][5] ), .B(\mult[29][5] ), .Y(n811) );
-  NOR2BX1 U639 ( .AN(n813), .B(n814), .Y(n786) );
-  XNOR2X1 U640 ( .A(\tree_sums[1][23][13] ), .B(n787), .Y(n788) );
-  OAI21XL U641 ( .A0(n792), .A1(n814), .B0(n813), .Y(n787) );
-  NAND2X1 U642 ( .A(\mult[29][7] ), .B(\mult[28][7] ), .Y(n813) );
-  NOR2X1 U643 ( .A(\mult[29][7] ), .B(\mult[28][7] ), .Y(n814) );
-  AOI2BB2X1 U644 ( .B0(n815), .B1(\mult[29][6] ), .A0N(n816), .A1N(n817), .Y(
-        n792) );
-  NAND2X1 U645 ( .A(n817), .B(n816), .Y(n815) );
-  CLKINVX1 U646 ( .A(n795), .Y(n816) );
-  OAI2BB1X1 U647 ( .A0N(n812), .A1N(\mult[28][5] ), .B0(n818), .Y(n795) );
-  OAI21XL U648 ( .A0(\mult[28][5] ), .A1(n812), .B0(\mult[29][5] ), .Y(n818)
+  OAI21XL U574 ( .A0(n740), .A1(n752), .B0(n753), .Y(n739) );
+  OAI2BB1X1 U575 ( .A0N(n740), .A1N(n752), .B0(\mult[41][1] ), .Y(n753) );
+  CLKINVX1 U576 ( .A(\mult[40][1] ), .Y(n752) );
+  NAND2X1 U577 ( .A(\mult[41][0] ), .B(\mult[40][0] ), .Y(n740) );
+  CLKINVX1 U578 ( .A(\mult[40][6] ), .Y(n747) );
+  XNOR2X1 U579 ( .A(\mult[40][7] ), .B(\mult[41][7] ), .Y(n728) );
+  NOR2BX1 U580 ( .AN(n744), .B(n743), .Y(n727) );
+  NOR2X1 U581 ( .A(\mult[41][7] ), .B(\mult[40][7] ), .Y(n743) );
+  NAND2X1 U582 ( .A(\mult[41][7] ), .B(\mult[40][7] ), .Y(n744) );
+  XOR2X1 U583 ( .A(\mult[41][0] ), .B(\mult[40][0] ), .Y(\tree_sums[2][10][0] ) );
+  XOR2X1 U584 ( .A(n754), .B(n755), .Y(\add_23_root_add_61_G6/SUM[8] ) );
+  XNOR2X1 U585 ( .A(n756), .B(n757), .Y(n755) );
+  XOR2X1 U586 ( .A(n758), .B(n759), .Y(\add_23_root_add_61_G6/SUM[7] ) );
+  XOR2X1 U587 ( .A(\tree_sums[1][23][7] ), .B(n760), .Y(n759) );
+  XOR2X1 U588 ( .A(n761), .B(n762), .Y(\add_23_root_add_61_G6/SUM[6] ) );
+  XOR2X1 U589 ( .A(\tree_sums[1][23][6] ), .B(n763), .Y(n762) );
+  XOR2X1 U590 ( .A(n764), .B(n765), .Y(\add_23_root_add_61_G6/SUM[5] ) );
+  XOR2X1 U591 ( .A(\tree_sums[1][23][5] ), .B(n766), .Y(n765) );
+  XOR2X1 U592 ( .A(n767), .B(n768), .Y(\add_23_root_add_61_G6/SUM[4] ) );
+  XOR2X1 U593 ( .A(\tree_sums[1][23][4] ), .B(n769), .Y(n768) );
+  XOR2X1 U594 ( .A(n770), .B(n771), .Y(\add_23_root_add_61_G6/SUM[3] ) );
+  XOR2X1 U595 ( .A(\tree_sums[1][23][3] ), .B(n772), .Y(n771) );
+  XOR2X1 U596 ( .A(n773), .B(n774), .Y(\add_23_root_add_61_G6/SUM[2] ) );
+  XOR2X1 U597 ( .A(\tree_sums[1][23][2] ), .B(n775), .Y(n774) );
+  XOR2X1 U598 ( .A(n776), .B(n777), .Y(\add_23_root_add_61_G6/SUM[1] ) );
+  XOR2X1 U599 ( .A(n778), .B(\tree_sums[1][23][1] ), .Y(n777) );
+  XOR2X1 U600 ( .A(n779), .B(n780), .Y(\add_23_root_add_61_G6/SUM[12] ) );
+  XNOR2X1 U601 ( .A(n781), .B(n782), .Y(n780) );
+  XNOR2X1 U602 ( .A(n783), .B(n756), .Y(n781) );
+  XOR2X1 U603 ( .A(n784), .B(n785), .Y(\add_23_root_add_61_G6/SUM[9] ) );
+  XOR2X1 U604 ( .A(n782), .B(n779), .Y(n785) );
+  OA22X1 U605 ( .A0(n757), .A1(n754), .B0(n786), .B1(n756), .Y(n779) );
+  CLKINVX1 U606 ( .A(\tree_sums[1][23][13] ), .Y(n756) );
+  AND2X1 U607 ( .A(n754), .B(n757), .Y(n786) );
+  XNOR2X1 U608 ( .A(n783), .B(n782), .Y(n754) );
+  OA21XL U609 ( .A0(n760), .A1(n758), .B0(n787), .Y(n757) );
+  OAI2BB1X1 U610 ( .A0N(n758), .A1N(n760), .B0(\tree_sums[1][23][7] ), .Y(n787) );
+  XOR2X1 U611 ( .A(n782), .B(n788), .Y(n758) );
+  OA21XL U612 ( .A0(n763), .A1(n761), .B0(n789), .Y(n760) );
+  OAI2BB1X1 U613 ( .A0N(n761), .A1N(n763), .B0(\tree_sums[1][23][6] ), .Y(n789) );
+  XOR2X1 U614 ( .A(n790), .B(n791), .Y(n761) );
+  XNOR2X1 U615 ( .A(\mult[28][6] ), .B(\mult[29][6] ), .Y(n790) );
+  AOI2BB2X1 U616 ( .B0(n792), .B1(\tree_sums[1][23][5] ), .A0N(n766), .A1N(
+        n764), .Y(n763) );
+  NAND2X1 U617 ( .A(n764), .B(n766), .Y(n792) );
+  OA21XL U618 ( .A0(n769), .A1(n767), .B0(n793), .Y(n766) );
+  OAI2BB1X1 U619 ( .A0N(n767), .A1N(n769), .B0(\tree_sums[1][23][4] ), .Y(n793) );
+  XOR2X1 U620 ( .A(n794), .B(n795), .Y(n767) );
+  XNOR2X1 U621 ( .A(\mult[28][4] ), .B(\mult[29][4] ), .Y(n794) );
+  OA21XL U622 ( .A0(n772), .A1(n770), .B0(n796), .Y(n769) );
+  OAI2BB1X1 U623 ( .A0N(n770), .A1N(n772), .B0(\tree_sums[1][23][3] ), .Y(n796) );
+  XOR2X1 U624 ( .A(n797), .B(n798), .Y(n770) );
+  XNOR2X1 U625 ( .A(\mult[28][3] ), .B(\mult[29][3] ), .Y(n797) );
+  AOI2BB2X1 U626 ( .B0(n799), .B1(\tree_sums[1][23][2] ), .A0N(n775), .A1N(
+        n773), .Y(n772) );
+  NAND2X1 U627 ( .A(n773), .B(n775), .Y(n799) );
+  OA21XL U628 ( .A0(n776), .A1(n778), .B0(n800), .Y(n775) );
+  OAI2BB1X1 U629 ( .A0N(n778), .A1N(n776), .B0(\tree_sums[1][23][1] ), .Y(n800) );
+  NAND2X1 U630 ( .A(\tree_sums[1][23][0] ), .B(n801), .Y(n778) );
+  XOR2X1 U631 ( .A(n802), .B(n803), .Y(n776) );
+  XNOR2X1 U632 ( .A(\mult[29][1] ), .B(n804), .Y(n803) );
+  XOR2X1 U633 ( .A(n805), .B(n806), .Y(n773) );
+  XNOR2X1 U634 ( .A(\mult[28][2] ), .B(\mult[29][2] ), .Y(n805) );
+  XOR2X1 U635 ( .A(n807), .B(n808), .Y(n764) );
+  XNOR2X1 U636 ( .A(\mult[28][5] ), .B(\mult[29][5] ), .Y(n807) );
+  NOR2BX1 U637 ( .AN(n809), .B(n810), .Y(n782) );
+  XNOR2X1 U638 ( .A(\tree_sums[1][23][13] ), .B(n783), .Y(n784) );
+  OAI21XL U639 ( .A0(n788), .A1(n810), .B0(n809), .Y(n783) );
+  NAND2X1 U640 ( .A(\mult[29][7] ), .B(\mult[28][7] ), .Y(n809) );
+  NOR2X1 U641 ( .A(\mult[29][7] ), .B(\mult[28][7] ), .Y(n810) );
+  AOI2BB2X1 U642 ( .B0(n811), .B1(\mult[29][6] ), .A0N(n812), .A1N(n813), .Y(
+        n788) );
+  NAND2X1 U643 ( .A(n813), .B(n812), .Y(n811) );
+  CLKINVX1 U644 ( .A(n791), .Y(n812) );
+  OAI2BB1X1 U645 ( .A0N(n808), .A1N(\mult[28][5] ), .B0(n814), .Y(n791) );
+  OAI21XL U646 ( .A0(\mult[28][5] ), .A1(n808), .B0(\mult[29][5] ), .Y(n814)
          );
-  OAI2BB1X1 U649 ( .A0N(n799), .A1N(\mult[28][4] ), .B0(n819), .Y(n812) );
-  OAI21XL U650 ( .A0(\mult[28][4] ), .A1(n799), .B0(\mult[29][4] ), .Y(n819)
+  OAI2BB1X1 U647 ( .A0N(n795), .A1N(\mult[28][4] ), .B0(n815), .Y(n808) );
+  OAI21XL U648 ( .A0(\mult[28][4] ), .A1(n795), .B0(\mult[29][4] ), .Y(n815)
          );
-  AO22X1 U651 ( .A0(n802), .A1(\mult[28][3] ), .B0(n820), .B1(\mult[29][3] ), 
-        .Y(n799) );
-  OR2X1 U652 ( .A(\mult[28][3] ), .B(n802), .Y(n820) );
-  OAI2BB1X1 U653 ( .A0N(n810), .A1N(\mult[28][2] ), .B0(n821), .Y(n802) );
-  OAI21XL U654 ( .A0(\mult[28][2] ), .A1(n810), .B0(\mult[29][2] ), .Y(n821)
+  AO22X1 U649 ( .A0(n798), .A1(\mult[28][3] ), .B0(n816), .B1(\mult[29][3] ), 
+        .Y(n795) );
+  OR2X1 U650 ( .A(\mult[28][3] ), .B(n798), .Y(n816) );
+  OAI2BB1X1 U651 ( .A0N(n806), .A1N(\mult[28][2] ), .B0(n817), .Y(n798) );
+  OAI21XL U652 ( .A0(\mult[28][2] ), .A1(n806), .B0(\mult[29][2] ), .Y(n817)
          );
-  OAI21XL U655 ( .A0(n806), .A1(n808), .B0(n822), .Y(n810) );
-  OAI2BB1X1 U656 ( .A0N(n806), .A1N(n808), .B0(\mult[29][1] ), .Y(n822) );
-  CLKINVX1 U657 ( .A(\mult[28][1] ), .Y(n808) );
-  NAND2X1 U658 ( .A(\mult[29][0] ), .B(\mult[28][0] ), .Y(n806) );
-  CLKINVX1 U659 ( .A(\mult[28][6] ), .Y(n817) );
-  XOR2X1 U660 ( .A(\tree_sums[1][23][0] ), .B(n805), .Y(
+  OAI21XL U653 ( .A0(n802), .A1(n804), .B0(n818), .Y(n806) );
+  OAI2BB1X1 U654 ( .A0N(n802), .A1N(n804), .B0(\mult[29][1] ), .Y(n818) );
+  CLKINVX1 U655 ( .A(\mult[28][1] ), .Y(n804) );
+  NAND2X1 U656 ( .A(\mult[29][0] ), .B(\mult[28][0] ), .Y(n802) );
+  CLKINVX1 U657 ( .A(\mult[28][6] ), .Y(n813) );
+  XOR2X1 U658 ( .A(\tree_sums[1][23][0] ), .B(n801), .Y(
         \add_23_root_add_61_G6/SUM[0] ) );
-  XOR2X1 U661 ( .A(\mult[28][0] ), .B(\mult[29][0] ), .Y(n805) );
-  XOR2X1 U662 ( .A(n823), .B(n824), .Y(\add_15_root_add_61_G6/SUM[8] ) );
-  XOR2X1 U663 ( .A(n825), .B(n826), .Y(\add_15_root_add_61_G6/SUM[7] ) );
-  XOR2X1 U664 ( .A(\tree_sums[1][15][7] ), .B(n827), .Y(n826) );
-  XOR2X1 U665 ( .A(n828), .B(n829), .Y(\add_15_root_add_61_G6/SUM[6] ) );
-  XOR2X1 U666 ( .A(\tree_sums[1][15][6] ), .B(n830), .Y(n829) );
-  XOR2X1 U667 ( .A(n831), .B(n832), .Y(\add_15_root_add_61_G6/SUM[5] ) );
-  XOR2X1 U668 ( .A(\tree_sums[1][15][5] ), .B(n833), .Y(n832) );
-  XOR2X1 U669 ( .A(n834), .B(n835), .Y(\add_15_root_add_61_G6/SUM[4] ) );
-  XOR2X1 U670 ( .A(\tree_sums[1][15][4] ), .B(n836), .Y(n835) );
-  XOR2X1 U671 ( .A(n837), .B(n838), .Y(\add_15_root_add_61_G6/SUM[3] ) );
-  XOR2X1 U672 ( .A(\tree_sums[1][15][3] ), .B(n839), .Y(n838) );
-  XOR2X1 U673 ( .A(n840), .B(n841), .Y(\add_15_root_add_61_G6/SUM[2] ) );
-  XOR2X1 U674 ( .A(\tree_sums[1][15][2] ), .B(n842), .Y(n841) );
-  XOR2X1 U675 ( .A(n843), .B(n844), .Y(\add_15_root_add_61_G6/SUM[1] ) );
-  XOR2X1 U676 ( .A(n845), .B(\tree_sums[1][15][1] ), .Y(n844) );
-  XOR2X1 U677 ( .A(n823), .B(n846), .Y(\add_15_root_add_61_G6/SUM[9] ) );
-  OA21XL U678 ( .A0(n824), .A1(n847), .B0(n848), .Y(n846) );
-  OA21XL U679 ( .A0(n827), .A1(n825), .B0(n849), .Y(n824) );
-  OAI2BB1X1 U680 ( .A0N(n825), .A1N(n827), .B0(\tree_sums[1][15][7] ), .Y(n849) );
-  XNOR2X1 U681 ( .A(n850), .B(n851), .Y(n825) );
-  OA21XL U682 ( .A0(n830), .A1(n828), .B0(n852), .Y(n827) );
-  OAI2BB1X1 U683 ( .A0N(n828), .A1N(n830), .B0(\tree_sums[1][15][6] ), .Y(n852) );
-  XOR2X1 U684 ( .A(n853), .B(n854), .Y(n828) );
-  XNOR2X1 U685 ( .A(\mult[60][6] ), .B(\mult[61][6] ), .Y(n853) );
-  AOI2BB2X1 U686 ( .B0(n855), .B1(\tree_sums[1][15][5] ), .A0N(n833), .A1N(
-        n831), .Y(n830) );
-  NAND2X1 U687 ( .A(n831), .B(n833), .Y(n855) );
-  OA21XL U688 ( .A0(n836), .A1(n834), .B0(n856), .Y(n833) );
-  OAI2BB1X1 U689 ( .A0N(n834), .A1N(n836), .B0(\tree_sums[1][15][4] ), .Y(n856) );
-  XOR2X1 U690 ( .A(n857), .B(n858), .Y(n834) );
-  XNOR2X1 U691 ( .A(\mult[60][4] ), .B(\mult[61][4] ), .Y(n857) );
-  OA21XL U692 ( .A0(n839), .A1(n837), .B0(n859), .Y(n836) );
-  OAI2BB1X1 U693 ( .A0N(n837), .A1N(n839), .B0(\tree_sums[1][15][3] ), .Y(n859) );
-  XOR2X1 U694 ( .A(n860), .B(n861), .Y(n837) );
-  XNOR2X1 U695 ( .A(\mult[60][3] ), .B(\mult[61][3] ), .Y(n860) );
-  AOI2BB2X1 U696 ( .B0(n862), .B1(\tree_sums[1][15][2] ), .A0N(n842), .A1N(
-        n840), .Y(n839) );
-  NAND2X1 U697 ( .A(n840), .B(n842), .Y(n862) );
-  OA21XL U698 ( .A0(n843), .A1(n845), .B0(n863), .Y(n842) );
-  OAI2BB1X1 U699 ( .A0N(n845), .A1N(n843), .B0(\tree_sums[1][15][1] ), .Y(n863) );
-  NAND2X1 U700 ( .A(\tree_sums[1][15][0] ), .B(n864), .Y(n845) );
-  XOR2X1 U701 ( .A(n865), .B(n866), .Y(n843) );
-  XNOR2X1 U702 ( .A(\mult[61][1] ), .B(n867), .Y(n866) );
-  XOR2X1 U703 ( .A(n868), .B(n869), .Y(n840) );
-  XNOR2X1 U704 ( .A(\mult[60][2] ), .B(\mult[61][2] ), .Y(n868) );
-  XOR2X1 U705 ( .A(n870), .B(n871), .Y(n831) );
-  XNOR2X1 U706 ( .A(\mult[60][5] ), .B(\mult[61][5] ), .Y(n870) );
-  NAND2BX1 U707 ( .AN(n847), .B(n848), .Y(n823) );
-  NAND2X1 U708 ( .A(\tree_sums[1][15][13] ), .B(n872), .Y(n848) );
-  NOR2X1 U709 ( .A(n872), .B(\tree_sums[1][15][13] ), .Y(n847) );
-  XOR2X1 U710 ( .A(n873), .B(n874), .Y(n872) );
-  CLKINVX1 U711 ( .A(n850), .Y(n874) );
-  XOR2X1 U712 ( .A(\mult[60][7] ), .B(\mult[61][7] ), .Y(n850) );
-  OAI22XL U713 ( .A0(\mult[60][7] ), .A1(n851), .B0(\mult[61][7] ), .B1(n875), 
-        .Y(n873) );
-  AND2X1 U714 ( .A(n851), .B(\mult[60][7] ), .Y(n875) );
-  AO22X1 U715 ( .A0(n854), .A1(\mult[60][6] ), .B0(n876), .B1(\mult[61][6] ), 
-        .Y(n851) );
-  OR2X1 U716 ( .A(\mult[60][6] ), .B(n854), .Y(n876) );
-  OAI2BB1X1 U717 ( .A0N(n871), .A1N(\mult[60][5] ), .B0(n877), .Y(n854) );
-  OAI21XL U718 ( .A0(\mult[60][5] ), .A1(n871), .B0(\mult[61][5] ), .Y(n877)
+  XOR2X1 U659 ( .A(\mult[28][0] ), .B(\mult[29][0] ), .Y(n801) );
+  XOR2X1 U660 ( .A(n819), .B(n820), .Y(\add_15_root_add_61_G6/SUM[8] ) );
+  XOR2X1 U661 ( .A(n821), .B(n822), .Y(\add_15_root_add_61_G6/SUM[7] ) );
+  XOR2X1 U662 ( .A(\tree_sums[1][15][7] ), .B(n823), .Y(n822) );
+  XOR2X1 U663 ( .A(n824), .B(n825), .Y(\add_15_root_add_61_G6/SUM[6] ) );
+  XOR2X1 U664 ( .A(\tree_sums[1][15][6] ), .B(n826), .Y(n825) );
+  XOR2X1 U665 ( .A(n827), .B(n828), .Y(\add_15_root_add_61_G6/SUM[5] ) );
+  XOR2X1 U666 ( .A(\tree_sums[1][15][5] ), .B(n829), .Y(n828) );
+  XOR2X1 U667 ( .A(n830), .B(n831), .Y(\add_15_root_add_61_G6/SUM[4] ) );
+  XOR2X1 U668 ( .A(\tree_sums[1][15][4] ), .B(n832), .Y(n831) );
+  XOR2X1 U669 ( .A(n833), .B(n834), .Y(\add_15_root_add_61_G6/SUM[3] ) );
+  XOR2X1 U670 ( .A(\tree_sums[1][15][3] ), .B(n835), .Y(n834) );
+  XOR2X1 U671 ( .A(n836), .B(n837), .Y(\add_15_root_add_61_G6/SUM[2] ) );
+  XOR2X1 U672 ( .A(\tree_sums[1][15][2] ), .B(n838), .Y(n837) );
+  XOR2X1 U673 ( .A(n839), .B(n840), .Y(\add_15_root_add_61_G6/SUM[1] ) );
+  XOR2X1 U674 ( .A(n841), .B(\tree_sums[1][15][1] ), .Y(n840) );
+  OA21XL U675 ( .A0(n823), .A1(n821), .B0(n844), .Y(n820) );
+  OAI2BB1X1 U676 ( .A0N(n821), .A1N(n823), .B0(\tree_sums[1][15][7] ), .Y(n844) );
+  XNOR2X1 U677 ( .A(n845), .B(n846), .Y(n821) );
+  OA21XL U678 ( .A0(n826), .A1(n824), .B0(n847), .Y(n823) );
+  OAI2BB1X1 U679 ( .A0N(n824), .A1N(n826), .B0(\tree_sums[1][15][6] ), .Y(n847) );
+  XOR2X1 U680 ( .A(n848), .B(n849), .Y(n824) );
+  XNOR2X1 U681 ( .A(\mult[60][6] ), .B(\mult[61][6] ), .Y(n848) );
+  AOI2BB2X1 U682 ( .B0(n850), .B1(\tree_sums[1][15][5] ), .A0N(n829), .A1N(
+        n827), .Y(n826) );
+  NAND2X1 U683 ( .A(n827), .B(n829), .Y(n850) );
+  OA21XL U684 ( .A0(n832), .A1(n830), .B0(n851), .Y(n829) );
+  OAI2BB1X1 U685 ( .A0N(n830), .A1N(n832), .B0(\tree_sums[1][15][4] ), .Y(n851) );
+  XOR2X1 U686 ( .A(n852), .B(n853), .Y(n830) );
+  XNOR2X1 U687 ( .A(\mult[60][4] ), .B(\mult[61][4] ), .Y(n852) );
+  OA21XL U688 ( .A0(n835), .A1(n833), .B0(n854), .Y(n832) );
+  OAI2BB1X1 U689 ( .A0N(n833), .A1N(n835), .B0(\tree_sums[1][15][3] ), .Y(n854) );
+  XOR2X1 U690 ( .A(n855), .B(n856), .Y(n833) );
+  XNOR2X1 U691 ( .A(\mult[60][3] ), .B(\mult[61][3] ), .Y(n855) );
+  AOI2BB2X1 U692 ( .B0(n857), .B1(\tree_sums[1][15][2] ), .A0N(n838), .A1N(
+        n836), .Y(n835) );
+  NAND2X1 U693 ( .A(n836), .B(n838), .Y(n857) );
+  OA21XL U694 ( .A0(n839), .A1(n841), .B0(n858), .Y(n838) );
+  OAI2BB1X1 U695 ( .A0N(n841), .A1N(n839), .B0(\tree_sums[1][15][1] ), .Y(n858) );
+  NAND2X1 U696 ( .A(\tree_sums[1][15][0] ), .B(n859), .Y(n841) );
+  XOR2X1 U697 ( .A(n860), .B(n861), .Y(n839) );
+  XNOR2X1 U698 ( .A(\mult[61][1] ), .B(n862), .Y(n861) );
+  XOR2X1 U699 ( .A(n863), .B(n864), .Y(n836) );
+  XNOR2X1 U700 ( .A(\mult[60][2] ), .B(\mult[61][2] ), .Y(n863) );
+  XOR2X1 U701 ( .A(n865), .B(n866), .Y(n827) );
+  XNOR2X1 U702 ( .A(\mult[60][5] ), .B(\mult[61][5] ), .Y(n865) );
+  NAND2BX1 U703 ( .AN(n842), .B(n843), .Y(n819) );
+  NAND2X1 U704 ( .A(\tree_sums[1][15][13] ), .B(n867), .Y(n843) );
+  NOR2X1 U705 ( .A(n867), .B(\tree_sums[1][15][13] ), .Y(n842) );
+  XOR2X1 U706 ( .A(\mult[60][7] ), .B(\mult[61][7] ), .Y(n845) );
+  OAI22XL U707 ( .A0(\mult[60][7] ), .A1(n846), .B0(\mult[61][7] ), .B1(n869), 
+        .Y(n868) );
+  AND2X1 U708 ( .A(n846), .B(\mult[60][7] ), .Y(n869) );
+  AO22X1 U709 ( .A0(n849), .A1(\mult[60][6] ), .B0(n870), .B1(\mult[61][6] ), 
+        .Y(n846) );
+  OR2X1 U710 ( .A(\mult[60][6] ), .B(n849), .Y(n870) );
+  OAI2BB1X1 U711 ( .A0N(n866), .A1N(\mult[60][5] ), .B0(n871), .Y(n849) );
+  OAI21XL U712 ( .A0(\mult[60][5] ), .A1(n866), .B0(\mult[61][5] ), .Y(n871)
          );
-  OAI2BB1X1 U719 ( .A0N(n858), .A1N(\mult[60][4] ), .B0(n878), .Y(n871) );
-  OAI21XL U720 ( .A0(\mult[60][4] ), .A1(n858), .B0(\mult[61][4] ), .Y(n878)
+  OAI2BB1X1 U713 ( .A0N(n853), .A1N(\mult[60][4] ), .B0(n872), .Y(n866) );
+  OAI21XL U714 ( .A0(\mult[60][4] ), .A1(n853), .B0(\mult[61][4] ), .Y(n872)
          );
-  AO22X1 U721 ( .A0(n861), .A1(\mult[60][3] ), .B0(n879), .B1(\mult[61][3] ), 
-        .Y(n858) );
-  OR2X1 U722 ( .A(\mult[60][3] ), .B(n861), .Y(n879) );
-  OAI2BB1X1 U723 ( .A0N(n869), .A1N(\mult[60][2] ), .B0(n880), .Y(n861) );
-  OAI21XL U724 ( .A0(\mult[60][2] ), .A1(n869), .B0(\mult[61][2] ), .Y(n880)
+  AO22X1 U715 ( .A0(n856), .A1(\mult[60][3] ), .B0(n873), .B1(\mult[61][3] ), 
+        .Y(n853) );
+  OR2X1 U716 ( .A(\mult[60][3] ), .B(n856), .Y(n873) );
+  OAI2BB1X1 U717 ( .A0N(n864), .A1N(\mult[60][2] ), .B0(n874), .Y(n856) );
+  OAI21XL U718 ( .A0(\mult[60][2] ), .A1(n864), .B0(\mult[61][2] ), .Y(n874)
          );
-  OAI21XL U725 ( .A0(n867), .A1(n865), .B0(n881), .Y(n869) );
-  OAI2BB1X1 U726 ( .A0N(n865), .A1N(n867), .B0(\mult[61][1] ), .Y(n881) );
-  NAND2X1 U727 ( .A(\mult[60][0] ), .B(\mult[61][0] ), .Y(n865) );
-  CLKINVX1 U728 ( .A(\mult[60][1] ), .Y(n867) );
-  XOR2X1 U729 ( .A(\tree_sums[1][15][0] ), .B(n864), .Y(
+  OAI21XL U719 ( .A0(n862), .A1(n860), .B0(n875), .Y(n864) );
+  OAI2BB1X1 U720 ( .A0N(n860), .A1N(n862), .B0(\mult[61][1] ), .Y(n875) );
+  NAND2X1 U721 ( .A(\mult[60][0] ), .B(\mult[61][0] ), .Y(n860) );
+  CLKINVX1 U722 ( .A(\mult[60][1] ), .Y(n862) );
+  XOR2X1 U723 ( .A(\tree_sums[1][15][0] ), .B(n859), .Y(
         \add_15_root_add_61_G6/SUM[0] ) );
-  XOR2X1 U730 ( .A(\mult[60][0] ), .B(\mult[61][0] ), .Y(n864) );
+  XOR2X1 U724 ( .A(\mult[60][0] ), .B(\mult[61][0] ), .Y(n859) );
 endmodule
 
 
@@ -14406,9 +14336,9 @@ module mac_DW_mult_uns_1 ( a, b, product );
          n101, n102, n103, n104, n105, n106, n107, n108, n109, n110, n111,
          n112, n113, n114, n115, n116, n117, n118, n119, n120, n121, n122,
          n123, n124, n125, n126, n127, n128, n129, n130, n131, n132, n133,
-         n134, n135, n136, n137, n138, n139, n140, n141, n142, n143, n144,
-         n145, n146, n147, n148, n149, n150, n151, n152, n153, n154, n155,
-         n156, n157, n158, n159, n160, n161, n162, n163;
+         n134, n135, n136, n137, n138, n139, n141, n142, n143, n144, n145,
+         n146, n148, n149, n150, n151, n152, n153, n154, n155, n156, n157,
+         n158, n159, n160, n161, n162, n163;
   assign product[15] = n1;
 
   ADDFXL U2 ( .A(n15), .B(n85), .CI(n2), .CO(n1), .S(product[14]) );
@@ -14521,15 +14451,13 @@ module mac_DW_mult_uns_1 ( a, b, product );
   NOR2X1 U96 ( .A(n152), .B(n162), .Y(n137) );
   NOR2X1 U97 ( .A(n153), .B(n162), .Y(n138) );
   NOR2X1 U98 ( .A(n154), .B(n162), .Y(n139) );
-  NOR2X1 U99 ( .A(n155), .B(n162), .Y(n140) );
   NOR2X1 U100 ( .A(n148), .B(n163), .Y(n141) );
   NOR2X1 U101 ( .A(n149), .B(n163), .Y(n142) );
   NOR2X1 U102 ( .A(n150), .B(n163), .Y(n143) );
   NOR2X1 U103 ( .A(n151), .B(n163), .Y(n144) );
   NOR2X1 U104 ( .A(n152), .B(n163), .Y(n145) );
   NOR2X1 U105 ( .A(n153), .B(n163), .Y(n146) );
-  NOR2X1 U106 ( .A(n154), .B(n163), .Y(n147) );
-  AND2X2 U126 ( .A(n140), .B(n147), .Y(n14) );
+  NOR4X1 U126 ( .A(n155), .B(n162), .C(n154), .D(n163), .Y(n14) );
   INVXL U127 ( .A(b[1]), .Y(n154) );
   INVXL U128 ( .A(b[2]), .Y(n153) );
   INVXL U129 ( .A(b[3]), .Y(n152) );
@@ -14566,18 +14494,18 @@ module mac_DW_mult_tc_1 ( a, b, product );
          n135, n136, n137, n138, n139, n140, n141, n142, n143, n144, n145,
          n146, n147, n148, n149, n150, n151, n152, n153, n154, n155, n156,
          n157, n158, n159, n160, n161, n162, n163, n164, n165, n166, n167,
-         n168, n169, n170, n171, n172, n173, n174, n175, n176, n177, n178,
-         n179, n180, n181, n182, n183, n184, n185, n186, n187, n188, n189,
-         n190, n191, n192, n193, n194, n195, n196, n197, n198, n199, n200,
-         n201, n202, n203, n204, n205, n206, n207, n208, n209, n210, n211,
-         n212, n213, n214, n215, n216, n217, n218, n219, n220, n221, n222,
-         n223, n224, n225, n226, n227, n228, n229, n230, n231, n232, n233,
-         n234, n235, n236, n237, n238, n239, n240, n241, n242, n243, n244,
-         n245, n246, n247, n248, n249, n250, n264, n265, n266, n267, n272,
-         n273, n274, n275, n276, n278, n279, n280, n281, n282, n283, n284,
-         n289, n290, n291, n292, n293, n345, n346, n347, n348, n349, n350,
-         n351, n352, n353, n354, n355, n356, n357, n358, n359, n360, n361,
-         n362, n363, n364, n365, n366, n367, n368, n369, n370;
+         n168, n169, n170, n171, n172, n173, n174, n175, n176, n177, n180,
+         n182, n183, n184, n185, n186, n187, n188, n189, n190, n191, n192,
+         n193, n194, n195, n196, n197, n198, n199, n200, n201, n202, n203,
+         n204, n205, n206, n207, n208, n209, n210, n211, n212, n213, n214,
+         n215, n216, n217, n218, n219, n220, n221, n222, n223, n224, n225,
+         n226, n227, n228, n229, n230, n231, n232, n233, n234, n235, n236,
+         n237, n238, n239, n240, n241, n242, n243, n244, n245, n246, n247,
+         n248, n249, n250, n264, n265, n266, n267, n272, n273, n274, n275,
+         n276, n278, n279, n280, n281, n282, n283, n284, n289, n290, n291,
+         n292, n293, n345, n346, n347, n348, n349, n350, n351, n352, n353,
+         n354, n355, n356, n357, n358, n359, n360, n361, n362, n363, n364,
+         n365, n366, n367, n368, n369, n370;
 
   XOR2X1 U1 ( .A(n2), .B(n1), .Y(product[22]) );
   XOR2X1 U2 ( .A(n107), .B(n23), .Y(n1) );
@@ -14648,10 +14576,7 @@ module mac_DW_mult_tc_1 ( a, b, product );
   ADDFXL U56 ( .A(n173), .B(n147), .CI(n160), .CO(n99), .S(n100) );
   ADDHXL U57 ( .A(n174), .B(n105), .CO(n101), .S(n102) );
   CLKINVX1 U73 ( .A(n250), .Y(n177) );
-  CLKINVX1 U74 ( .A(a[12]), .Y(n178) );
-  CLKINVX1 U75 ( .A(a[11]), .Y(n179) );
   CLKINVX1 U76 ( .A(a[10]), .Y(n180) );
-  CLKINVX1 U77 ( .A(a[9]), .Y(n181) );
   CLKINVX1 U78 ( .A(a[8]), .Y(n182) );
   CLKINVX1 U79 ( .A(a[7]), .Y(n183) );
   CLKINVX1 U80 ( .A(a[6]), .Y(n184) );
@@ -14674,7 +14599,6 @@ module mac_DW_mult_tc_1 ( a, b, product );
   OAI22XL U98 ( .A0(n355), .A1(n201), .B0(n366), .B1(n200), .Y(n129) );
   OAI22XL U99 ( .A0(n355), .A1(n202), .B0(n366), .B1(n201), .Y(n130) );
   OAI22XL U100 ( .A0(n355), .A1(n203), .B0(n366), .B1(n202), .Y(n131) );
-  NOR2BX1 U101 ( .AN(n350), .B(n365), .Y(n132) );
   XNOR2X1 U102 ( .A(n281), .B(n250), .Y(n190) );
   XNOR2X1 U103 ( .A(n281), .B(a[12]), .Y(n191) );
   XNOR2X1 U104 ( .A(n281), .B(a[11]), .Y(n192) );
@@ -14777,76 +14701,77 @@ module mac_DW_mult_tc_1 ( a, b, product );
   XOR2X1 U246 ( .A(b[4]), .B(b[5]), .Y(n265) );
   XOR2X1 U249 ( .A(b[2]), .B(b[3]), .Y(n266) );
   XOR2X1 U252 ( .A(b[0]), .B(b[1]), .Y(n267) );
-  AND2X2 U257 ( .A(n265), .B(n291), .Y(n345) );
-  AND2X2 U258 ( .A(n266), .B(n292), .Y(n346) );
-  AND2X2 U259 ( .A(n264), .B(n290), .Y(n347) );
-  AND2X2 U260 ( .A(n267), .B(n293), .Y(n348) );
-  INVXL U261 ( .A(a[0]), .Y(n349) );
-  INVXL U262 ( .A(n349), .Y(n350) );
-  CLKINVX1 U263 ( .A(b[7]), .Y(n351) );
-  CLKBUFX3 U264 ( .A(n289), .Y(n272) );
-  INVXL U265 ( .A(b[7]), .Y(n289) );
-  CLKINVX1 U266 ( .A(n345), .Y(n352) );
-  CLKINVX1 U267 ( .A(n345), .Y(n353) );
-  CLKINVX1 U268 ( .A(n347), .Y(n354) );
-  CLKINVX1 U269 ( .A(n347), .Y(n355) );
-  CLKINVX1 U270 ( .A(n348), .Y(n356) );
-  CLKINVX1 U271 ( .A(n348), .Y(n357) );
-  CLKINVX1 U272 ( .A(n346), .Y(n358) );
-  CLKINVX1 U273 ( .A(n346), .Y(n359) );
-  CLKINVX1 U274 ( .A(b[0]), .Y(n360) );
-  CLKBUFX3 U275 ( .A(n293), .Y(n276) );
-  INVXL U276 ( .A(b[0]), .Y(n293) );
-  CLKINVX1 U277 ( .A(n291), .Y(n274) );
-  CLKINVX1 U278 ( .A(n274), .Y(n361) );
-  CLKINVX1 U279 ( .A(n274), .Y(n362) );
-  XNOR2XL U280 ( .A(b[4]), .B(b[3]), .Y(n291) );
-  CLKINVX1 U281 ( .A(n292), .Y(n275) );
-  CLKINVX1 U282 ( .A(n275), .Y(n363) );
-  CLKINVX1 U283 ( .A(n275), .Y(n364) );
-  XNOR2XL U284 ( .A(b[2]), .B(b[1]), .Y(n292) );
-  CLKINVX1 U285 ( .A(n290), .Y(n273) );
-  CLKINVX1 U286 ( .A(n273), .Y(n365) );
-  CLKINVX1 U287 ( .A(n273), .Y(n366) );
-  XNOR2XL U288 ( .A(b[6]), .B(b[5]), .Y(n290) );
-  CLKINVX1 U289 ( .A(n278), .Y(n367) );
-  CLKBUFX3 U290 ( .A(b[5]), .Y(n282) );
-  CLKINVX1 U291 ( .A(n289), .Y(n368) );
-  CLKBUFX3 U292 ( .A(b[7]), .Y(n281) );
-  CLKINVX1 U293 ( .A(n279), .Y(n369) );
-  CLKBUFX3 U294 ( .A(b[3]), .Y(n283) );
-  CLKINVX1 U295 ( .A(n280), .Y(n370) );
-  CLKBUFX3 U296 ( .A(b[1]), .Y(n284) );
-  NOR2BXL U297 ( .AN(a[0]), .B(n360), .Y(product[0]) );
-  XNOR2XL U298 ( .A(n370), .B(n350), .Y(n248) );
-  NAND2BXL U299 ( .AN(n350), .B(n367), .Y(n219) );
-  XNOR2XL U300 ( .A(n369), .B(a[0]), .Y(n233) );
-  NOR2BXL U301 ( .AN(n350), .B(n364), .Y(n162) );
-  INVXL U302 ( .A(n282), .Y(n278) );
-  NOR2BXL U303 ( .AN(a[0]), .B(n362), .Y(n147) );
-  INVXL U304 ( .A(n284), .Y(n280) );
-  XNOR2XL U305 ( .A(n367), .B(n350), .Y(n218) );
-  INVXL U306 ( .A(n283), .Y(n279) );
-  NOR2XL U307 ( .A(n272), .B(n181), .Y(n37) );
-  NOR2XL U308 ( .A(n272), .B(n184), .Y(n49) );
-  XNOR2XL U309 ( .A(n368), .B(a[0]), .Y(n203) );
-  NOR2XL U310 ( .A(n272), .B(n177), .Y(n23) );
-  NOR2XL U311 ( .A(n272), .B(n179), .Y(n29) );
-  NAND2BXL U312 ( .AN(a[0]), .B(n368), .Y(n204) );
-  OR2XL U313 ( .A(n351), .B(n177), .Y(n107) );
-  NOR2XL U314 ( .A(n272), .B(n185), .Y(n112) );
-  NOR2XL U315 ( .A(n272), .B(n183), .Y(n111) );
-  NOR2XL U316 ( .A(n272), .B(n182), .Y(n110) );
-  NOR2XL U317 ( .A(n272), .B(n189), .Y(n116) );
-  NOR2XL U318 ( .A(n351), .B(n188), .Y(n115) );
-  NOR2XL U319 ( .A(n351), .B(n187), .Y(n114) );
-  NOR2XL U320 ( .A(n351), .B(n186), .Y(n113) );
-  NOR2BXL U321 ( .AN(n350), .B(n351), .Y(n117) );
-  AO21XL U322 ( .A0(n355), .A1(n366), .B0(n190), .Y(n118) );
-  NOR2XL U323 ( .A(n351), .B(n178), .Y(n108) );
-  AO21XL U324 ( .A0(n353), .A1(n362), .B0(n205), .Y(n133) );
-  NOR2XL U325 ( .A(n351), .B(n180), .Y(n109) );
-  CLKBUFX2 U326 ( .A(a[13]), .Y(n250) );
+  NOR2X1 U257 ( .A(n349), .B(n351), .Y(n117) );
+  NOR2X1 U258 ( .A(n290), .B(n349), .Y(n132) );
+  AND2X2 U259 ( .A(b[7]), .B(a[9]), .Y(n37) );
+  AND2X2 U260 ( .A(b[7]), .B(a[12]), .Y(n108) );
+  AND2X2 U261 ( .A(b[7]), .B(a[11]), .Y(n29) );
+  NAND2X1 U262 ( .A(b[7]), .B(n250), .Y(n107) );
+  NOR2X1 U263 ( .A(n292), .B(n349), .Y(n162) );
+  AND2X2 U264 ( .A(n265), .B(n291), .Y(n345) );
+  AND2X2 U265 ( .A(n266), .B(n292), .Y(n346) );
+  AND2X2 U266 ( .A(n264), .B(n290), .Y(n347) );
+  AND2X2 U267 ( .A(n267), .B(n293), .Y(n348) );
+  INVXL U268 ( .A(a[0]), .Y(n349) );
+  INVXL U269 ( .A(n349), .Y(n350) );
+  CLKINVX1 U270 ( .A(b[7]), .Y(n351) );
+  CLKBUFX3 U271 ( .A(n289), .Y(n272) );
+  INVXL U272 ( .A(b[7]), .Y(n289) );
+  CLKINVX1 U273 ( .A(n345), .Y(n352) );
+  CLKINVX1 U274 ( .A(n345), .Y(n353) );
+  CLKINVX1 U275 ( .A(n347), .Y(n354) );
+  CLKINVX1 U276 ( .A(n347), .Y(n355) );
+  CLKINVX1 U277 ( .A(n348), .Y(n356) );
+  CLKINVX1 U278 ( .A(n348), .Y(n357) );
+  CLKINVX1 U279 ( .A(n346), .Y(n358) );
+  CLKINVX1 U280 ( .A(n346), .Y(n359) );
+  CLKINVX1 U281 ( .A(b[0]), .Y(n360) );
+  CLKBUFX3 U282 ( .A(n293), .Y(n276) );
+  INVXL U283 ( .A(b[0]), .Y(n293) );
+  CLKINVX1 U284 ( .A(n291), .Y(n274) );
+  CLKINVX1 U285 ( .A(n274), .Y(n361) );
+  CLKINVX1 U286 ( .A(n274), .Y(n362) );
+  XNOR2XL U287 ( .A(b[4]), .B(b[3]), .Y(n291) );
+  CLKINVX1 U288 ( .A(n292), .Y(n275) );
+  CLKINVX1 U289 ( .A(n275), .Y(n363) );
+  CLKINVX1 U290 ( .A(n275), .Y(n364) );
+  XNOR2XL U291 ( .A(b[2]), .B(b[1]), .Y(n292) );
+  CLKINVX1 U292 ( .A(n290), .Y(n273) );
+  CLKINVX1 U293 ( .A(n273), .Y(n365) );
+  CLKINVX1 U294 ( .A(n273), .Y(n366) );
+  XNOR2XL U295 ( .A(b[6]), .B(b[5]), .Y(n290) );
+  CLKINVX1 U296 ( .A(n278), .Y(n367) );
+  CLKBUFX3 U297 ( .A(b[5]), .Y(n282) );
+  CLKINVX1 U298 ( .A(n289), .Y(n368) );
+  CLKBUFX3 U299 ( .A(b[7]), .Y(n281) );
+  CLKINVX1 U300 ( .A(n279), .Y(n369) );
+  CLKBUFX3 U301 ( .A(b[3]), .Y(n283) );
+  CLKINVX1 U302 ( .A(n280), .Y(n370) );
+  CLKBUFX3 U303 ( .A(b[1]), .Y(n284) );
+  NOR2BXL U304 ( .AN(a[0]), .B(n360), .Y(product[0]) );
+  XNOR2XL U305 ( .A(n370), .B(n350), .Y(n248) );
+  NAND2BXL U306 ( .AN(n350), .B(n367), .Y(n219) );
+  XNOR2XL U307 ( .A(n369), .B(a[0]), .Y(n233) );
+  INVXL U308 ( .A(n282), .Y(n278) );
+  NOR2BXL U309 ( .AN(a[0]), .B(n362), .Y(n147) );
+  INVXL U310 ( .A(n284), .Y(n280) );
+  XNOR2XL U311 ( .A(n367), .B(n350), .Y(n218) );
+  INVXL U312 ( .A(n283), .Y(n279) );
+  NOR2XL U313 ( .A(n272), .B(n184), .Y(n49) );
+  XNOR2XL U314 ( .A(n368), .B(a[0]), .Y(n203) );
+  NOR2XL U315 ( .A(n272), .B(n177), .Y(n23) );
+  NAND2BXL U316 ( .AN(a[0]), .B(n368), .Y(n204) );
+  NOR2XL U317 ( .A(n272), .B(n185), .Y(n112) );
+  NOR2XL U318 ( .A(n272), .B(n183), .Y(n111) );
+  NOR2XL U319 ( .A(n272), .B(n182), .Y(n110) );
+  NOR2XL U320 ( .A(n272), .B(n189), .Y(n116) );
+  NOR2XL U321 ( .A(n351), .B(n188), .Y(n115) );
+  NOR2XL U322 ( .A(n351), .B(n187), .Y(n114) );
+  NOR2XL U323 ( .A(n351), .B(n186), .Y(n113) );
+  AO21XL U324 ( .A0(n355), .A1(n366), .B0(n190), .Y(n118) );
+  AO21XL U325 ( .A0(n353), .A1(n362), .B0(n205), .Y(n133) );
+  NOR2XL U326 ( .A(n351), .B(n180), .Y(n109) );
+  CLKBUFX2 U327 ( .A(a[13]), .Y(n250) );
 endmodule
 
 
@@ -14964,214 +14889,214 @@ module mac ( i_mode, i_psum, i_a, i_b, i_scale_a, i_scale_b, o_result );
         \vsq_product[10] , \vsq_product[9] , \vsq_product[8] , 
         \vsq_product[7] , \vsq_product[6] , \vsq_product[5] , \vsq_product[4] , 
         \vsq_product[3] , \vsq_product[2] , \vsq_product[1] , \vsq_product[0] }) );
-  CLKINVX1 U949 ( .A(int4_product[13]), .Y(n377) );
-  CLKINVX1 U950 ( .A(n377), .Y(n379) );
-  CLKINVX1 U951 ( .A(n377), .Y(n380) );
-  AOI22X1 U952 ( .A0(int8_result[0]), .A1(n373), .B0(int4_result[0]), .B1(n381), .Y(n523) );
-  AOI222XL U953 ( .A0(int4_result[1]), .A1(n382), .B0(vsq_result_tmp[1]), .B1(
+  NOR2X1 U949 ( .A(n366), .B(n382), .Y(n462) );
+  CLKINVX1 U950 ( .A(int4_product[13]), .Y(n377) );
+  CLKINVX1 U951 ( .A(n377), .Y(n379) );
+  CLKINVX1 U952 ( .A(n377), .Y(n380) );
+  AOI22X1 U953 ( .A0(int8_result[0]), .A1(n373), .B0(int4_result[0]), .B1(n381), .Y(n523) );
+  AOI222XL U954 ( .A0(int4_result[1]), .A1(n382), .B0(vsq_result_tmp[1]), .B1(
         n376), .C0(int8_result[1]), .C1(n373), .Y(n512) );
-  AOI222XL U954 ( .A0(int4_result[2]), .A1(n384), .B0(vsq_result_tmp[2]), .B1(
+  AOI222XL U955 ( .A0(int4_result[2]), .A1(n384), .B0(vsq_result_tmp[2]), .B1(
         n376), .C0(int8_result[2]), .C1(n372), .Y(n505) );
-  AOI222XL U955 ( .A0(int4_result[3]), .A1(n383), .B0(vsq_result_tmp[3]), .B1(
+  AOI222XL U956 ( .A0(int4_result[3]), .A1(n383), .B0(vsq_result_tmp[3]), .B1(
         n375), .C0(int8_result[3]), .C1(n374), .Y(n504) );
-  AOI222XL U956 ( .A0(int4_result[4]), .A1(n382), .B0(vsq_result_tmp[4]), .B1(
+  AOI222XL U957 ( .A0(int4_result[4]), .A1(n382), .B0(vsq_result_tmp[4]), .B1(
         n376), .C0(int8_result[4]), .C1(n373), .Y(n503) );
-  AOI222XL U957 ( .A0(int4_result[5]), .A1(n384), .B0(vsq_result_tmp[5]), .B1(
+  AOI222XL U958 ( .A0(int4_result[5]), .A1(n384), .B0(vsq_result_tmp[5]), .B1(
         n375), .C0(int8_result[5]), .C1(n372), .Y(n502) );
-  AOI222XL U958 ( .A0(int4_result[6]), .A1(n383), .B0(vsq_result_tmp[6]), .B1(
+  AOI222XL U959 ( .A0(int4_result[6]), .A1(n383), .B0(vsq_result_tmp[6]), .B1(
         n376), .C0(int8_result[6]), .C1(n374), .Y(n501) );
-  AOI222XL U959 ( .A0(int4_result[7]), .A1(n382), .B0(vsq_result_tmp[7]), .B1(
+  AOI222XL U960 ( .A0(int4_result[7]), .A1(n382), .B0(vsq_result_tmp[7]), .B1(
         n375), .C0(int8_result[7]), .C1(n373), .Y(n500) );
-  AOI222XL U960 ( .A0(int4_result[8]), .A1(n384), .B0(vsq_result_tmp[8]), .B1(
+  AOI222XL U961 ( .A0(int4_result[8]), .A1(n384), .B0(vsq_result_tmp[8]), .B1(
         n376), .C0(int8_result[8]), .C1(n372), .Y(n499) );
-  AOI222XL U961 ( .A0(int4_result[9]), .A1(n383), .B0(vsq_result_tmp[9]), .B1(
+  AOI222XL U962 ( .A0(int4_result[9]), .A1(n383), .B0(vsq_result_tmp[9]), .B1(
         n375), .C0(int8_result[9]), .C1(n374), .Y(n495) );
-  AOI222XL U962 ( .A0(int4_result[10]), .A1(n381), .B0(vsq_result_tmp[10]), 
+  AOI222XL U963 ( .A0(int4_result[10]), .A1(n381), .B0(vsq_result_tmp[10]), 
         .B1(n497), .C0(int8_result[10]), .C1(n372), .Y(n522) );
-  AOI222XL U963 ( .A0(int4_result[11]), .A1(n381), .B0(vsq_result_tmp[11]), 
+  AOI222XL U964 ( .A0(int4_result[11]), .A1(n381), .B0(vsq_result_tmp[11]), 
         .B1(n497), .C0(int8_result[11]), .C1(n373), .Y(n521) );
-  AOI222XL U964 ( .A0(int4_result[12]), .A1(n381), .B0(vsq_result_tmp[12]), 
+  AOI222XL U965 ( .A0(int4_result[12]), .A1(n381), .B0(vsq_result_tmp[12]), 
         .B1(n497), .C0(int8_result[12]), .C1(n374), .Y(n520) );
-  AOI222XL U965 ( .A0(int4_result[13]), .A1(n381), .B0(vsq_result_tmp[13]), 
+  AOI222XL U966 ( .A0(int4_result[13]), .A1(n381), .B0(vsq_result_tmp[13]), 
         .B1(n497), .C0(int8_result[13]), .C1(n372), .Y(n519) );
-  AOI222XL U966 ( .A0(int4_result[14]), .A1(n382), .B0(vsq_result_tmp[14]), 
+  AOI222XL U967 ( .A0(int4_result[14]), .A1(n382), .B0(vsq_result_tmp[14]), 
         .B1(n497), .C0(int8_result[14]), .C1(n374), .Y(n518) );
-  AOI222XL U967 ( .A0(int4_result[15]), .A1(n384), .B0(vsq_result_tmp[15]), 
+  AOI222XL U968 ( .A0(int4_result[15]), .A1(n384), .B0(vsq_result_tmp[15]), 
         .B1(n497), .C0(int8_result[15]), .C1(n373), .Y(n517) );
-  AOI222XL U968 ( .A0(int4_result[16]), .A1(n383), .B0(vsq_result_tmp[16]), 
+  AOI222XL U969 ( .A0(int4_result[16]), .A1(n383), .B0(vsq_result_tmp[16]), 
         .B1(n497), .C0(int8_result[16]), .C1(n374), .Y(n516) );
-  AOI222XL U969 ( .A0(int4_result[17]), .A1(n382), .B0(vsq_result_tmp[17]), 
+  AOI222XL U970 ( .A0(int4_result[17]), .A1(n382), .B0(vsq_result_tmp[17]), 
         .B1(n497), .C0(int8_result[17]), .C1(n373), .Y(n515) );
-  AOI222XL U970 ( .A0(int4_result[18]), .A1(n384), .B0(vsq_result_tmp[18]), 
+  AOI222XL U971 ( .A0(int4_result[18]), .A1(n384), .B0(vsq_result_tmp[18]), 
         .B1(n376), .C0(int8_result[18]), .C1(n372), .Y(n514) );
-  AOI222XL U971 ( .A0(int4_result[19]), .A1(n383), .B0(vsq_result_tmp[19]), 
+  AOI222XL U972 ( .A0(int4_result[19]), .A1(n383), .B0(vsq_result_tmp[19]), 
         .B1(n375), .C0(int8_result[19]), .C1(n374), .Y(n513) );
-  AOI222XL U972 ( .A0(int4_result[20]), .A1(n384), .B0(vsq_result_tmp[20]), 
+  AOI222XL U973 ( .A0(int4_result[20]), .A1(n384), .B0(vsq_result_tmp[20]), 
         .B1(n375), .C0(int8_result[20]), .C1(n372), .Y(n511) );
-  AOI222XL U973 ( .A0(int4_result[21]), .A1(n383), .B0(vsq_result_tmp[21]), 
+  AOI222XL U974 ( .A0(int4_result[21]), .A1(n383), .B0(vsq_result_tmp[21]), 
         .B1(n376), .C0(int8_result[21]), .C1(n374), .Y(n510) );
-  AOI222XL U974 ( .A0(int4_result[22]), .A1(n382), .B0(vsq_result_tmp[22]), 
+  AOI222XL U975 ( .A0(int4_result[22]), .A1(n382), .B0(vsq_result_tmp[22]), 
         .B1(n375), .C0(int8_result[22]), .C1(n373), .Y(n509) );
-  AND2X2 U975 ( .A(i_mode[1]), .B(n784), .Y(n366) );
-  CLKINVX1 U976 ( .A(n377), .Y(n378) );
-  NOR2X1 U977 ( .A(n366), .B(n382), .Y(n367) );
-  INVXL U978 ( .A(n366), .Y(n368) );
-  INVXL U979 ( .A(n366), .Y(n369) );
-  INVXL U980 ( .A(n366), .Y(n370) );
-  INVXL U981 ( .A(n366), .Y(n371) );
-  NOR2XL U982 ( .A(n385), .B(n783), .Y(int8_b_gated[0]) );
-  NOR2XL U983 ( .A(n424), .B(n539), .Y(int8_b_gated[8]) );
-  NOR2XL U984 ( .A(n394), .B(n706), .Y(int8_b_gated[16]) );
-  NOR2XL U985 ( .A(n405), .B(n617), .Y(int8_b_gated[24]) );
-  OR2X1 U986 ( .A(i_mode[0]), .B(i_mode[1]), .Y(n498) );
-  CLKINVX1 U987 ( .A(n498), .Y(n372) );
-  CLKINVX1 U988 ( .A(n498), .Y(n373) );
-  CLKINVX1 U989 ( .A(n498), .Y(n374) );
-  NOR2XL U990 ( .A(n407), .B(n602), .Y(int8_b_gated[32]) );
-  NOR2XL U991 ( .A(n418), .B(n593), .Y(int8_b_gated[40]) );
-  NOR2XL U992 ( .A(n421), .B(n567), .Y(int8_b_gated[64]) );
-  NOR2XL U993 ( .A(n412), .B(n558), .Y(int8_b_gated[72]) );
-  NOR2XL U994 ( .A(n408), .B(n549), .Y(int8_b_gated[80]) );
-  NOR2XL U995 ( .A(n418), .B(n541), .Y(int8_b_gated[88]) );
-  NOR2XL U996 ( .A(n416), .B(n532), .Y(int8_b_gated[96]) );
-  NOR2XL U997 ( .A(n385), .B(n778), .Y(int8_b_gated[104]) );
-  NOR2XL U998 ( .A(n388), .B(n752), .Y(int8_b_gated[128]) );
-  NOR2XL U999 ( .A(n390), .B(n743), .Y(int8_b_gated[136]) );
-  NOR2XL U1000 ( .A(n391), .B(n734), .Y(int8_b_gated[144]) );
-  NOR2XL U1001 ( .A(n392), .B(n725), .Y(int8_b_gated[152]) );
-  NOR2XL U1002 ( .A(n393), .B(n716), .Y(int8_b_gated[160]) );
-  NOR2XL U1003 ( .A(n394), .B(n708), .Y(int8_b_gated[168]) );
-  NOR2XL U1004 ( .A(n397), .B(n681), .Y(int8_b_gated[192]) );
-  NOR2XL U1005 ( .A(n399), .B(n671), .Y(int8_b_gated[200]) );
-  NOR2XL U1006 ( .A(n400), .B(n663), .Y(int8_b_gated[208]) );
-  NOR2XL U1007 ( .A(n401), .B(n654), .Y(int8_b_gated[216]) );
-  NOR2XL U1008 ( .A(n402), .B(n645), .Y(int8_b_gated[224]) );
-  NOR2XL U1009 ( .A(n403), .B(n636), .Y(int8_b_gated[232]) );
-  NOR2XL U1010 ( .A(n498), .B(n585), .Y(int8_b_gated[48]) );
-  NOR2XL U1011 ( .A(n421), .B(n576), .Y(int8_b_gated[56]) );
-  NOR2XL U1012 ( .A(n395), .B(n699), .Y(int8_b_gated[176]) );
-  NOR2XL U1013 ( .A(n396), .B(n690), .Y(int8_b_gated[184]) );
-  NOR2XL U1014 ( .A(n386), .B(n769), .Y(int8_b_gated[112]) );
-  NOR2XL U1015 ( .A(n387), .B(n760), .Y(int8_b_gated[120]) );
-  NOR2XL U1016 ( .A(n404), .B(n627), .Y(int8_b_gated[240]) );
-  NOR2XL U1017 ( .A(n405), .B(n619), .Y(int8_b_gated[248]) );
-  NOR2BX1 U1018 ( .AN(i_mode[1]), .B(n507), .Y(n375) );
-  NOR2BX1 U1019 ( .AN(i_mode[1]), .B(n507), .Y(n376) );
-  XNOR2XL U1020 ( .A(\scale_mult_full[13] ), .B(n490), .Y(
+  AND2X2 U976 ( .A(i_mode[1]), .B(n784), .Y(n366) );
+  CLKINVX1 U977 ( .A(n377), .Y(n378) );
+  NOR2X1 U978 ( .A(n366), .B(n382), .Y(n367) );
+  INVXL U979 ( .A(n366), .Y(n368) );
+  INVXL U980 ( .A(n366), .Y(n369) );
+  INVXL U981 ( .A(n366), .Y(n370) );
+  INVXL U982 ( .A(n366), .Y(n371) );
+  NOR2XL U983 ( .A(n385), .B(n783), .Y(int8_b_gated[0]) );
+  NOR2XL U984 ( .A(n424), .B(n539), .Y(int8_b_gated[8]) );
+  NOR2XL U985 ( .A(n394), .B(n706), .Y(int8_b_gated[16]) );
+  NOR2XL U986 ( .A(n405), .B(n617), .Y(int8_b_gated[24]) );
+  OR2X1 U987 ( .A(i_mode[0]), .B(i_mode[1]), .Y(n498) );
+  CLKINVX1 U988 ( .A(n498), .Y(n372) );
+  CLKINVX1 U989 ( .A(n498), .Y(n373) );
+  CLKINVX1 U990 ( .A(n498), .Y(n374) );
+  NOR2XL U991 ( .A(n407), .B(n602), .Y(int8_b_gated[32]) );
+  NOR2XL U992 ( .A(n418), .B(n593), .Y(int8_b_gated[40]) );
+  NOR2XL U993 ( .A(n421), .B(n567), .Y(int8_b_gated[64]) );
+  NOR2XL U994 ( .A(n412), .B(n558), .Y(int8_b_gated[72]) );
+  NOR2XL U995 ( .A(n408), .B(n549), .Y(int8_b_gated[80]) );
+  NOR2XL U996 ( .A(n418), .B(n541), .Y(int8_b_gated[88]) );
+  NOR2XL U997 ( .A(n416), .B(n532), .Y(int8_b_gated[96]) );
+  NOR2XL U998 ( .A(n385), .B(n778), .Y(int8_b_gated[104]) );
+  NOR2XL U999 ( .A(n388), .B(n752), .Y(int8_b_gated[128]) );
+  NOR2XL U1000 ( .A(n390), .B(n743), .Y(int8_b_gated[136]) );
+  NOR2XL U1001 ( .A(n391), .B(n734), .Y(int8_b_gated[144]) );
+  NOR2XL U1002 ( .A(n392), .B(n725), .Y(int8_b_gated[152]) );
+  NOR2XL U1003 ( .A(n393), .B(n716), .Y(int8_b_gated[160]) );
+  NOR2XL U1004 ( .A(n394), .B(n708), .Y(int8_b_gated[168]) );
+  NOR2XL U1005 ( .A(n397), .B(n681), .Y(int8_b_gated[192]) );
+  NOR2XL U1006 ( .A(n399), .B(n671), .Y(int8_b_gated[200]) );
+  NOR2XL U1007 ( .A(n400), .B(n663), .Y(int8_b_gated[208]) );
+  NOR2XL U1008 ( .A(n401), .B(n654), .Y(int8_b_gated[216]) );
+  NOR2XL U1009 ( .A(n402), .B(n645), .Y(int8_b_gated[224]) );
+  NOR2XL U1010 ( .A(n403), .B(n636), .Y(int8_b_gated[232]) );
+  NOR2XL U1011 ( .A(n498), .B(n585), .Y(int8_b_gated[48]) );
+  NOR2XL U1012 ( .A(n421), .B(n576), .Y(int8_b_gated[56]) );
+  NOR2XL U1013 ( .A(n395), .B(n699), .Y(int8_b_gated[176]) );
+  NOR2XL U1014 ( .A(n396), .B(n690), .Y(int8_b_gated[184]) );
+  NOR2XL U1015 ( .A(n386), .B(n769), .Y(int8_b_gated[112]) );
+  NOR2XL U1016 ( .A(n387), .B(n760), .Y(int8_b_gated[120]) );
+  NOR2XL U1017 ( .A(n404), .B(n627), .Y(int8_b_gated[240]) );
+  NOR2XL U1018 ( .A(n405), .B(n619), .Y(int8_b_gated[248]) );
+  NOR2BX1 U1019 ( .AN(i_mode[1]), .B(n507), .Y(n375) );
+  NOR2BX1 U1020 ( .AN(i_mode[1]), .B(n507), .Y(n376) );
+  XNOR2XL U1021 ( .A(\scale_mult_full[13] ), .B(n490), .Y(
         \scale_mult_round[5] ) );
-  XOR2XL U1021 ( .A(\scale_mult_full[15] ), .B(n487), .Y(\scale_mult_round[7] ) );
-  XOR2XL U1022 ( .A(\scale_mult_full[11] ), .B(n493), .Y(\scale_mult_round[3] ) );
-  XNOR2XL U1023 ( .A(\scale_mult_full[9] ), .B(n494), .Y(\scale_mult_round[1] ) );
-  OR2X1 U1024 ( .A(n784), .B(i_mode[1]), .Y(n496) );
-  CLKINVX1 U1025 ( .A(n496), .Y(n381) );
-  CLKINVX1 U1026 ( .A(n496), .Y(n382) );
-  CLKINVX1 U1027 ( .A(n496), .Y(n383) );
-  CLKINVX1 U1028 ( .A(n496), .Y(n384) );
-  INVXL U1029 ( .A(n512), .Y(o_result[1]) );
-  INVXL U1030 ( .A(n505), .Y(o_result[2]) );
-  INVXL U1031 ( .A(n504), .Y(o_result[3]) );
-  INVXL U1032 ( .A(n503), .Y(o_result[4]) );
-  INVXL U1033 ( .A(n502), .Y(o_result[5]) );
-  INVXL U1034 ( .A(n501), .Y(o_result[6]) );
-  INVXL U1035 ( .A(n500), .Y(o_result[7]) );
-  INVXL U1036 ( .A(n499), .Y(o_result[8]) );
-  INVXL U1037 ( .A(n495), .Y(o_result[9]) );
-  INVXL U1038 ( .A(n522), .Y(o_result[10]) );
-  INVXL U1039 ( .A(n521), .Y(o_result[11]) );
-  INVXL U1040 ( .A(n520), .Y(o_result[12]) );
-  INVXL U1041 ( .A(n519), .Y(o_result[13]) );
-  INVXL U1042 ( .A(n518), .Y(o_result[14]) );
-  INVXL U1043 ( .A(n517), .Y(o_result[15]) );
-  INVXL U1044 ( .A(n516), .Y(o_result[16]) );
-  INVXL U1045 ( .A(n515), .Y(o_result[17]) );
-  INVXL U1046 ( .A(n514), .Y(o_result[18]) );
-  INVXL U1047 ( .A(n513), .Y(o_result[19]) );
-  INVXL U1048 ( .A(n511), .Y(o_result[20]) );
-  INVXL U1049 ( .A(n510), .Y(o_result[21]) );
-  INVXL U1050 ( .A(n509), .Y(o_result[22]) );
-  AO22XL U1051 ( .A0(int8_result[23]), .A1(n372), .B0(int4_result[23]), .B1(
+  XOR2XL U1022 ( .A(\scale_mult_full[15] ), .B(n487), .Y(\scale_mult_round[7] ) );
+  XOR2XL U1023 ( .A(\scale_mult_full[11] ), .B(n493), .Y(\scale_mult_round[3] ) );
+  XNOR2XL U1024 ( .A(\scale_mult_full[9] ), .B(n494), .Y(\scale_mult_round[1] ) );
+  OR2X1 U1025 ( .A(n784), .B(i_mode[1]), .Y(n496) );
+  CLKINVX1 U1026 ( .A(n496), .Y(n381) );
+  CLKINVX1 U1027 ( .A(n496), .Y(n382) );
+  CLKINVX1 U1028 ( .A(n496), .Y(n383) );
+  CLKINVX1 U1029 ( .A(n496), .Y(n384) );
+  INVXL U1030 ( .A(n512), .Y(o_result[1]) );
+  INVXL U1031 ( .A(n505), .Y(o_result[2]) );
+  INVXL U1032 ( .A(n504), .Y(o_result[3]) );
+  INVXL U1033 ( .A(n503), .Y(o_result[4]) );
+  INVXL U1034 ( .A(n502), .Y(o_result[5]) );
+  INVXL U1035 ( .A(n501), .Y(o_result[6]) );
+  INVXL U1036 ( .A(n500), .Y(o_result[7]) );
+  INVXL U1037 ( .A(n499), .Y(o_result[8]) );
+  INVXL U1038 ( .A(n495), .Y(o_result[9]) );
+  INVXL U1039 ( .A(n522), .Y(o_result[10]) );
+  INVXL U1040 ( .A(n521), .Y(o_result[11]) );
+  INVXL U1041 ( .A(n520), .Y(o_result[12]) );
+  INVXL U1042 ( .A(n519), .Y(o_result[13]) );
+  INVXL U1043 ( .A(n518), .Y(o_result[14]) );
+  INVXL U1044 ( .A(n517), .Y(o_result[15]) );
+  INVXL U1045 ( .A(n516), .Y(o_result[16]) );
+  INVXL U1046 ( .A(n515), .Y(o_result[17]) );
+  INVXL U1047 ( .A(n514), .Y(o_result[18]) );
+  INVXL U1048 ( .A(n513), .Y(o_result[19]) );
+  INVXL U1049 ( .A(n511), .Y(o_result[20]) );
+  INVXL U1050 ( .A(n510), .Y(o_result[21]) );
+  INVXL U1051 ( .A(n509), .Y(o_result[22]) );
+  AO22XL U1052 ( .A0(int8_result[23]), .A1(n372), .B0(int4_result[23]), .B1(
         n384), .Y(n508) );
-  NAND2XL U1052 ( .A(i_psum[23]), .B(n366), .Y(n525) );
-  AOI32XL U1053 ( .A0(i_mode[1]), .A1(n525), .A2(n507), .B0(vsq_result_tmp[0]), 
+  NAND2XL U1053 ( .A(i_psum[23]), .B(n366), .Y(n525) );
+  AOI32XL U1054 ( .A0(i_mode[1]), .A1(n525), .A2(n507), .B0(vsq_result_tmp[0]), 
         .B1(n375), .Y(n524) );
-  CLKBUFX3 U1054 ( .A(n450), .Y(n443) );
-  CLKBUFX3 U1055 ( .A(n452), .Y(n437) );
-  CLKBUFX3 U1056 ( .A(n454), .Y(n430) );
-  CLKBUFX3 U1057 ( .A(n452), .Y(n438) );
-  CLKBUFX3 U1058 ( .A(n453), .Y(n433) );
-  CLKBUFX3 U1059 ( .A(n453), .Y(n434) );
-  CLKBUFX3 U1060 ( .A(n455), .Y(n427) );
-  CLKBUFX3 U1061 ( .A(n451), .Y(n441) );
-  CLKBUFX3 U1062 ( .A(n455), .Y(n428) );
-  CLKBUFX3 U1063 ( .A(n449), .Y(n445) );
-  CLKBUFX3 U1064 ( .A(n450), .Y(n442) );
-  CLKBUFX3 U1065 ( .A(n450), .Y(n444) );
-  CLKBUFX3 U1066 ( .A(n451), .Y(n440) );
-  CLKBUFX3 U1067 ( .A(n451), .Y(n439) );
-  CLKBUFX3 U1068 ( .A(n452), .Y(n436) );
-  CLKBUFX3 U1069 ( .A(n453), .Y(n435) );
-  CLKBUFX3 U1070 ( .A(n454), .Y(n432) );
-  CLKBUFX3 U1071 ( .A(n455), .Y(n429) );
-  CLKBUFX3 U1072 ( .A(n449), .Y(n446) );
-  CLKBUFX3 U1073 ( .A(n454), .Y(n431) );
-  CLKBUFX3 U1074 ( .A(n449), .Y(n447) );
-  CLKBUFX3 U1075 ( .A(n412), .Y(n404) );
-  CLKBUFX3 U1076 ( .A(n415), .Y(n395) );
-  CLKBUFX3 U1077 ( .A(n417), .Y(n388) );
-  CLKBUFX3 U1078 ( .A(n417), .Y(n387) );
-  CLKBUFX3 U1079 ( .A(n411), .Y(n405) );
-  CLKBUFX3 U1080 ( .A(n414), .Y(n397) );
-  CLKBUFX3 U1081 ( .A(n414), .Y(n396) );
-  CLKBUFX3 U1082 ( .A(n415), .Y(n394) );
-  CLKBUFX3 U1083 ( .A(n411), .Y(n407) );
-  CLKBUFX3 U1084 ( .A(n414), .Y(n398) );
-  CLKBUFX3 U1085 ( .A(n411), .Y(n406) );
-  CLKBUFX3 U1086 ( .A(n412), .Y(n403) );
-  CLKBUFX3 U1087 ( .A(n415), .Y(n393) );
-  CLKBUFX3 U1088 ( .A(n412), .Y(n402) );
-  CLKBUFX3 U1089 ( .A(n413), .Y(n400) );
-  CLKBUFX3 U1090 ( .A(n413), .Y(n399) );
-  CLKBUFX3 U1091 ( .A(n416), .Y(n392) );
-  CLKBUFX3 U1092 ( .A(n417), .Y(n389) );
-  CLKBUFX3 U1093 ( .A(n413), .Y(n401) );
-  CLKBUFX3 U1094 ( .A(n416), .Y(n391) );
-  CLKBUFX3 U1095 ( .A(n416), .Y(n390) );
-  CLKBUFX3 U1096 ( .A(n419), .Y(n408) );
-  CLKBUFX3 U1097 ( .A(n456), .Y(n426) );
-  CLKBUFX3 U1098 ( .A(n456), .Y(n425) );
-  CLKBUFX3 U1099 ( .A(n418), .Y(n386) );
-  CLKBUFX3 U1100 ( .A(n418), .Y(n385) );
-  CLKBUFX3 U1101 ( .A(n410), .Y(n409) );
-  CLKBUFX3 U1102 ( .A(n458), .Y(n454) );
-  CLKBUFX3 U1103 ( .A(n459), .Y(n452) );
-  CLKBUFX3 U1104 ( .A(n458), .Y(n453) );
-  CLKBUFX3 U1105 ( .A(n457), .Y(n455) );
-  CLKBUFX3 U1106 ( .A(n460), .Y(n449) );
-  CLKBUFX3 U1107 ( .A(n461), .Y(n448) );
-  CLKBUFX3 U1108 ( .A(n460), .Y(n450) );
-  CLKBUFX3 U1109 ( .A(n459), .Y(n451) );
-  CLKBUFX3 U1110 ( .A(n419), .Y(n417) );
-  CLKBUFX3 U1111 ( .A(n420), .Y(n415) );
-  CLKBUFX3 U1112 ( .A(n422), .Y(n411) );
-  CLKBUFX3 U1113 ( .A(n421), .Y(n414) );
-  CLKBUFX3 U1114 ( .A(n422), .Y(n412) );
-  CLKBUFX3 U1115 ( .A(n421), .Y(n413) );
-  CLKBUFX3 U1116 ( .A(n420), .Y(n416) );
-  CLKBUFX3 U1117 ( .A(n414), .Y(n410) );
-  CLKBUFX3 U1118 ( .A(n457), .Y(n456) );
-  CLKBUFX3 U1119 ( .A(n419), .Y(n418) );
-  CLKBUFX3 U1120 ( .A(n462), .Y(n459) );
-  CLKBUFX3 U1121 ( .A(n463), .Y(n458) );
-  CLKBUFX3 U1122 ( .A(n463), .Y(n457) );
-  CLKBUFX3 U1123 ( .A(n450), .Y(n461) );
-  CLKBUFX3 U1124 ( .A(n462), .Y(n460) );
-  CLKBUFX3 U1125 ( .A(n424), .Y(n420) );
-  CLKBUFX3 U1126 ( .A(n423), .Y(n422) );
-  CLKBUFX3 U1127 ( .A(n423), .Y(n421) );
-  CLKBUFX3 U1128 ( .A(n424), .Y(n419) );
-  CLKBUFX3 U1129 ( .A(n424), .Y(n423) );
-  CLKBUFX3 U1130 ( .A(n498), .Y(n424) );
-  CLKBUFX3 U1131 ( .A(n367), .Y(n462) );
+  CLKBUFX3 U1055 ( .A(n450), .Y(n443) );
+  CLKBUFX3 U1056 ( .A(n452), .Y(n437) );
+  CLKBUFX3 U1057 ( .A(n454), .Y(n430) );
+  CLKBUFX3 U1058 ( .A(n452), .Y(n438) );
+  CLKBUFX3 U1059 ( .A(n453), .Y(n433) );
+  CLKBUFX3 U1060 ( .A(n453), .Y(n434) );
+  CLKBUFX3 U1061 ( .A(n455), .Y(n427) );
+  CLKBUFX3 U1062 ( .A(n451), .Y(n441) );
+  CLKBUFX3 U1063 ( .A(n455), .Y(n428) );
+  CLKBUFX3 U1064 ( .A(n449), .Y(n445) );
+  CLKBUFX3 U1065 ( .A(n450), .Y(n442) );
+  CLKBUFX3 U1066 ( .A(n450), .Y(n444) );
+  CLKBUFX3 U1067 ( .A(n451), .Y(n440) );
+  CLKBUFX3 U1068 ( .A(n451), .Y(n439) );
+  CLKBUFX3 U1069 ( .A(n452), .Y(n436) );
+  CLKBUFX3 U1070 ( .A(n453), .Y(n435) );
+  CLKBUFX3 U1071 ( .A(n454), .Y(n432) );
+  CLKBUFX3 U1072 ( .A(n455), .Y(n429) );
+  CLKBUFX3 U1073 ( .A(n449), .Y(n446) );
+  CLKBUFX3 U1074 ( .A(n454), .Y(n431) );
+  CLKBUFX3 U1075 ( .A(n449), .Y(n447) );
+  CLKBUFX3 U1076 ( .A(n412), .Y(n404) );
+  CLKBUFX3 U1077 ( .A(n415), .Y(n395) );
+  CLKBUFX3 U1078 ( .A(n417), .Y(n388) );
+  CLKBUFX3 U1079 ( .A(n417), .Y(n387) );
+  CLKBUFX3 U1080 ( .A(n411), .Y(n405) );
+  CLKBUFX3 U1081 ( .A(n414), .Y(n397) );
+  CLKBUFX3 U1082 ( .A(n414), .Y(n396) );
+  CLKBUFX3 U1083 ( .A(n415), .Y(n394) );
+  CLKBUFX3 U1084 ( .A(n411), .Y(n407) );
+  CLKBUFX3 U1085 ( .A(n414), .Y(n398) );
+  CLKBUFX3 U1086 ( .A(n411), .Y(n406) );
+  CLKBUFX3 U1087 ( .A(n412), .Y(n403) );
+  CLKBUFX3 U1088 ( .A(n415), .Y(n393) );
+  CLKBUFX3 U1089 ( .A(n412), .Y(n402) );
+  CLKBUFX3 U1090 ( .A(n413), .Y(n400) );
+  CLKBUFX3 U1091 ( .A(n413), .Y(n399) );
+  CLKBUFX3 U1092 ( .A(n416), .Y(n392) );
+  CLKBUFX3 U1093 ( .A(n417), .Y(n389) );
+  CLKBUFX3 U1094 ( .A(n413), .Y(n401) );
+  CLKBUFX3 U1095 ( .A(n416), .Y(n391) );
+  CLKBUFX3 U1096 ( .A(n416), .Y(n390) );
+  CLKBUFX3 U1097 ( .A(n419), .Y(n408) );
+  CLKBUFX3 U1098 ( .A(n456), .Y(n426) );
+  CLKBUFX3 U1099 ( .A(n456), .Y(n425) );
+  CLKBUFX3 U1100 ( .A(n418), .Y(n386) );
+  CLKBUFX3 U1101 ( .A(n418), .Y(n385) );
+  CLKBUFX3 U1102 ( .A(n410), .Y(n409) );
+  CLKBUFX3 U1103 ( .A(n458), .Y(n454) );
+  CLKBUFX3 U1104 ( .A(n459), .Y(n452) );
+  CLKBUFX3 U1105 ( .A(n458), .Y(n453) );
+  CLKBUFX3 U1106 ( .A(n457), .Y(n455) );
+  CLKBUFX3 U1107 ( .A(n460), .Y(n449) );
+  CLKBUFX3 U1108 ( .A(n461), .Y(n448) );
+  CLKBUFX3 U1109 ( .A(n460), .Y(n450) );
+  CLKBUFX3 U1110 ( .A(n459), .Y(n451) );
+  CLKBUFX3 U1111 ( .A(n419), .Y(n417) );
+  CLKBUFX3 U1112 ( .A(n420), .Y(n415) );
+  CLKBUFX3 U1113 ( .A(n422), .Y(n411) );
+  CLKBUFX3 U1114 ( .A(n421), .Y(n414) );
+  CLKBUFX3 U1115 ( .A(n422), .Y(n412) );
+  CLKBUFX3 U1116 ( .A(n421), .Y(n413) );
+  CLKBUFX3 U1117 ( .A(n420), .Y(n416) );
+  CLKBUFX3 U1118 ( .A(n414), .Y(n410) );
+  CLKBUFX3 U1119 ( .A(n457), .Y(n456) );
+  CLKBUFX3 U1120 ( .A(n419), .Y(n418) );
+  CLKBUFX3 U1121 ( .A(n462), .Y(n459) );
+  CLKBUFX3 U1122 ( .A(n463), .Y(n458) );
+  CLKBUFX3 U1123 ( .A(n463), .Y(n457) );
+  CLKBUFX3 U1124 ( .A(n450), .Y(n461) );
+  CLKBUFX3 U1125 ( .A(n462), .Y(n460) );
+  CLKBUFX3 U1126 ( .A(n424), .Y(n420) );
+  CLKBUFX3 U1127 ( .A(n423), .Y(n422) );
+  CLKBUFX3 U1128 ( .A(n423), .Y(n421) );
+  CLKBUFX3 U1129 ( .A(n424), .Y(n419) );
+  CLKBUFX3 U1130 ( .A(n424), .Y(n423) );
+  CLKBUFX3 U1131 ( .A(n498), .Y(n424) );
   CLKBUFX3 U1132 ( .A(n367), .Y(n463) );
   NOR2X1 U1133 ( .A(n370), .B(n464), .Y(vsq_psum_gated[9]) );
   NOR2X1 U1134 ( .A(n369), .B(n465), .Y(vsq_psum_gated[8]) );

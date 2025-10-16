@@ -12,7 +12,7 @@ module top (
 
     // ppu - ram interface
     wire         ram_we;
-    wire [7:0]   ram_data;
+    wire [63:0]  ram_data;
     wire [12:0]  ram_addr;
 
 
@@ -51,17 +51,17 @@ module top (
     );
 
 
-    // // output ram
-    // ram #(
-    //     .VEC_WIDTH  ( 8 ),
-    //     .ARR_DEPTH  ( 8192 )
-    // ) u_ram (
-    //     .i_clk       ( clk ),
-    //     .i_rst_n     ( 1'b1 ),
-    //     .i_we        ( 1'b0 ),
-    //     .i_addr      ( ram_addr ),
-    //     .i_data      ( 256'd0 ),
-    //     .o_data      ( ram_data )
-    // );
+    // output ram
+    ram #(
+        .VEC_WIDTH  ( 64 ),     // INT4 x 16 entries
+        .ARR_DEPTH  ( 64 )      // 64 cols (full vector)
+    ) u_ram (
+        .i_clk       ( i_clk ),
+        .i_rst_n     ( 1'b1 ),
+        .i_we        ( 1'b0 ),
+        .i_addr      ( ram_addr ),
+        .i_data      ( 64'd0 ),
+        .o_data      ( ram_data )
+    );
 
 endmodule

@@ -1,11 +1,11 @@
 module ppu (
-    input          i_clk,
-    input          i_rst_n,
-    input          i_ppu_start,     // ppu start signal
-    input  [383:0] i_acc_data,      // accumulator data
-    output         o_ram_we,        // ram write enable
-    output [15:0]  o_ram_data,      // ram data
-    output [12:0]  o_ram_addr       // ram address
+    input              i_clk,
+    input              i_rst_n,
+    input              i_ppu_start,     // ppu start signal
+    input  [24*16-1:0] i_acc_data,      // accumulator data
+    output             o_ram_we,        // ram write enable
+    output [4*16-1:0]  o_ram_data,      // ram data
+    output [5:0]       o_ram_addr       // ram address
 );
 
     genvar gi;
@@ -17,36 +17,39 @@ module ppu (
 
 
     // state ctrl
-    reg         state;
-    reg  [3:0]  acc_cnt;
-    reg  [1:0]  tile_cnt;
+    reg              state;
+    reg  [3:0]       acc_cnt;
+    reg  [1:0]       tile_cnt;
 
     // scaling
-    reg  [3:0]   scale_addr;
-    wire [255:0] scale_data;
-    wire [639:0] scale_res;     // Q32.6 x 16 entries
+    reg  [3:0]       scale_addr;
+    wire [15:0]      scale_data;
+    wire [40*16-1:0] scale_res;         // Q30.10 x 16 entries
 
     // bias add
-    reg  [3:0]   bias_addr;
-    wire [15:0]  bias_data;
-    wire [639:0] bias_res;      // Q32.6 x 16 entries
+    reg  [3:0]       bias_addr;
+    wire [15:0]      bias_data;
+    wire [40*16-1:0] bias_res;          // Q30.10 x 16 entries
 
     // relu
-    wire [639:0] relu_res;      // Q32.6 x 16 entries
+    wire [40*16-1:0] relu_res;          // Q30.10 x 16 entries
 
     // vsq buffer
-    wire         vsq_buf_we;
-    wire [5:0]   vsq_buf_addr_wr;
+    wire             vsq_buf_we;
+    wire [5:0]       vsq_buf_addr_wr;
+    wire [5:0]       vsq_buf_addr_rd;
+    wire [40*16-1:0] vsq_buf_data_wr;
+    wire [40*16-1:0] vsq_buf_data_rd;   // no truncation
 
-    // ram interface (TODO: write to output ram)
-    reg          ram_we;
-    reg  [15:0]  ram_data;
-    reg  [12:0]  ram_addr;
+    // quantize
+    reg              quant_start;
+    wire             quant_valid;
+    wire [4*16-1:0]  quant_data;        // INT4 x 16 entries
 
-
-    assign o_ram_we   = ram_we;
-    assign o_ram_data = ram_data;
-    assign o_ram_addr = ram_addr;
+    // ram interface
+    wire             ram_we;
+    wire [4*16-1:0]  ram_data;
+    reg  [5:0]       ram_addr;
 
 
     //////////
@@ -93,7 +96,7 @@ module ppu (
                     // tile cnt
                     if (acc_cnt == 4'd15) begin
                         if (tile_cnt == 2'd3) begin
-                            // vector finish -> start quantization
+                            // vector finish
                             tile_cnt <= 2'd0;
                         end else begin
                             tile_cnt <= tile_cnt + 2'd1;
@@ -118,8 +121,8 @@ module ppu (
         .i_clk     ( i_clk ),
         .i_rst_n   ( i_rst_n ),
         .i_we      ( 1'b0 ),
-        .i_addr_wr ( 7'd0 ),
-        .i_data_wr ( 8'd0 ),
+        .i_addr_wr ( 4'd0 ),
+        .i_data_wr ( 256'd0 ),
         .i_addr_rd ( scale_addr ),
         .o_data_rd ( scale_data )
     );
@@ -144,8 +147,8 @@ module ppu (
         .i_clk     ( i_clk ),
         .i_rst_n   ( i_rst_n ),
         .i_we      ( 1'b0 ),
-        .i_addr_wr ( 7'd0 ),
-        .i_data_wr ( 8'd0 ),
+        .i_addr_wr ( 4'd0 ),
+        .i_data_wr ( 16'd0 ),
         .i_addr_rd ( bias_addr ),
         .o_data_rd ( bias_data )
     );
@@ -174,6 +177,7 @@ module ppu (
 
     assign vsq_buf_we      = (state == S_BUSY) ? 1'b1 : 1'b0;
     assign vsq_buf_addr_wr = acc_cnt + tile_cnt * 16;
+    assign vsq_buf_data_wr = relu_res;
 
     buffer #(
         .VEC_WIDTH ( 640 ),
@@ -183,9 +187,9 @@ module ppu (
         .i_rst_n   ( i_rst_n ),
         .i_we      ( vsq_buf_we ),
         .i_addr_wr ( vsq_buf_addr_wr ),
-        .i_data_wr ( relu_res ),
-        .i_addr_rd (  ),    // from quantize.v
-        .o_data_rd (  )     // to quantize.v
+        .i_data_wr ( vsq_buf_data_wr ),
+        .i_addr_rd ( vsq_buf_addr_rd ),
+        .o_data_rd ( vsq_buf_data_rd )
     );
 
 
@@ -193,9 +197,34 @@ module ppu (
     // quantize //
     //////////////
 
-    // TODO: int4 quantization after vsq buf filled
-    // keep running max for 16 lanes
-    // start -> 16 reciprocal units -> read out vsq buf and quantize
+    // quant start signal
+    always @(posedge i_clk or negedge i_rst_n) begin
+        if (!i_rst_n) begin
+            quant_start <= 1'b0;
+        end else begin
+            if (tile_cnt == 2'd3 && acc_cnt == (4'd15 - 4'd1)) begin
+                // pull high one cycle earlier
+                quant_start <= 1'b1;
+            end else begin
+                quant_start <= 1'b0;
+            end
+        end
+    end
 
+    quantize quant (
+        .i_clk      ( i_clk ),
+        .i_rst_n    ( i_rst_n ),
+        .i_start    ( quant_start ),
+        .i_data     ( relu_res ),
+
+        // to vsq buffer
+        .i_buf_data ( vsq_buf_data_rd ),
+        .o_buf_addr ( vsq_buf_addr_rd ),
+
+        // to output ram
+        .o_ram_we   ( o_ram_we ),
+        .o_ram_data ( o_ram_data ),
+        .o_ram_addr ( o_ram_addr )
+    );
 
 endmodule
