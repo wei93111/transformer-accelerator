@@ -1,72 +1,67 @@
-module top (
-    input        i_clk,
-    input        i_rst_n,
-    input  [1:0] i_mode,
-    input        i_start,
-    output       o_done
-);
+// module top (
+//     input        i_clk,
+//     input        i_rst_n,
+//     input  [1:0] i_mode,
+//     input        i_start,
+//     output       o_done
+// );
 
-    // ppu - mm_ctrl interface
-    wire         ppu_start;
-    wire [383:0] acc_data;
+//     // ppu - mm_ctrl interface
+//     wire         ppu_start;
+//     wire [383:0] acc_data;
 
-    // ppu - ram interface
-    wire         ram_we;
-    wire [63:0]  ram_data;
-    wire [12:0]  ram_addr;
-
-
-    // mm_ctrl
-    mm_ctrl u_mm_ctrl (
-        .i_clk       ( i_clk ),
-        .i_rst_n     ( i_rst_n ),
-
-        // from tb
-        .i_mode      ( i_mode ),
-        .i_start     ( i_start ),
-
-        // to tb
-        .o_tile_done ( ),
-        .o_mtrx_done ( o_done ),
-
-        // to ppu
-        .o_ppu_start ( ppu_start ),
-        .o_acc_data  ( acc_data )
-    );
+//     // ppu - ram interface
+//     wire         ram_we;
+//     wire [63:0]  ram_data;
+//     wire [12:0]  ram_addr;
 
 
-    // ppu
-    ppu u_ppu (
-        .i_clk         ( i_clk ),
-        .i_rst_n       ( i_rst_n ),
+//     // mm_ctrl
+//     mm_ctrl u_mm_ctrl (
+//         .i_clk       ( i_clk ),
+//         .i_rst_n     ( i_rst_n ),
 
-        // from mm_ctrl
-        .i_ppu_start   ( ppu_start ),
-        .i_acc_data    ( acc_data ),
+//         // from tb
+//         .i_mode      ( i_mode ),
+//         .i_start     ( i_start ),
 
-        // to output ram
-        .o_ram_we      ( ram_we ),
-        .o_ram_data    ( ram_data ),
-        .o_ram_addr    ( ram_addr ),
+//         // to tb
+//         .o_tile_done ( ),
+//         .o_mtrx_done ( o_done ),
 
-        // to sf output ram
-        .o_sf_ram_we   ( sf_ram_we ),
-        .o_sf_ram_data ( sf_ram_data ),
-        .o_sf_ram_addr ( sf_ram_addr )
-    );
+//         // to ppu
+//         .o_ppu_start ( ppu_start ),
+//         .o_acc_data  ( acc_data )
+//     );
 
 
-    // output ram
-    ram #(
-        .VEC_WIDTH ( 4*16 ),   // INT4 x 16 entries
-        .ARR_DEPTH ( 64 )      // 64 cols (full vector)
-    ) u_ram (
-        .i_clk   ( i_clk ),
-        .i_rst_n ( 1'b1 ),
-        .i_we    ( ram_we ),
-        .i_addr  ( ram_addr ),
-        .i_data  ( ram_data ),
-        .o_data  ( 64'd0 )
-    );
+//     // ppu
+//     ppu u_ppu (
+//         .i_clk         ( i_clk ),
+//         .i_rst_n       ( i_rst_n ),
 
-endmodule
+//         // from mm_ctrl
+//         .i_ppu_start   ( ppu_start ),
+//         .i_acc_data    ( acc_data ),
+
+//         // to output ram
+//         .o_ram_we      ( ram_we ),
+//         .o_ram_data    ( ram_data ),
+//         .o_ram_addr    ( ram_addr )
+//     );
+
+
+//     // output ram
+//     ram #(
+//         .VEC_WIDTH ( 4*16 ),   // INT4 x 16 entries
+//         .ARR_DEPTH ( 64 )      // 64 cols (full vector)
+//     ) u_ram (
+//         .i_clk   ( i_clk ),
+//         .i_rst_n ( 1'b1 ),
+//         .i_we    ( ram_we ),
+//         .i_addr  ( ram_addr ),
+//         .i_data  ( ram_data ),
+//         .o_data  ( 64'd0 )
+//     );
+
+// endmodule

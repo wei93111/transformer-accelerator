@@ -4,24 +4,24 @@
 
 
 `ifdef pat0
-    `define IN_A "./tb/pat/p0_ina.dat"
-    `define IN_B "./tb/pat/p0_inb.dat"
-    `define OUT  "./tb/pat/p0_out.dat"
+    `define IN_A "./tb/pat_mm/p0_ina.dat"
+    `define IN_B "./tb/pat_mm/p0_inb.dat"
+    `define OUT  "./tb/pat_mm/p0_out.dat"
     `define MODE 1  // INT4
 `elsif pat1
-    `define IN_A "./tb/pat/p1_ina.dat"
-    `define IN_B "./tb/pat/p1_inb.dat"
-    `define OUT  "./tb/pat/p1_out.dat"
+    `define IN_A "./tb/pat_mm/p1_ina.dat"
+    `define IN_B "./tb/pat_mm/p1_inb.dat"
+    `define OUT  "./tb/pat_mm/p1_out.dat"
     `define MODE 1  // INT4
 `elsif pat2
-    `define IN_A "./tb/pat/p2_ina.dat"
-    `define IN_B "./tb/pat/p2_inb.dat"
-    `define OUT  "./tb/pat/p2_out.dat"
+    `define IN_A "./tb/pat_mm/p2_ina.dat"
+    `define IN_B "./tb/pat_mm/p2_inb.dat"
+    `define OUT  "./tb/pat_mm/p2_out.dat"
     `define MODE 1  // INT4
 `else
-    `define IN_A "./tb/pat/p0_ina.dat"
-    `define IN_B "./tb/pat/p0_inb.dat"
-    `define OUT  "./tb/pat/p0_out.dat"
+    `define IN_A "./tb/pat_mm/p0_ina.dat"
+    `define IN_B "./tb/pat_mm/p0_inb.dat"
+    `define OUT  "./tb/pat_mm/p0_out.dat"
     `define MODE 1
 `endif
 

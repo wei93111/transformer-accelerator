@@ -2,13 +2,17 @@
 +incdir+rtl
 -timescale=1ns/10ps
 
-// rtl files
-rtl/vec_product.v
-rtl/mac.v
+// mm_ctrl
+// tb/tb_mm.sv
+// rtl/mm_ctrl.v
+// rtl/ram.v
+// rtl/buffer.v
+// rtl/mac.v
+// rtl/vec_product.v
+
+// ppu
+tb/tb_ppu.sv
+rtl/ppu.v
 rtl/ram.v
 rtl/buffer.v
-rtl/mm_ctrl.v
-rtl/ppu.v
-
-// testbench
-tb/tb_mm.sv
+rtl/quantize.v

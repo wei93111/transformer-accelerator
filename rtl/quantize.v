@@ -11,7 +11,11 @@ module quantize (
     // output ram interface
     output             o_ram_we,
     output [4*16-1:0]  o_ram_data,
-    output [5:0]       o_ram_addr
+    output [5:0]       o_ram_addr,
+
+    // output sf interface
+    output             o_sf_valid,
+    output [40*16-1:0] o_sf_data
 );
 
     integer i;
@@ -19,57 +23,52 @@ module quantize (
 
 
     // states
-    localparam S_RUNMAX = 2'd0;         // idle - keep running maxes
-    localparam S_SFCALC = 2'd1;         // calculate scale factor
-    localparam S_QUANT  = 2'd2;         // quantize
+    localparam S_RUNMAX = 1'b0;     // idle - keep running maxes
+    localparam S_QUANT  = 1'b1;     // quantize
+
+    // constants
+    localparam ONE_SEVENTH = 8'b00100100;  // Q0.8
 
 
-    // state ctrl
-    reg  [1:0]       state;
+    // ctrl
+    reg              state;
+    reg  [5:0]       quant_cnt;
 
-    // registers
-    reg  [40-1:0]    run_max [0:16-1];  // running max registers
-    reg  [40-1:0]    sf      [0:16-1];  // scale factor registers
+    // runmax
+    reg  [40-1:0]    abs_data  [0:16-1];
+    reg  [40-1:0]    run_max_w [0:16-1];
+    reg  [40-1:0]    run_max_r [0:16-1];    // Q30.10
 
-    // vsq buffer addr
-    reg  [5:0]       buf_addr;
-
-    // output ram data
-    wire [4*16-1:0]  ram_data;
-    reg  [5:0]       ram_addr;
-
-
-    assign o_buf_addr = buf_addr;
-    assign o_ram_we   = (state == S_QUANT);
-    assign o_ram_data = ram_data;
-    assign o_ram_addr = ram_addr;
-
+    // quantize
+    wire [40*16-1:0] sf;                    // Q30.10 x 16 entries
+    wire [4*16-1:0]  data_out;              // INT4 x 16 entries
 
 
     //////////
     // ctrl //
     //////////
 
-    // state
     always @(posedge i_clk or negedge i_rst_n) begin
         if (!i_rst_n) begin
-            state <= S_RUNMAX;
+            state     <= S_RUNMAX;
+            quant_cnt <= 6'd0;
         end else begin
             case (state)
                 S_RUNMAX: begin
                     // vsq buf filled
                     if (i_start) begin
-                        state <= S_SFCALC;
+                        state     <= S_QUANT;
+                        quant_cnt <= 6'd0;
                     end
-                end
-                S_SFCALC: begin
-                    // 1 cycle
-                    state <= S_QUANT;
                 end
                 S_QUANT: begin
                     // quantize done
-                    if (buf_addr == 6'd63) begin
-                        state <= S_RUNMAX;
+                    if (quant_cnt == 6'd63) begin
+                        state     <= S_RUNMAX;
+                        quant_cnt <= 6'd0;
+                    end else begin
+                        quant_cnt <= quant_cnt + 6'd1;
+                        state     <= S_QUANT;
                     end
                 end
             endcase
@@ -77,109 +76,51 @@ module quantize (
     end
 
 
-    /////////////////
-    // running max //
-    /////////////////
+    ////////////
+    // runmax //
+    ////////////
 
-    generate
-        for (gi = 0; gi < 16; gi = gi + 1) begin: RUNMAX
-            wire [39:0] abs_data = (i_data[gi*40 + 39]) ? (~i_data[gi*40 +: 40] + 1'b1) : i_data[gi*40 +: 40];
+    always @(*) begin
 
-            // running max registers
-            always @(posedge i_clk or negedge i_rst_n) begin
-                if (!i_rst_n) begin
-                    run_max[gi] <= 40'd0;
-                end else begin
-                    case (state)
-                        S_RUNMAX: begin
-                            if (abs_data > run_max[gi]) begin
-                                run_max[gi] <= abs_data;
-                            end
-                        end
-                        default: begin
-                        end
-                    endcase
+        for (i = 0; i < 16; i = i + 1) abs_data[i]  = 0;
+        for (i = 0; i < 16; i = i + 1) run_max_w[i] = run_max_r[i];
+
+        case (state)
+            S_RUNMAX: begin
+                for (i = 0; i < 16; i = i + 1) abs_data[i]  = (i_data[i*40 + 39]) ? (~i_data[i*40 +: 40] + 1'b1) : i_data[i*40 +: 40];
+                for (i = 0; i < 16; i = i + 1) run_max_w[i] = (abs_data[i] > run_max_r[i]) ? abs_data[i] : run_max_r[i];
+            end
+            S_QUANT: begin
+                if (quant_cnt == 6'd63) begin
+                    for (i = 0; i < 16; i = i + 1) run_max_w[i] = 0;
                 end
             end
+        endcase
+    end
+
+    always @(posedge i_clk or negedge i_rst_n) begin
+        if (!i_rst_n) begin
+            for (i = 0; i < 16; i = i + 1) run_max_r[i] <= 40'd0;
+        end else begin
+            for (i = 0; i < 16; i = i + 1) run_max_r[i] <= run_max_w[i];
         end
-    endgenerate
-
-
-    /////////////
-    // sf calc //
-    /////////////
-
-    generate
-        for (gi = 0; gi < 16; gi = gi + 1) begin: SFCALC
-            always @(posedge i_clk or negedge i_rst_n) begin
-                if (!i_rst_n) begin
-                    sf[gi] <= 40'd0;
-                end else begin
-                    case (state)
-                        S_SFCALC: begin
-                            // TODO: use reciprocal unit
-                            sf[gi] <= 40'd7 / run_max[gi];
-                        end
-                        default: begin
-                        end
-                    endcase
-                end
-            end
-        end
-    endgenerate
+    end
 
 
     //////////////
     // quantize //
     //////////////
 
-    // vsq buffer addr
-    always @(posedge i_clk or negedge i_rst_n) begin
-        if (!i_rst_n) begin
-            buf_addr <= 6'd0;
-        end else begin
-            case (state)
-                S_QUANT: begin
-                    if (buf_addr == 6'd63) begin
-                        buf_addr <= 6'd0;
-                    end else begin
-                        buf_addr <= buf_addr + 6'd1;
-                    end
-                end
-                default: begin
-                end
-            endcase
-        end
-    end
+    assign o_sf_data  = sf;
+    assign o_sf_valid = (state == S_QUANT);
+
+    assign o_buf_addr = quant_cnt;
+    assign o_ram_addr = quant_cnt;
+    assign o_ram_data = data_out;
+    assign o_ram_we   = (state == S_QUANT);
 
     // quantize
-    generate
-        for (gi = 0; gi < 16; gi = gi + 1) begin: QUANT
-            // truncate to INT4
-            // TODO: shifting
-            assign ram_data[gi*4 +: 4] = $signed(i_buf_data[gi*40 +: 40]) * $signed(sf[gi]);
-        end
-    endgenerate
-
-    // output ram addr
-    always @(posedge i_clk or negedge i_rst_n) begin
-        if (!i_rst_n) begin
-            ram_addr <= 6'd0;
-        end else begin
-            case (state)
-                S_QUANT: begin
-                    if (ram_addr == 6'd63) begin
-                        ram_addr <= 6'd0;
-                    end else begin
-                        ram_addr <= ram_addr + 6'd1;
-                    end
-                end
-                default: begin
-                end
-            endcase
-        end
-    end
-
-    // TODO: write out the SF values to the output ram (after quantized output data is written)
+    for (gi = 0; gi < 16; gi = gi + 1) assign sf[gi*40 +: 40] = (run_max_r[gi] * ONE_SEVENTH) >> 8;   // Q30.18 >> Q30.10
+    for (gi = 0; gi < 16; gi = gi + 1) assign data_out[gi*4 +: 4] = $signed(i_buf_data[gi*40 +: 40] >>> 10) / $signed(sf[gi*40 +: 40] >>> 10);
 
 endmodule

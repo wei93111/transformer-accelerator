@@ -43,6 +43,9 @@ waves/
 simvision/
 xcelium.d/
 xrun.history
+nWaveLog/
+novas.conf
+BSSLib.lib++/
 
 # Synopsys VCS
 simv

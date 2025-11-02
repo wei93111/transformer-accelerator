@@ -6,7 +6,10 @@ module ppu (
 
     output             o_ram_we,        // ram write enable
     output [4*16-1:0]  o_ram_data,      // ram data
-    output [5:0]       o_ram_addr       // ram address
+    output [5:0]       o_ram_addr,      // ram address
+
+    output             o_sf_valid,
+    output [40*16-1:0] o_sf_data
 );
 
     genvar gi;
@@ -24,7 +27,7 @@ module ppu (
 
     // scaling
     reg  [3:0]       scale_addr;
-    wire [15:0]      scale_data;
+    wire [16*16-1:0] scale_data;
     wire [40*16-1:0] scale_res;         // Q30.10 x 16 entries
 
     // bias add
@@ -102,10 +105,11 @@ module ppu (
     end
 
 
-    /////////////
-    // scaling //
-    /////////////
+    //////////////
+    // datapath //
+    //////////////
 
+    // scaling
     assign scale_addr = acc_cnt;
 
     buffer #(
@@ -113,7 +117,7 @@ module ppu (
         .ARR_DEPTH ( 16 )
     ) scale_buf (
         .i_clk     ( i_clk ),
-        .i_rst_n   ( i_rst_n ),
+        .i_rst_n   ( 1'b1 ),
         .i_we      ( 1'b0 ),
         .i_addr_wr ( 4'd0 ),
         .i_data_wr ( 256'd0 ),
@@ -121,17 +125,10 @@ module ppu (
         .o_data_rd ( scale_data )
     );
 
-    generate
-        for (gi = 0; gi < 16; gi = gi + 1) begin: SCALE_MULT
-            assign scale_res[gi*40 +: 40] = $signed(scale_data[gi*16 +: 16]) * $signed(i_acc_data[gi*24 +: 24]);
-        end
-    endgenerate
+    for (gi = 0; gi < 16; gi = gi + 1) assign scale_res[gi*40 +: 40] = $signed(scale_data[gi*16 +: 16]) * $signed(i_acc_data[gi*24 +: 24]);
 
 
-    //////////////
-    // bias add //
-    //////////////
-
+    // bias add
     assign bias_addr = acc_cnt;
 
     buffer #(
@@ -139,7 +136,7 @@ module ppu (
         .ARR_DEPTH ( 16 )
     ) bias_buf (
         .i_clk     ( i_clk ),
-        .i_rst_n   ( i_rst_n ),
+        .i_rst_n   ( 1'b1 ),
         .i_we      ( 1'b0 ),
         .i_addr_wr ( 4'd0 ),
         .i_data_wr ( 16'd0 ),
@@ -147,22 +144,11 @@ module ppu (
         .o_data_rd ( bias_data )
     );
 
-    generate
-        for (gi = 0; gi < 16; gi = gi + 1) begin: BIAS_ADD
-            assign bias_res[gi*40 +: 40] = $signed(bias_data) + $signed(scale_res[gi*40 +: 40]);
-        end
-    endgenerate
+    for (gi = 0; gi < 16; gi = gi + 1) assign bias_res[gi*40 +: 40] = $signed(bias_data) + $signed(scale_res[gi*40 +: 40]);
 
 
-    //////////
-    // relu //
-    //////////
-
-    generate
-        for (gi = 0; gi < 16; gi = gi + 1) begin: RELU
-            assign relu_res[gi*40 +: 40] = ($signed(bias_res[gi*40 +: 40]) > 40'sd0) ? bias_res[gi*40 +: 40] : 40'd0;
-        end
-    endgenerate
+    // relu
+    for (gi = 0; gi < 16; gi = gi + 1) assign relu_res[gi*40 +: 40] = ($signed(bias_res[gi*40 +: 40]) > 40'sd0) ? bias_res[gi*40 +: 40] : 40'd0;
 
 
     ////////////////
@@ -216,7 +202,11 @@ module ppu (
         // to output ram
         .o_ram_we   ( o_ram_we ),
         .o_ram_data ( o_ram_data ),
-        .o_ram_addr ( o_ram_addr )
+        .o_ram_addr ( o_ram_addr ),
+
+        // output sf
+        .o_sf_valid ( o_sf_valid ),
+        .o_sf_data  ( o_sf_data )
     );
 
 endmodule
