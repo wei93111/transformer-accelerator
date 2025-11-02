@@ -5,6 +5,8 @@
 
 `ifdef pat0
     `define IN "./tb/pat_ppu/p0_in.dat"
+`elsif pat1
+    `define IN "./tb/pat_ppu/p1_in.dat"
 `else
     `define IN "./tb/pat_ppu/p0_in.dat"
 `endif
@@ -12,7 +14,7 @@
 
 module tb_ppu;
 
-    integer i;
+    integer i, j;
     integer errors;
     integer data_idx;
 
@@ -128,16 +130,24 @@ module tb_ppu;
     initial begin
         // output sf results
         wait (sf_valid === 1'b1);
+        $display("sf results:");
         for (i = 0; i < 16; i = i + 1) begin
             $display("sf[%d] = %b", i, sf_data[i*40 +: 40]);
         end
 
+        $display("");
+        $display("ram results:");
+
         // output ram results
-        #(`CYCLE * 64.0);
-        for (i = 0; i < 16; i = i + 1) begin
-            // output first column
-            $display("ram[0][%d] = %h", i, u_ram.mem[0][i*4 +: 4]);
+        #(`CYCLE * 100.0);
+        for (j = 0; j < 16; j = j + 1) begin
+            for (i = 0; i < 64; i = i + 1) begin
+                $write("%b ", u_ram.mem[i][j*4 +: 4]);
+            end
+            $write("\n");
         end
+
+        $finish;
     end
 
 endmodule
