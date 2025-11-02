@@ -26,12 +26,12 @@ module ppu (
     reg  [1:0]       tile_cnt;
 
     // scaling
-    reg  [3:0]       scale_addr;
+    wire [3:0]       scale_addr;
     wire [16*16-1:0] scale_data;
     wire [40*16-1:0] scale_res;         // Q30.10 x 16 entries
 
     // bias add
-    reg  [3:0]       bias_addr;
+    wire [3:0]       bias_addr;
     wire [15:0]      bias_data;
     wire [40*16-1:0] bias_res;          // Q30.10 x 16 entries
 
@@ -125,7 +125,11 @@ module ppu (
         .o_data_rd ( scale_data )
     );
 
-    for (gi = 0; gi < 16; gi = gi + 1) assign scale_res[gi*40 +: 40] = $signed(scale_data[gi*16 +: 16]) * $signed(i_acc_data[gi*24 +: 24]);
+    generate
+        for (gi = 0; gi < 16; gi = gi + 1) begin: SCALE
+            assign scale_res[gi*40 +: 40] = $signed(scale_data[gi*16 +: 16]) * $signed(i_acc_data[gi*24 +: 24]);
+        end
+    endgenerate
 
 
     // bias add
@@ -144,12 +148,19 @@ module ppu (
         .o_data_rd ( bias_data )
     );
 
-    for (gi = 0; gi < 16; gi = gi + 1) assign bias_res[gi*40 +: 40] = $signed(bias_data) + $signed(scale_res[gi*40 +: 40]);
+    generate
+        for (gi = 0; gi < 16; gi = gi + 1) begin: BIAS_ADD
+            assign bias_res[gi*40 +: 40] = $signed(bias_data) + $signed(scale_res[gi*40 +: 40]);
+        end
+    endgenerate
 
 
     // relu
-    for (gi = 0; gi < 16; gi = gi + 1) assign relu_res[gi*40 +: 40] = ($signed(bias_res[gi*40 +: 40]) > 40'sd0) ? bias_res[gi*40 +: 40] : 40'd0;
-
+    generate
+        for (gi = 0; gi < 16; gi = gi + 1) begin: RELU
+            assign relu_res[gi*40 +: 40] = ($signed(bias_res[gi*40 +: 40]) > 40'sd0) ? bias_res[gi*40 +: 40] : 40'd0;
+        end
+    endgenerate
 
     ////////////////
     // vsq buffer //

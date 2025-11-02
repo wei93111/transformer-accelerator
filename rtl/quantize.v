@@ -120,7 +120,11 @@ module quantize (
     assign o_ram_we   = (state == S_QUANT);
 
     // quantize
-    for (gi = 0; gi < 16; gi = gi + 1) assign sf[gi*40 +: 40] = (run_max_r[gi] * ONE_SEVENTH) >> 8;   // Q30.18 >> Q30.10
-    for (gi = 0; gi < 16; gi = gi + 1) assign data_out[gi*4 +: 4] = $signed(i_buf_data[gi*40 +: 40] >>> 10) / $signed(sf[gi*40 +: 40] >>> 10);
+    generate
+        for (gi = 0; gi < 16; gi = gi + 1) begin: QUANTIZE
+            assign sf[gi*40 +: 40] = (run_max_r[gi] * ONE_SEVENTH) >> 8;   // Q30.18 >> Q30.10
+            assign data_out[gi*4 +: 4] = $signed(i_buf_data[gi*40 +: 40] >>> 10) / $signed(sf[gi*40 +: 40] >>> 10);
+        end
+    endgenerate
 
 endmodule
