@@ -1,0 +1,18 @@
+# simulation / spyglass
+rm -rf *.history *.log *.fsdb
+rm -rf simv* novas*
+rm -rf csrc ucli.key vc_hdrs.h BSSLib.lib++
+rm -rf nWaveLog verdiLog
+rm -rf spyglass-1
+rm -rf rtl/spyglass-1
+
+# synthesis
+rm -rf syn/*.log
+rm -rf syn/*.area
+rm -rf syn/*.power
+rm -rf syn/*.timing
+rm -rf syn/*.syn
+rm -rf syn/*.svf
+rm -rf syn/*.pvl
+rm -rf syn/*.mr
+rm -rf syn/alib-52

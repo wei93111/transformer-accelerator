@@ -115,7 +115,6 @@ verdiLog/
 cov_work/
 
 # Lint/Static analysis outputs
-lint/
 spyglass/
 spyglass-1/
 *.rpt.html
@@ -136,7 +135,3 @@ utils/
 
 # Reference papers
 paper/
-
-# Script files
-01_RUN
-99_CLEAN

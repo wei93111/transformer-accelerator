@@ -1,0 +1,3 @@
+cd rtl
+sg_shell -tcl ../lint/lint.tcl
+cd ..

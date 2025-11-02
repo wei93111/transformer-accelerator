@@ -3,6 +3,7 @@ module ppu (
     input              i_rst_n,
     input              i_ppu_start,     // ppu start signal
     input  [24*16-1:0] i_acc_data,      // accumulator data
+
     output             o_ram_we,        // ram write enable
     output [4*16-1:0]  o_ram_data,      // ram data
     output [5:0]       o_ram_addr       // ram address
@@ -41,15 +42,8 @@ module ppu (
     wire [40*16-1:0] vsq_buf_data_wr;
     wire [40*16-1:0] vsq_buf_data_rd;   // no truncation
 
-    // quantize
+    // quantize ctrl
     reg              quant_start;
-    wire             quant_valid;
-    wire [4*16-1:0]  quant_data;        // INT4 x 16 entries
-
-    // ram interface
-    wire             ram_we;
-    wire [4*16-1:0]  ram_data;
-    reg  [5:0]       ram_addr;
 
 
     //////////
@@ -115,7 +109,7 @@ module ppu (
     assign scale_addr = acc_cnt;
 
     buffer #(
-        .VEC_WIDTH ( 256 ),     // Q6.10 x 16 entries
+        .VEC_WIDTH ( 16*16 ),   // Q6.10 x 16 entries
         .ARR_DEPTH ( 16 )
     ) scale_buf (
         .i_clk     ( i_clk ),
@@ -180,7 +174,7 @@ module ppu (
     assign vsq_buf_data_wr = relu_res;
 
     buffer #(
-        .VEC_WIDTH ( 640 ),
+        .VEC_WIDTH ( 40*16 ),
         .ARR_DEPTH ( 64 )
     ) vsq_buf (
         .i_clk     ( i_clk ),
@@ -201,13 +195,11 @@ module ppu (
     always @(posedge i_clk or negedge i_rst_n) begin
         if (!i_rst_n) begin
             quant_start <= 1'b0;
+        end else if (tile_cnt == 2'd3 && acc_cnt == (4'd15 - 4'd1)) begin
+            // pull high one cycle earlier
+            quant_start <= 1'b1;
         end else begin
-            if (tile_cnt == 2'd3 && acc_cnt == (4'd15 - 4'd1)) begin
-                // pull high one cycle earlier
-                quant_start <= 1'b1;
-            end else begin
-                quant_start <= 1'b0;
-            end
+            quant_start <= 1'b0;
         end
     end
 

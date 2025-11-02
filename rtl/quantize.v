@@ -1,41 +1,42 @@
 module quantize (
-    input          i_clk,
-    input          i_rst_n,
-    input          i_start,     // start signal
-    input  [639:0] i_data,      // data after relu
+    input              i_clk,
+    input              i_rst_n,
+    input              i_start,     // start signal
+    input  [40*16-1:0] i_data,      // data after relu
 
     // vsq buffer interface
-    input  [639:0] i_buf_data,  // data from vsq buffer
-    output [5:0]   o_buf_addr,  // addr to vsq buffer
+    input  [40*16-1:0] i_buf_data,
+    output [5:0]       o_buf_addr,
 
     // output ram interface
-    output         o_ram_we,    // quantized data valid signal
-    output [63:0]  o_ram_data,  // quantized data (INT4)
-    output [5:0]   o_ram_addr   // quantized data address
+    output             o_ram_we,
+    output [4*16-1:0]  o_ram_data,
+    output [5:0]       o_ram_addr
 );
 
+    integer i;
     genvar gi;
 
 
     // states
-    localparam S_RUNMAX = 2'd0;     // idle - keep running maxes
-    localparam S_SFCALC = 2'd1;     // calculate scale factor
-    localparam S_QUANT  = 2'd2;     // quantize
+    localparam S_RUNMAX = 2'd0;         // idle - keep running maxes
+    localparam S_SFCALC = 2'd1;         // calculate scale factor
+    localparam S_QUANT  = 2'd2;         // quantize
 
 
     // state ctrl
-    reg  [1:0]      state;
+    reg  [1:0]       state;
 
     // registers
-    reg  [40-1:0]   run_max [15:0];     // running max registers
-    reg  [40-1:0]   sf      [15:0];     // scale factor registers
+    reg  [40-1:0]    run_max [0:16-1];  // running max registers
+    reg  [40-1:0]    sf      [0:16-1];  // scale factor registers
 
     // vsq buffer addr
-    reg  [5:0]      buf_addr;
+    reg  [5:0]       buf_addr;
 
     // output ram data
-    wire [4*16-1:0] ram_data;
-    reg  [5:0]      ram_addr;
+    wire [4*16-1:0]  ram_data;
+    reg  [5:0]       ram_addr;
 
 
     assign o_buf_addr = buf_addr;
@@ -179,11 +180,6 @@ module quantize (
         end
     end
 
-
-    //////////////
-    // sf quant //
-    //////////////
-
-    // TODO: quantize sf to INT8 and write to ram
+    // TODO: write out the SF values to the output ram (after quantized output data is written)
 
 endmodule

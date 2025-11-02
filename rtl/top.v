@@ -37,31 +37,36 @@ module top (
 
     // ppu
     ppu u_ppu (
-        .i_clk       ( i_clk ),
-        .i_rst_n     ( i_rst_n ),
+        .i_clk         ( i_clk ),
+        .i_rst_n       ( i_rst_n ),
 
         // from mm_ctrl
-        .i_ppu_start ( ppu_start ),
-        .i_acc_data  ( acc_data ),
+        .i_ppu_start   ( ppu_start ),
+        .i_acc_data    ( acc_data ),
 
         // to output ram
-        .o_ram_we    ( ram_we ),
-        .o_ram_data  ( ram_data ),
-        .o_ram_addr  ( ram_addr )
+        .o_ram_we      ( ram_we ),
+        .o_ram_data    ( ram_data ),
+        .o_ram_addr    ( ram_addr ),
+
+        // to sf output ram
+        .o_sf_ram_we   ( sf_ram_we ),
+        .o_sf_ram_data ( sf_ram_data ),
+        .o_sf_ram_addr ( sf_ram_addr )
     );
 
 
     // output ram
     ram #(
-        .VEC_WIDTH  ( 64 ),     // INT4 x 16 entries
-        .ARR_DEPTH  ( 64 )      // 64 cols (full vector)
+        .VEC_WIDTH ( 4*16 ),   // INT4 x 16 entries
+        .ARR_DEPTH ( 64 )      // 64 cols (full vector)
     ) u_ram (
-        .i_clk       ( i_clk ),
-        .i_rst_n     ( 1'b1 ),
-        .i_we        ( 1'b0 ),
-        .i_addr      ( ram_addr ),
-        .i_data      ( 64'd0 ),
-        .o_data      ( ram_data )
+        .i_clk   ( i_clk ),
+        .i_rst_n ( 1'b1 ),
+        .i_we    ( ram_we ),
+        .i_addr  ( ram_addr ),
+        .i_data  ( ram_data ),
+        .o_data  ( 64'd0 )
     );
 
 endmodule
