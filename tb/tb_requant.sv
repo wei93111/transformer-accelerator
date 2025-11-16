@@ -4,40 +4,40 @@
 
 
 `ifdef pat0
-    `define IN "./tb/pat_ppu/p0_in.dat"
+    `define IN "./tb/pat_requant/p0_in.dat"
 `elsif pat1
-    `define IN "./tb/pat_ppu/p1_in.dat"
+    `define IN "./tb/pat_requant/p1_in.dat"
 `else
-    `define IN "./tb/pat_ppu/p0_in.dat"
+    `define IN "./tb/pat_requant/p0_in.dat"
 `endif
 
 
-module tb_ppu;
+module tb_requant;
 
     integer i, j;
-    integer errors;
     integer data_idx;
 
 
     logic clk;
     logic rst_n;
 
-    // interface
-    logic             start;
-    logic [24*16-1:0] acc_data;
+    // ppu input
+    logic                 start;
+    logic [24 * 16 - 1:0] acc_data;
 
-    logic             ram_we;
-    logic [4*16-1:0]  ram_data;
-    logic [5:0]       ram_addr;
+    // ppu output
+    logic                 ram_we;
+    logic [4  * 16 - 1:0] ram_data;
+    logic [5          :0] ram_addr;
 
-    logic             sf_valid;
-    logic [40*16-1:0] sf_data;
+    logic                 sf_valid;
+    logic [40 * 16 - 1:0] sf_data;
 
-    // data
-    logic [24*16-1:0] vector_in [0:64-1];
+    // data storage
+    logic [24 * 16 - 1:0] vector_in [0:64-1];
 
 
-    // clk gen (time exceed handled here)
+    // clk gen
     clk_gen u_clk_gen(
         .clk   ( clk ),
         .rst_n ( rst_n )
@@ -46,23 +46,29 @@ module tb_ppu;
 
     // ppu
     ppu u_ppu (
-        .i_clk       ( clk ),
-        .i_rst_n     ( rst_n ),
-        .i_ppu_start ( start ),
-        .i_acc_data  ( acc_data ),
+        .i_clk                 ( clk ),
+        .i_rst_n               ( rst_n ),
+        .i_ppu_start           ( start ),
+        .i_acc_data            ( acc_data ),
 
-        .o_ram_we    ( ram_we ),
-        .o_ram_data  ( ram_data ),
-        .o_ram_addr  ( ram_addr ),
+        .o_ram_we              ( ram_we ),
+        .o_ram_data            ( ram_data ),
+        .o_ram_addr            ( ram_addr ),
 
-        .o_sf_valid  ( sf_valid ),
-        .o_sf_data   ( sf_data )
+        .o_sf_valid            ( sf_valid ),
+        .o_sf_data             ( sf_data ),
+
+        .o_softmax_y           (  ),
+        .o_softmax_runmax      (  ),
+        .o_softmax_denom       (  ),
+        .o_softmax_y_valid     (  ),
+        .o_softmax_denom_valid (  )
     );
 
 
     // output ram
     ram #(
-        .VEC_WIDTH ( 4*16 ),   // INT4 x 16 entries
+        .VEC_WIDTH ( 4 * 16 ),   // INT4 x 16 entries
         .ARR_DEPTH ( 64 )      // 64 cols (full vector)
     ) u_ram (
         .i_clk   ( clk ),
@@ -76,8 +82,8 @@ module tb_ppu;
 
     // dump waveform
     initial begin
-        $fsdbDumpfile("ppu.fsdb");
-        $fsdbDumpvars(0, tb_ppu, "+mda");
+        $fsdbDumpfile("requant.fsdb");
+        $fsdbDumpvars(0, tb_requant, "+mda");
     end
 
 
@@ -124,7 +130,6 @@ module tb_ppu;
             end
         end
     end
-
 
     // finish
     initial begin

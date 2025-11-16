@@ -10,9 +10,17 @@
 // rtl/mac.v
 // rtl/vec_product.v
 
-// ppu
-tb/tb_ppu.sv
+// // vsq requant
+// tb/tb_requant.sv
+// rtl/ppu.v
+// rtl/ram.v
+// rtl/buffer.v
+// rtl/quantize.v
+// rtl/softmax.v
+
+// softmax
+tb/tb_softmax.sv
 rtl/ppu.v
-rtl/ram.v
 rtl/buffer.v
 rtl/quantize.v
+rtl/softmax.v

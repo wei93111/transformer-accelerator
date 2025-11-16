@@ -8,6 +8,7 @@ module softmax (
     output [8  * 16 - 1:0] o_y,             // Q1.7   x 16 entries
     output [30 * 16 - 1:0] o_runmax,        // Q30.0  x 16 entries
     output [9  * 16 - 1:0] o_denom,         // Q1.8   x 16 entries
+    output                 o_y_valid,
     output                 o_denom_valid
 );
 
@@ -21,9 +22,10 @@ module softmax (
 
     // ctrl
     reg                   state_w,       state_r;
-    reg                   denom_valid_w, denom_valid_r;
     reg  [3:0]            acc_cnt_w,     acc_cnt_r;
     reg  [$clog2(`N)-1:0] row_cnt_w,     row_cnt_r;
+    reg                   y_valid_w,     y_valid_r;
+    reg                   denom_valid_w, denom_valid_r;
 
     // softmax
     reg  [29:0] data_rnd [0:15];    // Q30.0 signed
@@ -38,6 +40,7 @@ module softmax (
     assign o_y           = {y_r[15],      y_r[14],      y_r[13],      y_r[12],      y_r[11],      y_r[10],      y_r[9],      y_r[8],      y_r[7],      y_r[6],      y_r[5],      y_r[4],      y_r[3],      y_r[2],      y_r[1],      y_r[0]};
     assign o_runmax      = {runmax_r[15], runmax_r[14], runmax_r[13], runmax_r[12], runmax_r[11], runmax_r[10], runmax_r[9], runmax_r[8], runmax_r[7], runmax_r[6], runmax_r[5], runmax_r[4], runmax_r[3], runmax_r[2], runmax_r[1], runmax_r[0]};
     assign o_denom       = {denom_r[15],  denom_r[14],  denom_r[13],  denom_r[12],  denom_r[11],  denom_r[10],  denom_r[9],  denom_r[8],  denom_r[7],  denom_r[6],  denom_r[5],  denom_r[4],  denom_r[3],  denom_r[2],  denom_r[1],  denom_r[0]};
+    assign o_y_valid     = y_valid_r;
     assign o_denom_valid = denom_valid_r;
 
 
@@ -60,6 +63,7 @@ module softmax (
                 end
             end
             S_BUSY: begin
+
                 // acc cnt
                 if (acc_cnt_r == 15) begin
                     acc_cnt_w = 0;
@@ -75,8 +79,23 @@ module softmax (
                     denom_valid_w = 1;
                 end else begin
                     row_cnt_w     = row_cnt_r + 1;
-                    denom_valid_w = 1;
+                    denom_valid_w = 0;
                 end
+            end
+        endcase
+    end
+
+    // y valid (1 cycle delay after data input)
+    always @(*) begin
+
+        y_valid_w = y_valid_r;
+
+        case (state_r)
+            S_IDLE: begin
+                y_valid_w = 0;
+            end
+            S_BUSY: begin
+                y_valid_w = 1;
             end
         endcase
     end
@@ -125,7 +144,7 @@ module softmax (
     end
 
     // round Q30.10 -> Q30.0
-    function automatic [29:0] round
+    function automatic [29:0] round;
         input [39:0] data;
 
         reg [39:0] data_abs;
@@ -153,6 +172,7 @@ module softmax (
             state_r       <= S_IDLE;
             acc_cnt_r     <= 0;
             row_cnt_r     <= 0;
+            y_valid_r     <= 0;
             denom_valid_r <= 0;
         end else begin
             for (i = 0; i < 16; i = i + 1) runmax_r[i] <= runmax_w[i];
@@ -161,6 +181,7 @@ module softmax (
             state_r       <= state_w;
             acc_cnt_r     <= acc_cnt_w;
             row_cnt_r     <= row_cnt_w;
+            y_valid_r     <= y_valid_w;
             denom_valid_r <= denom_valid_w;
         end
     end

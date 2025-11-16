@@ -1,19 +1,20 @@
 module ppu (
     input              i_clk,
     input              i_rst_n,
-    input              i_ppu_start,     // ppu start signal
-    input  [24*16-1:0] i_acc_data,      // accumulator data
+    input              i_ppu_start,
+    input  [24*16-1:0] i_acc_data,
 
-    output             o_ram_we,        // ram write enable
-    output [4*16-1:0]  o_ram_data,      // ram data
-    output [5:0]       o_ram_addr,      // ram address
+    output             o_ram_we,
+    output [4*16-1:0]  o_ram_data,
+    output [5:0]       o_ram_addr,
 
     output             o_sf_valid,
     output [40*16-1:0] o_sf_data,
 
-    output             o_softmax_finish,
+    output [8*16-1:0]  o_softmax_y,
+    output [30*16-1:0] o_softmax_runmax,
     output [9*16-1:0]  o_softmax_denom,
-    output [4*16-1:0]  o_softmax_runmax
+    output             o_softmax_denom_valid
 );
 
     genvar gi;
@@ -234,14 +235,14 @@ module ppu (
     /////////////
 
     softmax softmax (
-        .i_clk    ( i_clk ),
-        .i_rst_n  ( i_rst_n ),
-        .i_start  ( i_ppu_start ),
-        .i_data   ( relu_res ),
-        .o_finish ( o_softmax_finish ),
-        .o_denom  ( o_softmax_denom ),
-        .o_runmax ( o_softmax_runmax ),
-        .o_y_data ( )
+        .i_clk         ( i_clk ),
+        .i_rst_n       ( i_rst_n ),
+        .i_start       ( i_ppu_start ),
+        .i_data        ( relu_res ),
+        .o_y           ( o_softmax_y ),
+        .o_runmax      ( o_softmax_runmax ),
+        .o_denom       ( o_softmax_denom ),
+        .o_denom_valid ( o_softmax_denom_valid )
     );
 
 endmodule
