@@ -9,7 +9,11 @@ module ppu (
     output [5:0]       o_ram_addr,      // ram address
 
     output             o_sf_valid,
-    output [40*16-1:0] o_sf_data
+    output [40*16-1:0] o_sf_data,
+
+    output             o_softmax_finish,
+    output [9*16-1:0]  o_softmax_denom,
+    output [4*16-1:0]  o_softmax_runmax
 );
 
     genvar gi;
@@ -47,6 +51,9 @@ module ppu (
 
     // quantize ctrl
     reg              quant_start;
+
+    // softmax ctrl
+    reg              softmax_valid;
 
 
     //////////
@@ -162,6 +169,7 @@ module ppu (
         end
     endgenerate
 
+
     ////////////////
     // vsq buffer //
     ////////////////
@@ -218,6 +226,22 @@ module ppu (
         // output sf
         .o_sf_valid ( o_sf_valid ),
         .o_sf_data  ( o_sf_data )
+    );
+
+
+    /////////////
+    // softmax //
+    /////////////
+
+    softmax softmax (
+        .i_clk    ( i_clk ),
+        .i_rst_n  ( i_rst_n ),
+        .i_start  ( i_ppu_start ),
+        .i_data   ( relu_res ),
+        .o_finish ( o_softmax_finish ),
+        .o_denom  ( o_softmax_denom ),
+        .o_runmax ( o_softmax_runmax ),
+        .o_y_data ( )
     );
 
 endmodule

@@ -8,9 +8,6 @@ rm -rf rtl/spyglass-1
 
 # synthesis
 rm -rf syn/*.log
-rm -rf syn/*.area
-rm -rf syn/*.power
-rm -rf syn/*.timing
 rm -rf syn/*.syn
 rm -rf syn/*.svf
 rm -rf syn/*.pvl
