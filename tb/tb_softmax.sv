@@ -5,18 +5,30 @@
 
 
 `ifdef pat0
-    `define IN "./tb/pat_softmax/p0_in.dat"
+    `define IN  "./tb/pat_softmax/p0_in.dat"
+    `define OUT "./tb/pat_softmax/p0_out.dat"
 `elsif pat1
-    `define IN "./tb/pat_softmax/p1_in.dat"
+    `define IN  "./tb/pat_softmax/p1_in.dat"
+    `define OUT "./tb/pat_softmax/p1_out.dat"
+`elsif pat2
+    `define IN  "./tb/pat_softmax/p2_in.dat"
+    `define OUT "./tb/pat_softmax/p2_out.dat"
 `else
-    `define IN "./tb/pat_softmax/p0_in.dat"
+    `define IN  "./tb/pat_softmax/p0_in.dat"
+    `define OUT "./tb/pat_softmax/p0_out.dat"
 `endif
 
 
 module tb_softmax;
 
     integer i, j;
-    integer data_idx;
+    integer data_idx, out_idx;
+
+    // error calculation
+    logic [15:0] calc_denom;
+    logic [15:0] expected_denom;
+    real calc_real, expected_real, error_pct;
+    real total_error;
 
 
     logic clk;
@@ -29,14 +41,15 @@ module tb_softmax;
     // softmax output
     logic [8  * 16 - 1:0] softmax_y;
     logic [30 * 16 - 1:0] softmax_runmax;
-    logic [9  * 16 - 1:0] softmax_denom;
+    logic [16 * 16 - 1:0] softmax_denom;
     logic                 softmax_y_valid;
     logic                 softmax_denom_valid;
 
     // data storage
-    logic [40 * 16 - 1:0] data_in    [0:`N-1];
-    logic [8  * 16 - 1:0] y_out      [0:`N-1];
-    logic [30 * 16 - 1:0] runmax_out [0:`N-1];
+    logic [40 * 16 - 1:0] data_in      [0:`N-1];
+    logic [8  * 16 - 1:0] y_out        [0:`N-1];
+    logic [30 * 16 - 1:0] runmax_out   [0:`N-1];
+    logic [16 * 16 - 1:0] expected_out [0:0];  // Expected denominator values
 
 
     // clk gen
@@ -70,6 +83,7 @@ module tb_softmax;
     // load data
     initial begin
         $readmemh(`IN, data_in);
+        $readmemh(`OUT, expected_out);
     end
 
 
@@ -82,6 +96,7 @@ module tb_softmax;
         start    = 0;
         data     = 0;
         data_idx = 0;
+        out_idx  = 0;
         wait (rst_n === 1'b1);
         @(negedge clk);
 
@@ -109,32 +124,69 @@ module tb_softmax;
 
             repeat (16) begin
                 if (softmax_y_valid === 1'b1) begin
-                    y_out[data_idx]      = softmax_y;
-                    runmax_out[data_idx] = softmax_runmax;
+                    y_out[out_idx]      = softmax_y;
+                    runmax_out[out_idx] = softmax_runmax;
                     #(`CYCLE * 1.0);
-                    data_idx = data_idx + 1;
+                    out_idx = out_idx + 1;
                 end
             end
         end
     end
 
 
-    // output softmax results after row finished
+    // finish, calculate denominator error
     initial begin
+        
         wait (softmax_denom_valid === 1'b1);
+        #(`CYCLE * 10.0);
 
-        $display("y results first lane (Q1.7):");
-        for (i = 0; i < `N; i = i + 1) begin
-            $display("y[%d] = %b", i, y_out[i][7:0]);
+        $display("=============================================================================");
+        $display("Softmax Denominator Comparison (Q9.7 format)");
+        $display("=============================================================================");
+        $display("");
+        
+        total_error = 0.0;
+        
+        // Compare all 16 lanes
+        for (i = 0; i < 16; i = i + 1) begin
+            // Extract calculated and expected values for this lane
+            // Lane 0 (LSB) is row 1, Lane 15 (MSB) is row 16
+            calc_denom = softmax_denom[i*16 +: 16];
+            expected_denom = expected_out[0][i*16 +: 16];
+            
+            // Convert to real for error calculation
+            calc_real = $itor(calc_denom) / 128.0;
+            expected_real = $itor(expected_denom) / 128.0;
+            
+            // Calculate error percentage
+            if (expected_real != 0.0) begin
+                error_pct = ((calc_real - expected_real) / expected_real) * 100.0;
+            end else begin
+                error_pct = 0.0;
+            end
+            
+            // Accumulate absolute error for total
+            if (error_pct < 0.0) begin
+                total_error = total_error + (-error_pct);
+            end else begin
+                total_error = total_error + error_pct;
+            end
+            
+            // Display results
+            $display("Lane %2d (Row %2d):", i, i+1);
+            $display("  Calculated: %b (decimal: %0d, float: %f)", calc_denom, calc_denom, calc_real);
+            $display("  Expected:   %b (decimal: %0d, float: %f)", expected_denom, expected_denom, expected_real);
+            $display("  Error:      %f%%", error_pct);
+            $display("");
         end
-
-        $display("runmax results first lane (Q30.0):");
-        for (i = 0; i < `N; i = i + 1) begin
-            $display("runmax[%d] = %b", i, runmax_out[i][29:0]);
-        end
-
-        $display("denom results first lane (Q2.7):");
-        $display("denom = %b", softmax_denom[8:0]);
+        
+        $display("=============================================================================");
+        $display("Summary:");
+        $display("  Total Lanes:        16");
+        $display("  Total Error:        %f%%", total_error);
+        $display("  Average Error:      %f%%", total_error / 16.0);
+        $display("=============================================================================");
+        $display("");
 
         $finish;
     end

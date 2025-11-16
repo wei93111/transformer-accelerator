@@ -1,5 +1,5 @@
 # simulation / spyglass
-rm -rf *.history *.log *.fsdb
+rm -rf *.history *.log
 rm -rf simv* novas*
 rm -rf csrc ucli.key vc_hdrs.h BSSLib.lib++
 rm -rf nWaveLog verdiLog

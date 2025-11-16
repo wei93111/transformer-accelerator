@@ -7,7 +7,7 @@ module softmax (
     input  [40 * 16 - 1:0] i_data,          // Q30.10 x 16 entries
     output [8  * 16 - 1:0] o_y,             // Q1.7   x 16 entries
     output [30 * 16 - 1:0] o_runmax,        // Q30.0  x 16 entries
-    output [9  * 16 - 1:0] o_denom,         // Q1.8   x 16 entries
+    output [16 * 16 - 1:0] o_denom,         // Q9.7   x 16 entries
     output                 o_y_valid,
     output                 o_denom_valid
 );
@@ -31,8 +31,8 @@ module softmax (
     reg  [29:0] data_rnd [0:15];    // Q30.0 signed
     reg  [29:0] runmax_w [0:15];
     reg  [29:0] runmax_r [0:15];    // Q30.0 signed
-    reg  [8:0]  denom_w  [0:15];
-    reg  [8:0]  denom_r  [0:15];    // Q1.8 unsigned
+    reg  [15:0] denom_w  [0:15];
+    reg  [15:0] denom_r  [0:15];    // Q9.7 unsigned
     reg  [7:0]  y_w      [0:15];
     reg  [7:0]  y_r      [0:15];    // Q1.7 unsigned
 
@@ -131,12 +131,12 @@ module softmax (
                         // update runmax
                         runmax_w[i] = data_rnd[i];
                         y_w[i]      = 8'b10000000;
-                        denom_w[i]  = (denom_r[i] >> ($signed(data_rnd[i]) - $signed(runmax_r[i]))) + {1'b0, y_w[i]};
+                        denom_w[i]  = (denom_r[i] >> ($signed(data_rnd[i]) - $signed(runmax_r[i]))) + {8'd0, y_w[i]};
                     end else begin
                         // keep runmax
                         runmax_w[i] = runmax_r[i];
                         y_w[i]      = 8'b10000000 >> ($signed(runmax_r[i]) - $signed(data_rnd[i]));
-                        denom_w[i]  = denom_r[i] + {1'b0, y_w[i]};
+                        denom_w[i]  = denom_r[i] + {8'd0, y_w[i]};
                     end
                 end
             end
