@@ -1,20 +1,22 @@
 module ppu (
-    input              i_clk,
-    input              i_rst_n,
-    input              i_ppu_start,
-    input  [24*16-1:0] i_acc_data,
+    input                  i_clk,
+    input                  i_rst_n,
+    input                  i_ppu_start,
+    input  [24 * 16 - 1:0] i_acc_data,
+    input                  i_relu_en,
 
-    output             o_ram_we,
-    output [4*16-1:0]  o_ram_data,
-    output [5:0]       o_ram_addr,
+    output                 o_ram_we,
+    output [4  * 16 - 1:0] o_ram_data,
+    output [5          :0] o_ram_addr,
 
-    output             o_sf_valid,
-    output [40*16-1:0] o_sf_data,
+    output [40 * 16 - 1:0] o_sf_data,
+    output                 o_sf_valid,
 
-    output [8*16-1:0]  o_softmax_y,
-    output [30*16-1:0] o_softmax_runmax,
-    output [9*16-1:0]  o_softmax_denom,
-    output             o_softmax_denom_valid
+    output [8  * 16 - 1:0] o_softmax_y,
+    output [30 * 16 - 1:0] o_softmax_runmax,
+    output [16 * 16 - 1:0] o_softmax_denom,
+    output                 o_softmax_y_valid,
+    output                 o_softmax_denom_valid
 );
 
     genvar gi;
@@ -25,36 +27,31 @@ module ppu (
     localparam S_BUSY = 1'b1;
 
 
-    // state ctrl
-    reg              state;
-    reg  [3:0]       acc_cnt;
-    reg  [1:0]       tile_cnt;
+    // ctrl
+    reg                  state;
+    reg  [3:0]           acc_cnt;
+    reg  [1:0]           tile_cnt;
+    reg                  quant_start;
 
     // scaling
-    wire [3:0]       scale_addr;
-    wire [16*16-1:0] scale_data;
-    wire [40*16-1:0] scale_res;         // Q30.10 x 16 entries
+    wire [3:0]           scale_addr;
+    wire [16 * 16 - 1:0] scale_data;        // Q6.10  x 16 entries
+    wire [40 * 16 - 1:0] scale_res;         // Q30.10 x 16 entries
 
     // bias add
-    wire [3:0]       bias_addr;
-    wire [15:0]      bias_data;
-    wire [40*16-1:0] bias_res;          // Q30.10 x 16 entries
+    wire [3:0]           bias_addr;
+    wire [16 * 16 - 1:0] bias_data;         // Q6.10  x 16 entries
+    wire [40 * 16 - 1:0] bias_res;          // Q30.10 x 16 entries
 
     // relu
-    wire [40*16-1:0] relu_res;          // Q30.10 x 16 entries
+    wire [40 * 16 - 1:0] relu_res;          // Q30.10 x 16 entries
 
     // vsq buffer
-    wire             vsq_buf_we;
-    wire [5:0]       vsq_buf_addr_wr;
-    wire [5:0]       vsq_buf_addr_rd;
-    wire [40*16-1:0] vsq_buf_data_wr;
-    wire [40*16-1:0] vsq_buf_data_rd;   // no truncation
-
-    // quantize ctrl
-    reg              quant_start;
-
-    // softmax ctrl
-    reg              softmax_valid;
+    wire                 vsq_buf_we;
+    wire [5:0]           vsq_buf_addr_wr;
+    wire [5:0]           vsq_buf_addr_rd;
+    wire [40 * 16 - 1:0] vsq_buf_data_wr;
+    wire [40 * 16 - 1:0] vsq_buf_data_rd;   // no truncation
 
 
     //////////
@@ -121,7 +118,7 @@ module ppu (
     assign scale_addr = acc_cnt;
 
     buffer #(
-        .VEC_WIDTH ( 16*16 ),   // Q6.10 x 16 entries
+        .VEC_WIDTH ( 16 * 16 ),   // Q6.10 x 16 entries
         .ARR_DEPTH ( 16 )
     ) scale_buf (
         .i_clk     ( i_clk ),
@@ -144,21 +141,21 @@ module ppu (
     assign bias_addr = acc_cnt;
 
     buffer #(
-        .VEC_WIDTH ( 16 ),      // Q6.10, same for each lane
+        .VEC_WIDTH ( 16 * 16 ),   // Q6.10 x 16 entries
         .ARR_DEPTH ( 16 )
     ) bias_buf (
         .i_clk     ( i_clk ),
         .i_rst_n   ( 1'b1 ),
         .i_we      ( 1'b0 ),
         .i_addr_wr ( 4'd0 ),
-        .i_data_wr ( 16'd0 ),
+        .i_data_wr ( 256'd0 ),
         .i_addr_rd ( bias_addr ),
         .o_data_rd ( bias_data )
     );
 
     generate
         for (gi = 0; gi < 16; gi = gi + 1) begin: BIAS_ADD
-            assign bias_res[gi*40 +: 40] = $signed(bias_data) + $signed(scale_res[gi*40 +: 40]);
+            assign bias_res[gi*40 +: 40] = $signed(bias_data[gi*16 +: 16]) + $signed(scale_res[gi*40 +: 40]);
         end
     endgenerate
 
@@ -166,7 +163,7 @@ module ppu (
     // relu
     generate
         for (gi = 0; gi < 16; gi = gi + 1) begin: RELU
-            assign relu_res[gi*40 +: 40] = ($signed(bias_res[gi*40 +: 40]) > 40'sd0) ? bias_res[gi*40 +: 40] : 40'd0;
+            assign relu_res[gi*40 +: 40] = (i_relu_en && ($signed(bias_res[gi*40 +: 40]) > 40'sd0)) ? bias_res[gi*40 +: 40] : 40'd0;
         end
     endgenerate
 
@@ -180,7 +177,7 @@ module ppu (
     assign vsq_buf_data_wr = relu_res;
 
     buffer #(
-        .VEC_WIDTH ( 40*16 ),
+        .VEC_WIDTH ( 40 * 16 ),   // Q30.10 x 16 entries
         .ARR_DEPTH ( 64 )
     ) vsq_buf (
         .i_clk     ( i_clk ),
@@ -225,8 +222,8 @@ module ppu (
         .o_ram_addr ( o_ram_addr ),
 
         // output sf
-        .o_sf_valid ( o_sf_valid ),
-        .o_sf_data  ( o_sf_data )
+        .o_sf_data  ( o_sf_data ),
+        .o_sf_valid ( o_sf_valid )
     );
 
 
@@ -242,6 +239,7 @@ module ppu (
         .o_y           ( o_softmax_y ),
         .o_runmax      ( o_softmax_runmax ),
         .o_denom       ( o_softmax_denom ),
+        .o_y_valid     ( o_softmax_y_valid ),
         .o_denom_valid ( o_softmax_denom_valid )
     );
 

@@ -4,10 +4,10 @@ module softmax (
     input                  i_clk,
     input                  i_rst_n,
     input                  i_start,
-    input  [40 * 16 - 1:0] i_data,          // Q30.10 x 16 entries
-    output [8  * 16 - 1:0] o_y,             // Q1.7   x 16 entries
-    output [30 * 16 - 1:0] o_runmax,        // Q30.0  x 16 entries
-    output [16 * 16 - 1:0] o_denom,         // Q9.7   x 16 entries
+    input  [40 * 16 - 1:0] i_data,
+    output [8  * 16 - 1:0] o_y,
+    output [30 * 16 - 1:0] o_runmax,
+    output [16 * 16 - 1:0] o_denom,
     output                 o_y_valid,
     output                 o_denom_valid
 );
@@ -63,7 +63,6 @@ module softmax (
                 end
             end
             S_BUSY: begin
-
                 // acc cnt
                 if (acc_cnt_r == 15) begin
                     acc_cnt_w = 0;

@@ -34,7 +34,7 @@ module tb_requant;
     logic [40 * 16 - 1:0] sf_data;
 
     // data storage
-    logic [24 * 16 - 1:0] vector_in [0:64-1];
+    logic [24 * 16 - 1:0] vector_in [0: 64 - 1];
 
 
     // clk gen
@@ -50,6 +50,7 @@ module tb_requant;
         .i_rst_n               ( rst_n ),
         .i_ppu_start           ( start ),
         .i_acc_data            ( acc_data ),
+        .i_relu_en             ( 1'b0 ),
 
         .o_ram_we              ( ram_we ),
         .o_ram_data            ( ram_data ),
@@ -69,7 +70,7 @@ module tb_requant;
     // output ram
     ram #(
         .VEC_WIDTH ( 4 * 16 ),   // INT4 x 16 entries
-        .ARR_DEPTH ( 64 )      // 64 cols (full vector)
+        .ARR_DEPTH ( 64 )        // 64 cols (full vector)
     ) u_ram (
         .i_clk   ( clk ),
         .i_rst_n ( rst_n ),
@@ -96,7 +97,7 @@ module tb_requant;
 
         // bias (all zeros)
         for (i = 0; i < 16; i = i + 1) begin
-            u_ppu.bias_buf.registers[i] = 16'd0;
+            u_ppu.bias_buf.registers[i] = {16{16'd0}};
         end
 
         // input tile
