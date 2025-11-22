@@ -4,7 +4,7 @@ module quantize (
     input                  i_start,
     input  [40 * 16 - 1:0] i_data,
 
-    input  [40 * 16 - 1:0] i_buf_data,
+    input  [18 * 16 - 1:0] i_buf_data,
     output [5          :0] o_buf_addr,
 
     output                 o_ram_we,

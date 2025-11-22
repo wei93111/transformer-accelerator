@@ -19,6 +19,7 @@ module ppu (
     output                 o_softmax_denom_valid
 );
 
+    integer i;
     genvar gi;
 
 
@@ -45,13 +46,14 @@ module ppu (
 
     // relu
     wire [40 * 16 - 1:0] relu_res;          // Q30.10 x 16 entries
+    wire [18 * 16 - 1:0] relu_res_trunc;    // INT18 x 16 entries
 
     // vsq buffer
     wire                 vsq_buf_we;
     wire [5:0]           vsq_buf_addr_wr;
     wire [5:0]           vsq_buf_addr_rd;
-    wire [40 * 16 - 1:0] vsq_buf_data_wr;
-    wire [40 * 16 - 1:0] vsq_buf_data_rd;   // no truncation
+    wire [18 * 16 - 1:0] vsq_buf_data_wr;   // INT18 x 16 entries
+    wire [18 * 16 - 1:0] vsq_buf_data_rd;   // INT18 x 16 entries
 
 
     //////////
@@ -160,12 +162,35 @@ module ppu (
     endgenerate
 
 
-    // relu
+    // relu (active when i_relu_en is high)
     generate
         for (gi = 0; gi < 16; gi = gi + 1) begin: RELU
             assign relu_res[gi*40 +: 40] = (i_relu_en && ($signed(bias_res[gi*40 +: 40]) > 40'sd0)) ? bias_res[gi*40 +: 40] : 40'd0;
         end
     endgenerate
+
+
+    // truncation: Q30.10 -> INT18
+    generate
+        for (gi = 0; gi < 16; gi = gi + 1) begin: TRUNCATE
+            assign relu_res_trunc[gi*18 +: 18] = truncate(relu_res[gi*40 +: 40]);
+        end
+    endgenerate
+
+    function [17:0] truncate;
+        input [39:0] data;
+
+        reg  [39:0] data_abs;
+        reg  [29:0] data_abs_rnd;
+        reg  [17:0] data_abs_sat;
+        
+        begin
+            data_abs     = (data[39]) ? ~data + 40'd1 : data;
+            data_abs_rnd = (data_abs[9]) ? (data_abs >> 10) + 40'd1 : data_abs >> 10;
+            data_abs_sat = (data_abs_rnd > {12'd0, 18{1'b1}}) ? {18{1'b1}} : data_abs_rnd[17:0];
+            truncate     = (data[39]) ? ~data_abs_sat + 18'd1 : data_abs_sat;
+        end
+    endfunction
 
 
     ////////////////
@@ -174,10 +199,10 @@ module ppu (
 
     assign vsq_buf_we      = (state == S_BUSY) ? 1'b1 : 1'b0;
     assign vsq_buf_addr_wr = acc_cnt + tile_cnt * 16;
-    assign vsq_buf_data_wr = relu_res;
+    assign vsq_buf_data_wr = relu_res_trunc;
 
     buffer #(
-        .VEC_WIDTH ( 40 * 16 ),   // Q30.10 x 16 entries
+        .VEC_WIDTH ( 18 * 16 ),   // INT18 x 16 entries
         .ARR_DEPTH ( 64 )
     ) vsq_buf (
         .i_clk     ( i_clk ),
@@ -210,7 +235,7 @@ module ppu (
         .i_clk      ( i_clk ),
         .i_rst_n    ( i_rst_n ),
         .i_start    ( quant_start ),
-        .i_data     ( relu_res ),
+        .i_data     ( relu_res_trunc ),
 
         // to vsq buffer
         .i_buf_data ( vsq_buf_data_rd ),
@@ -235,7 +260,7 @@ module ppu (
         .i_clk         ( i_clk ),
         .i_rst_n       ( i_rst_n ),
         .i_start       ( i_ppu_start ),
-        .i_data        ( relu_res ),
+        .i_data        ( relu_res ),        // TODO: use truncated data
         .o_y           ( o_softmax_y ),
         .o_runmax      ( o_softmax_runmax ),
         .o_denom       ( o_softmax_denom ),
