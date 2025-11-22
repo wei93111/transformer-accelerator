@@ -177,7 +177,7 @@ module ppu (
         end
     endgenerate
 
-    function [17:0] truncate;
+    function automatic [17:0] truncate;
         input [39:0] data;
 
         reg  [39:0] data_abs;

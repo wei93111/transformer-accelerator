@@ -138,3 +138,6 @@ utils/
 
 # Reference papers
 paper/
+
+# Others
+recip_gen.py
