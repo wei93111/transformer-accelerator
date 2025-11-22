@@ -12,6 +12,7 @@ module reciprocal (
     wire [17:0] y0;         // Q1.17
 
     // newton iteration
+    wire [35:0] mult;       // Q1.35
     wire [17:0] mult1;      // Q1.17
     wire [17:0] sub;        // Q1.17
     wire [35:0] mult2;      // Q2.34
@@ -62,10 +63,11 @@ module reciprocal (
     assign data_norm = i_data << lzc;
 
     // LUT initial guess
-    assign y0      = recip_lut(data_norm[17:10]);    // Q1.17, take top 8 bits as lut index
+    assign y0      = recip_lut(data_norm[17:8]);    // Q1.17, take top 10 bits as lut index
 
     // Newton iteration
-    assign mult1   = (data_norm * y0) >> 18;
+    assign mult    = data_norm * y0;
+    assign mult1   = mult >> 18;
     assign sub     = TWO - {1'b0, mult1};
     assign mult2   = y0 * sub;
 
@@ -82,7 +84,7 @@ module reciprocal (
 
         begin
             case (idx)
-                10'd512: recip_lut = 18'h40000;
+                10'd512: recip_lut = 18'h3ffff;
                 10'd513: recip_lut = 18'h3fe01;
                 10'd514: recip_lut = 18'h3fc04;
                 10'd515: recip_lut = 18'h3fa09;
@@ -594,7 +596,7 @@ module reciprocal (
                 10'd1021: recip_lut = 18'h20181;
                 10'd1022: recip_lut = 18'h20101;
                 10'd1023: recip_lut = 18'h20080;
-                default: recip_lut = 18'h0;
+                default: recip_lut = 18'h10000;
             endcase
         end
     endfunction
