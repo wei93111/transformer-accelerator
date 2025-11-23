@@ -67,10 +67,14 @@ module tb_mm;
         .i_rst_n     ( rst_n ),
         .i_mode      ( mode ),
         .i_start     ( start ),
+
         .o_tile_done ( tile_done ),
         .o_mtrx_done ( mtrx_done ),
+        
         .o_ppu_start ( ),
-        .o_acc_data  ( )
+        .o_acc_data  ( ),
+        .o_mode      ( ),
+        .o_findmax   ( )
     );
 
 

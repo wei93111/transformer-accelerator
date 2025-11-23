@@ -3,6 +3,8 @@ module ppu (
     input                  i_rst_n,
     input                  i_ppu_start,
     input  [24 * 16 - 1:0] i_acc_data,
+    input  [1:0]           i_mode,
+    input                  i_findmax,
     input                  i_relu_en,
 
     output                 o_ram_we,
@@ -46,14 +48,14 @@ module ppu (
 
     // relu
     wire [40 * 16 - 1:0] relu_res;          // Q30.10 x 16 entries
-    wire [18 * 16 - 1:0] relu_res_trunc;    // INT18 x 16 entries
+    wire [18 * 16 - 1:0] relu_res_trunc;    // INT18  x 16 entries
 
     // vsq buffer
     wire                 vsq_buf_we;
     wire [5:0]           vsq_buf_addr_wr;
     wire [5:0]           vsq_buf_addr_rd;
-    wire [18 * 16 - 1:0] vsq_buf_data_wr;   // INT18 x 16 entries
-    wire [18 * 16 - 1:0] vsq_buf_data_rd;   // INT18 x 16 entries
+    wire [18 * 16 - 1:0] vsq_buf_data_wr;   // INT18  x 16 entries
+    wire [18 * 16 - 1:0] vsq_buf_data_rd;   // INT18  x 16 entries
 
 
     //////////
@@ -237,16 +239,13 @@ module ppu (
         .i_start    ( quant_start ),
         .i_data     ( relu_res_trunc ),
 
-        // to vsq buffer
         .i_buf_data ( vsq_buf_data_rd ),
         .o_buf_addr ( vsq_buf_addr_rd ),
 
-        // to output ram
         .o_ram_we   ( o_ram_we ),
         .o_ram_data ( o_ram_data ),
         .o_ram_addr ( o_ram_addr ),
 
-        // output sf
         .o_sf_data  ( o_sf_data ),
         .o_sf_valid ( o_sf_valid )
     );

@@ -5,7 +5,7 @@ module top (
     input                  i_relu_en,
     input                  i_start,
 
-    output [40 * 16 - 1:0] o_sf_data,
+    output [18 * 16 - 1:0] o_sf_data,
     output                 o_sf_valid,
 
     output [8  * 16 - 1:0] o_softmax_y,
@@ -20,6 +20,8 @@ module top (
     // ppu - mm_ctrl interface
     wire                 ppu_start;
     wire [24 * 16 - 1:0] acc_data;      // INT24 x 16 entries
+    wire [1:0]           mode;
+    wire                 findmax;
 
     // ppu - output buffer interface
     wire                 ram_we;
@@ -32,17 +34,16 @@ module top (
         .i_clk       ( i_clk ),
         .i_rst_n     ( i_rst_n ),
 
-        // from tb
         .i_mode      ( i_mode ),
         .i_start     ( i_start ),
 
-        // to tb
         .o_tile_done ( ),
         .o_mtrx_done ( o_done ),
 
-        // to ppu
         .o_ppu_start ( ppu_start ),
-        .o_acc_data  ( acc_data )
+        .o_acc_data  ( acc_data ),
+        .o_mode      ( mode ),
+        .o_findmax   ( findmax )
     );
 
 
@@ -51,21 +52,19 @@ module top (
         .i_clk                 ( i_clk ),
         .i_rst_n               ( i_rst_n ),
 
-        // from mm_ctrl
         .i_ppu_start           ( ppu_start ),
         .i_acc_data            ( acc_data ),
+        .i_mode                ( mode ),
+        .i_findmax             ( findmax ),
         .i_relu_en             ( i_relu_en ),
 
-        // to output buffer
         .o_ram_we              ( ram_we ),
         .o_ram_data            ( ram_data ),
         .o_ram_addr            ( ram_addr ),
 
-        // output sf
         .o_sf_data             ( o_sf_data ),
         .o_sf_valid            ( o_sf_valid ),
 
-        // output softmax
         .o_softmax_y           ( o_softmax_y ),
         .o_softmax_runmax      ( o_softmax_runmax ),
         .o_softmax_denom       ( o_softmax_denom ),
