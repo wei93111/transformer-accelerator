@@ -1,6 +1,6 @@
 module reciprocal (
     input  [17:0] i_data,   // unsigned INT18
-    output [35:0] o_recip   // Q0.36
+    output [35:0] o_recip   // Q2.34
 );
 
     localparam TWO = {2'b10, 17'd0};     // Q2.17
@@ -56,6 +56,8 @@ module reciprocal (
             lzc = 5'd16;
         end else if (i_data[0]) begin
             lzc = 5'd17;
+        end else begin
+            lzc = 5'd0;
         end
     end
 
@@ -65,13 +67,13 @@ module reciprocal (
     // LUT initial guess
     assign y0      = recip_lut(data_norm[17:8]);    // Q1.17, take top 10 bits as lut index
 
-    // Newton iteration
+    // newton iteration
     assign mult    = data_norm * y0;
     assign mult1   = mult >> 18;
     assign sub     = TWO - {1'b0, mult1};
     assign mult2   = y0 * sub;
 
-    // Rescale output
+    // rescale output
     assign o_recip = mult2 >> (18 - lzc);
 
 
@@ -596,7 +598,7 @@ module reciprocal (
                 10'd1021: recip_lut = 18'h20181;
                 10'd1022: recip_lut = 18'h20101;
                 10'd1023: recip_lut = 18'h20080;
-                default: recip_lut = 18'h10000;
+                default: recip_lut = 18'h00000;
             endcase
         end
     endfunction
