@@ -1,9 +1,10 @@
 module ppu (
     input                  i_clk,
     input                  i_rst_n,
+
     input                  i_ppu_start,
     input  [24 * 16 - 1:0] i_acc_data,
-    input  [1:0]           i_mode,
+    input  [1          :0] i_mode,
     input                  i_findmax,
     input                  i_relu_en,
 
@@ -21,7 +22,6 @@ module ppu (
     output                 o_softmax_denom_valid
 );
 
-    integer i;
     genvar gi;
 
 
@@ -31,10 +31,10 @@ module ppu (
 
 
     // ctrl
-    reg                  state;
-    reg  [3:0]           acc_cnt;
-    reg  [1:0]           tile_cnt;
-    reg                  quant_start;
+    reg                  state_w,       state_r;
+    reg  [3:0]           acc_cnt_w,     acc_cnt_r;
+    reg  [1:0]           tile_cnt_w,    tile_cnt_r;
+    reg                  quant_start_w, quant_start_r;
 
     // scaling
     wire [3:0]           scale_addr;
@@ -62,55 +62,44 @@ module ppu (
     // ctrl //
     //////////
 
-    // state
-    always @(posedge i_clk or negedge i_rst_n) begin
-        if (!i_rst_n) begin
-            state <= S_IDLE;
-        end else begin
-            case (state)
-                S_IDLE: begin
-                    if (i_ppu_start) begin
-                        state <= S_BUSY;
-                    end
-                end
-                S_BUSY: begin
-                    if (acc_cnt == 4'd15) begin
-                        state <= S_IDLE;
-                    end
-                end
-            endcase
-        end
-    end
+    always @(*) begin
 
-    // counters
-    always @(posedge i_clk or negedge i_rst_n) begin
-        if (!i_rst_n) begin
-            acc_cnt  <= 4'd0;
-            tile_cnt <= 2'd0;
-        end else begin
-            case (state)
-                S_IDLE: begin
+        quant_start_w = 1'b0;
+
+        state_w       = state_r;
+        acc_cnt_w     = acc_cnt_r;
+        tile_cnt_w    = tile_cnt_r;
+
+        case (state_r)
+            S_IDLE: begin
+                if (i_ppu_start) begin
+                    state_w = S_BUSY;
                 end
-                S_BUSY: begin
-                    // acc cnt
-                    if (acc_cnt == 4'd15) begin
-                        acc_cnt  <= 4'd0;
+            end
+            S_BUSY: begin
+                // acc cnt
+                if (acc_cnt_r == 4'd15) begin
+                    acc_cnt_w = 0;
+                    state_w   = S_IDLE;
+                end else begin
+                    acc_cnt_w = acc_cnt_r + 4'd1;
+                end
+
+                // tile cnt
+                if (acc_cnt_r == 4'd15) begin
+                    if (tile_cnt_r == 2'd3) begin
+                        tile_cnt_w = 0;
                     end else begin
-                        acc_cnt  <= acc_cnt + 4'd1;
-                    end
-
-                    // tile cnt
-                    if (acc_cnt == 4'd15) begin
-                        if (tile_cnt == 2'd3) begin
-                            // vector finish
-                            tile_cnt <= 2'd0;
-                        end else begin
-                            tile_cnt <= tile_cnt + 2'd1;
-                        end
+                        tile_cnt_w = tile_cnt_r + 2'd1;
                     end
                 end
-            endcase
-        end
+
+                // quant start
+                if (tile_cnt_r == 2'd3 && acc_cnt_r == (4'd15 - 4'd1)) begin
+                    quant_start_w = 1'b1;
+                end
+            end
+        endcase
     end
 
 
@@ -119,7 +108,7 @@ module ppu (
     //////////////
 
     // scaling
-    assign scale_addr = acc_cnt;
+    assign scale_addr = acc_cnt_r;
 
     buffer #(
         .VEC_WIDTH ( 16 * 16 ),   // Q6.10 x 16 entries
@@ -142,7 +131,7 @@ module ppu (
 
 
     // bias add
-    assign bias_addr = acc_cnt;
+    assign bias_addr = acc_cnt_r;
 
     buffer #(
         .VEC_WIDTH ( 16 * 16 ),   // Q6.10 x 16 entries
@@ -199,8 +188,8 @@ module ppu (
     // vsq buffer //
     ////////////////
 
-    assign vsq_buf_we      = (state == S_BUSY) ? 1'b1 : 1'b0;
-    assign vsq_buf_addr_wr = acc_cnt + tile_cnt * 16;
+    assign vsq_buf_we      = (state_r == S_BUSY) ? 1'b1 : 1'b0;
+    assign vsq_buf_addr_wr = acc_cnt_r + tile_cnt_r * 16;
     assign vsq_buf_data_wr = relu_res_trunc;
 
     buffer #(
@@ -221,22 +210,10 @@ module ppu (
     // quantize //
     //////////////
 
-    // quant start signal
-    always @(posedge i_clk or negedge i_rst_n) begin
-        if (!i_rst_n) begin
-            quant_start <= 1'b0;
-        end else if (tile_cnt == 2'd3 && acc_cnt == (4'd15 - 4'd1)) begin
-            // pull high one cycle earlier
-            quant_start <= 1'b1;
-        end else begin
-            quant_start <= 1'b0;
-        end
-    end
-
     quantize quant (
         .i_clk      ( i_clk ),
         .i_rst_n    ( i_rst_n ),
-        .i_start    ( quant_start ),
+        .i_start    ( quant_start_r ),
         .i_data     ( relu_res_trunc ),
 
         .i_buf_data ( vsq_buf_data_rd ),
@@ -266,5 +243,24 @@ module ppu (
         .o_y_valid     ( o_softmax_y_valid ),
         .o_denom_valid ( o_softmax_denom_valid )
     );
+
+
+    ////////////////
+    // sequential //
+    ////////////////
+
+    always @(posedge i_clk or negedge i_rst_n) begin
+        if (!i_rst_n) begin
+            state_r       <= S_IDLE;
+            acc_cnt_r     <= 0;
+            tile_cnt_r    <= 0;
+            quant_start_r <= 0;
+        end else begin
+            state_r       <= state_w;
+            acc_cnt_r     <= acc_cnt_w;
+            tile_cnt_r    <= tile_cnt_w;
+            quant_start_r <= quant_start_w;
+        end
+    end
 
 endmodule
