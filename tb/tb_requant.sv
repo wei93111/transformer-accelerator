@@ -31,7 +31,7 @@ module tb_requant;
     logic [5          :0] ram_addr;
 
     logic                 sf_valid;
-    logic [40 * 16 - 1:0] sf_data;
+    logic [18 * 16 - 1:0] sf_data;
 
     // data storage
     logic [24 * 16 - 1:0] vector_in [0: 64 - 1];
@@ -138,7 +138,7 @@ module tb_requant;
         wait (sf_valid === 1'b1);
         $display("sf results:");
         for (i = 0; i < 16; i = i + 1) begin
-            $display("sf[%d] = %b", i, sf_data[i*40 +: 40]);
+            $display("sf[%d] = %b", i, sf_data[i*18 +: 18]);
         end
 
         $display("");

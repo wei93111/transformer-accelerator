@@ -1,5 +1,5 @@
 # read files
-read_file -type verilog {define.v ppu.v buffer.v quantize.v}
+read_file -type verilog {define.v ppu.v buffer.v quantize.v reciprocal.v softmax.v}
 set DESIGN "ppu"
 set_option top $DESIGN
 

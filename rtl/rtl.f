@@ -17,6 +17,7 @@ rtl/ram.v
 rtl/buffer.v
 rtl/quantize.v
 rtl/softmax.v
+rtl/reciprocal.v
 
 // // softmax
 // tb/tb_softmax.sv

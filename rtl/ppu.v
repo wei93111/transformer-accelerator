@@ -9,7 +9,7 @@ module ppu (
     output [4  * 16 - 1:0] o_ram_data,
     output [5          :0] o_ram_addr,
 
-    output [40 * 16 - 1:0] o_sf_data,
+    output [18 * 16 - 1:0] o_sf_data,
     output                 o_sf_valid,
 
     output [8  * 16 - 1:0] o_softmax_y,
@@ -165,7 +165,7 @@ module ppu (
     // relu (active when i_relu_en is high)
     generate
         for (gi = 0; gi < 16; gi = gi + 1) begin: RELU
-            assign relu_res[gi*40 +: 40] = (i_relu_en && ($signed(bias_res[gi*40 +: 40]) > 40'sd0)) ? bias_res[gi*40 +: 40] : 40'd0;
+            assign relu_res[gi*40 +: 40] = (!i_relu_en || ($signed(bias_res[gi*40 +: 40]) > 40'sd0)) ? bias_res[gi*40 +: 40] : 40'd0;
         end
     endgenerate
 
@@ -180,14 +180,14 @@ module ppu (
     function automatic [17:0] truncate;
         input [39:0] data;
 
-        reg  [39:0] data_abs;
-        reg  [29:0] data_abs_rnd;
-        reg  [17:0] data_abs_sat;
+        reg  [39:0] data_abs;       // Q30.10
+        reg  [29:0] data_abs_rnd;   // INT30
+        reg  [17:0] data_abs_sat;   // INT18
         
         begin
             data_abs     = (data[39]) ? ~data + 40'd1 : data;
             data_abs_rnd = (data_abs[9]) ? (data_abs >> 10) + 40'd1 : data_abs >> 10;
-            data_abs_sat = (data_abs_rnd > {12'd0, 18{1'b1}}) ? {18{1'b1}} : data_abs_rnd[17:0];
+            data_abs_sat = (data_abs_rnd > {12'd0, {18{1'b1}}}) ? {18{1'b1}} : data_abs_rnd[17:0];
             truncate     = (data[39]) ? ~data_abs_sat + 18'd1 : data_abs_sat;
         end
     endfunction
