@@ -1,6 +1,6 @@
 `timescale 1ns / 10ps
 `define CYCLE 10.0
-`define END_CYCLE 100000
+`define END_CYCLE 500000
 
 
 `ifdef pat0

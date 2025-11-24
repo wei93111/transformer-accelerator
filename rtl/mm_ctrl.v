@@ -11,8 +11,7 @@ module mm_ctrl (
 
     output                 o_ppu_start,
     output [24 * 16 - 1:0] o_acc_data,
-    output [1          :0] o_mode,
-    output                 o_findmax
+    output [1          :0] o_mode
 );
 
     genvar gi;
@@ -58,7 +57,6 @@ module mm_ctrl (
     assign o_ppu_start = ppu_start_r;
     assign o_acc_data  = acc_data;
     assign o_mode      = mode_r;
-    assign o_findmax   = (state_r == S_MAX) ? 1'b1 : 1'b0;  // to ppu: first pass to find tensor max
 
 
     //////////
@@ -224,14 +222,13 @@ module mm_ctrl (
             end
         endcase
     end
-
-    assign ram_a_addr = a_cnt_r + (row_cnt_r * `K / 64);
-    assign ram_b_addr = b_cnt_r + (a_cnt_r * `N) + (col_cnt_r * 16);
     
 
     ///////////////
     // A buffers //
     ///////////////
+
+    assign ram_a_addr = a_cnt_r + (row_cnt_r * `K / 64);
 
     generate
         for (gi = 0; gi < 16; gi = gi + 1) begin: A_BUF
@@ -253,6 +250,8 @@ module mm_ctrl (
     //////////////
     // B buffer //
     //////////////
+    
+    assign ram_b_addr = b_cnt_r + (a_cnt_r * `N) + (col_cnt_r * 16);
 
     ram #(
         .VEC_WIDTH ( 264 ),

@@ -1,3 +1,5 @@
+`include "define.v"
+
 module ppu (
     input                  i_clk,
     input                  i_rst_n,
@@ -5,7 +7,6 @@ module ppu (
     input                  i_ppu_start,
     input  [24 * 16 - 1:0] i_acc_data,
     input  [1          :0] i_mode,
-    input                  i_findmax,
     input                  i_relu_en,
 
     output                 o_ram_we,
@@ -26,14 +27,21 @@ module ppu (
 
 
     // states
-    localparam S_IDLE = 1'b0;
-    localparam S_BUSY = 1'b1;
+    localparam S_IDLE = 2'd0;
+    localparam S_MAX  = 2'd1;
+    localparam S_CALC = 2'd2;
+
+    // end tile cnt
+    localparam MAX_TILE = (`M / 16) * (`N / 16);
+    localparam CNT_W    = $clog2(MAX_TILE);
 
 
     // ctrl
-    reg                  state_w,       state_r;
+    reg  [1:0]           state_w,       state_r;
+    reg                  max_done_w,    max_done_r;
     reg  [3:0]           acc_cnt_w,     acc_cnt_r;
-    reg  [1:0]           tile_cnt_w,    tile_cnt_r;
+    reg  [CNT_W-1:0]     tile_cnt_w,    tile_cnt_r;
+    reg  [1:0]           vsq_cnt_w,     vsq_cnt_r;
     reg                  quant_start_w, quant_start_r;
 
     // scaling
@@ -67,16 +75,24 @@ module ppu (
         quant_start_w = 1'b0;
 
         state_w       = state_r;
+        max_done_w    = max_done_r;
         acc_cnt_w     = acc_cnt_r;
         tile_cnt_w    = tile_cnt_r;
+        vsq_cnt_w     = vsq_cnt_r;
 
         case (state_r)
             S_IDLE: begin
                 if (i_ppu_start) begin
-                    state_w = S_BUSY;
+                    if (i_mode == `INT4_VSQ) begin
+                        state_w = S_CALC;
+                    end else if (max_done_r) begin
+                        state_w = S_CALC;
+                    end else begin
+                        state_w = S_MAX;
+                    end
                 end
             end
-            S_BUSY: begin
+            S_MAX: begin
                 // acc cnt
                 if (acc_cnt_r == 4'd15) begin
                     acc_cnt_w = 0;
@@ -87,17 +103,64 @@ module ppu (
 
                 // tile cnt
                 if (acc_cnt_r == 4'd15) begin
-                    if (tile_cnt_r == 2'd3) begin
+                    if (tile_cnt_r == MAX_TILE - 1) begin
+                        // matrix done (find max done)
                         tile_cnt_w = 0;
+                        max_done_w = 1;
                     end else begin
-                        tile_cnt_w = tile_cnt_r + 2'd1;
+                        tile_cnt_w = tile_cnt_r + 1;
                     end
                 end
 
-                // quant start
-                if (tile_cnt_r == 2'd3 && acc_cnt_r == (4'd15 - 4'd1)) begin
+                // vsq cnt
+                if (acc_cnt_r == 4'd15) begin
+                    if (vsq_cnt_r == 2'd3) begin
+                        vsq_cnt_w = 0;
+                    end else begin
+                        vsq_cnt_w = vsq_cnt_r + 2'd1;
+                    end
+                end
+
+                // quant start (one cycle earlier)
+                if (vsq_cnt_r == 2'd3 && acc_cnt_r == (4'd15 - 4'd1)) begin
                     quant_start_w = 1'b1;
                 end
+            end
+            S_CALC: begin
+                // acc cnt
+                if (acc_cnt_r == 4'd15) begin
+                    acc_cnt_w = 0;
+                    state_w   = S_IDLE;
+                end else begin
+                    acc_cnt_w = acc_cnt_r + 4'd1;
+                end
+
+                // tile cnt
+                if (acc_cnt_r == 4'd15) begin
+                    if (tile_cnt_r == MAX_TILE - 1) begin
+                        // matrix done (calc done)
+                        tile_cnt_w = 0;
+                        max_done_w = 0;
+                    end else begin
+                        tile_cnt_w = tile_cnt_r + 1;
+                    end
+                end
+
+                // vsq cnt
+                if (acc_cnt_r == 4'd15) begin
+                    if (vsq_cnt_r == 2'd3) begin
+                        vsq_cnt_w = 0;
+                    end else begin
+                        vsq_cnt_w = vsq_cnt_r + 2'd1;
+                    end
+                end
+
+                // quant start (one cycle earlier)
+                if (vsq_cnt_r == 2'd3 && acc_cnt_r == (4'd15 - 4'd1)) begin
+                    quant_start_w = 1'b1;
+                end
+            end
+            default: begin
             end
         endcase
     end
@@ -188,8 +251,8 @@ module ppu (
     // vsq buffer //
     ////////////////
 
-    assign vsq_buf_we      = (state_r == S_BUSY) ? 1'b1 : 1'b0;
-    assign vsq_buf_addr_wr = acc_cnt_r + tile_cnt_r * 16;
+    assign vsq_buf_we      = (state_r == S_IDLE) ? 1'b0 : 1'b1;
+    assign vsq_buf_addr_wr = acc_cnt_r + vsq_cnt_r * 16;
     assign vsq_buf_data_wr = relu_res_trunc;
 
     buffer #(
@@ -237,6 +300,7 @@ module ppu (
         .i_rst_n       ( i_rst_n ),
         .i_start       ( i_ppu_start ),
         .i_data        ( relu_res ),        // TODO: use truncated data
+        
         .o_y           ( o_softmax_y ),
         .o_runmax      ( o_softmax_runmax ),
         .o_denom       ( o_softmax_denom ),
@@ -252,13 +316,17 @@ module ppu (
     always @(posedge i_clk or negedge i_rst_n) begin
         if (!i_rst_n) begin
             state_r       <= S_IDLE;
+            max_done_r    <= 0;
             acc_cnt_r     <= 0;
             tile_cnt_r    <= 0;
+            vsq_cnt_r     <= 0;
             quant_start_r <= 0;
         end else begin
             state_r       <= state_w;
+            max_done_r    <= max_done_w;
             acc_cnt_r     <= acc_cnt_w;
             tile_cnt_r    <= tile_cnt_w;
+            vsq_cnt_r     <= vsq_cnt_w;
             quant_start_r <= quant_start_w;
         end
     end

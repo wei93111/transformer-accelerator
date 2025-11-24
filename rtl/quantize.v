@@ -28,9 +28,9 @@ module quantize (
 
 
     // ctrl
-    reg                  state;
-    reg  [5:0]           quant_cnt;
-    reg                  sf_valid;
+    reg                  state_w,     state_r;
+    reg  [5:0]           quant_cnt_w, quant_cnt_r;
+    reg                  sf_valid_w,  sf_valid_r;
 
     // runmax
     reg  [17:0]          abs_data [0:15];
@@ -47,31 +47,34 @@ module quantize (
     // ctrl //
     //////////
 
-    always @(posedge i_clk or negedge i_rst_n) begin
-        if (!i_rst_n) begin
-            state     <= S_RUNMAX;
-            quant_cnt <= 6'd0;
-        end else begin
-            case (state)
-                S_RUNMAX: begin
-                    // vsq buf filled
-                    if (i_start) begin
-                        state     <= S_QUANT;
-                        quant_cnt <= 6'd0;
-                    end
+    always @(*) begin
+
+        sf_valid_w  = 1'b0;
+
+        state_w     = state_r;
+        quant_cnt_w = quant_cnt_r;
+
+        case (state_r)
+            S_RUNMAX: begin
+                if (i_start) begin
+                    state_w = S_QUANT;
                 end
-                S_QUANT: begin
-                    // quantize done
-                    if (quant_cnt == 6'd63) begin
-                        state     <= S_RUNMAX;
-                        quant_cnt <= 6'd0;
-                    end else begin
-                        quant_cnt <= quant_cnt + 6'd1;
-                        state     <= S_QUANT;
-                    end
+            end
+            S_QUANT: begin
+                // quant cnt
+                if (quant_cnt_r == 6'd63) begin
+                    quant_cnt_w = 6'd0;
+                    state_w     = S_RUNMAX;
+                end else begin
+                    quant_cnt_w = quant_cnt_r + 6'd1;
                 end
-            endcase
-        end
+
+                // sf valid (one cycle earlier)
+                if (quant_cnt_r == (6'd63 - 6'd1)) begin
+                    sf_valid_w = 1'b1;
+                end
+            end
+        endcase
     end
 
 
@@ -99,14 +102,6 @@ module quantize (
         endcase
     end
 
-    always @(posedge i_clk or negedge i_rst_n) begin
-        if (!i_rst_n) begin
-            for (i = 0; i < 16; i = i + 1) runmax_r[i] <= 18'd0;
-        end else begin
-            for (i = 0; i < 16; i = i + 1) runmax_r[i] <= runmax_w[i];
-        end
-    end
-
 
     //////////////
     // quantize //
@@ -114,17 +109,7 @@ module quantize (
 
     // sf
     assign o_sf_data  = sf_data;
-    assign o_sf_valid = sf_valid;
-
-    always @(posedge i_clk or negedge i_rst_n) begin
-        if (!i_rst_n) begin
-            sf_valid <= 1'b0;
-        end else if (state == S_QUANT && quant_cnt == (6'd63 - 6'd1)) begin
-            sf_valid <= 1'b1;
-        end else begin
-            sf_valid <= 1'b0;
-        end
-    end
+    assign o_sf_valid = sf_valid_r;
 
     generate
         for (gi = 0; gi < 16; gi = gi + 1) begin: SF_CALC
@@ -134,10 +119,10 @@ module quantize (
 
 
     // quantize
-    assign o_buf_addr = quant_cnt;  // read from vsq buffer
-    assign o_ram_addr = quant_cnt;
+    assign o_buf_addr = quant_cnt_r;  // read from vsq buffer
+    assign o_ram_addr = quant_cnt_r;
     assign o_ram_data = data_out;
-    assign o_ram_we   = (state == S_QUANT);
+    assign o_ram_we   = (state_r == S_QUANT);
 
     generate
         for (gi = 0; gi < 16; gi = gi + 1) begin: QUANTIZE
@@ -172,5 +157,24 @@ module quantize (
             truncate = (data[53]) ? ~data_abs_sat + 4'd1 : data_abs_sat;
         end
     endfunction
+
+
+    ////////////////
+    // sequential //
+    ////////////////
+
+    always @(posedge i_clk or negedge i_rst_n) begin
+        if (!i_rst_n) begin
+            state_r     <= S_RUNMAX;
+            quant_cnt_r <= 0;
+            sf_valid_r  <= 0;
+            for (i = 0; i < 16; i = i + 1) runmax_r[i] <= 0;
+        end else begin
+            state_r     <= state_w;
+            quant_cnt_r <= quant_cnt_w;
+            sf_valid_r  <= sf_valid_w;
+            for (i = 0; i < 16; i = i + 1) runmax_r[i] <= runmax_w[i];
+        end
+    end
 
 endmodule

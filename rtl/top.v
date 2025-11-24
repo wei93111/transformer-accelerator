@@ -21,7 +21,6 @@ module top (
     wire                 ppu_start;
     wire [24 * 16 - 1:0] acc_data;      // INT24 x 16 entries
     wire [1:0]           mode;
-    wire                 findmax;
 
     // ppu - output buffer interface
     wire                 ram_we;
@@ -43,7 +42,6 @@ module top (
         .o_ppu_start ( ppu_start ),
         .o_acc_data  ( acc_data ),
         .o_mode      ( mode ),
-        .o_findmax   ( findmax )
     );
 
 
@@ -55,7 +53,6 @@ module top (
         .i_ppu_start           ( ppu_start ),
         .i_acc_data            ( acc_data ),
         .i_mode                ( mode ),
-        .i_findmax             ( findmax ),
         .i_relu_en             ( i_relu_en ),
 
         .o_ram_we              ( ram_we ),
