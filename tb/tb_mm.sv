@@ -110,15 +110,16 @@ module tb_mm;
     // finish
     initial begin
         wait (mtrx_done === 1'b1);
+        #(`CYCLE * 10.0);
 
-        #(`CYCLE * 2.0);
-        $display("////////////////////////");
-        $display("// Simulation Results //");
-        $display("////////////////////////");
+        $display("==================================================================");
+        $display("Simulation Results");
+        $display("==================================================================");
+
         $display("");
+        $display("First 32 outputs:\n");
 
         errors = 0;
-        $display("First 32 outputs:\n");
         for (integer idx = 0; idx < 512*512; idx = idx + 1) begin
             if (mtrx_out[idx] !== mtrx_golden[idx]) begin
                 errors = errors + 1;
@@ -151,7 +152,6 @@ module tb_mm;
             $display("	Total of %d errors               ", errors);
         end
 
-        #(`CYCLE * 2.0);
         $finish;
     end
 

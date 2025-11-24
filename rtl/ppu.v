@@ -246,7 +246,7 @@ module ppu (
         begin
             data_abs     = (data[39]) ? ~data + 40'd1 : data;
             data_abs_rnd = (data_abs[9]) ? (data_abs >> 10) + 40'd1 : data_abs >> 10;
-            data_abs_sat = (data_abs_rnd > {12'd0, {18{1'b1}}}) ? {18{1'b1}} : data_abs_rnd[17:0];
+            data_abs_sat = (data_abs_rnd > {13'd0, {17{1'b1}}}) ? {1'b0, {17{1'b1}}} : data_abs_rnd[17:0];
             truncate     = (data[39]) ? ~data_abs_sat + 18'd1 : data_abs_sat;
         end
     endfunction

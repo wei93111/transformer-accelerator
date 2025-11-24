@@ -2,13 +2,21 @@
 `define CYCLE 10.0
 `define END_CYCLE 400
 
+`include "define.v"
+
 
 `ifdef pat0
-    `define IN "./tb/pat_requant/p0_in.dat"
+    `define IN  "./tb/pat_requant/p0_in.dat"
+    `define OUT "./tb/pat_requant/p0_out.dat"
 `elsif pat1
-    `define IN "./tb/pat_requant/p1_in.dat"
+    `define IN  "./tb/pat_requant/p1_in.dat"
+    `define OUT "./tb/pat_requant/p1_out.dat"
+`elsif pat2
+    `define IN  "./tb/pat_requant/p2_in.dat"
+    `define OUT "./tb/pat_requant/p2_out.dat"
 `else
-    `define IN "./tb/pat_requant/p0_in.dat"
+    `define IN  "./tb/pat_requant/p0_in.dat"
+    `define OUT "./tb/pat_requant/p0_out.dat"
 `endif
 
 
@@ -16,16 +24,17 @@ module tb_requant;
 
     integer i, j;
     integer data_idx;
+    integer errors;
 
 
     logic clk;
     logic rst_n;
 
-    // ppu input
+    // input
     logic                 start;
     logic [24 * 16 - 1:0] acc_data;
 
-    // ppu output
+    // output
     logic                 ram_we;
     logic [4  * 16 - 1:0] ram_data;
     logic [5          :0] ram_addr;
@@ -37,6 +46,7 @@ module tb_requant;
 
     // data storage
     logic [24 * 16 - 1:0] vector_in [0: 64 - 1];
+    logic [4  * 16 - 1:0] vector_out[0: 64 - 1];
 
 
     // clk gen
@@ -53,7 +63,7 @@ module tb_requant;
         .i_ppu_start           ( start ),
         .i_acc_data            ( acc_data ),
         .i_mode                ( `INT4_VSQ ),
-        .i_relu_en             ( 1'b0 ),
+        .i_relu_en             ( 1'b0 ),        // relu off
 
         .o_ram_we              ( ram_we ),
         .o_ram_data            ( ram_data ),
@@ -107,6 +117,9 @@ module tb_requant;
 
         // input tile
         $readmemh(`IN, vector_in);
+
+        // output golden results
+        $readmemh(`OUT, vector_out);
     end
 
 
@@ -139,23 +152,53 @@ module tb_requant;
 
     // finish
     initial begin
-        // output sf results
         wait (finish === 1'b1);
-        $display("sf results:");
-        for (i = 0; i < 16; i = i + 1) begin
-            $display("sf[%d] = %b", i, vsq_sf[i*18 +: 18]);
+        #(`CYCLE * 10.0);
+
+        $display("==================================================================");
+        $display("Simulation Results");
+        $display("==================================================================");
+
+        $display("");
+        $display("First row outputs (tolerate +/- 1 mismatch):\n");
+
+        errors = 0;
+        for (j = 0; j < 16; j = j + 1) begin
+            for (i = 0; i < 64; i = i + 1) begin
+                // allow +/- 1 error
+                if (u_ram.mem[i][j*4 +: 4] !== vector_out[i][j*4 +: 4] && u_ram.mem[i][j*4 +: 4] !== $signed(vector_out[i][j*4 +: 4]) + 4'sd1 && u_ram.mem[i][j*4 +: 4] !== $signed(vector_out[i][j*4 +: 4]) - 4'sd1) begin
+                    $display("[ERROR] ram[%d][%d] = %b, expected %b", i, j, u_ram.mem[i][j*4 +: 4], vector_out[i][j*4 +: 4]);
+                    errors = errors + 1;
+                end else if (j == 0) begin
+                    // display first row results
+                    $display("[CORRECT] [%d] Calculated: %b, Golden: %b", i, u_ram.mem[i][j*4 +: 4], vector_out[i][j*4 +: 4]);
+                end
+            end
         end
 
         $display("");
-        $display("ram results:");
 
-        // output ram results
-        #(`CYCLE * 100.0);
-        for (j = 0; j < 16; j = j + 1) begin
-            for (i = 0; i < 64; i = i + 1) begin
-                $write("%b ", u_ram.mem[i][j*4 +: 4]);
-            end
-            $write("\n");
+        if (errors == 0) begin
+            $display("");
+            $display("	//////////////////////////////               ");
+            $display("	//                          //       |\__||  ");
+            $display("	//    Congratulations !!    //      / O.O  | ");
+            $display("	//                          //    /_____   | ");
+            $display("	//    Simulation PASS!!     //   /^ ^ ^ \\  |");
+            $display("	//                          //  |^ ^ ^ ^ |w| ");
+            $display("	//////////////////////////////   \\m___m__|_|");
+            $display("");
+        end else begin
+            $display("");
+            $display("	//////////////////////////////               ");
+            $display("	//                          //       |\__||  ");
+            $display("	//    OOPS!!                //      / X,X  | ");
+            $display("	//                          //    /_____   | ");
+            $display("	//    Simulation Failed!!   //   /^ ^ ^ \\  |");
+            $display("	//                          //  |^ ^ ^ ^ |w| ");
+            $display("	//////////////////////////////   \\m___m__|_|");
+            $display("");
+            $display("	Total of %d errors               ", errors);
         end
 
         $finish;
