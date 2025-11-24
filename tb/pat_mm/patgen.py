@@ -3,9 +3,9 @@ import os
 import numpy as np
 
 
-M         = 512                        # rows of A
-K         = 256                        # cols of A / rows of B
-N         = 512                        # cols of B
+M         = 512                                  # rows of A
+K         = 256                                  # cols of A / rows of B
+N         = 512                                  # cols of B
 BIT_WIDTH = 8
 
 PAT_ID  = 1
@@ -53,47 +53,41 @@ def compute_golden_24bit(a, b):
 
 
 def write_int4_nibbles_row_major(path: Path, data_2d) -> None:
-    """Write a 2D INT4 array in row-major order: one 4-bit hex nibble per line with address."""
+    """Write a 2D INT4 array in row-major order: one 4-bit hex nibble per line (no comments)."""
     path.parent.mkdir(parents=True, exist_ok=True)
     m, n = data_2d.shape
     with path.open("w", encoding="utf-8") as f:
-        idx = 0
         # Convert signed INT4 [-8,7] to 4-bit two's complement hex nibble
         flat = data_2d.reshape(m * n)
         for val in flat.tolist():
             nib = val & 0xF
-            f.write(f"{nib:x}  // [{idx}]\n")
-            idx += 1
+            f.write(f"{nib:x}\n")
 
 
 def write_int8_bytes_row_major(path: Path, data_2d) -> None:
-    """Write a 2D INT8 array in row-major order: one 8-bit hex byte per line with address."""
+    """Write a 2D INT8 array in row-major order: one 8-bit hex byte per line (no comments)."""
     path.parent.mkdir(parents=True, exist_ok=True)
     m, n = data_2d.shape
     with path.open("w", encoding="utf-8") as f:
-        idx = 0
         flat = data_2d.reshape(m * n)
         for val in flat.tolist():
             byte = val & 0xFF
-            f.write(f"{byte:02x}  // [{idx}]\n")
-            idx += 1
+            f.write(f"{byte:02x}\n")
 
 
 def write_24bit_words_row_major(path: Path, data_2d) -> None:
-    """Write a 2D int32 array as 24-bit two's complement hex words in row-major order."""
+    """Write a 2D int32 array as 24-bit two's complement hex words in row-major order (no comments)."""
     path.parent.mkdir(parents=True, exist_ok=True)
     m, n = data_2d.shape
     with path.open("w", encoding="utf-8") as f:
-        idx = 0
         flat = data_2d.reshape(m * n)
         for val in flat.tolist():
             word = val & 0xFFFFFF
-            f.write(f"{word:06x}  // [{idx}]\n")
-            idx += 1
+            f.write(f"{word:06x}\n")
 
 
 def write_24bit_hex_words_with_address(output_path, number_of_entries, value):
-    """Write one 24-bit hex word per line with an address comment."""
+    """Write one 24-bit hex word per line (no comments)."""
     if not (0 <= value <= 0xFFFFFF):
         raise ValueError("value must be within 0x000000..0xFFFFFF for 24-bit output")
 
@@ -103,8 +97,8 @@ def write_24bit_hex_words_with_address(output_path, number_of_entries, value):
     output_path.parent.mkdir(parents=True, exist_ok=True)
 
     with output_path.open("w", encoding="utf-8") as f:
-        for address in range(number_of_entries):
-            f.write(f"{word_hex}  // [{address}]\n")
+        for _ in range(number_of_entries):
+            f.write(f"{word_hex}\n")
 
 
 def main() -> None:
