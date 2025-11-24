@@ -3,17 +3,24 @@ import os
 import numpy as np
 
 
-M       = 512                           # rows of A
-K       = 256                           # cols of A / rows of B
-N       = 512                           # cols of B
-INA_DIR = Path("tb/pat/p2_ina.dat")     # A input pattern
-INB_DIR = Path("tb/pat/p2_inb.dat")     # B input pattern
-OUT_DIR = Path("tb/pat/p2_out.dat")     # golden output pattern
+M         = 512                        # rows of A
+K         = 256                        # cols of A / rows of B
+N         = 512                        # cols of B
+BIT_WIDTH = 8
+
+PAT_ID  = 1
+INA_DIR = Path(f"tb/pat_mm/p{PAT_ID}_ina.dat")   # A input pattern
+INB_DIR = Path(f"tb/pat_mm/p{PAT_ID}_inb.dat")   # B input pattern
+OUT_DIR = Path(f"tb/pat_mm/p{PAT_ID}_out.dat")   # golden output pattern
 
 
-def generate_int4_random(m, k, n, seed=None):
-    """Generate random INT4 matrices A(m,k), B(k,n) with values in [-8, 7]."""
+def generate_random(m, k, n, bit_width, seed=None):
+    """
+    Generate random INT4 or INT8 matrices A(m,k), B(k,n).
 
+    INT4: values in [-8, 7]   (stored in int8, low nibble used)
+    INT8: values in [-128, 127]
+    """
     if seed is None:
         # Optional reproducibility via PATGEN_SEED env var
         env_seed = os.environ.get("PATGEN_SEED")
@@ -22,15 +29,22 @@ def generate_int4_random(m, k, n, seed=None):
     if seed is not None:
         np.random.seed(seed)
 
-    a = np.random.randint(-8, 8, size=(m, k), dtype=np.int8)
-    b = np.random.randint(-8, 8, size=(k, n), dtype=np.int8)
+    if bit_width == 4:
+        low, high = -8, 8
+    elif bit_width == 8:
+        low, high = -128, 128
+    else:
+        raise ValueError("BIT_WIDTH must be 4 or 8")
+
+    a = np.random.randint(low, high, size=(m, k), dtype=np.int8)
+    b = np.random.randint(low, high, size=(k, n), dtype=np.int8)
     return a, b
 
 
 def compute_golden_24bit(a, b):
-    """Compute C = A @ B with INT4 signed arithmetic; return int32 array clipped to 24-bit two's complement range.
+    """Compute C = A @ B with signed arithmetic; return int32 array.
 
-    Note: No saturation is applied in design for INT4 mode, but results are represented in 24 bits.
+    Note: No saturation is applied in design; results are represented in 24 bits.
     We mask to 24b when writing hex.
     """
     # Upcast to prevent overflow during matmul
@@ -39,7 +53,7 @@ def compute_golden_24bit(a, b):
 
 
 def write_int4_nibbles_row_major(path: Path, data_2d) -> None:
-    """Write a 2D INT4 array in row-major order: one hex nibble per line with address."""
+    """Write a 2D INT4 array in row-major order: one 4-bit hex nibble per line with address."""
     path.parent.mkdir(parents=True, exist_ok=True)
     m, n = data_2d.shape
     with path.open("w", encoding="utf-8") as f:
@@ -49,6 +63,19 @@ def write_int4_nibbles_row_major(path: Path, data_2d) -> None:
         for val in flat.tolist():
             nib = val & 0xF
             f.write(f"{nib:x}  // [{idx}]\n")
+            idx += 1
+
+
+def write_int8_bytes_row_major(path: Path, data_2d) -> None:
+    """Write a 2D INT8 array in row-major order: one 8-bit hex byte per line with address."""
+    path.parent.mkdir(parents=True, exist_ok=True)
+    m, n = data_2d.shape
+    with path.open("w", encoding="utf-8") as f:
+        idx = 0
+        flat = data_2d.reshape(m * n)
+        for val in flat.tolist():
+            byte = val & 0xFF
+            f.write(f"{byte:02x}  // [{idx}]\n")
             idx += 1
 
 
@@ -82,17 +109,25 @@ def write_24bit_hex_words_with_address(output_path, number_of_entries, value):
 
 def main() -> None:
 
-    # Generate random INT4 inputs
-    a, b = generate_int4_random(M, K, N)
+    # Generate random INT4 or INT8 inputs, depending on BIT_WIDTH
+    a, b = generate_random(M, K, N, BIT_WIDTH)
 
     # Compute golden
     c = compute_golden_24bit(a, b)
 
     # Write in raster order with address comments
-    write_int4_nibbles_row_major(INA_DIR, a)
-    write_int4_nibbles_row_major(INB_DIR, b)
+    if BIT_WIDTH == 4:
+        write_int4_nibbles_row_major(INA_DIR, a)
+        write_int4_nibbles_row_major(INB_DIR, b)
+        mode_str = "INT4"
+    else:
+        write_int8_bytes_row_major(INA_DIR, a)
+        write_int8_bytes_row_major(INB_DIR, b)
+        mode_str = "INT8"
+
     write_24bit_words_row_major(OUT_DIR, c)
 
+    print(f"Mode: {mode_str}, BIT_WIDTH = {BIT_WIDTH}")
     print(f"Wrote A pattern: {INA_DIR} ({M*K} entries)")
     print(f"Wrote B pattern: {INB_DIR} ({K*N} entries)")
     print(f"Wrote golden output: {OUT_DIR} ({M*N} entries)")

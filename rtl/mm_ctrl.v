@@ -1,17 +1,22 @@
 `include "define.v"
 
 module mm_ctrl (
-    input                  i_clk,
-    input                  i_rst_n,
-    input  [1          :0] i_mode,
-    input                  i_start,
+    input                   i_clk,
+    input                   i_rst_n,
+    input  [1          :0]  i_mode,
+    input                   i_start,
 
-    output                 o_tile_done,
-    output                 o_mtrx_done,
+    input  [264 * 16 - 1:0] i_a_data,
+    input  [264      - 1:0] i_b_data,
+    output [15          :0] o_a_addr,
+    output [15          :0] o_b_addr,
 
-    output                 o_ppu_start,
-    output [24 * 16 - 1:0] o_acc_data,
-    output [1          :0] o_mode
+    output                  o_tile_done,
+    output                  o_mtrx_done,
+
+    output                  o_ppu_start,
+    output [24 * 16 - 1:0]  o_acc_data,
+    output [1          :0]  o_mode
 );
 
     genvar gi;
@@ -22,7 +27,6 @@ module mm_ctrl (
     localparam S_MAX  = 2'd1;
     localparam S_CALC = 2'd2;
 
-
     // ctrl
     reg  [1:0]            state_w,     state_r;
     reg  [1:0]            mode_w,      mode_r;
@@ -32,24 +36,25 @@ module mm_ctrl (
 
     // addr gen
     reg  [3:0]            b_cnt_w,     b_cnt_r;        // increment every cycle
-    reg  [1:0]            a_cnt_w,     a_cnt_r;        // increment every 16 cycles
-    reg  [4:0]            col_cnt_w,   col_cnt_r;      // increment every 16 * 4 cycles
-    reg  [4:0]            row_cnt_w,   row_cnt_r;      // increment every 16 * 4 * 32 cycles
+    reg  [9:0]            a_cnt_w,     a_cnt_r;        // increment every 16 cycles
+    reg  [4:0]            col_cnt_w,   col_cnt_r;      // increment every 16 * stride cycles
+    reg  [4:0]            row_cnt_w,   row_cnt_r;      // increment every 16 * stride * 32 cycles
     reg  [3:0]            acc_addr_w,  acc_addr_r;
-
-    // ram
-    wire [6:0]            ram_a_addr;
-    wire [264 * 16 - 1:0] ram_a_data;   // 264 x 16 banks
-    wire [10:0]           ram_b_addr;
-    wire [264 - 1:0]      ram_b_data;   // 264 x 1 bank
 
     // accumulator
     wire                  acc_we;
     wire [24 * 16 - 1:0]  acc_data;     // INT24 x 16 entries
+    
 
     // mac
     wire [24 * 16 - 1:0]  mac_res;      // INT24 x 16 entries
 
+    // sizing
+    wire [31:0] stride = (mode_r == `INT8) ? (`K / 32) : (`K / 64);
+
+
+    assign o_a_addr    = a_cnt_r + (row_cnt_r * stride);
+    assign o_b_addr    = b_cnt_r + (a_cnt_r * `N) + (col_cnt_r * 16);
 
     assign o_tile_done = tile_done_r;
     assign o_mtrx_done = mtrx_done_r;
@@ -80,18 +85,18 @@ module mm_ctrl (
                 end
             end
             S_MAX: begin
-                if (b_cnt_r == 4'd15 && a_cnt_r == 2'd3 && col_cnt_r == 5'd31 && row_cnt_r == 5'd31) begin
+                if (b_cnt_r == 4'd15 && a_cnt_r == (stride - 1) && col_cnt_r == 5'd31 && row_cnt_r == 5'd31) begin
                     // mtrx max done (start calculate)
                     state_w = S_CALC;
                 end
 
                 // ppu start (one cycle earlier)
-                if (b_cnt_r == (4'd15 - 4'd1) && a_cnt_r == 2'd3) begin
+                if (b_cnt_r == (4'd15 - 4'd1) && a_cnt_r == (stride - 1)) begin
                     ppu_start_w = 1'b1;
                 end
             end
             S_CALC: begin
-                if (b_cnt_r == 4'd15 && a_cnt_r == 2'd3) begin
+                if (b_cnt_r == 4'd15 && a_cnt_r == (stride - 1)) begin
                     // tile done
                     tile_done_w = 1'b1;
                     if (col_cnt_r == 5'd31 && row_cnt_r == 5'd31) begin
@@ -102,7 +107,7 @@ module mm_ctrl (
                 end
 
                 // ppu start (one cycle earlier)
-                if (b_cnt_r == (4'd15 - 4'd1) && a_cnt_r == 2'd3) begin
+                if (b_cnt_r == (4'd15 - 4'd1) && a_cnt_r == (stride - 1)) begin
                     ppu_start_w = 1'b1;
                 end
             end
@@ -147,16 +152,16 @@ module mm_ctrl (
 
                 // a_cnt
                 if (b_cnt_r == 4'd15) begin
-                    if (a_cnt_r == 2'd3) begin
+                    if (a_cnt_r == (stride - 1)) begin
                         // tile done
                         a_cnt_w = 0;
                     end else begin
-                        a_cnt_w = a_cnt_r + 2'd1;
+                        a_cnt_w = a_cnt_r + 1;
                     end
                 end
 
                 // col_cnt
-                if (b_cnt_r == 4'd15 && a_cnt_r == 2'd3) begin
+                if (b_cnt_r == 4'd15 && a_cnt_r == (stride - 1)) begin
                     if (col_cnt_r == 5'd31) begin
                         col_cnt_w = 0;
                     end else begin
@@ -165,7 +170,7 @@ module mm_ctrl (
                 end
 
                 // row_cnt
-                if (b_cnt_r == 4'd15 && a_cnt_r == 2'd3 && col_cnt_r == 5'd31) begin
+                if (b_cnt_r == 4'd15 && a_cnt_r == (stride - 1) && col_cnt_r == 5'd31) begin
                     if (row_cnt_r == 5'd31) begin
                         // matrix done
                         row_cnt_w = 0;
@@ -191,16 +196,16 @@ module mm_ctrl (
 
                 // a_cnt
                 if (b_cnt_r == 4'd15) begin
-                    if (a_cnt_r == 2'd3) begin
+                    if (a_cnt_r == (stride - 1)) begin
                         // tile done
                         a_cnt_w = 0;
                     end else begin
-                        a_cnt_w = a_cnt_r + 2'd1;
+                        a_cnt_w = a_cnt_r + 1;
                     end
                 end
 
                 // col_cnt
-                if (b_cnt_r == 4'd15 && a_cnt_r == 2'd3) begin
+                if (b_cnt_r == 4'd15 && a_cnt_r == (stride - 1)) begin
                     if (col_cnt_r == 5'd31) begin
                         col_cnt_w = 0;
                     end else begin
@@ -209,7 +214,7 @@ module mm_ctrl (
                 end
 
                 // row_cnt
-                if (b_cnt_r == 4'd15 && a_cnt_r == 2'd3 && col_cnt_r == 5'd31) begin
+                if (b_cnt_r == 4'd15 && a_cnt_r == (stride - 1) && col_cnt_r == 5'd31) begin
                     if (row_cnt_r == 5'd31) begin
                         // matrix done
                         row_cnt_w = 0;
@@ -225,61 +230,19 @@ module mm_ctrl (
     
 
     ///////////////
-    // A buffers //
-    ///////////////
-
-    assign ram_a_addr = a_cnt_r + (row_cnt_r * `K / 64);
-
-    generate
-        for (gi = 0; gi < 16; gi = gi + 1) begin: A_BUF
-            ram #(
-                .VEC_WIDTH ( 264 ),
-                .ARR_DEPTH ( 128 )
-            ) ram_a (
-                .i_clk   ( i_clk ),
-                .i_rst_n ( 1'b1 ),
-                .i_we    ( 1'b0 ),
-                .i_addr  ( ram_a_addr ),
-                .i_data  ( 264'd0 ),
-                .o_data  ( ram_a_data[gi*264 +: 264] )
-            );
-        end
-    endgenerate
-
-
-    //////////////
-    // B buffer //
-    //////////////
-    
-    assign ram_b_addr = b_cnt_r + (a_cnt_r * `N) + (col_cnt_r * 16);
-
-    ram #(
-        .VEC_WIDTH ( 264 ),
-        .ARR_DEPTH ( 2048 )
-    ) ram_b (
-        .i_clk   ( i_clk ),
-        .i_rst_n ( 1'b1 ),
-        .i_we    ( 1'b0 ),
-        .i_addr  ( ram_b_addr ),
-        .i_data  ( 264'd0 ),
-        .o_data  ( ram_b_data )
-    );
-    
-
-    ///////////////
     // mac units //
     ///////////////
 
     generate
         for (gi = 0; gi < 16; gi = gi + 1) begin: MAC_UNIT
-            wire [23:0] psum = (a_cnt_r == 2'd0) ? 24'd0 : acc_data[gi*24 +: 24];  // new round of accumulation
+            wire [23:0] psum = (a_cnt_r == 0) ? 24'd0 : acc_data[gi*24 +: 24];  // new round of accumulation
             mac mac_unit (
                 .i_mode    ( mode_r ),
                 .i_psum    ( psum ),
-                .i_a       ( ram_a_data[gi*264+8 +: 256] ),
-                .i_b       ( ram_b_data[       8 +: 256] ),
-                .i_scale_a ( ram_a_data[gi*264 +: 8] ),
-                .i_scale_b ( ram_b_data[     0 +: 8] ),
+                .i_a       ( i_a_data[gi*264+8 +: 256] ),
+                .i_b       ( i_b_data[       8 +: 256] ),
+                .i_scale_a ( i_a_data[gi*264 +: 8] ),
+                .i_scale_b ( i_b_data[     0 +: 8] ),
                 .o_result  ( mac_res[gi*24 +: 24] )
             );
         end
@@ -295,7 +258,7 @@ module mm_ctrl (
     buffer #(
         .VEC_WIDTH ( 24 * 16 ),
         .ARR_DEPTH ( 16 )
-    ) acc (
+    ) accumulator (
         .i_clk     ( i_clk ),
         .i_rst_n   ( i_rst_n ),
         .i_we      ( acc_we ),

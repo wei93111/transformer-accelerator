@@ -41,12 +41,10 @@ module tb_requant;
 
     logic                 finish;
     logic [18 * 16 - 1:0] vsq_sf;
-    logic [17         :0] int4_sf;
-    logic [17         :0] int8_sf;
 
     // data storage
-    logic [24 * 16 - 1:0] vector_in [0: 64 - 1];
-    logic [4  * 16 - 1:0] vector_out[0: 64 - 1];
+    logic [24 * 16 - 1:0] vector_in     [0: 64 - 1];
+    logic [4  * 16 - 1:0] vector_out    [0: 64 - 1];
 
 
     // clk gen
@@ -70,8 +68,8 @@ module tb_requant;
         .o_ram_addr            ( ram_addr ),
 
         .o_vsq_sf              ( vsq_sf ),
-        .o_int4_sf             ( int4_sf ),
-        .o_int8_sf             ( int8_sf ),
+        .o_int4_sf             (  ),
+        .o_int8_sf             (  ),
         .o_finish              ( finish ),
 
         .o_softmax_y           (  ),

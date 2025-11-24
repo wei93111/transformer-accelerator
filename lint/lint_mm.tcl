@@ -1,5 +1,5 @@
 # read files
-read_file -type verilog {define.v mm_ctrl.v ram.v buffer.v mac.v vec_product.v}
+read_file -type verilog {define.v mm_ctrl.v buffer.v mac.v vec_product.v}
 set DESIGN "mm_ctrl"
 set_option top $DESIGN
 

@@ -1,3 +1,3 @@
 cd rtl
-sg_shell -tcl ../lint/lint_ppu.tcl
+sg_shell -tcl ../lint/lint_mm.tcl
 cd ..
