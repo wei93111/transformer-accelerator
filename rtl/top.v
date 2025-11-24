@@ -5,8 +5,10 @@ module top (
     input                  i_relu_en,
     input                  i_start,
 
-    output [18 * 16 - 1:0] o_sf_data,
-    output                 o_sf_valid,
+    output [18 * 16 - 1:0] o_vsq_sf,
+    output [17         :0] o_int4_sf,
+    output [17         :0] o_int8_sf,
+    output                 o_finish,
 
     output [8  * 16 - 1:0] o_softmax_y,
     output [30 * 16 - 1:0] o_softmax_runmax,
@@ -59,8 +61,10 @@ module top (
         .o_ram_data            ( ram_data ),
         .o_ram_addr            ( ram_addr ),
 
-        .o_sf_data             ( o_sf_data ),
-        .o_sf_valid            ( o_sf_valid ),
+        .o_vsq_sf              ( o_vsq_sf ),
+        .o_int4_sf             ( o_int4_sf ),
+        .o_int8_sf             ( o_int8_sf ),
+        .o_finish              ( o_finish ),
 
         .o_softmax_y           ( o_softmax_y ),
         .o_softmax_runmax      ( o_softmax_runmax ),

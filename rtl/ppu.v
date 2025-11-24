@@ -13,8 +13,10 @@ module ppu (
     output [4  * 16 - 1:0] o_ram_data,
     output [5          :0] o_ram_addr,
 
-    output [18 * 16 - 1:0] o_sf_data,
-    output                 o_sf_valid,
+    output [18 * 16 - 1:0] o_vsq_sf,
+    output [17         :0] o_int4_sf,
+    output [17         :0] o_int8_sf,
+    output                 o_finish,
 
     output [8  * 16 - 1:0] o_softmax_y,
     output [30 * 16 - 1:0] o_softmax_runmax,
@@ -103,10 +105,9 @@ module ppu (
 
                 // tile cnt
                 if (acc_cnt_r == 4'd15) begin
-                    if (tile_cnt_r == MAX_TILE - 1) begin
-                        // matrix done (find max done)
+                    if (tile_cnt_r == (MAX_TILE - 1)) begin
+                        // matrix done
                         tile_cnt_w = 0;
-                        max_done_w = 1;
                     end else begin
                         tile_cnt_w = tile_cnt_r + 1;
                     end
@@ -121,9 +122,9 @@ module ppu (
                     end
                 end
 
-                // quant start (one cycle earlier)
-                if (vsq_cnt_r == 2'd3 && acc_cnt_r == (4'd15 - 4'd1)) begin
-                    quant_start_w = 1'b1;
+                // max done (one cycle earlier)
+                if (tile_cnt_r == (MAX_TILE - 1) && acc_cnt_r == (4'd15 - 4'd1)) begin
+                    max_done_w = 1'b1;
                 end
             end
             S_CALC: begin
@@ -137,10 +138,9 @@ module ppu (
 
                 // tile cnt
                 if (acc_cnt_r == 4'd15) begin
-                    if (tile_cnt_r == MAX_TILE - 1) begin
-                        // matrix done (calc done)
+                    if (tile_cnt_r == (MAX_TILE - 1)) begin
+                        // matrix done
                         tile_cnt_w = 0;
-                        max_done_w = 0;
                     end else begin
                         tile_cnt_w = tile_cnt_r + 1;
                     end
@@ -153,6 +153,11 @@ module ppu (
                     end else begin
                         vsq_cnt_w = vsq_cnt_r + 2'd1;
                     end
+                end
+
+                // max done (one cycle earlier)
+                if (tile_cnt_r == (MAX_TILE - 1) && acc_cnt_r == (4'd15 - 4'd1)) begin
+                    max_done_w = 1'b0;
                 end
 
                 // quant start (one cycle earlier)
@@ -276,7 +281,10 @@ module ppu (
     quantize quant (
         .i_clk      ( i_clk ),
         .i_rst_n    ( i_rst_n ),
+
         .i_start    ( quant_start_r ),
+        .i_mode     ( i_mode ),
+        .i_max_done ( max_done_r ),
         .i_data     ( relu_res_trunc ),
 
         .i_buf_data ( vsq_buf_data_rd ),
@@ -286,8 +294,10 @@ module ppu (
         .o_ram_data ( o_ram_data ),
         .o_ram_addr ( o_ram_addr ),
 
-        .o_sf_data  ( o_sf_data ),
-        .o_sf_valid ( o_sf_valid )
+        .o_vsq_sf   ( o_vsq_sf ),
+        .o_int4_sf  ( o_int4_sf ),
+        .o_int8_sf  ( o_int8_sf ),
+        .o_finish   ( o_finish )
     );
 
 

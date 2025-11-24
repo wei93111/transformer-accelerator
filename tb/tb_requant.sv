@@ -30,8 +30,10 @@ module tb_requant;
     logic [4  * 16 - 1:0] ram_data;
     logic [5          :0] ram_addr;
 
-    logic                 sf_valid;
-    logic [18 * 16 - 1:0] sf_data;
+    logic                 finish;
+    logic [18 * 16 - 1:0] vsq_sf;
+    logic [17         :0] int4_sf;
+    logic [17         :0] int8_sf;
 
     // data storage
     logic [24 * 16 - 1:0] vector_in [0: 64 - 1];
@@ -50,14 +52,17 @@ module tb_requant;
         .i_rst_n               ( rst_n ),
         .i_ppu_start           ( start ),
         .i_acc_data            ( acc_data ),
+        .i_mode                ( `INT4_VSQ ),
         .i_relu_en             ( 1'b0 ),
 
         .o_ram_we              ( ram_we ),
         .o_ram_data            ( ram_data ),
         .o_ram_addr            ( ram_addr ),
 
-        .o_sf_valid            ( sf_valid ),
-        .o_sf_data             ( sf_data ),
+        .o_vsq_sf              ( vsq_sf ),
+        .o_int4_sf             ( int4_sf ),
+        .o_int8_sf             ( int8_sf ),
+        .o_finish              ( finish ),
 
         .o_softmax_y           (  ),
         .o_softmax_runmax      (  ),
@@ -135,10 +140,10 @@ module tb_requant;
     // finish
     initial begin
         // output sf results
-        wait (sf_valid === 1'b1);
+        wait (finish === 1'b1);
         $display("sf results:");
         for (i = 0; i < 16; i = i + 1) begin
-            $display("sf[%d] = %b", i, sf_data[i*18 +: 18]);
+            $display("sf[%d] = %b", i, vsq_sf[i*18 +: 18]);
         end
 
         $display("");
