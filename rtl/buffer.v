@@ -1,7 +1,6 @@
 module buffer #(
     parameter VEC_WIDTH  = 384,
-    parameter ARR_DEPTH  = 16,
-    parameter ADDR_WIDTH = $clog2(ARR_DEPTH)
+    parameter ARR_DEPTH  = 16
 )(
     input                   i_clk,
     input                   i_rst_n,

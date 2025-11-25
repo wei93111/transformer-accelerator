@@ -216,32 +216,32 @@ module mm_ctrl (
     end
     
 
-    ///////////////
-    // mac units //
-    ///////////////
+    /////////
+    // mac //
+    /////////
 
     generate
         for (gi = 0; gi < `VL; gi = gi + 1) begin: MAC_UNIT
             wire [`ACC_W - 1:0] psum;
             wire [`DAT_W - 1:0] a_data;
             wire [`DAT_W - 1:0] b_data;
-            wire [`SF_W  - 1:0] a_scale;
-            wire [`SF_W  - 1:0] b_scale;
+            wire [`SF_W  - 1:0] a_sf;
+            wire [`SF_W  - 1:0] b_sf;
             wire [`ACC_W - 1:0] result;
 
             assign psum    = (a_cnt_r == 0) ? 0 : acc_data[gi * `ACC_W +: `ACC_W];  // new round of accumulation
             assign a_data  = i_a_data[`SF_W + gi * `VEC_W +: `DAT_W];
             assign b_data  = i_b_data[`SF_W               +: `DAT_W];
-            assign a_scale = i_a_data[        gi * `VEC_W +:  `SF_W];
-            assign b_scale = i_b_data[0                   +:  `SF_W];
+            assign a_sf    = i_a_data[        gi * `VEC_W +:  `SF_W];
+            assign b_sf    = i_b_data[0                   +:  `SF_W];
 
             mac mac_unit (
                 .i_mode    ( mode_r ),
                 .i_psum    ( psum ),
-                .i_a       ( a_data ),
-                .i_b       ( b_data ),
-                .i_scale_a ( a_scale ),
-                .i_scale_b ( b_scale ),
+                .i_a_data  ( a_data ),
+                .i_b_data  ( b_data ),
+                .i_a_sf    ( a_sf ),
+                .i_b_sf    ( b_sf ),
                 .o_result  ( result )
             );
 

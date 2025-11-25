@@ -18,6 +18,10 @@
     // data width
     `define INT4_DATA_W 4
     `define INT8_DATA_W 8
+    `define INT4_PROD_W 14
+    `define INT8_PROD_W 21
+
+    `define ADDR_W      16
     `define ACC_W       24
     `define VEC_W       264
     `define DAT_W       256

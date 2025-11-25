@@ -1,68 +1,59 @@
 `include "define.v"
 
 module mac (
-    input  [1         :0] i_mode,     // mode = 0: INT8 / 1: INT4 / 2: INT4_VSQ
-    input  [`ACC_W - 1:0] i_psum,       // partial sum in
-    input  [`DAT_W - 1:0] i_a,          // flattened a vector
-    input  [`DAT_W - 1:0] i_b,          // flattened b vector
-    input  [`SF_W  - 1:0] i_scale_a,    // a vsq scale factor
-    input  [`SF_W  - 1:0] i_scale_b,    // b vsq scale factor
-    output [`ACC_W - 1:0] o_result      // result = partial sum + vector dot product
+    input  [1         :0] i_mode,
+    input  [`ACC_W - 1:0] i_psum,
+    input  [`DAT_W - 1:0] i_a_data,
+    input  [`DAT_W - 1:0] i_b_data,
+    input  [`SF_W  - 1:0] i_a_sf,
+    input  [`SF_W  - 1:0] i_b_sf,
+    output [`ACC_W - 1:0] o_result
 );
 
     // gate signals
-    wire         int8_gate, int4_gate, vsq_gate;
+    wire                      int4_gate;
+    wire                      int8_gate;
+    wire                      vsq_gate;
 
     // gated b / psum
-    wire [`DAT_W - 1:0] int8_b_gated;
-    wire [`DAT_W - 1:0] int4_b_gated;
-    wire [`SF_W  - 1:0] scale_b_gated;
-    wire [`ACC_W - 1:0] int8_psum_gated, int4_psum_gated, vsq_psum_gated;
+    wire [`DAT_W       - 1:0] int4_b_gated;
+    wire [`DAT_W       - 1:0] int8_b_gated;
+    wire [`SF_W        - 1:0] sf_b_gated;
+    wire [`ACC_W       - 1:0] int4_psum_gated;
+    wire [`ACC_W       - 1:0] int8_psum_gated;
+    wire [`ACC_W       - 1:0] vsq_psum_gated;
 
-    // int8 results
-    wire [20:0]  int8_product;
-    wire [`ACC_W - 1:0] int8_result;
+    // int4 datapath
+    wire [`INT4_PROD_W - 1:0] int4_product;
+    wire [`ACC_W          :0] int4_res_full;
+    wire [`ACC_W       - 1:0] int4_res;
 
-    // int4 results
-    wire [13:0]  int4_product;
-    wire [`ACC_W - 1:0] int4_result;
+    // int8 datapath
+    wire [`INT8_PROD_W - 1:0] int8_product;
+    wire [`ACC_W          :0] int8_res_full;
+    wire [`ACC_W       - 1:0] int8_res;
 
     // vsq datapath
-    wire [15:0]  scale_mult_full;
-    wire [7:0]   scale_mult_round;
-    wire [22:0]  vsq_product;
-    wire [23:0]  vsq_result_tmp;
-    wire [23:0]  vsq_result;
-    wire         vsq_overflow;
+    wire [`SF_W * 2    - 1:0] sf_mult;
+    wire [`ACC_W       - 1:0] vsq_product;
+    wire [`ACC_W          :0] vsq_res_full;
+    wire [`ACC_W       - 1:0] vsq_res;
 
 
-    // input gating
-    assign int8_gate = (i_mode == `INT8);
-    assign int4_gate = (i_mode == `INT4 || i_mode == `INT4_VSQ);
-    assign vsq_gate  = (i_mode == `INT4_VSQ);
+    ////////////
+    // gating //
+    ////////////
 
-    assign int8_b_gated    = {256{int8_gate}} & i_b;
-    assign int4_b_gated    = {256{int4_gate}} & i_b;
-    assign scale_b_gated   = {8{vsq_gate}}    & i_scale_b;
-    assign int8_psum_gated = {24{int8_gate}}  & i_psum;
-    assign int4_psum_gated = {24{int4_gate}}  & i_psum;
-    assign vsq_psum_gated  = {24{vsq_gate}}   & i_psum;
+    assign int4_gate       = (i_mode == `INT4 || i_mode == `INT4_VSQ);
+    assign int8_gate       = (i_mode == `INT8);
+    assign vsq_gate        = (i_mode == `INT4_VSQ);
 
-
-    //////////////
-    // int8 mac //
-    //////////////
-
-    vec_product #(
-        .BIT_WIDTH ( `INT8_DATA_W ),
-        .VEC_SIZE  ( `INT8_VS )
-    ) int8_vp (
-        .i_a       ( i_a ),
-        .i_b       ( int8_b_gated ),
-        .o_product ( int8_product )
-    );
-
-    assign int8_result = $signed(int8_psum_gated) + $signed(int8_product);      // TODO: saturation
+    assign int4_b_gated    = {`DAT_W{int4_gate}} & i_b_data;
+    assign int8_b_gated    = {`DAT_W{int8_gate}} & i_b_data;
+    assign sf_b_gated      = {`SF_W{vsq_gate}}   & i_b_sf;
+    assign int4_psum_gated = {`ACC_W{int4_gate}} & i_psum;
+    assign int8_psum_gated = {`ACC_W{int8_gate}} & i_psum;
+    assign vsq_psum_gated  = {`ACC_W{vsq_gate}}  & i_psum;
 
 
     //////////////
@@ -70,33 +61,63 @@ module mac (
     //////////////
 
     vec_product #(
-        .BIT_WIDTH ( `INT4_DATA_W ),
-        .VEC_SIZE  ( `INT4_VS )
+        .DATA_W ( `INT4_DATA_W ),
+        .RES_W  ( `INT4_PROD_W ),
+        .VS     ( `INT4_VS )
     ) int4_vp (
-        .i_a       ( i_a ),
+        .i_a       ( i_a_data ),
         .i_b       ( int4_b_gated ),
         .o_product ( int4_product )
     );
 
-    assign int4_result = $signed(int4_psum_gated) + $signed(int4_product);      // TODO: saturation
+    assign int4_res_full = $signed(int4_psum_gated) + $signed(int4_product);
+    assign int4_res      = saturate(int4_res_full);
+
+
+    //////////////
+    // int8 mac //
+    //////////////
+
+    vec_product #(
+        .DATA_W ( `INT8_DATA_W ),
+        .RES_W  ( `INT8_PROD_W ),
+        .VS     ( `INT8_VS )
+    ) int8_vp (
+        .i_a       ( i_a_data ),
+        .i_b       ( int8_b_gated ),
+        .o_product ( int8_product )
+    );
+
+    assign int8_res_full = $signed(int8_psum_gated) + $signed(int8_product);
+    assign int8_res      = saturate(int8_res_full);
 
 
     /////////
     // VSQ //
     /////////
 
-    assign scale_mult_full  = i_scale_a * scale_b_gated;
-    assign scale_mult_round = (scale_mult_full + 16'd128) >> 8;                             // rounding
-    assign vsq_product      = $signed(int4_product) * $signed({1'b0, scale_mult_round});    // TODO: need to lshift 8 bits back later
+    assign sf_mult      = i_a_sf * sf_b_gated;
+    assign vsq_product  = $signed(int4_product) * $signed({1'b0, sf_mult});
+    assign vsq_res_full = $signed(vsq_psum_gated) + $signed(vsq_product);
+    assign vsq_res      = saturate(vsq_res_full);
 
-    assign vsq_result_tmp   = $signed(vsq_psum_gated) + $signed(vsq_product);
-    assign vsq_overflow     = (vsq_psum_gated[23] == vsq_product[22]) && (vsq_result_tmp[23] != vsq_psum_gated[23]);
-    assign vsq_result       = (~vsq_overflow)      ? vsq_result_tmp :
-                              (vsq_psum_gated[23]) ? {1'b1, 23'd0}  : {1'b0, 23'd1};          // saturation
+
+    function automatic [`ACC_W - 1:0] saturate;
+        input [`ACC_W :0] data;
+
+        reg [`ACC_W    :0] data_abs;
+        reg [`ACC_W - 1:0] data_abs_sat;
+        
+        begin
+            data_abs     = (data[`ACC_W]) ? ~data + 1 : data;
+            data_abs_sat = (data_abs > {(`ACC_W - 1){1'b1}}) ? {1'b0, {(`ACC_W - 1){1'b1}}} : data_abs[`ACC_W - 1:0];
+            saturate     = (data[`ACC_W]) ? ~data_abs_sat + 1 : data_abs_sat;
+        end
+    endfunction
 
 
     // output
-    assign o_result = (i_mode == `INT8) ? int8_result :
-                      (i_mode == `INT4) ? int4_result : vsq_result;
+    assign o_result = (i_mode == `INT8) ? int8_res :
+                      (i_mode == `INT4) ? int4_res : vsq_res;
 
 endmodule
