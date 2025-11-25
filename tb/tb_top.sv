@@ -11,7 +11,7 @@
     `define IN_SFB "./tb/pat_mm/p0_insfb.dat"
     `define OUT    "./tb/pat_mm/p0_out.dat"
     `define MODE   `INT4
-    `define DATA_W `INT4_DATA_W
+    `define DATA_W `DATA4_W
     `define VS     `INT4_VS
 `elsif pat1
     `define IN_A   "./tb/pat_mm/p1_ina.dat"
@@ -20,7 +20,7 @@
     `define IN_SFB "./tb/pat_mm/p1_insfb.dat"
     `define OUT    "./tb/pat_mm/p1_out.dat"
     `define MODE   `INT8
-    `define DATA_W `INT8_DATA_W
+    `define DATA_W `DATA8_W
     `define VS     `INT8_VS
 `elsif pat2
     `define IN_A   "./tb/pat_mm/p2_ina.dat"
@@ -29,7 +29,7 @@
     `define IN_SFB "./tb/pat_mm/p2_insfb.dat"
     `define OUT    "./tb/pat_mm/p2_out.dat"
     `define MODE   `INT4_VSQ
-    `define DATA_W `INT4_DATA_W
+    `define DATA_W `DATA4_W
     `define VS     `INT4_VS
 `else
     `define IN_A   "./tb/pat_mm/p0_ina.dat"
@@ -38,7 +38,7 @@
     `define IN_SFB "./tb/pat_mm/p0_insfb.dat"
     `define OUT    "./tb/pat_mm/p0_out.dat"
     `define MODE   `INT4
-    `define DATA_W `INT4_DATA_W
+    `define DATA_W `DATA4_W
     `define VS     `INT4_VS
 `endif
 
@@ -48,43 +48,49 @@
 `define STRIDE (`K / `VS)
 
 
-module tb_mm;
+module tb_top;
 
     genvar  gi;
     integer errors;
     integer row_grp, vec, entry, col, row;
 
 
-    logic clk;
-    logic rst_n;
+    logic                        clk;
+    logic                        rst_n;
 
     // interface
-    logic [1               :0] mode;
-    logic                      start;
-    logic                      tile_done;
-    logic                      mtrx_done;
+    logic [1                 :0] mode;
+    logic                        start;
 
-    logic [`VEC_W * `VL - 1:0] a_data;
-    logic [`VEC_W       - 1:0] b_data;
-    logic [15              :0] a_addr;
-    logic [15              :0] b_addr;
+    logic [`VEC_W * `VL   - 1:0] a_data;
+    logic [`VEC_W         - 1:0] b_data;
+    logic [`ADDR_W        - 1:0] a_addr;
+    logic [`ADDR_W        - 1:0] b_addr;
+
+    logic                        out_we;
+    logic [`DATA8_W * `VL - 1:0] out_data;
+    logic [`ADDR_W        - 1:0] out_addr;
+
+    logic [`TRUNC_W * `VL - 1:0] vsq_sf;
+    logic [`TRUNC_W       - 1:0] int4_sf;
+    logic [`TRUNC_W       - 1:0] int8_sf;
+
+    logic                        finish;
+    logic                        vec_done;
 
     // matrices (raster scan)
-    logic [`DATA_W      - 1:0] mtrx_a      [0:`M * `K - 1];
-    logic [`DATA_W      - 1:0] mtrx_b      [0:`K * `N - 1];
-    logic [`ACC_W       - 1:0] mtrx_golden [0:`M * `N - 1];
-    logic [`ACC_W       - 1:0] mtrx_out    [0:`M * `N - 1];
+    logic [`DATA_W        - 1:0] mtrx_a      [0:`M * `K - 1];
+    logic [`DATA_W        - 1:0] mtrx_b      [0:`K * `N - 1];
+    logic [`ACC_W         - 1:0] mtrx_golden [0:`M * `N - 1];
+    logic [`ACC_W         - 1:0] mtrx_out    [0:`M * `N - 1];
 
     // sf in
-    logic [`SF_W        - 1:0] sf_a        [0:`M * `K / `VS - 1];
-    logic [`SF_W        - 1:0] sf_b        [0:`K * `N / `VS - 1];
+    logic [`SF_W          - 1:0] sf_a        [0:`M * `K / `VS - 1];
+    logic [`SF_W          - 1:0] sf_b        [0:`K * `N / `VS - 1];
 
     // vars
-    logic [15              :0] tile_cnt;
-    logic [15              :0] tile_row;
-    logic [15              :0] tile_col;
-    logic [`DAT_W       - 1:0] data;
-    logic [`SF_W        - 1:0] sf;
+    logic [`DAT_W         - 1:0] data;
+    logic [`SF_W          - 1:0] sf;
 
 
     // clk gen
@@ -94,24 +100,37 @@ module tb_mm;
     );
 
 
-    // mm_ctrl
-    mm_ctrl u_mm_ctrl (
-        .i_clk       ( clk ),
-        .i_rst_n     ( rst_n ),
-        .i_mode      ( mode ),
-        .i_start     ( start ),
+    // top
+    top u_top (
+        .i_clk                 ( clk ),
+        .i_rst_n               ( rst_n ),
+        .i_mode                ( mode ),
+        .i_relu_en             ( 1'b0 ),
+        .i_start               ( start ),
 
-        .i_a_data    ( a_data ),
-        .i_b_data    ( b_data ),
-        .o_a_addr    ( a_addr ),
-        .o_b_addr    ( b_addr ),
+        .i_a_data              ( a_data ),
+        .i_b_data              ( b_data ),
+        .o_a_addr              ( a_addr ),
+        .o_b_addr              ( b_addr ),
 
-        .o_tile_done ( tile_done ),
-        .o_mtrx_done ( mtrx_done ),
-        
-        .o_ppu_start ( ),
-        .o_acc_data  ( ),
-        .o_mode      ( )
+        .o_out_we              ( out_we ),
+        .o_out_data            ( out_data ),
+        .o_out_addr            ( out_addr ),
+
+        .o_vsq_sf              ( vsq_sf ),
+        .o_int4_sf             ( int4_sf ),
+        .o_int8_sf             ( int8_sf ),
+
+        .o_softmax_y           (  ),
+        .o_softmax_runmax      (  ),
+        .o_softmax_denom       (  ),
+        .o_softmax_y_valid     (  ),
+        .o_softmax_denom_valid (  ),
+
+        .o_tile_done           (  ),
+        .o_mtrx_done           (  ),
+        .o_vec_done            ( vec_done ),
+        .o_finish              ( finish )
     );
 
 
@@ -147,11 +166,25 @@ module tb_mm;
     );
 
 
-    // // dump waveform
-    // initial begin
-    //     $fsdbDumpfile("mm.fsdb");
-    //     $fsdbDumpvars(0, tb_mm, "+mda");
-    // end
+    // output buffer
+    ram #(
+        .WIDTH ( `DATA8_W * `VL ),
+        .DEPTH ( `VS )
+    ) u_ram_out (
+        .i_clk   ( clk ),
+        .i_rst_n ( rst_n ),
+        .i_we    ( out_we ),
+        .i_addr  ( out_addr ),
+        .i_data  ( out_data ),
+        .o_data  ( {(`DATA8_W * `VL){1'b0}} )
+    );
+
+
+    // dump waveform
+    initial begin
+        $fsdbDumpfile("top.fsdb");
+        $fsdbDumpvars(1, tb_top, "+mda");
+    end
 
 
     // stimulus
@@ -162,7 +195,6 @@ module tb_mm;
         wait (rst_n === 1'b0);
         start    = 0;
         mode     = 0;
-        tile_cnt = 0;
         wait (rst_n === 1'b1);
 
         // start
@@ -176,23 +208,18 @@ module tb_mm;
     end
 
 
-    // save each tile output
-    assign tile_row = tile_cnt / (`N / `VL);
-    assign tile_col = tile_cnt - (tile_row * (`N / `VL));
-
-    always @(posedge tile_done) begin
-        for (col = 0; col < `VL; col = col + 1) begin
-            for (row = 0; row < `VL; row = row + 1) begin
-                mtrx_out[(tile_row * `VL + row) * `N + (tile_col * `VL + col)] = u_mm_ctrl.accumulator.registers[col][row * `ACC_W +: `ACC_W];
-            end
-        end
-        tile_cnt <= tile_cnt + 1;
+    // store vec outputs
+    initial begin
+        wait (vec_done === 1'b1);
+        // for (integer idx = 0; idx < `VS; idx = idx + 1) begin
+        //     mtrx_out[out_addr + idx] = out_data[idx * `DATA8_W +: `DATA8_W];
+        // end
     end
 
 
     // finish
     initial begin
-        wait (mtrx_done === 1'b1);
+        wait (finish === 1'b1);
         #(`CYCLE * 10.0);
 
         $display("==================================================================");

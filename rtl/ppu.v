@@ -1,28 +1,29 @@
 `include "define.v"
 
 module ppu (
-    input                  i_clk,
-    input                  i_rst_n,
+    input                         i_clk,
+    input                         i_rst_n,
 
-    input                  i_ppu_start,
-    input  [24 * 16 - 1:0] i_acc_data,
-    input  [1          :0] i_mode,
-    input                  i_relu_en,
+    input                         i_ppu_start,
+    input  [`ACC_W * `VL   - 1:0] i_acc_data,
+    input  [1                 :0] i_mode,
+    input                         i_relu_en,
 
-    output                 o_out_we,
-    output [8  * 16 - 1:0] o_out_data,
-    output [`ADDR_W - 1:0] o_out_addr,
+    output                        o_out_we,
+    output [`DATA8_W * `VL - 1:0] o_out_data,
+    output [`ADDR_W        - 1:0] o_out_addr,
 
-    output [18 * 16 - 1:0] o_vsq_sf,
-    output [17         :0] o_int4_sf,
-    output [17         :0] o_int8_sf,
-    output                 o_finish,
+    output [`TRUNC_W * `VL - 1:0] o_vsq_sf,
+    output [`TRUNC_W       - 1:0] o_int4_sf,
+    output [`TRUNC_W       - 1:0] o_int8_sf,
+    output                        o_vec_done,
+    output                        o_finish,
 
-    output [8  * 16 - 1:0] o_softmax_y,
-    output [30 * 16 - 1:0] o_softmax_runmax,
-    output [16 * 16 - 1:0] o_softmax_denom,
-    output                 o_softmax_y_valid,
-    output                 o_softmax_denom_valid
+    output [8  * 16        - 1:0] o_softmax_y,
+    output [30 * 16        - 1:0] o_softmax_runmax,
+    output [16 * 16        - 1:0] o_softmax_denom,
+    output                        o_softmax_y_valid,
+    output                        o_softmax_denom_valid
 );
 
     genvar gi;
@@ -33,39 +34,40 @@ module ppu (
     localparam S_MAX  = 2'd1;
     localparam S_CALC = 2'd2;
 
-    // end tile cnt
-    localparam MAX_TILE = (`M / 16) * (`N / 16);
-    localparam CNT_W    = $clog2(MAX_TILE);
-
 
     // ctrl
-    reg  [1:0]           state_w,       state_r;
-    reg                  max_done_w,    max_done_r;
-    reg  [3:0]           acc_cnt_w,     acc_cnt_r;
-    reg  [CNT_W-1:0]     tile_cnt_w,    tile_cnt_r;
-    reg  [1:0]           vsq_cnt_w,     vsq_cnt_r;
-    reg                  quant_start_w, quant_start_r;
+    reg  [1                 :0] state_w,       state_r;
+    reg                         max_done_w,    max_done_r;
+    reg                         qnt_start_w,   quant_start_r;
+    reg  [`ADDR_W        - 1:0] acc_cnt_w,     acc_cnt_r;
+    reg  [`ADDR_W        - 1:0] tile_cnt_w,    tile_cnt_r;
+    reg  [`ADDR_W        - 1:0] vsq_cnt_w,     vsq_cnt_r;
 
     // scaling
-    wire [`ADDR_W - 1:0] scale_addr;
-    wire [16 * 16 - 1:0] scale_data;        // Q6.10  x 16 entries
-    wire [40 * 16 - 1:0] scale_res;         // Q30.10 x 16 entries
+    wire [`ADDR_W        - 1:0] scale_addr;
+    wire [`SCALE_W * `VL - 1:0] scale_data;
+    wire [`FULL_W  * `VL - 1:0] scale_res;
 
     // bias add
-    wire [`ADDR_W - 1:0] bias_addr;
-    wire [16 * 16 - 1:0] bias_data;         // Q6.10  x 16 entries
-    wire [40 * 16 - 1:0] bias_res;          // Q30.10 x 16 entries
+    wire [`ADDR_W        - 1:0] bias_addr;
+    wire [`BIAS_W  * `VL - 1:0] bias_data;
+    wire [`FULL_W  * `VL - 1:0] bias_res;
 
     // relu
-    wire [40 * 16 - 1:0] relu_res;          // Q30.10 x 16 entries
-    wire [18 * 16 - 1:0] relu_res_trunc;    // INT18  x 16 entries
+    wire [`FULL_W  * `VL - 1:0] relu_res;
+    wire [`TRUNC_W * `VL - 1:0] relu_res_trunc;
 
     // vsq buffer
-    wire                 vsq_buf_we;
-    wire [`ADDR_W - 1:0] vsq_buf_addr_wr;
-    wire [`ADDR_W - 1:0] vsq_buf_addr_rd;
-    wire [18 * 16 - 1:0] vsq_buf_data_wr;   // INT18  x 16 entries
-    wire [18 * 16 - 1:0] vsq_buf_data_rd;   // INT18  x 16 entries
+    wire                        vsq_buf_we;
+    wire [`ADDR_W        - 1:0] vsq_buf_addr_wr;
+    wire [`ADDR_W        - 1:0] vsq_buf_addr_rd;
+    wire [`TRUNC_W * `VL - 1:0] vsq_buf_data_wr;
+    wire [`TRUNC_W * `VL - 1:0] vsq_buf_data_rd;
+
+    // ctrl params
+    wire [`ADDR_W        - 1:0] TILE = (`M / `VL) * (`N / `AD);
+    wire [`ADDR_W        - 1:0] AD   = `AD;
+    wire [`ADDR_W        - 1:0] VSQ  = `VSQ_BUF_D / `AD;
 
 
     //////////
@@ -74,13 +76,13 @@ module ppu (
 
     always @(*) begin
 
-        quant_start_w = 1'b0;
+        qnt_start_w = 1'b0;
 
-        state_w       = state_r;
-        max_done_w    = max_done_r;
-        acc_cnt_w     = acc_cnt_r;
-        tile_cnt_w    = tile_cnt_r;
-        vsq_cnt_w     = vsq_cnt_r;
+        state_w     = state_r;
+        max_done_w  = max_done_r;
+        acc_cnt_w   = acc_cnt_r;
+        tile_cnt_w  = tile_cnt_r;
+        vsq_cnt_w   = vsq_cnt_r;
 
         case (state_r)
             S_IDLE: begin
@@ -96,16 +98,16 @@ module ppu (
             end
             S_MAX: begin
                 // acc cnt
-                if (acc_cnt_r == 4'd15) begin
+                if (acc_cnt_r == AD - 1) begin
                     acc_cnt_w = 0;
                     state_w   = S_IDLE;
                 end else begin
-                    acc_cnt_w = acc_cnt_r + 4'd1;
+                    acc_cnt_w = acc_cnt_r + 1;
                 end
 
                 // tile cnt
-                if (acc_cnt_r == 4'd15) begin
-                    if (tile_cnt_r == (MAX_TILE - 1)) begin
+                if (acc_cnt_r == AD - 1) begin
+                    if (tile_cnt_r == TILE - 1) begin
                         // matrix done
                         tile_cnt_w = 0;
                     end else begin
@@ -114,31 +116,31 @@ module ppu (
                 end
 
                 // vsq cnt
-                if (acc_cnt_r == 4'd15) begin
-                    if (vsq_cnt_r == 2'd3) begin
+                if (acc_cnt_r == AD - 1) begin
+                    if (vsq_cnt_r == VSQ - 1) begin
                         vsq_cnt_w = 0;
                     end else begin
-                        vsq_cnt_w = vsq_cnt_r + 2'd1;
+                        vsq_cnt_w = vsq_cnt_r + 1;
                     end
                 end
 
                 // max done (one cycle earlier)
-                if (tile_cnt_r == (MAX_TILE - 1) && acc_cnt_r == (4'd15 - 4'd1)) begin
+                if (tile_cnt_r == TILE - 1 && acc_cnt_r == AD - 2) begin
                     max_done_w = 1'b1;
                 end
             end
             S_CALC: begin
                 // acc cnt
-                if (acc_cnt_r == 4'd15) begin
+                if (acc_cnt_r == AD - 1) begin
                     acc_cnt_w = 0;
                     state_w   = S_IDLE;
                 end else begin
-                    acc_cnt_w = acc_cnt_r + 4'd1;
+                    acc_cnt_w = acc_cnt_r + 1;
                 end
 
                 // tile cnt
-                if (acc_cnt_r == 4'd15) begin
-                    if (tile_cnt_r == (MAX_TILE - 1)) begin
+                if (acc_cnt_r == AD - 1) begin
+                    if (tile_cnt_r == TILE - 1) begin
                         // matrix done
                         tile_cnt_w = 0;
                     end else begin
@@ -147,22 +149,22 @@ module ppu (
                 end
 
                 // vsq cnt
-                if (acc_cnt_r == 4'd15) begin
-                    if (vsq_cnt_r == 2'd3) begin
+                if (acc_cnt_r == AD - 1) begin
+                    if (vsq_cnt_r == VSQ - 1) begin
                         vsq_cnt_w = 0;
                     end else begin
-                        vsq_cnt_w = vsq_cnt_r + 2'd1;
+                        vsq_cnt_w = vsq_cnt_r + 1;
                     end
                 end
 
                 // max done (one cycle earlier)
-                if (tile_cnt_r == (MAX_TILE - 1) && acc_cnt_r == (4'd15 - 4'd1)) begin
+                if (tile_cnt_r == TILE - 1 && acc_cnt_r == AD - 2) begin
                     max_done_w = 1'b0;
                 end
 
                 // quant start (one cycle earlier)
-                if (vsq_cnt_r == 2'd3 && acc_cnt_r == (4'd15 - 4'd1)) begin
-                    quant_start_w = 1'b1;
+                if (vsq_cnt_r == VSQ - 1 && acc_cnt_r == AD - 2) begin
+                    qnt_start_w = 1'b1;
                 end
             end
             default: begin
@@ -179,21 +181,21 @@ module ppu (
     assign scale_addr = acc_cnt_r;
 
     buffer #(
-        .WIDTH ( 16 * 16 ),   // Q6.10 x 16 entries
-        .DEPTH ( 16 )
+        .WIDTH ( `SCALE_W * `VL ),
+        .DEPTH ( `AD )
     ) scale_buf (
         .i_clk     ( i_clk ),
         .i_rst_n   ( 1'b1 ),
         .i_we      ( 1'b0 ),
-        .i_addr_wr ( `ADDR_W'd0 ),
-        .i_data_wr ( 256'd0 ),
+        .i_addr_wr ( 0 ),
+        .i_data_wr ( 0 ),
         .i_addr_rd ( scale_addr ),
         .o_data_rd ( scale_data )
     );
 
     generate
-        for (gi = 0; gi < 16; gi = gi + 1) begin: SCALE
-            assign scale_res[gi*40 +: 40] = $signed(scale_data[gi*16 +: 16]) * $signed(i_acc_data[gi*24 +: 24]);
+        for (gi = 0; gi < `VL; gi = gi + 1) begin: SCALE
+            assign scale_res[gi*`FULL_W +: `FULL_W] = $signed(scale_data[gi*`SCALE_W +: `SCALE_W]) * $signed(i_acc_data[gi*`ACC_W +: `ACC_W]);
         end
     endgenerate
 
@@ -202,37 +204,37 @@ module ppu (
     assign bias_addr = acc_cnt_r;
 
     buffer #(
-        .WIDTH ( 16 * 16 ),   // Q6.10 x 16 entries
-        .DEPTH ( 16 )
+        .WIDTH ( `BIAS_W * `VL ),
+        .DEPTH ( `AD )
     ) bias_buf (
         .i_clk     ( i_clk ),
         .i_rst_n   ( 1'b1 ),
         .i_we      ( 1'b0 ),
-        .i_addr_wr ( `ADDR_W'd0 ),
-        .i_data_wr ( 256'd0 ),
+        .i_addr_wr ( 0 ),
+        .i_data_wr ( 0 ),
         .i_addr_rd ( bias_addr ),
         .o_data_rd ( bias_data )
     );
 
     generate
-        for (gi = 0; gi < 16; gi = gi + 1) begin: BIAS_ADD
-            assign bias_res[gi*40 +: 40] = $signed(bias_data[gi*16 +: 16]) + $signed(scale_res[gi*40 +: 40]);
+        for (gi = 0; gi < `VL; gi = gi + 1) begin: BIAS_ADD
+            assign bias_res[gi*`FULL_W +: `FULL_W] = $signed(bias_data[gi*`BIAS_W +: `BIAS_W]) + $signed(scale_res[gi*`FULL_W +: `FULL_W]);
         end
     endgenerate
 
 
     // relu (active when i_relu_en is high)
     generate
-        for (gi = 0; gi < 16; gi = gi + 1) begin: RELU
-            assign relu_res[gi*40 +: 40] = (!i_relu_en || ($signed(bias_res[gi*40 +: 40]) > 40'sd0)) ? bias_res[gi*40 +: 40] : 40'd0;
+        for (gi = 0; gi < `VL; gi = gi + 1) begin: RELU
+            assign relu_res[gi*`FULL_W +: `FULL_W] = (!i_relu_en || ($signed(bias_res[gi*`FULL_W +: `FULL_W]) > `FULL_W'sd0)) ? bias_res[gi*`FULL_W +: `FULL_W] : `FULL_W'd0;
         end
     endgenerate
 
 
     // truncation: Q30.10 -> INT18
     generate
-        for (gi = 0; gi < 16; gi = gi + 1) begin: TRUNCATE
-            assign relu_res_trunc[gi*18 +: 18] = truncate(relu_res[gi*40 +: 40]);
+        for (gi = 0; gi < `VL; gi = gi + 1) begin: TRUNCATE
+            assign relu_res_trunc[gi*`TRUNC_W +: `TRUNC_W] = truncate(relu_res[gi*`FULL_W +: `FULL_W]);
         end
     endgenerate
 
@@ -257,12 +259,12 @@ module ppu (
     ////////////////
 
     assign vsq_buf_we      = (state_r == S_IDLE) ? 1'b0 : 1'b1;
-    assign vsq_buf_addr_wr = acc_cnt_r + vsq_cnt_r * 16;
+    assign vsq_buf_addr_wr = acc_cnt_r + vsq_cnt_r * `VL;
     assign vsq_buf_data_wr = relu_res_trunc;
 
     buffer #(
-        .WIDTH ( 18 * 16 ),   // INT18 x 16 entries
-        .DEPTH ( 64 )
+        .WIDTH ( `TRUNC_W * `VL ),
+        .DEPTH ( `VSQ_BUF_D )
     ) vsq_buf (
         .i_clk     ( i_clk ),
         .i_rst_n   ( i_rst_n ),
@@ -297,6 +299,7 @@ module ppu (
         .o_vsq_sf   ( o_vsq_sf ),
         .o_int4_sf  ( o_int4_sf ),
         .o_int8_sf  ( o_int8_sf ),
+        .o_vec_done ( o_vec_done ),
         .o_finish   ( o_finish )
     );
 
@@ -310,7 +313,7 @@ module ppu (
         .i_rst_n       ( i_rst_n ),
         .i_start       ( i_ppu_start ),
         .i_data        ( relu_res ),        // TODO: use truncated data
-        
+
         .o_y           ( o_softmax_y ),
         .o_runmax      ( o_softmax_runmax ),
         .o_denom       ( o_softmax_denom ),
@@ -327,17 +330,17 @@ module ppu (
         if (!i_rst_n) begin
             state_r       <= S_IDLE;
             max_done_r    <= 0;
+            quant_start_r <= 0;
             acc_cnt_r     <= 0;
             tile_cnt_r    <= 0;
             vsq_cnt_r     <= 0;
-            quant_start_r <= 0;
         end else begin
             state_r       <= state_w;
             max_done_r    <= max_done_w;
+            quant_start_r <= qnt_start_w;
             acc_cnt_r     <= acc_cnt_w;
             tile_cnt_r    <= tile_cnt_w;
             vsq_cnt_r     <= vsq_cnt_w;
-            quant_start_r <= quant_start_w;
         end
     end
 

@@ -39,7 +39,7 @@ module tb_ppu;
     logic [`DATA8_W * `VL - 1:0] out_data;
     logic [`ADDR_W - 1:0]        out_addr;
 
-    logic                        finish;
+    logic                        vec_done;
     logic [`TRUNC_W * `VL - 1:0] vsq_sf;
 
     // data storage
@@ -70,7 +70,8 @@ module tb_ppu;
         .o_vsq_sf              ( vsq_sf ),
         .o_int4_sf             (  ),
         .o_int8_sf             (  ),
-        .o_finish              ( finish ),
+        .o_vec_done            ( vec_done ),
+        .o_finish              (  ),
 
         .o_softmax_y           (  ),
         .o_softmax_runmax      (  ),
@@ -150,7 +151,7 @@ module tb_ppu;
 
     // finish
     initial begin
-        wait (finish === 1'b1);
+        wait (vec_done === 1'b1);
         #(`CYCLE * 10.0);
 
         $display("==================================================================");

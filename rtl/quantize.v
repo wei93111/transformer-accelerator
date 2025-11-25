@@ -19,6 +19,7 @@ module quantize (
     output [`TRUNC_W * `VL - 1:0] o_vsq_sf,
     output [`TRUNC_W       - 1:0] o_int4_sf,
     output [`TRUNC_W       - 1:0] o_int8_sf,
+    output                        o_vec_done,
     output                        o_finish
 );
 
@@ -36,40 +37,41 @@ module quantize (
     localparam INT4_NORM = 8'b00100100;   // 1/7   in Q0.8
     localparam INT8_NORM = 8'b00000010;   // 1/127 in Q0.8
 
-    // end col cnt
-    localparam MAX_COL = (`M / 16) * `N;
-    localparam CNT_W   = $clog2(MAX_COL);
-
 
     // ctrl
-    reg  [1:0]           state_w,   state_r;
-    reg  [5:0]           vsq_cnt_w, vsq_cnt_r;
-    reg  [CNT_W-1:0]     col_cnt_w, col_cnt_r;
-    reg  [1:0]           max_cnt_w, max_cnt_r;
-    reg                  finish_w,  finish_r;
+    reg  [1                     :0] state_w,    state_r;
+    reg  [`ADDR_W            - 1:0] vsq_cnt_w,  vsq_cnt_r;
+    reg  [`ADDR_W            - 1:0] col_cnt_w,  col_cnt_r;
+    reg  [`ADDR_W            - 1:0] max_cnt_w,  max_cnt_r;
+    reg                             vec_done_w, vec_done_r;
+    reg                             finish_w,   finish_r;
 
     // tensor max
-    reg  [17:0]          max_w,     max_r;      // unsigned INT18
+    reg  [`TRUNC_W           - 1:0] max_w,      max_r;
 
     // runmax
-    reg  [17:0]          runmax_w [0:15];
-    reg  [17:0]          runmax_r [0:15];       // unsigned INT18
+    reg  [`TRUNC_W           - 1:0] runmax_w [0:`VL - 1];
+    reg  [`TRUNC_W           - 1:0] runmax_r [0:`VL - 1];
 
     // scale factors
-    wire [18 * 16 - 1:0] vsq_sf;                // INT18 x 16 entries
-    wire [36 * 16 - 1:0] vsq_recip;             // Q2.34 x 16 entries
-    wire [17:0]          int4_sf;               // INT18
-    wire [35:0]          int4_recip;            // Q2.34
-    wire [17:0]          int8_sf;               // INT18
-    wire [35:0]          int8_recip;            // Q2.34
+    wire [`TRUNC_W * `VL     - 1:0] vsq_sf;
+    wire [`TRUNC_W * 2 * `VL - 1:0] vsq_recip;
+    wire [`TRUNC_W           - 1:0] int4_sf;
+    wire [`TRUNC_W * 2       - 1:0] int4_recip;
+    wire [`TRUNC_W           - 1:0] int8_sf;
+    wire [`TRUNC_W * 2       - 1:0] int8_recip;
 
     // quantize
-    reg  [53:0]          mult;                  // Q20.34
-    reg  [8  * 16 - 1:0] data_out;
+    reg  [`TRUNC_W * 3       - 1:0] mult;
+    reg  [`DATA8_W * `VL     - 1:0] data_out;
+
+    // ctrl params
+    wire [`ADDR_W            - 1:0] COL = (`M / `VL) * `N;
+    wire [`ADDR_W            - 1:0] VSQ = `VSQ_BUF_D;
 
 
-    // vector finish signal
-    assign o_finish  = finish_r;
+    assign o_vec_done = vec_done_r;
+    assign o_finish   = finish_r;
 
 
     //////////
@@ -78,12 +80,13 @@ module quantize (
 
     always @(*) begin
 
-        finish_w  = 1'b0;
+        vec_done_w = 1'b0;
+        finish_w   = 1'b0;
 
-        state_w   = state_r;
-        vsq_cnt_w = vsq_cnt_r;
-        col_cnt_w = col_cnt_r;
-        max_cnt_w = max_cnt_r;
+        state_w    = state_r;
+        vsq_cnt_w  = vsq_cnt_r;
+        col_cnt_w  = col_cnt_r;
+        max_cnt_w  = max_cnt_r;
 
         if (i_mode == `INT4_VSQ) begin
             case (state_r)
@@ -100,24 +103,25 @@ module quantize (
                 end
                 S_QUANT: begin
                     // vsq cnt
-                    if (vsq_cnt_r == 6'd63) begin
-                        vsq_cnt_w = 6'd0;
+                    if (vsq_cnt_r == VSQ - 1) begin
+                        vsq_cnt_w = 0;
                         state_w   = S_RUNMAX;
                     end else begin
-                        vsq_cnt_w = vsq_cnt_r + 6'd1;
+                        vsq_cnt_w = vsq_cnt_r + 1;
                     end
 
                     // matrix finish
-                    if (col_cnt_r == MAX_COL - 1) begin
+                    if (col_cnt_r == COL - 1) begin
                         col_cnt_w = 0;
                         state_w   = S_RUNMAX;
+                        finish_w  = 1'b1;
                     end else begin
                         col_cnt_w = col_cnt_r + 1;
                     end
 
                     // vector finish (one cycle earlier)
-                    if (vsq_cnt_r == (6'd63 - 6'd1)) begin
-                        finish_w = 1'b1;
+                    if (vsq_cnt_r == VSQ - 2) begin
+                        vec_done_w = 1'b1;
                     end
                 end
             endcase
@@ -135,33 +139,34 @@ module quantize (
                     end
                 end
                 S_MAX: begin
-                    if (max_cnt_r == 2'd3) begin
-                        max_cnt_w = 2'd0;
+                    if (max_cnt_r == 4 - 1) begin
+                        max_cnt_w = 0;
                         state_w   = S_IDLE;
                     end else begin
-                        max_cnt_w = max_cnt_r + 2'd1;
+                        max_cnt_w = max_cnt_r + 1;
                     end
                 end
                 S_QUANT: begin
                     // vsq cnt
-                    if (vsq_cnt_r == 6'd63) begin
-                        vsq_cnt_w = 6'd0;
+                    if (vsq_cnt_r == VSQ - 1) begin
+                        vsq_cnt_w = 0;
                         state_w   = S_IDLE;
                     end else begin
-                        vsq_cnt_w = vsq_cnt_r + 6'd1;
+                        vsq_cnt_w = vsq_cnt_r + 1;
                     end
 
                     // matrix finish
-                    if (col_cnt_r == MAX_COL - 1) begin
+                    if (col_cnt_r == COL - 1) begin
                         col_cnt_w = 0;
                         state_w   = S_RUNMAX;
+                        finish_w  = 1'b1;
                     end else begin
                         col_cnt_w = col_cnt_r + 1;
                     end
 
                     // vector finish (one cycle earlier)
-                    if (vsq_cnt_r == (6'd63 - 6'd1)) begin
-                        finish_w = 1'b1;
+                    if (vsq_cnt_r == VSQ - 2) begin
+                        vec_done_w = 1'b1;
                     end
                 end
             endcase
@@ -176,7 +181,7 @@ module quantize (
     always @(*) begin
 
         max_w = max_r;
-        for (i = 0; i < 16; i = i + 1) runmax_w[i] = runmax_r[i];
+        for (i = 0; i < `VL; i = i + 1) runmax_w[i] = runmax_r[i];
 
         if (i_mode == `INT4_VSQ) begin
             case (state_r)
@@ -184,8 +189,8 @@ module quantize (
 
                 end
                 S_RUNMAX: begin
-                    for (i = 0; i < 16; i = i + 1) begin
-                        runmax_w[i] = max(abs(i_data[i*18 +: 18]), runmax_r[i]);
+                    for (i = 0; i < `VL; i = i + 1) begin
+                        runmax_w[i] = max(abs(i_data[i * `TRUNC_W +: `TRUNC_W]), runmax_r[i]);
                     end
                 end
                 S_MAX: begin
@@ -193,8 +198,8 @@ module quantize (
                 end
                 S_QUANT: begin
                     // vector finish, reset runmax
-                    if (vsq_cnt_r == 6'd63) begin
-                        for (i = 0; i < 16; i = i + 1) runmax_w[i] = 0;
+                    if (vsq_cnt_r == VSQ - 1) begin
+                        for (i = 0; i < `VL; i = i + 1) runmax_w[i] = 0;
                     end
                 end
             endcase
@@ -204,13 +209,13 @@ module quantize (
 
                 end
                 S_RUNMAX: begin
-                    for (i = 0; i < 16; i = i + 1) begin
-                        runmax_w[i] = max(abs(i_data[i*18 +: 18]), runmax_r[i]);
+                    for (i = 0; i < `VL; i = i + 1) begin
+                        runmax_w[i] = max(abs(i_data[i * `TRUNC_W +: `TRUNC_W]), runmax_r[i]);
                     end
                 end
                 S_MAX: begin
                     // compare final 16 lanes for tensor max
-                    if (max_cnt_r == 2'd0) begin
+                    if (max_cnt_r == 0) begin
                         runmax_w[0]  = max(runmax_r[0],  runmax_r[1]);
                         runmax_w[2]  = max(runmax_r[2],  runmax_r[3]);
                         runmax_w[4]  = max(runmax_r[4],  runmax_r[5]);
@@ -219,42 +224,42 @@ module quantize (
                         runmax_w[10] = max(runmax_r[10], runmax_r[11]);
                         runmax_w[12] = max(runmax_r[12], runmax_r[13]);
                         runmax_w[14] = max(runmax_r[14], runmax_r[15]);
-                    end else if (max_cnt_r == 2'd1) begin
+                    end else if (max_cnt_r == 1) begin
                         runmax_w[0]  = max(runmax_w[0],  runmax_w[2]);
                         runmax_w[4]  = max(runmax_w[4],  runmax_w[6]);
                         runmax_w[8]  = max(runmax_w[8],  runmax_w[10]);
                         runmax_w[12] = max(runmax_w[12], runmax_w[14]);
-                    end else if (max_cnt_r == 2'd2) begin
+                    end else if (max_cnt_r == 2) begin
                         runmax_w[0]  = max(runmax_w[0],  runmax_w[4]);
                         runmax_w[8]  = max(runmax_w[8],  runmax_w[12]);
-                    end else if (max_cnt_r == 2'd3) begin
+                    end else if (max_cnt_r == 3) begin
                         max_w = max(runmax_w[0], runmax_w[8]);
                     end
                 end
                 S_QUANT: begin
                     // matrix finish, reset runmax
-                    if (col_cnt_r == MAX_COL - 1) begin
-                        for (i = 0; i < 16; i = i + 1) runmax_w[i] = 0;
+                    if (col_cnt_r == COL - 1) begin
+                        for (i = 0; i < `VL; i = i + 1) runmax_w[i] = 0;
                     end
                 end
             endcase
         end
     end
 
-    function automatic [17:0] max;
-        input [17:0] data1;
-        input [17:0] data2;
+    function automatic [`TRUNC_W - 1:0] max;
+        input [`TRUNC_W - 1:0] data1;
+        input [`TRUNC_W - 1:0] data2;
 
         begin
             max = (data1 > data2) ? data1 : data2;
         end
     endfunction
 
-    function automatic [17:0] abs;
-        input [17:0] data;
+    function automatic [`TRUNC_W - 1:0] abs;
+        input [`TRUNC_W - 1:0] data;
 
         begin
-            abs = (data[17]) ? ~data + 18'd1 : data;
+            abs = (data[`TRUNC_W - 1]) ? ~data + `TRUNC_W'd1 : data;
         end
     endfunction
 
@@ -269,25 +274,25 @@ module quantize (
 
     // vsq scale factor
     generate
-        for (gi = 0; gi < 16; gi = gi + 1) begin: SF_CALC
-            assign vsq_sf[gi*18 +: 18] = (runmax_r[gi] * INT4_NORM) >> 8;   // Q18.8 -> Q18.0
+        for (gi = 0; gi < `VL; gi = gi + 1) begin: SF_CALC
+            assign vsq_sf[gi * `TRUNC_W +: `TRUNC_W] = (runmax_r[gi] * INT4_NORM) >> 8;
 
             reciprocal vsq_recip_unit (
-                .i_data  ( vsq_sf[gi*18 +: 18] ),
-                .o_recip ( vsq_recip[gi*36 +: 36] )
+                .i_data  ( vsq_sf[gi * `TRUNC_W +: `TRUNC_W] ),
+                .o_recip ( vsq_recip[gi * `TRUNC_W * 2 +: `TRUNC_W * 2] )
             );
         end
     endgenerate
 
     // int4 scale factor
-    assign int4_sf = (max_r * INT4_NORM) >> 8;  // Q18.8 -> Q18.0
+    assign int4_sf = (max_r * INT4_NORM) >> 8;
     reciprocal int4_recip_unit (
         .i_data  ( int4_sf ),
         .o_recip ( int4_recip )
     );
 
     // int8 scale factor
-    assign int8_sf = (max_r * INT8_NORM) >> 8;  // Q18.8 -> Q18.0
+    assign int8_sf = (max_r * INT8_NORM) >> 8;
     reciprocal int8_recip_unit (
         .i_data  ( int8_sf ),
         .o_recip ( int8_recip )
@@ -304,34 +309,37 @@ module quantize (
     assign o_out_we   = (state_r == S_QUANT);
 
     always @(*) begin
+
+        mult     = 0;
         data_out = 0;
+
         if (i_mode == `INT4_VSQ) begin
             // vsq quantization
-            for (i = 0; i < 16; i = i + 1) begin
-                mult               = $signed(i_buf_data[i*18 +: 18]) * $signed(vsq_recip[i*36 +: 36]);
-                data_out[i*4 +: 4] = int4_truncate(mult);
+            for (i = 0; i < `VL; i = i + 1) begin
+                mult = $signed(i_buf_data[i * `TRUNC_W +: `TRUNC_W]) * $signed(vsq_recip[i * `TRUNC_W * 2 +: `TRUNC_W * 2]);
+                data_out[i * `DATA4_W +: `DATA4_W] = int4_truncate(mult);
             end
         end else if (i_mode == `INT4) begin
             // int4 quantization
-            for (i = 0; i < 16; i = i + 1) begin
-                mult               = $signed(i_buf_data[i*18 +: 18]) * $signed(int4_recip);
-                data_out[i*4 +: 4] = int4_truncate(mult);
+            for (i = 0; i < `VL; i = i + 1) begin
+                mult = $signed(i_buf_data[i * `TRUNC_W +: `TRUNC_W]) * $signed(int4_recip);
+                data_out[i * `DATA4_W +: `DATA4_W] = int4_truncate(mult);
             end
         end else begin
             // int8 quantization
-            for (i = 0; i < 16; i = i + 1) begin
-                mult               = $signed(i_buf_data[i*18 +: 18]) * $signed(int8_recip);
-                data_out[i*8 +: 8] = int8_truncate(mult);
+            for (i = 0; i < `VL; i = i + 1) begin
+                mult = $signed(i_buf_data[i * `TRUNC_W +: `TRUNC_W]) * $signed(int8_recip);
+                data_out[i * `DATA8_W +: `DATA8_W] = int8_truncate(mult);
             end
         end
     end
 
-    function automatic [3:0] int4_truncate;
-        input [53:0] data;
+    function automatic [`DATA4_W - 1:0] int4_truncate;
+        input [`TRUNC_W * 3 - 1:0] data;
 
-        reg [53:0] data_abs;        // Q20.34
-        reg [53:0] data_abs_rnd;    // Q54.0
-        reg [3:0]  data_abs_sat;    // INT4
+        reg [`TRUNC_W * 3 - 1:0] data_abs;        // Q20.34
+        reg [`TRUNC_W * 3 - 1:0] data_abs_rnd;    // Q54.0
+        reg [`DATA4_W     - 1:0] data_abs_sat;    // INT4
 
         begin
             data_abs     = (data[53]) ? ~data + 54'd1 : data;
@@ -346,12 +354,12 @@ module quantize (
         end
     endfunction
 
-    function automatic [7:0] int8_truncate;
-        input [53:0] data;
+    function automatic [`DATA8_W - 1:0] int8_truncate;
+        input [`TRUNC_W * 3 - 1:0] data;
 
-        reg [53:0] data_abs;        // Q20.34
-        reg [53:0] data_abs_rnd;    // Q54.0
-        reg [7:0]  data_abs_sat;    // INT8
+        reg [`TRUNC_W * 3 - 1:0] data_abs;        // Q20.34
+        reg [`TRUNC_W * 3 - 1:0] data_abs_rnd;    // Q54.0
+        reg [`DATA8_W     - 1:0] data_abs_sat;    // INT8
 
         begin
             data_abs     = (data[53]) ? ~data + 54'd1 : data;
@@ -373,21 +381,23 @@ module quantize (
 
     always @(posedge i_clk or negedge i_rst_n) begin
         if (!i_rst_n) begin
-            state_r   <= S_RUNMAX;
-            vsq_cnt_r <= 0;
-            col_cnt_r <= 0;
-            max_cnt_r <= 0;
-            finish_r  <= 0;
-            max_r     <= 0;
-            for (i = 0; i < 16; i = i + 1) runmax_r[i] <= 0;
+            state_r    <= S_RUNMAX;
+            vsq_cnt_r  <= 0;
+            col_cnt_r  <= 0;
+            max_cnt_r  <= 0;
+            vec_done_r <= 0;
+            finish_r   <= 0;
+            max_r      <= 0;
+            for (i = 0; i < `VL; i = i + 1) runmax_r[i] <= 0;
         end else begin
-            state_r   <= state_w;
-            vsq_cnt_r <= vsq_cnt_w;
-            col_cnt_r <= col_cnt_w;
-            max_cnt_r <= max_cnt_w;
-            finish_r  <= finish_w;
-            max_r     <= max_w;
-            for (i = 0; i < 16; i = i + 1) runmax_r[i] <= runmax_w[i];
+            state_r    <= state_w;
+            vsq_cnt_r  <= vsq_cnt_w;
+            col_cnt_r  <= col_cnt_w;
+            max_cnt_r  <= max_cnt_w;
+            vec_done_r <= vec_done_w;
+            finish_r   <= finish_w;
+            max_r      <= max_w;
+            for (i = 0; i < `VL; i = i + 1) runmax_r[i] <= runmax_w[i];
         end
     end
 

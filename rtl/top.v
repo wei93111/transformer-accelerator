@@ -24,14 +24,19 @@ module top (
     output [`TRUNC_W * `VL - 1:0] o_vsq_sf,
     output [`TRUNC_W       - 1:0] o_int4_sf,
     output [`TRUNC_W       - 1:0] o_int8_sf,
-    output                        o_finish,
 
     // softmax out
     output [8  * 16        - 1:0] o_softmax_y,
     output [30 * 16        - 1:0] o_softmax_runmax,
     output [16 * 16        - 1:0] o_softmax_denom,
     output                        o_softmax_y_valid,
-    output                        o_softmax_denom_valid
+    output                        o_softmax_denom_valid,
+
+    // finish
+    output                        o_tile_done,
+    output                        o_mtrx_done,
+    output                        o_vec_done,
+    output                        o_finish
 );
 
     // interface
@@ -53,8 +58,8 @@ module top (
         .o_a_addr    ( o_a_addr ),
         .o_b_addr    ( o_b_addr ),
 
-        .o_tile_done (  ),
-        .o_mtrx_done (  ),
+        .o_tile_done ( o_tile_done ),
+        .o_mtrx_done ( o_mtrx_done ),
 
         .o_ppu_start ( ppu_start ),
         .o_acc_data  ( acc_data ),
@@ -79,6 +84,7 @@ module top (
         .o_vsq_sf              ( o_vsq_sf ),
         .o_int4_sf             ( o_int4_sf ),
         .o_int8_sf             ( o_int8_sf ),
+        .o_vec_done            ( o_vec_done ),
         .o_finish              ( o_finish ),
 
         .o_softmax_y           ( o_softmax_y ),

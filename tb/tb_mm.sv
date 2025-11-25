@@ -55,8 +55,8 @@ module tb_mm;
     integer row_grp, vec, entry, col, row;
 
 
-    logic clk;
-    logic rst_n;
+    logic                      clk;
+    logic                      rst_n;
 
     // interface
     logic [1               :0] mode;

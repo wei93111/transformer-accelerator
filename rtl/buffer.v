@@ -17,9 +17,9 @@ module buffer #(
     integer i;
 
     // Register array
-    reg [WIDTH - 1:0] registers [0:DEPTH - 1];
+    reg  [WIDTH - 1:0] registers [0:DEPTH - 1];
 
-    // limited addr range
+    // limited addr range (port is always `ADDR_W wide)
     wire [ADDR_W - 1:0] addr_wr = i_addr_wr[ADDR_W - 1:0];
     wire [ADDR_W - 1:0] addr_rd = i_addr_rd[ADDR_W - 1:0];
 
@@ -30,7 +30,7 @@ module buffer #(
     // Write logic (1 cycle latency)
     always @(posedge i_clk or negedge i_rst_n) begin
         if (!i_rst_n) begin
-            for (i = 0; i < DEPTH; i = i + 1) registers[i] <= {WIDTH{1'b0}};
+            for (i = 0; i < DEPTH; i = i + 1) registers[i] <= 0;
         end else if (i_we) begin
             registers[addr_wr] <= i_data_wr;
         end
