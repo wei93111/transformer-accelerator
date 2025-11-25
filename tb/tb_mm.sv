@@ -5,38 +5,35 @@
 `include "define.v"
 
 `ifdef pat0
-    `define IN_A "./tb/pat_mm/p0_ina.dat"
-    `define IN_B "./tb/pat_mm/p0_inb.dat"
-    `define OUT  "./tb/pat_mm/p0_out.dat"
-    `define MODE `INT4
-    `define DATA_W 4
-    `define VS 64
+    `define IN_A   "./tb/pat_mm/p0_ina.dat"
+    `define IN_B   "./tb/pat_mm/p0_inb.dat"
+    `define OUT    "./tb/pat_mm/p0_out.dat"
+    `define MODE   `INT4
+    `define DATA_W `INT4_DATA_W
+    `define VS     `INT4_VS
 `elsif pat1
-    `define IN_A "./tb/pat_mm/p1_ina.dat"
-    `define IN_B "./tb/pat_mm/p1_inb.dat"
-    `define OUT  "./tb/pat_mm/p1_out.dat"
-    `define MODE `INT8
-    `define DATA_W 8
-    `define VS 32
+    `define IN_A   "./tb/pat_mm/p1_ina.dat"
+    `define IN_B   "./tb/pat_mm/p1_inb.dat"
+    `define OUT    "./tb/pat_mm/p1_out.dat"
+    `define MODE   `INT8
+    `define DATA_W `INT8_DATA_W
+    `define VS     `INT8_VS
 `elsif pat2
-    `define IN_A "./tb/pat_mm/p2_ina.dat"
-    `define IN_B "./tb/pat_mm/p2_inb.dat"
-    `define OUT  "./tb/pat_mm/p2_out.dat"
-    `define MODE `INT4_VSQ
-    `define DATA_W 4
-    `define VS 64
+    `define IN_A   "./tb/pat_mm/p2_ina.dat"
+    `define IN_B   "./tb/pat_mm/p2_inb.dat"
+    `define OUT    "./tb/pat_mm/p2_out.dat"
+    `define MODE   `INT4_VSQ
+    `define DATA_W `INT4_DATA_W
+    `define VS     `INT4_VS
 `else
-    `define IN_A "./tb/pat_mm/p0_ina.dat"
-    `define IN_B "./tb/pat_mm/p0_inb.dat"
-    `define OUT  "./tb/pat_mm/p0_out.dat"
-    `define MODE `INT4
-    `define DATA_W 4
-    `define VS 64
+    `define IN_A   "./tb/pat_mm/p0_ina.dat"
+    `define IN_B   "./tb/pat_mm/p0_inb.dat"
+    `define OUT    "./tb/pat_mm/p0_out.dat"
+    `define MODE   `INT4
+    `define DATA_W `INT4_DATA_W
+    `define VS     `INT4_VS
 `endif
 
-`define VEC_W  264
-`define DAT_W  256
-`define SF_W   8
 `define RAMA_D (`M / `VL) * (`K / `VS)
 `define RAMB_D (`N / `VS) * `K
 `define GROUP  (`M / `VL)

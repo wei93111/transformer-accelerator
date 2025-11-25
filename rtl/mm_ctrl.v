@@ -1,22 +1,22 @@
 `include "define.v"
 
 module mm_ctrl (
-    input                   i_clk,
-    input                   i_rst_n,
-    input  [1          :0]  i_mode,
-    input                   i_start,
+    input                       i_clk,
+    input                       i_rst_n,
+    input  [1              :0]  i_mode,
+    input                       i_start,
 
-    input  [264 * 16 - 1:0] i_a_data,
-    input  [264      - 1:0] i_b_data,
-    output [15          :0] o_a_addr,
-    output [15          :0] o_b_addr,
+    input  [`VEC_W * `VL - 1:0] i_a_data,
+    input  [`VEC_W       - 1:0] i_b_data,
+    output [15              :0] o_a_addr,
+    output [15              :0] o_b_addr,
 
-    output                  o_tile_done,
-    output                  o_mtrx_done,
+    output                      o_tile_done,
+    output                      o_mtrx_done,
 
-    output                  o_ppu_start,
-    output [24 * 16 - 1:0]  o_acc_data,
-    output [1          :0]  o_mode
+    output                      o_ppu_start,
+    output [`ACC_W * `VL - 1:0] o_acc_data,
+    output [1               :0] o_mode
 );
 
     genvar gi;
@@ -27,34 +27,37 @@ module mm_ctrl (
     localparam S_MAX  = 2'd1;
     localparam S_CALC = 2'd2;
 
+
     // ctrl
-    reg  [1:0]            state_w,     state_r;
-    reg  [1:0]            mode_w,      mode_r;
-    reg                   tile_done_w, tile_done_r;
-    reg                   mtrx_done_w, mtrx_done_r;
-    reg                   ppu_start_w, ppu_start_r;
+    reg  [1               :0] state_w,     state_r;
+    reg  [1               :0] mode_w,      mode_r;
+    reg                       tile_done_w, tile_done_r;
+    reg                       mtrx_done_w, mtrx_done_r;
+    reg                       ppu_start_w, ppu_start_r;
 
     // addr gen
-    reg  [3:0]            b_cnt_w,     b_cnt_r;        // increment every cycle
-    reg  [9:0]            a_cnt_w,     a_cnt_r;        // increment every 16 cycles
-    reg  [4:0]            col_cnt_w,   col_cnt_r;      // increment every 16 * stride cycles
-    reg  [4:0]            row_cnt_w,   row_cnt_r;      // increment every 16 * stride * 32 cycles
-    reg  [3:0]            acc_addr_w,  acc_addr_r;
+    reg  [9               :0] b_cnt_w,     b_cnt_r;
+    reg  [9               :0] a_cnt_w,     a_cnt_r;
+    reg  [9               :0] col_cnt_w,   col_cnt_r;
+    reg  [9               :0] row_cnt_w,   row_cnt_r;
 
     // accumulator
-    wire                  acc_we;
-    wire [24 * 16 - 1:0]  acc_data;     // INT24 x 16 entries
+    wire                      acc_we;
+    wire [9               :0] acc_addr;
+    wire [`ACC_W * `VL - 1:0] acc_data;
     
-
     // mac
-    wire [24 * 16 - 1:0]  mac_res;      // INT24 x 16 entries
+    wire [`ACC_W * `VL - 1:0] mac_res;
 
-    // sizing
-    wire [31:0] stride = (mode_r == `INT8) ? (`K / 32) : (`K / 64);
+    // addr gen parameters
+    wire [9:0] VL     = `VL;
+    wire [9:0] STRIDE = (mode_r == `INT8) ? (`K / `INT8_VS) : (`K / `INT4_VS);
+    wire [9:0] COL    = (`N / `AD);
+    wire [9:0] ROW    = (`M / `VL);
 
 
-    assign o_a_addr    = a_cnt_r + (row_cnt_r * stride);
-    assign o_b_addr    = b_cnt_r + (a_cnt_r * `N) + (col_cnt_r * 16);
+    assign o_a_addr    = a_cnt_r + (row_cnt_r * STRIDE);
+    assign o_b_addr    = b_cnt_r + (a_cnt_r * `N) + (col_cnt_r * `AD);
 
     assign o_tile_done = tile_done_r;
     assign o_mtrx_done = mtrx_done_r;
@@ -85,21 +88,21 @@ module mm_ctrl (
                 end
             end
             S_MAX: begin
-                if (b_cnt_r == 4'd15 && a_cnt_r == (stride - 1) && col_cnt_r == 5'd31 && row_cnt_r == 5'd31) begin
+                if (b_cnt_r == VL - 1 && a_cnt_r == STRIDE - 1 && col_cnt_r == COL - 1 && row_cnt_r == ROW - 1) begin
                     // mtrx max done (start calculate)
                     state_w = S_CALC;
                 end
 
                 // ppu start (one cycle earlier)
-                if (b_cnt_r == (4'd15 - 4'd1) && a_cnt_r == (stride - 1)) begin
+                if (b_cnt_r == VL - 2 && a_cnt_r == STRIDE - 1) begin
                     ppu_start_w = 1'b1;
                 end
             end
             S_CALC: begin
-                if (b_cnt_r == 4'd15 && a_cnt_r == (stride - 1)) begin
+                if (b_cnt_r == VL - 1 && a_cnt_r == STRIDE - 1) begin
                     // tile done
                     tile_done_w = 1'b1;
-                    if (col_cnt_r == 5'd31 && row_cnt_r == 5'd31) begin
+                    if (col_cnt_r == COL - 1 && row_cnt_r == ROW - 1) begin
                         // mtrx calc done
                         state_w = S_IDLE;
                         mtrx_done_w = 1'b1;
@@ -107,7 +110,7 @@ module mm_ctrl (
                 end
 
                 // ppu start (one cycle earlier)
-                if (b_cnt_r == (4'd15 - 4'd1) && a_cnt_r == (stride - 1)) begin
+                if (b_cnt_r == VL - 2 && a_cnt_r == STRIDE - 1) begin
                     ppu_start_w = 1'b1;
                 end
             end
@@ -123,12 +126,10 @@ module mm_ctrl (
         a_cnt_w    = a_cnt_r;
         col_cnt_w  = col_cnt_r;
         row_cnt_w  = row_cnt_r;
-        acc_addr_w = acc_addr_r;
         
         case (state_r)
             S_IDLE: begin
                 if (i_start) begin
-                    acc_addr_w = 0;
                     b_cnt_w    = 0;
                     a_cnt_w    = 0;
                     col_cnt_w  = 0;
@@ -136,23 +137,16 @@ module mm_ctrl (
                 end
             end
             S_MAX: begin
-                // acc_addr
-                if (acc_addr_r == 4'd15) begin
-                    acc_addr_w = 0;
-                end else begin
-                    acc_addr_w = acc_addr_r + 4'd1;
-                end
-
                 // b_cnt
-                if (b_cnt_r == 4'd15) begin
+                if (b_cnt_r == VL - 1) begin
                     b_cnt_w = 0;
                 end else begin
-                    b_cnt_w = b_cnt_r + 4'd1;
+                    b_cnt_w = b_cnt_r + 1;
                 end
 
                 // a_cnt
-                if (b_cnt_r == 4'd15) begin
-                    if (a_cnt_r == (stride - 1)) begin
+                if (b_cnt_r == VL - 1) begin
+                    if (a_cnt_r == STRIDE - 1) begin
                         // tile done
                         a_cnt_w = 0;
                     end else begin
@@ -161,42 +155,35 @@ module mm_ctrl (
                 end
 
                 // col_cnt
-                if (b_cnt_r == 4'd15 && a_cnt_r == (stride - 1)) begin
-                    if (col_cnt_r == 5'd31) begin
+                if (b_cnt_r == VL - 1 && a_cnt_r == STRIDE - 1) begin
+                    if (col_cnt_r == COL - 1) begin
                         col_cnt_w = 0;
                     end else begin
-                        col_cnt_w = col_cnt_r + 5'd1;
+                        col_cnt_w = col_cnt_r + 1;
                     end
                 end
 
                 // row_cnt
-                if (b_cnt_r == 4'd15 && a_cnt_r == (stride - 1) && col_cnt_r == 5'd31) begin
-                    if (row_cnt_r == 5'd31) begin
+                if (b_cnt_r == VL - 1 && a_cnt_r == STRIDE - 1 && col_cnt_r == COL - 1) begin
+                    if (row_cnt_r == ROW - 1) begin
                         // matrix done
                         row_cnt_w = 0;
                     end else begin
-                        row_cnt_w = row_cnt_r + 5'd1;
+                        row_cnt_w = row_cnt_r + 1;
                     end
                 end
             end
             S_CALC: begin
-                // acc_addr
-                if (acc_addr_r == 4'd15) begin
-                    acc_addr_w = 0;
-                end else begin
-                    acc_addr_w = acc_addr_r + 4'd1;
-                end
-
                 // b_cnt
-                if (b_cnt_r == 4'd15) begin
+                if (b_cnt_r == VL - 1) begin
                     b_cnt_w = 0;
                 end else begin
-                    b_cnt_w = b_cnt_r + 4'd1;
+                    b_cnt_w = b_cnt_r + 1;
                 end
 
                 // a_cnt
-                if (b_cnt_r == 4'd15) begin
-                    if (a_cnt_r == (stride - 1)) begin
+                if (b_cnt_r == VL - 1) begin
+                    if (a_cnt_r == STRIDE - 1) begin
                         // tile done
                         a_cnt_w = 0;
                     end else begin
@@ -205,21 +192,21 @@ module mm_ctrl (
                 end
 
                 // col_cnt
-                if (b_cnt_r == 4'd15 && a_cnt_r == (stride - 1)) begin
-                    if (col_cnt_r == 5'd31) begin
+                if (b_cnt_r == VL - 1 && a_cnt_r == STRIDE - 1) begin
+                    if (col_cnt_r == COL - 1) begin
                         col_cnt_w = 0;
                     end else begin
-                        col_cnt_w = col_cnt_r + 5'd1;
+                        col_cnt_w = col_cnt_r + 1;
                     end
                 end
 
                 // row_cnt
-                if (b_cnt_r == 4'd15 && a_cnt_r == (stride - 1) && col_cnt_r == 5'd31) begin
-                    if (row_cnt_r == 5'd31) begin
+                if (b_cnt_r == VL - 1 && a_cnt_r == STRIDE - 1 && col_cnt_r == COL - 1) begin
+                    if (row_cnt_r == ROW - 1) begin
                         // matrix done
                         row_cnt_w = 0;
                     end else begin
-                        row_cnt_w = row_cnt_r + 5'd1;
+                        row_cnt_w = row_cnt_r + 1;
                     end
                 end
             end
@@ -234,17 +221,31 @@ module mm_ctrl (
     ///////////////
 
     generate
-        for (gi = 0; gi < 16; gi = gi + 1) begin: MAC_UNIT
-            wire [23:0] psum = (a_cnt_r == 0) ? 24'd0 : acc_data[gi*24 +: 24];  // new round of accumulation
+        for (gi = 0; gi < `VL; gi = gi + 1) begin: MAC_UNIT
+            wire [`ACC_W - 1:0] psum;
+            wire [`DAT_W - 1:0] a_data;
+            wire [`DAT_W - 1:0] b_data;
+            wire [`SF_W  - 1:0] a_scale;
+            wire [`SF_W  - 1:0] b_scale;
+            wire [`ACC_W - 1:0] result;
+
+            assign psum    = (a_cnt_r == 0) ? 0 : acc_data[gi * `ACC_W +: `ACC_W];  // new round of accumulation
+            assign a_data  = i_a_data[`SF_W + gi * `VEC_W +: `DAT_W];
+            assign b_data  = i_b_data[`SF_W               +: `DAT_W];
+            assign a_scale = i_a_data[        gi * `VEC_W +:  `SF_W];
+            assign b_scale = i_b_data[0                   +:  `SF_W];
+
             mac mac_unit (
                 .i_mode    ( mode_r ),
                 .i_psum    ( psum ),
-                .i_a       ( i_a_data[gi*264+8 +: 256] ),
-                .i_b       ( i_b_data[       8 +: 256] ),
-                .i_scale_a ( i_a_data[gi*264 +: 8] ),
-                .i_scale_b ( i_b_data[     0 +: 8] ),
-                .o_result  ( mac_res[gi*24 +: 24] )
+                .i_a       ( a_data ),
+                .i_b       ( b_data ),
+                .i_scale_a ( a_scale ),
+                .i_scale_b ( b_scale ),
+                .o_result  ( result )
             );
+
+            assign mac_res[gi * `ACC_W +: `ACC_W] = result;
         end
     endgenerate
 
@@ -253,18 +254,19 @@ module mm_ctrl (
     // accumulator //
     /////////////////
 
-    assign acc_we = (state_r != S_IDLE) ? 1'b1 : 1'b0;
+    assign acc_we   = (state_r != S_IDLE) ? 1'b1 : 1'b0;
+    assign acc_addr = b_cnt_r;
 
     buffer #(
-        .VEC_WIDTH ( 24 * 16 ),
-        .ARR_DEPTH ( 16 )
+        .VEC_WIDTH ( `ACC_W * `VL ),
+        .ARR_DEPTH ( `AD )
     ) accumulator (
         .i_clk     ( i_clk ),
         .i_rst_n   ( i_rst_n ),
         .i_we      ( acc_we ),
-        .i_addr_wr ( acc_addr_r ),
+        .i_addr_wr ( acc_addr ),
         .i_data_wr ( mac_res ),
-        .i_addr_rd ( acc_addr_r ),
+        .i_addr_rd ( acc_addr ),
         .o_data_rd ( acc_data )
     );
 
@@ -284,7 +286,6 @@ module mm_ctrl (
             a_cnt_r     <= 0;
             col_cnt_r   <= 0;
             row_cnt_r   <= 0;
-            acc_addr_r  <= 0;
         end else begin
             state_r     <= state_w;
             mode_r      <= mode_w;
@@ -295,7 +296,6 @@ module mm_ctrl (
             a_cnt_r     <= a_cnt_w;
             col_cnt_r   <= col_cnt_w;
             row_cnt_r   <= row_cnt_w;
-            acc_addr_r  <= acc_addr_w;
         end
     end
 
