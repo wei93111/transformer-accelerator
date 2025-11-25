@@ -105,13 +105,13 @@ module tb_mm;
         .i_b_data    ( b_data ),
         .o_a_addr    ( a_addr ),
         .o_b_addr    ( b_addr ),
-
-        .o_tile_done ( tile_done ),
-        .o_mtrx_done ( mtrx_done ),
         
         .o_ppu_start ( ),
         .o_acc_data  ( ),
-        .o_mode      ( )
+        .o_mode      ( ),
+
+        .o_tile_done ( tile_done ),
+        .o_mtrx_done ( mtrx_done )
     );
 
 

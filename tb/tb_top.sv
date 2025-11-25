@@ -71,12 +71,12 @@ module tb_top;
     logic [`DATA8_W * `VL - 1:0] out_data;
     logic [`ADDR_W        - 1:0] out_addr;
 
-    logic [`TRUNC_W * `VL - 1:0] vsq_sf;
-    logic [`TRUNC_W       - 1:0] int4_sf;
-    logic [`TRUNC_W       - 1:0] int8_sf;
+    logic [`TRUNC_W * `VL - 1:0] sf_vsq;
+    logic [`TRUNC_W       - 1:0] sf_int4;
+    logic [`TRUNC_W       - 1:0] sf_int8;
 
-    logic                        finish;
     logic                        vec_done;
+    logic                        finish;
 
     // matrices (raster scan)
     logic [`DATA_W        - 1:0] mtrx_a      [0:`M * `K - 1];
@@ -117,9 +117,9 @@ module tb_top;
         .o_out_data            ( out_data ),
         .o_out_addr            ( out_addr ),
 
-        .o_vsq_sf              ( vsq_sf ),
-        .o_int4_sf             ( int4_sf ),
-        .o_int8_sf             ( int8_sf ),
+        .o_sf_vsq              ( sf_vsq ),
+        .o_sf_int4             ( sf_int4 ),
+        .o_sf_int8             ( sf_int8 ),
 
         .o_softmax_y           (  ),
         .o_softmax_runmax      (  ),

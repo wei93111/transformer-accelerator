@@ -9,21 +9,21 @@ module top (
     input                         i_relu_en,
     input                         i_start,
 
-    // input ram buffers
+    // input ram
     input  [`VEC_W * `VL   - 1:0] i_a_data,
     input  [`VEC_W         - 1:0] i_b_data,
     output [`ADDR_W        - 1:0] o_a_addr,
     output [`ADDR_W        - 1:0] o_b_addr,
 
-    // output ram buffers
+    // output ram
     output                        o_out_we,
     output [`DATA8_W * `VL - 1:0] o_out_data,
     output [`ADDR_W        - 1:0] o_out_addr,
 
     // sf out
-    output [`TRUNC_W * `VL - 1:0] o_vsq_sf,
-    output [`TRUNC_W       - 1:0] o_int4_sf,
-    output [`TRUNC_W       - 1:0] o_int8_sf,
+    output [`TRUNC_W * `VL - 1:0] o_sf_vsq,
+    output [`TRUNC_W       - 1:0] o_sf_int4,
+    output [`TRUNC_W       - 1:0] o_sf_int8,
 
     // softmax out
     output [8  * 16        - 1:0] o_softmax_y,
@@ -58,12 +58,12 @@ module top (
         .o_a_addr    ( o_a_addr ),
         .o_b_addr    ( o_b_addr ),
 
-        .o_tile_done ( o_tile_done ),
-        .o_mtrx_done ( o_mtrx_done ),
-
         .o_ppu_start ( ppu_start ),
         .o_acc_data  ( acc_data ),
         .o_mode      ( mode ),
+
+        .o_tile_done ( o_tile_done ),
+        .o_mtrx_done ( o_mtrx_done )
     );
 
 
@@ -81,17 +81,18 @@ module top (
         .o_out_data            ( o_out_data ),
         .o_out_addr            ( o_out_addr ),
 
-        .o_vsq_sf              ( o_vsq_sf ),
-        .o_int4_sf             ( o_int4_sf ),
-        .o_int8_sf             ( o_int8_sf ),
-        .o_vec_done            ( o_vec_done ),
-        .o_finish              ( o_finish ),
+        .o_sf_vsq              ( o_sf_vsq ),
+        .o_sf_int4             ( o_sf_int4 ),
+        .o_sf_int8             ( o_sf_int8 ),
 
         .o_softmax_y           ( o_softmax_y ),
         .o_softmax_runmax      ( o_softmax_runmax ),
         .o_softmax_denom       ( o_softmax_denom ),
         .o_softmax_y_valid     ( o_softmax_y_valid ),
-        .o_softmax_denom_valid ( o_softmax_denom_valid )
+        .o_softmax_denom_valid ( o_softmax_denom_valid ),
+
+        .o_vec_done            ( o_vec_done ),
+        .o_finish              ( o_finish )
     );
 
 endmodule

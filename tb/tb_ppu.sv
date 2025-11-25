@@ -30,17 +30,16 @@ module tb_ppu;
     logic clk;
     logic rst_n;
 
-    // input
+    // interface
     logic                        start;
     logic [`ACC_W * `VL   - 1:0] acc_data;
 
-    // output
     logic                        out_we;
     logic [`DATA8_W * `VL - 1:0] out_data;
-    logic [`ADDR_W - 1:0]        out_addr;
+    logic [`ADDR_W        - 1:0] out_addr;
 
+    logic [`TRUNC_W * `VL - 1:0] sf_vsq;
     logic                        vec_done;
-    logic [`TRUNC_W * `VL - 1:0] vsq_sf;
 
     // data storage
     logic [`ACC_W * `VL   - 1:0] vector_in  [0: 64 - 1];
@@ -67,17 +66,18 @@ module tb_ppu;
         .o_out_data            ( out_data ),
         .o_out_addr            ( out_addr ),
 
-        .o_vsq_sf              ( vsq_sf ),
-        .o_int4_sf             (  ),
-        .o_int8_sf             (  ),
-        .o_vec_done            ( vec_done ),
-        .o_finish              (  ),
+        .o_sf_vsq              ( sf_vsq ),
+        .o_sf_int4             (  ),
+        .o_sf_int8             (  ),
 
         .o_softmax_y           (  ),
         .o_softmax_runmax      (  ),
         .o_softmax_denom       (  ),
         .o_softmax_y_valid     (  ),
-        .o_softmax_denom_valid (  )
+        .o_softmax_denom_valid (  ),
+
+        .o_vec_done            ( vec_done ),
+        .o_finish              (  )
     );
 
 
@@ -148,6 +148,7 @@ module tb_ppu;
             end
         end
     end
+
 
     // finish
     initial begin

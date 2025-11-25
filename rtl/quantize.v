@@ -4,21 +4,27 @@ module quantize (
     input                         i_clk,
     input                         i_rst_n,
 
+    // ctrl in
     input                         i_start,
     input                         i_max_done,
     input  [1                 :0] i_mode,
     input  [`TRUNC_W * `VL - 1:0] i_data,
 
+    // vsq buffer
     input  [`TRUNC_W * `VL - 1:0] i_buf_data,
     output [`ADDR_W        - 1:0] o_buf_addr,
 
+    // output ram
     output                        o_out_we,
     output [`DATA8_W * `VL - 1:0] o_out_data,
     output [`ADDR_W        - 1:0] o_out_addr,
 
-    output [`TRUNC_W * `VL - 1:0] o_vsq_sf,
-    output [`TRUNC_W       - 1:0] o_int4_sf,
-    output [`TRUNC_W       - 1:0] o_int8_sf,
+    // sf out
+    output [`TRUNC_W * `VL - 1:0] o_sf_vsq,
+    output [`TRUNC_W       - 1:0] o_sf_int4,
+    output [`TRUNC_W       - 1:0] o_sf_int8,
+
+    // finish
     output                        o_vec_done,
     output                        o_finish
 );
@@ -268,9 +274,9 @@ module quantize (
     // sf //
     ////////
 
-    assign o_vsq_sf  = vsq_sf;
-    assign o_int4_sf = int4_sf;
-    assign o_int8_sf = int8_sf;
+    assign o_sf_vsq  = vsq_sf;
+    assign o_sf_int4 = int4_sf;
+    assign o_sf_int8 = int8_sf;
 
     // vsq scale factor
     generate

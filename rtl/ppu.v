@@ -4,26 +4,32 @@ module ppu (
     input                         i_clk,
     input                         i_rst_n,
 
+    // ctrl in
     input                         i_ppu_start,
     input  [`ACC_W * `VL   - 1:0] i_acc_data,
     input  [1                 :0] i_mode,
     input                         i_relu_en,
 
+    // output ram
     output                        o_out_we,
     output [`DATA8_W * `VL - 1:0] o_out_data,
     output [`ADDR_W        - 1:0] o_out_addr,
 
-    output [`TRUNC_W * `VL - 1:0] o_vsq_sf,
-    output [`TRUNC_W       - 1:0] o_int4_sf,
-    output [`TRUNC_W       - 1:0] o_int8_sf,
-    output                        o_vec_done,
-    output                        o_finish,
+    // sf out
+    output [`TRUNC_W * `VL - 1:0] o_sf_vsq,
+    output [`TRUNC_W       - 1:0] o_sf_int4,
+    output [`TRUNC_W       - 1:0] o_sf_int8,
 
+    // softmax out
     output [8  * 16        - 1:0] o_softmax_y,
     output [30 * 16        - 1:0] o_softmax_runmax,
     output [16 * 16        - 1:0] o_softmax_denom,
     output                        o_softmax_y_valid,
-    output                        o_softmax_denom_valid
+    output                        o_softmax_denom_valid,
+
+    // finish
+    output                        o_vec_done,
+    output                        o_finish
 );
 
     genvar gi;
@@ -36,12 +42,12 @@ module ppu (
 
 
     // ctrl
-    reg  [1                 :0] state_w,       state_r;
-    reg                         max_done_w,    max_done_r;
-    reg                         qnt_start_w,   quant_start_r;
-    reg  [`ADDR_W        - 1:0] acc_cnt_w,     acc_cnt_r;
-    reg  [`ADDR_W        - 1:0] tile_cnt_w,    tile_cnt_r;
-    reg  [`ADDR_W        - 1:0] vsq_cnt_w,     vsq_cnt_r;
+    reg  [1                 :0] state_w,     state_r;
+    reg                         max_done_w,  max_done_r;
+    reg                         qnt_start_w, qnt_start_r;
+    reg  [`ADDR_W        - 1:0] acc_cnt_w,   acc_cnt_r;
+    reg  [`ADDR_W        - 1:0] tile_cnt_w,  tile_cnt_r;
+    reg  [`ADDR_W        - 1:0] vsq_cnt_w,   vsq_cnt_r;
 
     // scaling
     wire [`ADDR_W        - 1:0] scale_addr;
@@ -284,7 +290,7 @@ module ppu (
         .i_clk      ( i_clk ),
         .i_rst_n    ( i_rst_n ),
 
-        .i_start    ( quant_start_r ),
+        .i_start    ( qnt_start_r ),
         .i_mode     ( i_mode ),
         .i_max_done ( max_done_r ),
         .i_data     ( relu_res_trunc ),
@@ -296,9 +302,9 @@ module ppu (
         .o_out_data ( o_out_data ),
         .o_out_addr ( o_out_addr ),
 
-        .o_vsq_sf   ( o_vsq_sf ),
-        .o_int4_sf  ( o_int4_sf ),
-        .o_int8_sf  ( o_int8_sf ),
+        .o_sf_vsq   ( o_sf_vsq ),
+        .o_sf_int4  ( o_sf_int4 ),
+        .o_sf_int8  ( o_sf_int8 ),
         .o_vec_done ( o_vec_done ),
         .o_finish   ( o_finish )
     );
@@ -328,19 +334,19 @@ module ppu (
 
     always @(posedge i_clk or negedge i_rst_n) begin
         if (!i_rst_n) begin
-            state_r       <= S_IDLE;
-            max_done_r    <= 0;
-            quant_start_r <= 0;
-            acc_cnt_r     <= 0;
-            tile_cnt_r    <= 0;
-            vsq_cnt_r     <= 0;
+            state_r     <= S_IDLE;
+            max_done_r  <= 0;
+            qnt_start_r <= 0;
+            acc_cnt_r   <= 0;
+            tile_cnt_r  <= 0;
+            vsq_cnt_r   <= 0;
         end else begin
-            state_r       <= state_w;
-            max_done_r    <= max_done_w;
-            quant_start_r <= qnt_start_w;
-            acc_cnt_r     <= acc_cnt_w;
-            tile_cnt_r    <= tile_cnt_w;
-            vsq_cnt_r     <= vsq_cnt_w;
+            state_r     <= state_w;
+            max_done_r  <= max_done_w;
+            qnt_start_r <= qnt_start_w;
+            acc_cnt_r   <= acc_cnt_w;
+            tile_cnt_r  <= tile_cnt_w;
+            vsq_cnt_r   <= vsq_cnt_w;
         end
     end
 

@@ -4,20 +4,24 @@ module mm_ctrl (
     input                       i_clk,
     input                       i_rst_n,
 
+    // ctrl in
     input  [1               :0] i_mode,
     input                       i_start,
 
+    // input ram
     input  [`VEC_W * `VL - 1:0] i_a_data,
     input  [`VEC_W       - 1:0] i_b_data,
     output [`ADDR_W      - 1:0] o_a_addr,
     output [`ADDR_W      - 1:0] o_b_addr,
 
-    output                      o_tile_done,
-    output                      o_mtrx_done,
-
+    // ppu ctrl
     output                      o_ppu_start,
     output [`ACC_W * `VL - 1:0] o_acc_data,
-    output [1               :0] o_mode
+    output [1               :0] o_mode,
+
+    // finish
+    output                      o_tile_done,
+    output                      o_mtrx_done
 );
 
     genvar gi;
