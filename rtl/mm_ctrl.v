@@ -36,24 +36,24 @@ module mm_ctrl (
     reg                       ppu_start_w, ppu_start_r;
 
     // addr gen
-    reg  [9               :0] b_cnt_w,     b_cnt_r;
-    reg  [9               :0] a_cnt_w,     a_cnt_r;
-    reg  [9               :0] col_cnt_w,   col_cnt_r;
-    reg  [9               :0] row_cnt_w,   row_cnt_r;
+    reg  [15              :0] b_cnt_w,     b_cnt_r;
+    reg  [15              :0] a_cnt_w,     a_cnt_r;
+    reg  [15              :0] col_cnt_w,   col_cnt_r;
+    reg  [15              :0] row_cnt_w,   row_cnt_r;
 
     // accumulator
     wire                      acc_we;
-    wire [9               :0] acc_addr;
+    wire [15              :0] acc_addr;
     wire [`ACC_W * `VL - 1:0] acc_data;
     
     // mac
     wire [`ACC_W * `VL - 1:0] mac_res;
 
     // addr gen parameters
-    wire [9:0] VL     = `VL;
-    wire [9:0] STRIDE = (mode_r == `INT8) ? (`K / `INT8_VS) : (`K / `INT4_VS);
-    wire [9:0] COL    = (`N / `AD);
-    wire [9:0] ROW    = (`M / `VL);
+    wire [15:0] VL     = `VL;
+    wire [15:0] STRIDE = (mode_r == `INT8) ? (`K / `INT8_VS) : (`K / `INT4_VS);
+    wire [15:0] COL    = (`N / `AD);
+    wire [15:0] ROW    = (`M / `VL);
 
 
     assign o_a_addr    = a_cnt_r + (row_cnt_r * STRIDE);

@@ -1,31 +1,31 @@
 `include "define.v"
 
 module mac (
-    input  [1:0]   i_mode,      // mode = 0: INT8 / 1: INT4 / 2: INT4_VSQ
-    input  [23:0]  i_psum,      // partial sum in
-    input  [255:0] i_a,         // flattened a vector
-    input  [255:0] i_b,         // flattened b vector
-    input  [7:0]   i_scale_a,   // a vsq scale factor
-    input  [7:0]   i_scale_b,   // b vsq scale factor
-    output [23:0]  o_result     // result = partial sum + vector dot product
+    input  [1         :0] i_mode,     // mode = 0: INT8 / 1: INT4 / 2: INT4_VSQ
+    input  [`ACC_W - 1:0] i_psum,       // partial sum in
+    input  [`DAT_W - 1:0] i_a,          // flattened a vector
+    input  [`DAT_W - 1:0] i_b,          // flattened b vector
+    input  [`SF_W  - 1:0] i_scale_a,    // a vsq scale factor
+    input  [`SF_W  - 1:0] i_scale_b,    // b vsq scale factor
+    output [`ACC_W - 1:0] o_result      // result = partial sum + vector dot product
 );
 
     // gate signals
     wire         int8_gate, int4_gate, vsq_gate;
 
     // gated b / psum
-    wire [255:0] int8_b_gated;
-    wire [255:0] int4_b_gated;
-    wire [7:0]   scale_b_gated;
-    wire [23:0]  int8_psum_gated, int4_psum_gated, vsq_psum_gated;
+    wire [`DAT_W - 1:0] int8_b_gated;
+    wire [`DAT_W - 1:0] int4_b_gated;
+    wire [`SF_W  - 1:0] scale_b_gated;
+    wire [`ACC_W - 1:0] int8_psum_gated, int4_psum_gated, vsq_psum_gated;
 
     // int8 results
     wire [20:0]  int8_product;
-    wire [23:0]  int8_result;
+    wire [`ACC_W - 1:0] int8_result;
 
     // int4 results
     wire [13:0]  int4_product;
-    wire [23:0]  int4_result;
+    wire [`ACC_W - 1:0] int4_result;
 
     // vsq datapath
     wire [15:0]  scale_mult_full;
@@ -54,8 +54,8 @@ module mac (
     //////////////
 
     vec_product #(
-        .BIT_WIDTH ( 8 ),
-        .VEC_SIZE  ( 32 )
+        .BIT_WIDTH ( `INT8_DATA_W ),
+        .VEC_SIZE  ( `INT8_VS )
     ) int8_vp (
         .i_a       ( i_a ),
         .i_b       ( int8_b_gated ),
@@ -70,8 +70,8 @@ module mac (
     //////////////
 
     vec_product #(
-        .BIT_WIDTH ( 4 ),
-        .VEC_SIZE  ( 64 )
+        .BIT_WIDTH ( `INT4_DATA_W ),
+        .VEC_SIZE  ( `INT4_VS )
     ) int4_vp (
         .i_a       ( i_a ),
         .i_b       ( int4_b_gated ),

@@ -7,9 +7,9 @@
     `define INT4_VSQ 2
 
     // matrix size
-    `define M       512
-    `define K       256
-    `define N       512
+    `define M       64
+    `define K       64
+    `define N       64
     `define VL      16
     `define AD      16
     `define INT4_VS 64

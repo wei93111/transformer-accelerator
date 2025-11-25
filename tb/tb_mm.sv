@@ -7,6 +7,8 @@
 `ifdef pat0
     `define IN_A   "./tb/pat_mm/p0_ina.dat"
     `define IN_B   "./tb/pat_mm/p0_inb.dat"
+    `define IN_SFA "./tb/pat_mm/p0_insfa.dat"
+    `define IN_SFB "./tb/pat_mm/p0_insfb.dat"
     `define OUT    "./tb/pat_mm/p0_out.dat"
     `define MODE   `INT4
     `define DATA_W `INT4_DATA_W
@@ -14,6 +16,8 @@
 `elsif pat1
     `define IN_A   "./tb/pat_mm/p1_ina.dat"
     `define IN_B   "./tb/pat_mm/p1_inb.dat"
+    `define IN_SFA "./tb/pat_mm/p1_insfa.dat"
+    `define IN_SFB "./tb/pat_mm/p1_insfb.dat"
     `define OUT    "./tb/pat_mm/p1_out.dat"
     `define MODE   `INT8
     `define DATA_W `INT8_DATA_W
@@ -21,6 +25,8 @@
 `elsif pat2
     `define IN_A   "./tb/pat_mm/p2_ina.dat"
     `define IN_B   "./tb/pat_mm/p2_inb.dat"
+    `define IN_SFA "./tb/pat_mm/p2_insfa.dat"
+    `define IN_SFB "./tb/pat_mm/p2_insfb.dat"
     `define OUT    "./tb/pat_mm/p2_out.dat"
     `define MODE   `INT4_VSQ
     `define DATA_W `INT4_DATA_W
@@ -28,6 +34,8 @@
 `else
     `define IN_A   "./tb/pat_mm/p0_ina.dat"
     `define IN_B   "./tb/pat_mm/p0_inb.dat"
+    `define IN_SFA "./tb/pat_mm/p0_insfa.dat"
+    `define IN_SFB "./tb/pat_mm/p0_insfb.dat"
     `define OUT    "./tb/pat_mm/p0_out.dat"
     `define MODE   `INT4
     `define DATA_W `INT4_DATA_W
@@ -37,7 +45,7 @@
 `define RAMA_D (`M / `VL) * (`K / `VS)
 `define RAMB_D (`N / `VS) * `K
 `define GROUP  (`M / `VL)
-`define STRIDE (`K / `DATA_W)
+`define STRIDE (`K / `VS)
 
 
 module tb_mm;
@@ -61,11 +69,15 @@ module tb_mm;
     logic [15              :0] a_addr;
     logic [15              :0] b_addr;
 
-    // flattened matrices
+    // matrices (raster scan)
     logic [`DATA_W      - 1:0] mtrx_a      [0:`M * `K - 1];
     logic [`DATA_W      - 1:0] mtrx_b      [0:`K * `N - 1];
     logic [`ACC_W       - 1:0] mtrx_golden [0:`M * `N - 1];
     logic [`ACC_W       - 1:0] mtrx_out    [0:`M * `N - 1];
+
+    // sf in
+    logic [`SF_W        - 1:0] sf_a        [0:`M * `K / `VS - 1];
+    logic [`SF_W        - 1:0] sf_b        [0:`K * `N / `VS - 1];
 
     // vars
     logic [15              :0] tile_cnt;
@@ -115,7 +127,7 @@ module tb_mm;
                 .i_we    ( 1'b0 ),
                 .i_addr  ( a_addr ),
                 .i_data  ( `VEC_W'd0 ),
-                .o_data  ( a_data[gi*`VEC_W +: `VEC_W] )
+                .o_data  ( a_data[gi * `VEC_W +: `VEC_W] )
             );
         end
     endgenerate
@@ -144,7 +156,10 @@ module tb_mm;
 
     // stimulus
     initial begin
-        $display("Starting simulation...\n");
+        $display("==================================================================");
+        $display("Simulation Start");
+        $display("==================================================================");
+        $display("");
         
         // reset
         wait (rst_n === 1'b0);
@@ -232,6 +247,8 @@ module tb_mm;
         $readmemh(`IN_A, mtrx_a);
         $readmemh(`IN_B, mtrx_b);
         $readmemh(`OUT, mtrx_golden);
+        $readmemh(`IN_SFA, sf_a);
+        $readmemh(`IN_SFB, sf_b);
 
         // load A buffers (unrolled...)
         // Bank 0
@@ -241,9 +258,9 @@ module tb_mm;
                 for (entry = 0; entry < `VS; entry = entry + 1) begin
                     data[entry * `DATA_W +: `DATA_W] = mtrx_a[row * `K + vec * `VS + entry];
                 end
-                sf = 0;
-                RAM_A[0].ram_a.mem[row_grp * `DATA_W + vec][`VEC_W - 1 -: `DAT_W] = data;
-                RAM_A[0].ram_a.mem[row_grp * `DATA_W + vec][`SF_W  - 1 -:  `SF_W] = sf;
+                sf = sf_a[row * (`K / `VS) + vec];
+                RAM_A[0].ram_a.mem[row_grp * `STRIDE + vec][`VEC_W - 1 -: `DAT_W] = data;
+                RAM_A[0].ram_a.mem[row_grp * `STRIDE + vec][`SF_W  - 1 -:  `SF_W] = sf;
             end
         end
 
@@ -254,9 +271,9 @@ module tb_mm;
                 for (entry = 0; entry < `VS; entry = entry + 1) begin
                     data[entry * `DATA_W +: `DATA_W] = mtrx_a[row * `K + vec * `VS + entry];
                 end
-                sf = 0;
-                RAM_A[1].ram_a.mem[row_grp * `DATA_W + vec][`VEC_W - 1 -: `DAT_W] = data;
-                RAM_A[1].ram_a.mem[row_grp * `DATA_W + vec][`SF_W  - 1 -:  `SF_W] = sf;
+                sf = sf_a[row * (`K / `VS) + vec];
+                RAM_A[1].ram_a.mem[row_grp * `STRIDE + vec][`VEC_W - 1 -: `DAT_W] = data;
+                RAM_A[1].ram_a.mem[row_grp * `STRIDE + vec][`SF_W  - 1 -:  `SF_W] = sf;
             end
         end
 
@@ -267,9 +284,9 @@ module tb_mm;
                 for (entry = 0; entry < `VS; entry = entry + 1) begin
                     data[entry * `DATA_W +: `DATA_W] = mtrx_a[row * `K + vec * `VS + entry];
                 end
-                sf = 0;
-                RAM_A[2].ram_a.mem[row_grp * `DATA_W + vec][`VEC_W - 1 -: `DAT_W] = data;
-                RAM_A[2].ram_a.mem[row_grp * `DATA_W + vec][`SF_W  - 1 -:  `SF_W] = sf;
+                sf = sf_a[row * (`K / `VS) + vec];
+                RAM_A[2].ram_a.mem[row_grp * `STRIDE + vec][`VEC_W - 1 -: `DAT_W] = data;
+                RAM_A[2].ram_a.mem[row_grp * `STRIDE + vec][`SF_W  - 1 -:  `SF_W] = sf;
             end
         end
 
@@ -280,9 +297,9 @@ module tb_mm;
                 for (entry = 0; entry < `VS; entry = entry + 1) begin
                     data[entry * `DATA_W +: `DATA_W] = mtrx_a[row * `K + vec * `VS + entry];
                 end
-                sf = 0;
-                RAM_A[3].ram_a.mem[row_grp * `DATA_W + vec][`VEC_W - 1 -: `DAT_W] = data;
-                RAM_A[3].ram_a.mem[row_grp * `DATA_W + vec][`SF_W  - 1 -:  `SF_W] = sf;
+                sf = sf_a[row * (`K / `VS) + vec];
+                RAM_A[3].ram_a.mem[row_grp * `STRIDE + vec][`VEC_W - 1 -: `DAT_W] = data;
+                RAM_A[3].ram_a.mem[row_grp * `STRIDE + vec][`SF_W  - 1 -:  `SF_W] = sf;
             end
         end
 
@@ -293,9 +310,9 @@ module tb_mm;
                 for (entry = 0; entry < `VS; entry = entry + 1) begin
                     data[entry * `DATA_W +: `DATA_W] = mtrx_a[row * `K + vec * `VS + entry];
                 end
-                sf = 0;
-                RAM_A[4].ram_a.mem[row_grp * `DATA_W + vec][`VEC_W - 1 -: `DAT_W] = data;
-                RAM_A[4].ram_a.mem[row_grp * `DATA_W + vec][`SF_W  - 1 -:  `SF_W] = sf;
+                sf = sf_a[row * (`K / `VS) + vec];
+                RAM_A[4].ram_a.mem[row_grp * `STRIDE + vec][`VEC_W - 1 -: `DAT_W] = data;
+                RAM_A[4].ram_a.mem[row_grp * `STRIDE + vec][`SF_W  - 1 -:  `SF_W] = sf;
             end
         end
 
@@ -306,9 +323,9 @@ module tb_mm;
                 for (entry = 0; entry < `VS; entry = entry + 1) begin
                     data[entry * `DATA_W +: `DATA_W] = mtrx_a[row * `K + vec * `VS + entry];
                 end
-                sf = 0;
-                RAM_A[5].ram_a.mem[row_grp * `DATA_W + vec][`VEC_W - 1 -: `DAT_W] = data;
-                RAM_A[5].ram_a.mem[row_grp * `DATA_W + vec][`SF_W  - 1 -:  `SF_W] = sf;
+                sf = sf_a[row * (`K / `VS) + vec];
+                RAM_A[5].ram_a.mem[row_grp * `STRIDE + vec][`VEC_W - 1 -: `DAT_W] = data;
+                RAM_A[5].ram_a.mem[row_grp * `STRIDE + vec][`SF_W  - 1 -:  `SF_W] = sf;
             end
         end
 
@@ -319,9 +336,9 @@ module tb_mm;
                 for (entry = 0; entry < `VS; entry = entry + 1) begin
                     data[entry * `DATA_W +: `DATA_W] = mtrx_a[row * `K + vec * `VS + entry];
                 end
-                sf = 0;
-                RAM_A[6].ram_a.mem[row_grp * `DATA_W + vec][`VEC_W - 1 -: `DAT_W] = data;
-                RAM_A[6].ram_a.mem[row_grp * `DATA_W + vec][`SF_W  - 1 -:  `SF_W] = sf;
+                sf = sf_a[row * (`K / `VS) + vec];
+                RAM_A[6].ram_a.mem[row_grp * `STRIDE + vec][`VEC_W - 1 -: `DAT_W] = data;
+                RAM_A[6].ram_a.mem[row_grp * `STRIDE + vec][`SF_W  - 1 -:  `SF_W] = sf;
             end
         end
 
@@ -332,9 +349,9 @@ module tb_mm;
                 for (entry = 0; entry < `VS; entry = entry + 1) begin
                     data[entry * `DATA_W +: `DATA_W] = mtrx_a[row * `K + vec * `VS + entry];
                 end
-                sf = 0;
-                RAM_A[7].ram_a.mem[row_grp * `DATA_W + vec][`VEC_W - 1 -: `DAT_W] = data;
-                RAM_A[7].ram_a.mem[row_grp * `DATA_W + vec][`SF_W  - 1 -:  `SF_W] = sf;
+                sf = sf_a[row * (`K / `VS) + vec];
+                RAM_A[7].ram_a.mem[row_grp * `STRIDE + vec][`VEC_W - 1 -: `DAT_W] = data;
+                RAM_A[7].ram_a.mem[row_grp * `STRIDE + vec][`SF_W  - 1 -:  `SF_W] = sf;
             end
         end
 
@@ -345,9 +362,9 @@ module tb_mm;
                 for (entry = 0; entry < `VS; entry = entry + 1) begin
                     data[entry * `DATA_W +: `DATA_W] = mtrx_a[row * `K + vec * `VS + entry];
                 end
-                sf = 0;
-                RAM_A[8].ram_a.mem[row_grp * `DATA_W + vec][`VEC_W - 1 -: `DAT_W] = data;
-                RAM_A[8].ram_a.mem[row_grp * `DATA_W + vec][`SF_W  - 1 -:  `SF_W] = sf;
+                sf = sf_a[row * (`K / `VS) + vec];
+                RAM_A[8].ram_a.mem[row_grp * `STRIDE + vec][`VEC_W - 1 -: `DAT_W] = data;
+                RAM_A[8].ram_a.mem[row_grp * `STRIDE + vec][`SF_W  - 1 -:  `SF_W] = sf;
             end
         end
 
@@ -358,9 +375,9 @@ module tb_mm;
                 for (entry = 0; entry < `VS; entry = entry + 1) begin
                     data[entry * `DATA_W +: `DATA_W] = mtrx_a[row * `K + vec * `VS + entry];
                 end
-                sf = 0;
-                RAM_A[9].ram_a.mem[row_grp * `DATA_W + vec][`VEC_W - 1 -: `DAT_W] = data;
-                RAM_A[9].ram_a.mem[row_grp * `DATA_W + vec][`SF_W  - 1 -:  `SF_W] = sf;
+                sf = sf_a[row * (`K / `VS) + vec];
+                RAM_A[9].ram_a.mem[row_grp * `STRIDE + vec][`VEC_W - 1 -: `DAT_W] = data;
+                RAM_A[9].ram_a.mem[row_grp * `STRIDE + vec][`SF_W  - 1 -:  `SF_W] = sf;
             end
         end
 
@@ -371,9 +388,9 @@ module tb_mm;
                 for (entry = 0; entry < `VS; entry = entry + 1) begin
                     data[entry * `DATA_W +: `DATA_W] = mtrx_a[row * `K + vec * `VS + entry];
                 end
-                sf = 0;
-                RAM_A[10].ram_a.mem[row_grp * `DATA_W + vec][`VEC_W - 1 -: `DAT_W] = data;
-                RAM_A[10].ram_a.mem[row_grp * `DATA_W + vec][`SF_W  - 1 -:  `SF_W] = sf;
+                sf = sf_a[row * (`K / `VS) + vec];
+                RAM_A[10].ram_a.mem[row_grp * `STRIDE + vec][`VEC_W - 1 -: `DAT_W] = data;
+                RAM_A[10].ram_a.mem[row_grp * `STRIDE + vec][`SF_W  - 1 -:  `SF_W] = sf;
             end
         end
 
@@ -384,9 +401,9 @@ module tb_mm;
                 for (entry = 0; entry < `VS; entry = entry + 1) begin
                     data[entry * `DATA_W +: `DATA_W] = mtrx_a[row * `K + vec * `VS + entry];
                 end
-                sf = 0;
-                RAM_A[11].ram_a.mem[row_grp * `DATA_W + vec][`VEC_W - 1 -: `DAT_W] = data;
-                RAM_A[11].ram_a.mem[row_grp * `DATA_W + vec][`SF_W  - 1 -:  `SF_W] = sf;
+                sf = sf_a[row * (`K / `VS) + vec];
+                RAM_A[11].ram_a.mem[row_grp * `STRIDE + vec][`VEC_W - 1 -: `DAT_W] = data;
+                RAM_A[11].ram_a.mem[row_grp * `STRIDE + vec][`SF_W  - 1 -:  `SF_W] = sf;
             end
         end
 
@@ -397,9 +414,9 @@ module tb_mm;
                 for (entry = 0; entry < `VS; entry = entry + 1) begin
                     data[entry * `DATA_W +: `DATA_W] = mtrx_a[row * `K + vec * `VS + entry];
                 end
-                sf = 0;
-                RAM_A[12].ram_a.mem[row_grp * `DATA_W + vec][`VEC_W - 1 -: `DAT_W] = data;
-                RAM_A[12].ram_a.mem[row_grp * `DATA_W + vec][`SF_W  - 1 -:  `SF_W] = sf;
+                sf = sf_a[row * (`K / `VS) + vec];
+                RAM_A[12].ram_a.mem[row_grp * `STRIDE + vec][`VEC_W - 1 -: `DAT_W] = data;
+                RAM_A[12].ram_a.mem[row_grp * `STRIDE + vec][`SF_W  - 1 -:  `SF_W] = sf;
             end
         end
 
@@ -410,9 +427,9 @@ module tb_mm;
                 for (entry = 0; entry < `VS; entry = entry + 1) begin
                     data[entry * `DATA_W +: `DATA_W] = mtrx_a[row * `K + vec * `VS + entry];
                 end
-                sf = 0;
-                RAM_A[13].ram_a.mem[row_grp * `DATA_W + vec][`VEC_W - 1 -: `DAT_W] = data;
-                RAM_A[13].ram_a.mem[row_grp * `DATA_W + vec][`SF_W  - 1 -:  `SF_W] = sf;
+                sf = sf_a[row * (`K / `VS) + vec];
+                RAM_A[13].ram_a.mem[row_grp * `STRIDE + vec][`VEC_W - 1 -: `DAT_W] = data;
+                RAM_A[13].ram_a.mem[row_grp * `STRIDE + vec][`SF_W  - 1 -:  `SF_W] = sf;
             end
         end
 
@@ -423,9 +440,9 @@ module tb_mm;
                 for (entry = 0; entry < `VS; entry = entry + 1) begin
                     data[entry * `DATA_W +: `DATA_W] = mtrx_a[row * `K + vec * `VS + entry];
                 end
-                sf = 0;
-                RAM_A[14].ram_a.mem[row_grp * `DATA_W + vec][`VEC_W - 1 -: `DAT_W] = data;
-                RAM_A[14].ram_a.mem[row_grp * `DATA_W + vec][`SF_W  - 1 -:  `SF_W] = sf;
+                sf = sf_a[row * (`K / `VS) + vec];
+                RAM_A[14].ram_a.mem[row_grp * `STRIDE + vec][`VEC_W - 1 -: `DAT_W] = data;
+                RAM_A[14].ram_a.mem[row_grp * `STRIDE + vec][`SF_W  - 1 -:  `SF_W] = sf;
             end
         end
 
@@ -436,9 +453,9 @@ module tb_mm;
                 for (entry = 0; entry < `VS; entry = entry + 1) begin
                     data[entry * `DATA_W +: `DATA_W] = mtrx_a[row * `K + vec * `VS + entry];
                 end
-                sf = 0;
-                RAM_A[15].ram_a.mem[row_grp * `DATA_W + vec][`VEC_W - 1 -: `DAT_W] = data;
-                RAM_A[15].ram_a.mem[row_grp * `DATA_W + vec][`SF_W  - 1 -:  `SF_W] = sf;
+                sf = sf_a[row * (`K / `VS) + vec];
+                RAM_A[15].ram_a.mem[row_grp * `STRIDE + vec][`VEC_W - 1 -: `DAT_W] = data;
+                RAM_A[15].ram_a.mem[row_grp * `STRIDE + vec][`SF_W  - 1 -:  `SF_W] = sf;
             end
         end
 
@@ -449,7 +466,7 @@ module tb_mm;
                 for (entry = 0; entry < `VS; entry = entry + 1) begin
                     data[entry * `DATA_W +: `DATA_W] = mtrx_b[(entry + vec * `VS) * `N + col];
                 end
-                sf = 0;
+                sf = sf_b[vec * `N + col];
                 ram_b.mem[vec * `N + col][`VEC_W - 1 -: `DAT_W] = data;
                 ram_b.mem[vec * `N + col][`SF_W  - 1 -:  `SF_W] = sf;
             end
