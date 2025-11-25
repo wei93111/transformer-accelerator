@@ -1,33 +1,43 @@
+`include "define.v"
+
 module top (
-    input                  i_clk,
-    input                  i_rst_n,
-    input  [1:0]           i_mode,
-    input                  i_relu_en,
-    input                  i_start,
+    input                         i_clk,
+    input                         i_rst_n,
 
-    output [18 * 16 - 1:0] o_vsq_sf,
-    output [17         :0] o_int4_sf,
-    output [17         :0] o_int8_sf,
-    output                 o_finish,
+    // ctrl in
+    input  [1                 :0] i_mode,
+    input                         i_relu_en,
+    input                         i_start,
 
-    output [8  * 16 - 1:0] o_softmax_y,
-    output [30 * 16 - 1:0] o_softmax_runmax,
-    output [16 * 16 - 1:0] o_softmax_denom,
-    output                 o_softmax_y_valid,
-    output                 o_softmax_denom_valid,
+    // input ram buffers
+    input  [`VEC_W * `VL   - 1:0] i_a_data,
+    input  [`VEC_W         - 1:0] i_b_data,
+    output [`ADDR_W        - 1:0] o_a_addr,
+    output [`ADDR_W        - 1:0] o_b_addr,
 
-    output                 o_done
+    // output ram buffers
+    output                        o_out_we,
+    output [`DATA8_W * `VL - 1:0] o_out_data,
+    output [`ADDR_W        - 1:0] o_out_addr,
+
+    // sf out
+    output [`TRUNC_W * `VL - 1:0] o_vsq_sf,
+    output [`TRUNC_W       - 1:0] o_int4_sf,
+    output [`TRUNC_W       - 1:0] o_int8_sf,
+    output                        o_finish,
+
+    // softmax out
+    output [8  * 16        - 1:0] o_softmax_y,
+    output [30 * 16        - 1:0] o_softmax_runmax,
+    output [16 * 16        - 1:0] o_softmax_denom,
+    output                        o_softmax_y_valid,
+    output                        o_softmax_denom_valid
 );
 
-    // ppu - mm_ctrl interface
-    wire                 ppu_start;
-    wire [24 * 16 - 1:0] acc_data;      // INT24 x 16 entries
-    wire [1:0]           mode;
-
-    // ppu - output buffer interface
-    wire                 ram_we;
-    wire [4 * 16 - 1:0]  ram_data;      // INT4 x 16 entries
-    wire [5:0]           ram_addr;
+    // interface
+    wire                      ppu_start;
+    wire [`ACC_W * `VL - 1:0] acc_data;
+    wire [1               :0] mode;
 
 
     // mm_ctrl
@@ -38,8 +48,13 @@ module top (
         .i_mode      ( i_mode ),
         .i_start     ( i_start ),
 
-        .o_tile_done ( ),
-        .o_mtrx_done ( o_done ),
+        .i_a_data    ( i_a_data ),
+        .i_b_data    ( i_b_data ),
+        .o_a_addr    ( o_a_addr ),
+        .o_b_addr    ( o_b_addr ),
+
+        .o_tile_done (  ),
+        .o_mtrx_done (  ),
 
         .o_ppu_start ( ppu_start ),
         .o_acc_data  ( acc_data ),
@@ -57,9 +72,9 @@ module top (
         .i_mode                ( mode ),
         .i_relu_en             ( i_relu_en ),
 
-        .o_ram_we              ( ram_we ),
-        .o_ram_data            ( ram_data ),
-        .o_ram_addr            ( ram_addr ),
+        .o_out_we              ( o_out_we ),
+        .o_out_data            ( o_out_data ),
+        .o_out_addr            ( o_out_addr ),
 
         .o_vsq_sf              ( o_vsq_sf ),
         .o_int4_sf             ( o_int4_sf ),
@@ -71,20 +86,6 @@ module top (
         .o_softmax_denom       ( o_softmax_denom ),
         .o_softmax_y_valid     ( o_softmax_y_valid ),
         .o_softmax_denom_valid ( o_softmax_denom_valid )
-    );
-
-
-    // output buffer
-    ram #(
-        .VEC_WIDTH ( 4 * 16 ),   // INT4 x 16 entries
-        .ARR_DEPTH ( 64 )        // 64 cols (full vector)
-    ) u_ram (
-        .i_clk   ( i_clk ),
-        .i_rst_n ( i_rst_n ),
-        .i_we    ( ram_we ),
-        .i_addr  ( ram_addr ),
-        .i_data  ( ram_data ),
-        .o_data  ( 64'd0 )
     );
 
 endmodule

@@ -11,33 +11,33 @@ module mac (
 );
 
     // gate signals
-    wire                      int4_gate;
-    wire                      int8_gate;
-    wire                      vsq_gate;
+    wire                   int4_gate;
+    wire                   int8_gate;
+    wire                   vsq_gate;
 
     // gated b / psum
-    wire [`DAT_W       - 1:0] int4_b_gated;
-    wire [`DAT_W       - 1:0] int8_b_gated;
-    wire [`SF_W        - 1:0] sf_b_gated;
-    wire [`ACC_W       - 1:0] int4_psum_gated;
-    wire [`ACC_W       - 1:0] int8_psum_gated;
-    wire [`ACC_W       - 1:0] vsq_psum_gated;
+    wire [`DAT_W    - 1:0] int4_b_gated;
+    wire [`DAT_W    - 1:0] int8_b_gated;
+    wire [`SF_W     - 1:0] sf_b_gated;
+    wire [`ACC_W    - 1:0] int4_psum_gated;
+    wire [`ACC_W    - 1:0] int8_psum_gated;
+    wire [`ACC_W    - 1:0] vsq_psum_gated;
 
     // int4 datapath
-    wire [`INT4_PROD_W - 1:0] int4_product;
-    wire [`ACC_W          :0] int4_res_full;
-    wire [`ACC_W       - 1:0] int4_res;
+    wire [`PROD4_W  - 1:0] int4_product;
+    wire [`ACC_W       :0] int4_res_full;
+    wire [`ACC_W    - 1:0] int4_res;
 
     // int8 datapath
-    wire [`INT8_PROD_W - 1:0] int8_product;
-    wire [`ACC_W          :0] int8_res_full;
-    wire [`ACC_W       - 1:0] int8_res;
+    wire [`PROD8_W  - 1:0] int8_product;
+    wire [`ACC_W       :0] int8_res_full;
+    wire [`ACC_W    - 1:0] int8_res;
 
     // vsq datapath
-    wire [`SF_W * 2    - 1:0] sf_mult;
-    wire [`ACC_W       - 1:0] vsq_product;
-    wire [`ACC_W          :0] vsq_res_full;
-    wire [`ACC_W       - 1:0] vsq_res;
+    wire [`SF_W * 2 - 1:0] sf_mult;
+    wire [`ACC_W    - 1:0] vsq_product;
+    wire [`ACC_W       :0] vsq_res_full;
+    wire [`ACC_W    - 1:0] vsq_res;
 
 
     ////////////
@@ -61,8 +61,8 @@ module mac (
     //////////////
 
     vec_product #(
-        .DATA_W ( `INT4_DATA_W ),
-        .RES_W  ( `INT4_PROD_W ),
+        .DATA_W ( `DATA4_W ),
+        .RES_W  ( `PROD4_W ),
         .VS     ( `INT4_VS )
     ) int4_vp (
         .i_a       ( i_a_data ),
@@ -79,8 +79,8 @@ module mac (
     //////////////
 
     vec_product #(
-        .DATA_W ( `INT8_DATA_W ),
-        .RES_W  ( `INT8_PROD_W ),
+        .DATA_W ( `DATA8_W ),
+        .RES_W  ( `PROD8_W ),
         .VS     ( `INT8_VS )
     ) int8_vp (
         .i_a       ( i_a_data ),

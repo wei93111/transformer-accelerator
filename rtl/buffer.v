@@ -1,30 +1,38 @@
+`include "define.v"
+
 module buffer #(
-    parameter VEC_WIDTH  = 384,
-    parameter ARR_DEPTH  = 16
+    parameter WIDTH  = 384,
+    parameter DEPTH  = 16,
+    parameter ADDR_W = $clog2(DEPTH)
 )(
-    input                   i_clk,
-    input                   i_rst_n,
-    input                   i_we,       // write enable
-    input  [ADDR_WIDTH-1:0] i_addr_wr,  // write address
-    input  [VEC_WIDTH-1:0]  i_data_wr,  // write data
-    input  [ADDR_WIDTH-1:0] i_addr_rd,  // read address
-    output [VEC_WIDTH-1:0]  o_data_rd   // read data
+    input                  i_clk,
+    input                  i_rst_n,
+    input                  i_we,
+    input  [`ADDR_W - 1:0] i_addr_wr,
+    input  [WIDTH   - 1:0] i_data_wr,
+    input  [`ADDR_W - 1:0] i_addr_rd,
+    output [WIDTH   - 1:0] o_data_rd
 );
 
     integer i;
 
     // Register array
-    reg [VEC_WIDTH-1:0] registers [0:ARR_DEPTH-1];
+    reg [WIDTH - 1:0] registers [0:DEPTH - 1];
+
+    // limited addr range
+    wire [ADDR_W - 1:0] addr_wr = i_addr_wr[ADDR_W - 1:0];
+    wire [ADDR_W - 1:0] addr_rd = i_addr_rd[ADDR_W - 1:0];
+
 
     // Read logic
-    assign o_data_rd = registers[i_addr_rd];
+    assign o_data_rd = registers[addr_rd];
 
     // Write logic (1 cycle latency)
     always @(posedge i_clk or negedge i_rst_n) begin
         if (!i_rst_n) begin
-            for (i = 0; i < ARR_DEPTH; i = i + 1) registers[i] <= {VEC_WIDTH{1'b0}};
+            for (i = 0; i < DEPTH; i = i + 1) registers[i] <= {WIDTH{1'b0}};
         end else if (i_we) begin
-            registers[i_addr_wr] <= i_data_wr;
+            registers[addr_wr] <= i_data_wr;
         end
     end
 

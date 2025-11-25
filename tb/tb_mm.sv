@@ -11,7 +11,7 @@
     `define IN_SFB "./tb/pat_mm/p0_insfb.dat"
     `define OUT    "./tb/pat_mm/p0_out.dat"
     `define MODE   `INT4
-    `define DATA_W `INT4_DATA_W
+    `define DATA_W `DATA4_W
     `define VS     `INT4_VS
 `elsif pat1
     `define IN_A   "./tb/pat_mm/p1_ina.dat"
@@ -20,7 +20,7 @@
     `define IN_SFB "./tb/pat_mm/p1_insfb.dat"
     `define OUT    "./tb/pat_mm/p1_out.dat"
     `define MODE   `INT8
-    `define DATA_W `INT8_DATA_W
+    `define DATA_W `DATA8_W
     `define VS     `INT8_VS
 `elsif pat2
     `define IN_A   "./tb/pat_mm/p2_ina.dat"
@@ -29,7 +29,7 @@
     `define IN_SFB "./tb/pat_mm/p2_insfb.dat"
     `define OUT    "./tb/pat_mm/p2_out.dat"
     `define MODE   `INT4_VSQ
-    `define DATA_W `INT4_DATA_W
+    `define DATA_W `DATA4_W
     `define VS     `INT4_VS
 `else
     `define IN_A   "./tb/pat_mm/p0_ina.dat"
@@ -38,7 +38,7 @@
     `define IN_SFB "./tb/pat_mm/p0_insfb.dat"
     `define OUT    "./tb/pat_mm/p0_out.dat"
     `define MODE   `INT4
-    `define DATA_W `INT4_DATA_W
+    `define DATA_W `DATA4_W
     `define VS     `INT4_VS
 `endif
 
@@ -66,8 +66,8 @@ module tb_mm;
 
     logic [`VEC_W * `VL - 1:0] a_data;
     logic [`VEC_W       - 1:0] b_data;
-    logic [15              :0] a_addr;
-    logic [15              :0] b_addr;
+    logic [`ADDR_W      - 1:0] a_addr;
+    logic [`ADDR_W      - 1:0] b_addr;
 
     // matrices (raster scan)
     logic [`DATA_W      - 1:0] mtrx_a      [0:`M * `K - 1];
@@ -80,9 +80,9 @@ module tb_mm;
     logic [`SF_W        - 1:0] sf_b        [0:`K * `N / `VS - 1];
 
     // vars
-    logic [15              :0] tile_cnt;
-    logic [15              :0] tile_row;
-    logic [15              :0] tile_col;
+    logic [`ADDR_W      - 1:0] tile_cnt;
+    logic [`ADDR_W      - 1:0] tile_row;
+    logic [`ADDR_W      - 1:0] tile_col;
     logic [`DAT_W       - 1:0] data;
     logic [`SF_W        - 1:0] sf;
 
@@ -119,8 +119,8 @@ module tb_mm;
     generate
         for (gi = 0; gi < `VL; gi = gi + 1) begin: RAM_A
             ram #(
-                .VEC_WIDTH ( `VEC_W ),
-                .ARR_DEPTH ( `RAMA_D )
+                .WIDTH ( `VEC_W ),
+                .DEPTH ( `RAMA_D )
             ) u_ram_a (
                 .i_clk   ( clk ),
                 .i_rst_n ( 1'b1 ),
@@ -135,8 +135,8 @@ module tb_mm;
 
     // B buffer
     ram #(
-        .VEC_WIDTH ( `VEC_W ),
-        .ARR_DEPTH ( `RAMB_D )
+        .WIDTH ( `VEC_W ),
+        .DEPTH ( `RAMB_D )
     ) u_ram_b (
         .i_clk   ( clk ),
         .i_rst_n ( 1'b1 ),

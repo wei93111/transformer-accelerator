@@ -1,25 +1,25 @@
 `include "define.v"
 
 module quantize (
-    input                  i_clk,
-    input                  i_rst_n,
+    input                         i_clk,
+    input                         i_rst_n,
 
-    input                  i_start,
-    input                  i_max_done,
-    input  [1          :0] i_mode,
-    input  [18 * 16 - 1:0] i_data,
+    input                         i_start,
+    input                         i_max_done,
+    input  [1                 :0] i_mode,
+    input  [`TRUNC_W * `VL - 1:0] i_data,
 
-    input  [18 * 16 - 1:0] i_buf_data,
-    output [5          :0] o_buf_addr,
+    input  [`TRUNC_W * `VL - 1:0] i_buf_data,
+    output [`ADDR_W        - 1:0] o_buf_addr,
 
-    output                 o_ram_we,
-    output [4  * 16 - 1:0] o_ram_data,
-    output [5          :0] o_ram_addr,
+    output                        o_out_we,
+    output [`DATA8_W * `VL - 1:0] o_out_data,
+    output [`ADDR_W        - 1:0] o_out_addr,
 
-    output [18 * 16 - 1:0] o_vsq_sf,
-    output [17         :0] o_int4_sf,
-    output [17         :0] o_int8_sf,
-    output                 o_finish
+    output [`TRUNC_W * `VL - 1:0] o_vsq_sf,
+    output [`TRUNC_W       - 1:0] o_int4_sf,
+    output [`TRUNC_W       - 1:0] o_int8_sf,
+    output                        o_finish
 );
 
     integer i;
@@ -65,7 +65,7 @@ module quantize (
 
     // quantize
     reg  [53:0]          mult;                  // Q20.34
-    reg  [4  * 16 - 1:0] data_out;              // INT4  x 16 entries
+    reg  [8  * 16 - 1:0] data_out;
 
 
     // vector finish signal
@@ -299,33 +299,34 @@ module quantize (
     //////////////
 
     assign o_buf_addr = vsq_cnt_r;  // read from vsq buffer
-    assign o_ram_addr = vsq_cnt_r;
-    assign o_ram_data = data_out;
-    assign o_ram_we   = (state_r == S_QUANT);
+    assign o_out_addr = vsq_cnt_r;
+    assign o_out_data = data_out;
+    assign o_out_we   = (state_r == S_QUANT);
 
     always @(*) begin
+        data_out = 0;
         if (i_mode == `INT4_VSQ) begin
             // vsq quantization
             for (i = 0; i < 16; i = i + 1) begin
                 mult               = $signed(i_buf_data[i*18 +: 18]) * $signed(vsq_recip[i*36 +: 36]);
-                data_out[i*4 +: 4] = truncate(mult);
+                data_out[i*4 +: 4] = int4_truncate(mult);
             end
         end else if (i_mode == `INT4) begin
             // int4 quantization
             for (i = 0; i < 16; i = i + 1) begin
                 mult               = $signed(i_buf_data[i*18 +: 18]) * $signed(int4_recip);
-                data_out[i*4 +: 4] = truncate(mult);
+                data_out[i*4 +: 4] = int4_truncate(mult);
             end
         end else begin
             // int8 quantization
             for (i = 0; i < 16; i = i + 1) begin
                 mult               = $signed(i_buf_data[i*18 +: 18]) * $signed(int8_recip);
-                data_out[i*4 +: 4] = truncate(mult);
+                data_out[i*8 +: 8] = int8_truncate(mult);
             end
         end
     end
 
-    function automatic [3:0] truncate;
+    function automatic [3:0] int4_truncate;
         input [53:0] data;
 
         reg [53:0] data_abs;        // Q20.34
@@ -341,7 +342,27 @@ module quantize (
             end else begin
                 data_abs_sat = (data_abs_rnd > {50'd0, 4'b0111}) ? 4'b0111 : data_abs_rnd[3:0];
             end
-            truncate = (data[53]) ? ~data_abs_sat + 4'd1 : data_abs_sat;
+            int4_truncate = (data[53]) ? ~data_abs_sat + 4'd1 : data_abs_sat;
+        end
+    endfunction
+
+    function automatic [7:0] int8_truncate;
+        input [53:0] data;
+
+        reg [53:0] data_abs;        // Q20.34
+        reg [53:0] data_abs_rnd;    // Q54.0
+        reg [7:0]  data_abs_sat;    // INT8
+
+        begin
+            data_abs     = (data[53]) ? ~data + 54'd1 : data;
+            data_abs_rnd = (data_abs[33]) ? (data_abs >> 34) + 54'd1 : data_abs >> 34;
+            if (data[53]) begin
+                // larger limit for negative numbers
+                data_abs_sat = (data_abs_rnd > {46'd0, 8'b10000000}) ? 8'b10000000 : data_abs_rnd[7:0];
+            end else begin
+                data_abs_sat = (data_abs_rnd > {46'd0, 8'b01111111}) ? 8'b01111111 : data_abs_rnd[7:0];
+            end
+            int8_truncate = (data[53]) ? ~data_abs_sat + 8'd1 : data_abs_sat;
         end
     endfunction
 

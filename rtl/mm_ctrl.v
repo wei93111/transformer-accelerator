@@ -3,13 +3,14 @@
 module mm_ctrl (
     input                       i_clk,
     input                       i_rst_n,
-    input  [1              :0]  i_mode,
+
+    input  [1               :0] i_mode,
     input                       i_start,
 
     input  [`VEC_W * `VL - 1:0] i_a_data,
     input  [`VEC_W       - 1:0] i_b_data,
-    output [15              :0] o_a_addr,
-    output [15              :0] o_b_addr,
+    output [`ADDR_W      - 1:0] o_a_addr,
+    output [`ADDR_W      - 1:0] o_b_addr,
 
     output                      o_tile_done,
     output                      o_mtrx_done,
@@ -36,24 +37,24 @@ module mm_ctrl (
     reg                       ppu_start_w, ppu_start_r;
 
     // addr gen
-    reg  [15              :0] b_cnt_w,     b_cnt_r;
-    reg  [15              :0] a_cnt_w,     a_cnt_r;
-    reg  [15              :0] col_cnt_w,   col_cnt_r;
-    reg  [15              :0] row_cnt_w,   row_cnt_r;
+    reg  [`ADDR_W      - 1:0] b_cnt_w,     b_cnt_r;
+    reg  [`ADDR_W      - 1:0] a_cnt_w,     a_cnt_r;
+    reg  [`ADDR_W      - 1:0] col_cnt_w,   col_cnt_r;
+    reg  [`ADDR_W      - 1:0] row_cnt_w,   row_cnt_r;
 
     // accumulator
     wire                      acc_we;
-    wire [15              :0] acc_addr;
+    wire [`ADDR_W      - 1:0] acc_addr;
     wire [`ACC_W * `VL - 1:0] acc_data;
     
     // mac
     wire [`ACC_W * `VL - 1:0] mac_res;
 
     // addr gen parameters
-    wire [15:0] VL     = `VL;
-    wire [15:0] STRIDE = (mode_r == `INT8) ? (`K / `INT8_VS) : (`K / `INT4_VS);
-    wire [15:0] COL    = (`N / `AD);
-    wire [15:0] ROW    = (`M / `VL);
+    wire [`ADDR_W      - 1:0] VL     = `VL;
+    wire [`ADDR_W      - 1:0] STRIDE = (mode_r == `INT8) ? (`K / `INT8_VS) : (`K / `INT4_VS);
+    wire [`ADDR_W      - 1:0] COL    = (`N / `AD);
+    wire [`ADDR_W      - 1:0] ROW    = (`M / `VL);
 
 
     assign o_a_addr    = a_cnt_r + (row_cnt_r * STRIDE);
@@ -258,8 +259,8 @@ module mm_ctrl (
     assign acc_addr = b_cnt_r;
 
     buffer #(
-        .VEC_WIDTH ( `ACC_W * `VL ),
-        .ARR_DEPTH ( `AD )
+        .WIDTH ( `ACC_W * `VL ),
+        .DEPTH ( `AD )
     ) accumulator (
         .i_clk     ( i_clk ),
         .i_rst_n   ( i_rst_n ),

@@ -1,30 +1,37 @@
+`include "define.v"
+
 module ram #(
-    parameter VEC_WIDTH  = 264,
-    parameter ARR_DEPTH  = 2048,
-    parameter ADDR_WIDTH = $clog2(ARR_DEPTH)
+    parameter WIDTH  = 264,
+    parameter DEPTH  = 2048,
+    parameter ADDR_W = $clog2(DEPTH)
 )(
-    input                   i_clk,
-    input                   i_rst_n,
-    input                   i_we,       // write enable
-    input  [ADDR_WIDTH-1:0] i_addr,     // read / write address
-    input  [VEC_WIDTH-1:0]  i_data,     // input write data
-    output [VEC_WIDTH-1:0]  o_data      // output read data
+    input                  i_clk,
+    input                  i_rst_n,
+    input                  i_we,
+    input  [`ADDR_W - 1:0] i_addr,      // port is always `ADDR_W wide
+    input  [WIDTH   - 1:0] i_data,
+    output [WIDTH   - 1:0] o_data
 );
 
     integer i;
 
-    // Pseudo memory array
-    reg [VEC_WIDTH-1:0] mem [0:ARR_DEPTH-1];
 
-    // Read logic
-    assign o_data = mem[i_addr];
+    // pseudo memory array
+    reg [WIDTH - 1:0] mem [0:DEPTH - 1];
 
-    // Write logic (1 cycle latency)
+    // limited addr range
+    wire [ADDR_W - 1:0] addr = i_addr[ADDR_W - 1:0];
+
+
+    // read logic
+    assign o_data = mem[addr];
+
+    // write logic (1 cycle latency)
     always @(posedge i_clk or negedge i_rst_n) begin
         if (!i_rst_n) begin
-            for (i = 0; i < ARR_DEPTH; i = i + 1) mem[i] <= {VEC_WIDTH{1'b0}};
+            for (i = 0; i < DEPTH; i = i + 1) mem[i] <= {WIDTH{1'b0}};
         end else if (i_we) begin
-            mem[i_addr] <= i_data;
+            mem[addr] <= i_data;
         end
     end
 

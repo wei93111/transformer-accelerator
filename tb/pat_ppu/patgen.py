@@ -6,12 +6,12 @@ Generates random 24-bit signed input patterns and calculates INT4 quantized outp
 
 import random
 
-
-INPUT_FILE  = "./tb/pat_requant/p2_in.dat"
-OUTPUT_FILE = "./tb/pat_requant/p2_out.dat"
+PAT_ID = 2
+INPUT_FILE  = f"./tb/pat_requant/p{PAT_ID}_in.dat"
+OUTPUT_FILE = f"./tb/pat_requant/p{PAT_ID}_out.dat"
 NUM_ROWS = 16      # Number of parallel lanes
 NUM_COLS = 64      # Number of entries per row
-MAX_VAL = 5000     # Max absolute value for random generation (configurable)
+MAX_VAL = 5000     # Max absolute value for random generation
 
 
 def int_to_signed_hex_24bit(value):
@@ -153,17 +153,24 @@ def write_output_pattern(quantized_data, filename):
         filename: Path to output file
     """
     with open(filename, 'w') as f:
-        # Write NUM_COLS lines, each containing NUM_ROWS entries
+        # Write NUM_COLS lines
+        # Each line contains 16 leading padding zeros, followed by NUM_ROWS INT4 entries
+        # to match the format seen in tb/pat_requant/p0_out.dat (lines 1–9).
         for col_idx in range(NUM_COLS):
             hex_entries = []
+
+            # 16 padding zeros at the front (MSB side)
+            for _ in range(16):
+                hex_entries.append('0')
+
+            # Then the 16 quantized outputs (rows 15..0)
             for row_idx in range(NUM_ROWS):
-                # MSB (leftmost) is Row 15, LSB (rightmost) is Row 0
+                # MSB (leftmost non-padding) is Row 15, LSB (rightmost) is Row 0
                 actual_row_idx = NUM_ROWS - 1 - row_idx
                 value = quantized_data[actual_row_idx][col_idx]
                 hex_str = int_to_signed_hex_4bit(value)
                 hex_entries.append(hex_str)
-            
-            # Join with underscores
+
             output_line = '_'.join(hex_entries)
             f.write(output_line + '\n')
 

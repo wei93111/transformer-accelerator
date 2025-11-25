@@ -6,21 +6,21 @@
 
 
 `ifdef pat0
-    `define IN  "./tb/pat_requant/p0_in.dat"
-    `define OUT "./tb/pat_requant/p0_out.dat"
+    `define IN  "./tb/pat_ppu/p0_in.dat"
+    `define OUT "./tb/pat_ppu/p0_out.dat"
 `elsif pat1
-    `define IN  "./tb/pat_requant/p1_in.dat"
-    `define OUT "./tb/pat_requant/p1_out.dat"
+    `define IN  "./tb/pat_ppu/p1_in.dat"
+    `define OUT "./tb/pat_ppu/p1_out.dat"
 `elsif pat2
-    `define IN  "./tb/pat_requant/p2_in.dat"
-    `define OUT "./tb/pat_requant/p2_out.dat"
+    `define IN  "./tb/pat_ppu/p2_in.dat"
+    `define OUT "./tb/pat_ppu/p2_out.dat"
 `else
-    `define IN  "./tb/pat_requant/p0_in.dat"
-    `define OUT "./tb/pat_requant/p0_out.dat"
+    `define IN  "./tb/pat_ppu/p0_in.dat"
+    `define OUT "./tb/pat_ppu/p0_out.dat"
 `endif
 
 
-module tb_requant;
+module tb_ppu;
 
     integer i, j;
     integer data_idx;
@@ -31,20 +31,20 @@ module tb_requant;
     logic rst_n;
 
     // input
-    logic                 start;
-    logic [24 * 16 - 1:0] acc_data;
+    logic                        start;
+    logic [`ACC_W * `VL   - 1:0] acc_data;
 
     // output
-    logic                 ram_we;
-    logic [4  * 16 - 1:0] ram_data;
-    logic [5          :0] ram_addr;
+    logic                        out_we;
+    logic [`DATA8_W * `VL - 1:0] out_data;
+    logic [`ADDR_W - 1:0]        out_addr;
 
-    logic                 finish;
-    logic [18 * 16 - 1:0] vsq_sf;
+    logic                        finish;
+    logic [`TRUNC_W * `VL - 1:0] vsq_sf;
 
     // data storage
-    logic [24 * 16 - 1:0] vector_in     [0: 64 - 1];
-    logic [4  * 16 - 1:0] vector_out    [0: 64 - 1];
+    logic [`ACC_W * `VL   - 1:0] vector_in  [0: 64 - 1];
+    logic [`DATA8_W * `VL - 1:0] vector_out [0: 64 - 1];
 
 
     // clk gen
@@ -63,9 +63,9 @@ module tb_requant;
         .i_mode                ( `INT4_VSQ ),
         .i_relu_en             ( 1'b0 ),        // relu off
 
-        .o_ram_we              ( ram_we ),
-        .o_ram_data            ( ram_data ),
-        .o_ram_addr            ( ram_addr ),
+        .o_out_we              ( out_we ),
+        .o_out_data            ( out_data ),
+        .o_out_addr            ( out_addr ),
 
         .o_vsq_sf              ( vsq_sf ),
         .o_int4_sf             (  ),
@@ -82,22 +82,22 @@ module tb_requant;
 
     // output ram
     ram #(
-        .VEC_WIDTH ( 4 * 16 ),   // INT4 x 16 entries
-        .ARR_DEPTH ( 64 )        // 64 cols (full vector)
+        .WIDTH ( `DATA8_W * `VL ),
+        .DEPTH ( 64 )
     ) u_ram (
         .i_clk   ( clk ),
         .i_rst_n ( rst_n ),
-        .i_we    ( ram_we ),
-        .i_addr  ( ram_addr ),
-        .i_data  ( ram_data ),
+        .i_we    ( out_we ),
+        .i_addr  ( out_addr ),
+        .i_data  ( out_data ),
         .o_data  ( )
     );
 
 
     // dump waveform
     initial begin
-        $fsdbDumpfile("requant.fsdb");
-        $fsdbDumpvars(0, tb_requant, "+mda");
+        $fsdbDumpfile("ppu.fsdb");
+        $fsdbDumpvars(0, tb_ppu, "+mda");
     end
 
 

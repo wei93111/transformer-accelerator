@@ -9,9 +9,9 @@ module ppu (
     input  [1          :0] i_mode,
     input                  i_relu_en,
 
-    output                 o_ram_we,
-    output [4  * 16 - 1:0] o_ram_data,
-    output [5          :0] o_ram_addr,
+    output                 o_out_we,
+    output [8  * 16 - 1:0] o_out_data,
+    output [`ADDR_W - 1:0] o_out_addr,
 
     output [18 * 16 - 1:0] o_vsq_sf,
     output [17         :0] o_int4_sf,
@@ -47,12 +47,12 @@ module ppu (
     reg                  quant_start_w, quant_start_r;
 
     // scaling
-    wire [3:0]           scale_addr;
+    wire [`ADDR_W - 1:0] scale_addr;
     wire [16 * 16 - 1:0] scale_data;        // Q6.10  x 16 entries
     wire [40 * 16 - 1:0] scale_res;         // Q30.10 x 16 entries
 
     // bias add
-    wire [3:0]           bias_addr;
+    wire [`ADDR_W - 1:0] bias_addr;
     wire [16 * 16 - 1:0] bias_data;         // Q6.10  x 16 entries
     wire [40 * 16 - 1:0] bias_res;          // Q30.10 x 16 entries
 
@@ -62,8 +62,8 @@ module ppu (
 
     // vsq buffer
     wire                 vsq_buf_we;
-    wire [5:0]           vsq_buf_addr_wr;
-    wire [5:0]           vsq_buf_addr_rd;
+    wire [`ADDR_W - 1:0] vsq_buf_addr_wr;
+    wire [`ADDR_W - 1:0] vsq_buf_addr_rd;
     wire [18 * 16 - 1:0] vsq_buf_data_wr;   // INT18  x 16 entries
     wire [18 * 16 - 1:0] vsq_buf_data_rd;   // INT18  x 16 entries
 
@@ -179,13 +179,13 @@ module ppu (
     assign scale_addr = acc_cnt_r;
 
     buffer #(
-        .VEC_WIDTH ( 16 * 16 ),   // Q6.10 x 16 entries
-        .ARR_DEPTH ( 16 )
+        .WIDTH ( 16 * 16 ),   // Q6.10 x 16 entries
+        .DEPTH ( 16 )
     ) scale_buf (
         .i_clk     ( i_clk ),
         .i_rst_n   ( 1'b1 ),
         .i_we      ( 1'b0 ),
-        .i_addr_wr ( 4'd0 ),
+        .i_addr_wr ( `ADDR_W'd0 ),
         .i_data_wr ( 256'd0 ),
         .i_addr_rd ( scale_addr ),
         .o_data_rd ( scale_data )
@@ -202,13 +202,13 @@ module ppu (
     assign bias_addr = acc_cnt_r;
 
     buffer #(
-        .VEC_WIDTH ( 16 * 16 ),   // Q6.10 x 16 entries
-        .ARR_DEPTH ( 16 )
+        .WIDTH ( 16 * 16 ),   // Q6.10 x 16 entries
+        .DEPTH ( 16 )
     ) bias_buf (
         .i_clk     ( i_clk ),
         .i_rst_n   ( 1'b1 ),
         .i_we      ( 1'b0 ),
-        .i_addr_wr ( 4'd0 ),
+        .i_addr_wr ( `ADDR_W'd0 ),
         .i_data_wr ( 256'd0 ),
         .i_addr_rd ( bias_addr ),
         .o_data_rd ( bias_data )
@@ -261,8 +261,8 @@ module ppu (
     assign vsq_buf_data_wr = relu_res_trunc;
 
     buffer #(
-        .VEC_WIDTH ( 18 * 16 ),   // INT18 x 16 entries
-        .ARR_DEPTH ( 64 )
+        .WIDTH ( 18 * 16 ),   // INT18 x 16 entries
+        .DEPTH ( 64 )
     ) vsq_buf (
         .i_clk     ( i_clk ),
         .i_rst_n   ( i_rst_n ),
@@ -290,9 +290,9 @@ module ppu (
         .i_buf_data ( vsq_buf_data_rd ),
         .o_buf_addr ( vsq_buf_addr_rd ),
 
-        .o_ram_we   ( o_ram_we ),
-        .o_ram_data ( o_ram_data ),
-        .o_ram_addr ( o_ram_addr ),
+        .o_out_we   ( o_out_we ),
+        .o_out_data ( o_out_data ),
+        .o_out_addr ( o_out_addr ),
 
         .o_vsq_sf   ( o_vsq_sf ),
         .o_int4_sf  ( o_int4_sf ),

@@ -119,8 +119,8 @@ module tb_mm;
     generate
         for (gi = 0; gi < `VL; gi = gi + 1) begin: RAM_A
             ram #(
-                .VEC_WIDTH ( `VEC_W ),
-                .ARR_DEPTH ( `RAMA_D )
+                .WIDTH ( `VEC_W ),
+                .DEPTH ( `RAMA_D )
             ) u_ram_a (
                 .i_clk   ( clk ),
                 .i_rst_n ( 1'b1 ),
@@ -135,8 +135,8 @@ module tb_mm;
 
     // B buffer
     ram #(
-        .VEC_WIDTH ( `VEC_W ),
-        .ARR_DEPTH ( `RAMB_D )
+        .WIDTH ( `VEC_W ),
+        .DEPTH ( `RAMB_D )
     ) u_ram_b (
         .i_clk   ( clk ),
         .i_rst_n ( 1'b1 ),
@@ -156,10 +156,7 @@ module tb_mm;
 
     // stimulus
     initial begin
-        $display("==================================================================");
-        $display("Simulation Start");
-        $display("==================================================================");
-        $display("");
+        $display("Starting simulation...\n");
         
         // reset
         wait (rst_n === 1'b0);
