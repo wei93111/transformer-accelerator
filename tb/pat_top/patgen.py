@@ -16,21 +16,20 @@ def mode_to_params(mode: str):
     return bit_width, vs
 
 
-M             = 64                                      # rows of A
-K             = 64                                      # cols of A / rows of B
-N             = 64                                      # cols of B
-MODE          = "INT4_VSQ"                              # MODE: "INT4", "INT8", or "INT4_VSQ"
+M             = 128                                      # rows of A
+K             = 128                                      # cols of A / rows of B
+N             = 128                                      # cols of B
+MODE          = "INT4_VSQ"                               # MODE: "INT4", "INT8", or "INT4_VSQ"
 BIT_WIDTH, VS = mode_to_params(MODE)
-VEC_PER_ROW   = K // VS                                 # number of K-vectors per row of A
-VEC_PER_COL   = K // VS                                 # number of K-vectors per column of B
+VEC_PER_ROW   = K // VS                                  # number of K-vectors per row of A
+VEC_PER_COL   = K // VS                                  # number of K-vectors per column of B
 
-PAT_ID        = 2
-INA_DIR       = Path(f"tb/pat_mm/p{PAT_ID}_ina.dat")    # A input pattern
-INB_DIR       = Path(f"tb/pat_mm/p{PAT_ID}_inb.dat")    # B input pattern
-OUT_DIR       = Path(f"tb/pat_mm/p{PAT_ID}_out.dat")    # golden output pattern
-SFA_DIR       = Path(f"tb/pat_mm/p{PAT_ID}_insfa.dat")  # A scale factors
-SFB_DIR       = Path(f"tb/pat_mm/p{PAT_ID}_insfb.dat")  # B scale factors
-
+PAT_ID        = 1
+INA_DIR       = Path(f"tb/pat_top/p{PAT_ID}_ina.dat")    # A input pattern
+INB_DIR       = Path(f"tb/pat_top/p{PAT_ID}_inb.dat")    # B input pattern
+OUT_DIR       = Path(f"tb/pat_top/p{PAT_ID}_out.dat")    # golden output pattern
+SFA_DIR       = Path(f"tb/pat_top/p{PAT_ID}_insfa.dat")  # A scale factors
+SFB_DIR       = Path(f"tb/pat_top/p{PAT_ID}_insfb.dat")  # B scale factors
 
 
 def generate_random(m, k, n, bit_width, seed=None):
@@ -152,6 +151,70 @@ def write_24bit_words_row_major(path: Path, data_2d) -> None:
             f.write(f"{word:06x}\n")
 
 
+def quantize_symmetric_global(c_2d: np.ndarray, qmax: int) -> np.ndarray:
+    """
+    Symmetric quantization of an int32 matrix to the range [-qmax, qmax].
+
+    Scale factor = max_abs / qmax, where max_abs is the maximum absolute
+    value over the entire matrix. Each element is divided by this scale
+    factor and rounded to the nearest integer, then clipped to [-qmax, qmax].
+    """
+    if c_2d.size == 0:
+        return np.zeros_like(c_2d, dtype=np.int8)
+
+    c_f = c_2d.astype(np.float64)
+    max_abs = np.max(np.abs(c_f))
+
+    if max_abs == 0:
+        # All zeros, nothing to scale
+        return np.zeros_like(c_2d, dtype=np.int8)
+
+    scale = max_abs / float(qmax)
+    q = np.rint(c_f / scale)
+    q = np.clip(q, -qmax, qmax)
+    return q.astype(np.int8)
+
+
+def quantize_symmetric_per_vector_rows(c_2d: np.ndarray, qmax: int, vec_len: int) -> np.ndarray:
+    """
+    Symmetric quantization per row-vector.
+
+    The matrix is viewed as M rows, each row split into contiguous vectors
+    of length `vec_len` along the N dimension. For each such vector, take
+    its max absolute value to form the scale factor:
+
+        scale_vec = max_abs_vec / qmax
+
+    Then divide all entries in the vector by this scale factor, round, and
+    clip to [-qmax, qmax].
+    """
+    m, n = c_2d.shape
+    if n % vec_len != 0:
+        raise ValueError(f"N={n} must be divisible by vec_len={vec_len} for INT4_VSQ quantization")
+
+    c_f = c_2d.astype(np.float64)
+    q = np.zeros_like(c_f)
+
+    num_vec = n // vec_len
+    for i in range(m):
+        for v in range(num_vec):
+            start = v * vec_len
+            end = start + vec_len
+            seg = c_f[i, start:end]
+
+            max_abs = np.max(np.abs(seg))
+            if max_abs == 0:
+                q[i, start:end] = 0.0
+                continue
+
+            scale = max_abs / float(qmax)
+            q_seg = np.rint(seg / scale)
+            q_seg = np.clip(q_seg, -qmax, qmax)
+            q[i, start:end] = q_seg
+
+    return q.astype(np.int8)
+
+
 def write_24bit_hex_words_with_address(output_path, number_of_entries, value):
     """Write one 24-bit hex word per line (no comments)."""
     if not (0 <= value <= 0xFFFFFF):
@@ -175,7 +238,7 @@ def main() -> None:
     # Generate scale factors
     sfa, sfb = generate_scale_factors(MODE, M, N)
 
-    # Compute golden
+    # Compute full-precision golden result (24-bit wide stored in int32)
     c = compute_golden_24bit(a, b, sfa, sfb)
 
     # Write in raster order with address comments
@@ -203,14 +266,29 @@ def main() -> None:
                 byte = int(sfb[seg, j]) & 0xFF
                 f.write(f"{byte:02x}\n")
 
-    write_24bit_words_row_major(OUT_DIR, c)
+    # Quantize and write golden output depending on mode
+    if MODE == "INT4":
+        # Global matrix max → scale = max/7 → outputs in [-7, 7], 4-bit wide
+        c_q = quantize_symmetric_global(c, qmax=7)
+        write_int4_nibbles_row_major(OUT_DIR, c_q)
+    elif MODE == "INT8":
+        # Global matrix max → scale = max/127 → outputs in [-127, 127], 8-bit wide
+        c_q = quantize_symmetric_global(c, qmax=127)
+        write_int8_bytes_row_major(OUT_DIR, c_q)
+    elif MODE == "INT4_VSQ":
+        # Vector-wise max over 64-entry row units along N:
+        # For each row, split N into vectors of length 64 and quantize each independently.
+        c_q = quantize_symmetric_per_vector_rows(c, qmax=7, vec_len=64)
+        write_int4_nibbles_row_major(OUT_DIR, c_q)
+    else:
+        raise ValueError(f"Unsupported MODE {MODE} for output quantization")
 
     print(f"Mode: {MODE}, BIT_WIDTH = {BIT_WIDTH}, VS = {VS}")
     print(f"Wrote A pattern: {INA_DIR} ({M*K} entries)")
     print(f"Wrote B pattern: {INB_DIR} ({K*N} entries)")
     print(f"Wrote SFA pattern: {SFA_DIR} ({M*VEC_PER_ROW} entries)")
     print(f"Wrote SFB pattern: {SFB_DIR} ({VEC_PER_COL*N} entries)")
-    print(f"Wrote golden output: {OUT_DIR} ({M*N} entries)")
+    print(f"Wrote quantized output: {OUT_DIR} ({M*N} entries)")
 
 
 if __name__ == "__main__":

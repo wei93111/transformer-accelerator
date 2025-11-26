@@ -10,14 +10,14 @@
 // rtl/mac.v
 // rtl/vec_product.v
 
-// ppu
-tb/tb_ppu.sv
-rtl/ppu.v
-rtl/ram.v
-rtl/buffer.v
-rtl/quantize.v
-rtl/softmax.v
-rtl/reciprocal.v
+// // ppu
+// tb/tb_ppu.sv
+// rtl/ppu.v
+// rtl/ram.v
+// rtl/buffer.v
+// rtl/quantize.v
+// rtl/softmax.v
+// rtl/reciprocal.v
 
 // // softmax
 // tb/tb_softmax.sv
@@ -25,3 +25,16 @@ rtl/reciprocal.v
 // rtl/buffer.v
 // rtl/quantize.v
 // rtl/softmax.v
+
+// top
+tb/tb_top.sv
+rtl/ram.v
+rtl/buffer.v
+rtl/top.v
+rtl/mm_ctrl.v
+rtl/mac.v
+rtl/vec_product.v
+rtl/ppu.v
+rtl/quantize.v
+rtl/softmax.v
+rtl/reciprocal.v

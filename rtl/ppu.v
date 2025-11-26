@@ -193,8 +193,8 @@ module ppu (
         .i_clk     ( i_clk ),
         .i_rst_n   ( 1'b1 ),
         .i_we      ( 1'b0 ),
-        .i_addr_wr ( 0 ),
-        .i_data_wr ( 0 ),
+        .i_addr_wr ( `ADDR_W'd0 ),
+        .i_data_wr ( {(`SCALE_W * `VL){1'b0}} ),
         .i_addr_rd ( scale_addr ),
         .o_data_rd ( scale_data )
     );
@@ -216,8 +216,8 @@ module ppu (
         .i_clk     ( i_clk ),
         .i_rst_n   ( 1'b1 ),
         .i_we      ( 1'b0 ),
-        .i_addr_wr ( 0 ),
-        .i_data_wr ( 0 ),
+        .i_addr_wr ( `ADDR_W'd0 ),
+        .i_data_wr ( {(`BIAS_W * `VL){1'b0}} ),
         .i_addr_rd ( bias_addr ),
         .o_data_rd ( bias_data )
     );

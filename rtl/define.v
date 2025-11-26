@@ -14,9 +14,9 @@
     // sizes //
     ///////////
 
-    `define M         64
-    `define K         64
-    `define N         64
+    `define M         128
+    `define K         128
+    `define N         128
     `define VL        16
     `define AD        16
     `define INT4_VS   64

@@ -5,54 +5,57 @@
 `include "define.v"
 
 `ifdef pat0
-    `define IN_A   "./tb/pat_mm/p0_ina.dat"
-    `define IN_B   "./tb/pat_mm/p0_inb.dat"
-    `define IN_SFA "./tb/pat_mm/p0_insfa.dat"
-    `define IN_SFB "./tb/pat_mm/p0_insfb.dat"
-    `define OUT    "./tb/pat_mm/p0_out.dat"
+    `define IN_A   "./tb/pat_top/p0_ina.dat"
+    `define IN_B   "./tb/pat_top/p0_inb.dat"
+    `define IN_SFA "./tb/pat_top/p0_insfa.dat"
+    `define IN_SFB "./tb/pat_top/p0_insfb.dat"
+    `define OUT    "./tb/pat_top/p0_out.dat"
     `define MODE   `INT4
     `define DATA_W `DATA4_W
     `define VS     `INT4_VS
 `elsif pat1
-    `define IN_A   "./tb/pat_mm/p1_ina.dat"
-    `define IN_B   "./tb/pat_mm/p1_inb.dat"
-    `define IN_SFA "./tb/pat_mm/p1_insfa.dat"
-    `define IN_SFB "./tb/pat_mm/p1_insfb.dat"
-    `define OUT    "./tb/pat_mm/p1_out.dat"
+    `define IN_A   "./tb/pat_top/p1_ina.dat"
+    `define IN_B   "./tb/pat_top/p1_inb.dat"
+    `define IN_SFA "./tb/pat_top/p1_insfa.dat"
+    `define IN_SFB "./tb/pat_top/p1_insfb.dat"
+    `define OUT    "./tb/pat_top/p1_out.dat"
     `define MODE   `INT8
     `define DATA_W `DATA8_W
     `define VS     `INT8_VS
 `elsif pat2
-    `define IN_A   "./tb/pat_mm/p2_ina.dat"
-    `define IN_B   "./tb/pat_mm/p2_inb.dat"
-    `define IN_SFA "./tb/pat_mm/p2_insfa.dat"
-    `define IN_SFB "./tb/pat_mm/p2_insfb.dat"
-    `define OUT    "./tb/pat_mm/p2_out.dat"
+    `define IN_A   "./tb/pat_top/p2_ina.dat"
+    `define IN_B   "./tb/pat_top/p2_inb.dat"
+    `define IN_SFA "./tb/pat_top/p2_insfa.dat"
+    `define IN_SFB "./tb/pat_top/p2_insfb.dat"
+    `define OUT    "./tb/pat_top/p2_out.dat"
     `define MODE   `INT4_VSQ
     `define DATA_W `DATA4_W
     `define VS     `INT4_VS
 `else
-    `define IN_A   "./tb/pat_mm/p0_ina.dat"
-    `define IN_B   "./tb/pat_mm/p0_inb.dat"
-    `define IN_SFA "./tb/pat_mm/p0_insfa.dat"
-    `define IN_SFB "./tb/pat_mm/p0_insfb.dat"
-    `define OUT    "./tb/pat_mm/p0_out.dat"
+    `define IN_A   "./tb/pat_top/p0_ina.dat"
+    `define IN_B   "./tb/pat_top/p0_inb.dat"
+    `define IN_SFA "./tb/pat_top/p0_insfa.dat"
+    `define IN_SFB "./tb/pat_top/p0_insfb.dat"
+    `define OUT    "./tb/pat_top/p0_out.dat"
     `define MODE   `INT4
     `define DATA_W `DATA4_W
     `define VS     `INT4_VS
 `endif
 
-`define RAMA_D (`M / `VL) * (`K / `VS)
-`define RAMB_D (`N / `VS) * `K
-`define GROUP  (`M / `VL)
-`define STRIDE (`K / `VS)
+`define RAMA_D     (`M / `VL) * (`K / `VS)
+`define RAMB_D     (`N / `VS) * `K
+`define GROUP      (`M / `VL)
+`define STRIDE     (`K / `VS)
+`define VEC_STRIDE (`N / `VSQ_BUF_D)
 
 
 module tb_top;
 
     genvar  gi;
+    integer i;
     integer errors;
     integer row_grp, vec, entry, col, row;
+    integer vec_col, vec_row;
 
 
     logic                        clk;
@@ -81,8 +84,8 @@ module tb_top;
     // matrices (raster scan)
     logic [`DATA_W        - 1:0] mtrx_a      [0:`M * `K - 1];
     logic [`DATA_W        - 1:0] mtrx_b      [0:`K * `N - 1];
-    logic [`ACC_W         - 1:0] mtrx_golden [0:`M * `N - 1];
-    logic [`ACC_W         - 1:0] mtrx_out    [0:`M * `N - 1];
+    logic [`DATA_W        - 1:0] mtrx_golden [0:`M * `N - 1];
+    logic [`DATA_W        - 1:0] mtrx_out    [0:`M * `N - 1];
 
     // sf in
     logic [`SF_W          - 1:0] sf_a        [0:`M * `K / `VS - 1];
@@ -91,6 +94,7 @@ module tb_top;
     // vars
     logic [`DAT_W         - 1:0] data;
     logic [`SF_W          - 1:0] sf;
+    logic [`DATA8_W * `VL - 1:0] out_col;
 
 
     // clk gen
@@ -169,21 +173,21 @@ module tb_top;
     // output buffer
     ram #(
         .WIDTH ( `DATA8_W * `VL ),
-        .DEPTH ( `VS )
+        .DEPTH ( `VSQ_BUF_D )
     ) u_ram_out (
         .i_clk   ( clk ),
         .i_rst_n ( rst_n ),
         .i_we    ( out_we ),
         .i_addr  ( out_addr ),
         .i_data  ( out_data ),
-        .o_data  ( {(`DATA8_W * `VL){1'b0}} )
+        .o_data  ( 0 )
     );
 
 
     // dump waveform
     initial begin
         $fsdbDumpfile("top.fsdb");
-        $fsdbDumpvars(1, tb_top, "+mda");
+        $fsdbDumpvars(0, tb_top, "+mda");
     end
 
 
@@ -193,8 +197,8 @@ module tb_top;
         
         // reset
         wait (rst_n === 1'b0);
-        start    = 0;
-        mode     = 0;
+        start = 0;
+        mode  = 0;
         wait (rst_n === 1'b1);
 
         // start
@@ -210,10 +214,27 @@ module tb_top;
 
     // store vec outputs
     initial begin
-        wait (vec_done === 1'b1);
-        // for (integer idx = 0; idx < `VS; idx = idx + 1) begin
-        //     mtrx_out[out_addr + idx] = out_data[idx * `DATA8_W +: `DATA8_W];
-        // end
+        vec_col = 0;
+        vec_row = 0;
+
+        repeat (`GROUP) begin
+            repeat (`VEC_STRIDE) begin
+                wait (vec_done === 1'b1);
+                
+                for (col = 0; col < `VSQ_BUF_D; col = col + 1) begin
+                    out_col = u_ram_out.mem[col];
+                    for (row = 0; row < `VL; row = row + 1) begin
+                        if (`MODE == `INT8) mtrx_out[(vec_row*`VL + row) * `N + (vec_col*`VSQ_BUF_D + col)] = out_col[row * `DATA8_W +: `DATA8_W];
+                        else                mtrx_out[(vec_row*`VL + row) * `N + (vec_col*`VSQ_BUF_D + col)] = out_col[row * `DATA4_W +: `DATA4_W];
+                    end
+                end
+
+                # (`CYCLE * 1.0);
+                vec_col = vec_col + 1;
+            end
+            vec_col = 0;
+            vec_row = vec_row + 1;
+        end
     end
 
 
@@ -233,9 +254,9 @@ module tb_top;
         for (integer idx = 0; idx < `M * `N; idx = idx + 1) begin
             if (mtrx_out[idx] !== mtrx_golden[idx]) begin
                 errors = errors + 1;
-                if (idx < 32) $display("[ERROR  ] [%d] Calculated:%24h Golden:%24h", idx, mtrx_out[idx], mtrx_golden[idx]);
+                $display("[ERROR  ] [%d] Calculated:%24h Golden:%24h", idx, mtrx_out[idx], mtrx_golden[idx]);
             end else begin
-                if (idx < 32) $display("[CORRECT] [%d] Calculated:%24h Golden:%24h", idx, mtrx_out[idx], mtrx_golden[idx]);
+                $display("[CORRECT] [%d] Calculated:%24h Golden:%24h", idx, mtrx_out[idx], mtrx_golden[idx]);
             end
         end
         
@@ -263,6 +284,20 @@ module tb_top;
         end
 
         $finish;
+    end
+
+
+    // load scale and bias
+    initial begin
+        // scale factors (all ones)
+        for (i = 0; i < 16; i = i + 1) begin
+            u_top.u_ppu.scale_buf.registers[i] = {16{16'b0000010000000000}};
+        end
+
+        // bias (all zeros)
+        for (i = 0; i < 16; i = i + 1) begin
+            u_top.u_ppu.bias_buf.registers[i] = {16{16'd0}};
+        end
     end
 
 
