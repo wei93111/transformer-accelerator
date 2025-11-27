@@ -7,11 +7,10 @@ Generates random 24-bit signed input patterns and calculates INT4 quantized outp
 import random
 
 PAT_ID = 2
-INPUT_FILE  = f"./tb/pat_requant/p{PAT_ID}_in.dat"
-OUTPUT_FILE = f"./tb/pat_requant/p{PAT_ID}_out.dat"
-NUM_ROWS = 16      # Number of parallel lanes
-NUM_COLS = 64      # Number of entries per row
-MAX_VAL = 5000     # Max absolute value for random generation
+INPUT_FILE  = f"./tb/pat_ppu/p{PAT_ID}_in.dat"
+OUTPUT_FILE = f"./tb/pat_ppu/p{PAT_ID}_out.dat"
+NUM_ROWS = 16
+NUM_COLS = 64
 
 
 def int_to_signed_hex_24bit(value):
@@ -84,7 +83,8 @@ def generate_random_data():
     """
     data = []
     for _ in range(NUM_ROWS):
-        row = [random.randint(-MAX_VAL, MAX_VAL) for _ in range(NUM_COLS)]
+        # Full signed 24-bit range: [-2^23, 2^23 - 1] → [-0x800000, 0x7FFFFF]
+        row = [random.randint(-0x800000, 0x7FFFFF) for _ in range(NUM_COLS)]
         data.append(row)
     return data
 
@@ -181,7 +181,6 @@ def generate_patterns():
     """
     print(f"Generating requantization patterns...")
     print(f"NUM_ROWS = {NUM_ROWS}, NUM_COLS = {NUM_COLS}")
-    print(f"MAX_VAL = {MAX_VAL}")
     print("")
     
     # Generate random input data

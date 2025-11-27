@@ -19,7 +19,7 @@ def mode_to_params(mode: str):
 M             = 128                                      # rows of A
 K             = 128                                      # cols of A / rows of B
 N             = 128                                      # cols of B
-MODE          = "INT4_VSQ"                               # MODE: "INT4", "INT8", or "INT4_VSQ"
+MODE          = "INT8"                               # MODE: "INT4", "INT8", or "INT4_VSQ"
 BIT_WIDTH, VS = mode_to_params(MODE)
 VEC_PER_ROW   = K // VS                                  # number of K-vectors per row of A
 VEC_PER_COL   = K // VS                                  # number of K-vectors per column of B

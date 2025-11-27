@@ -60,11 +60,11 @@ module quantize (
     reg  [`TRUNC_W           - 1:0] runmax_r [0:`VL - 1];
 
     // scale factors
-    wire [`TRUNC_W * `VL     - 1:0] vsq_sf;
+    wire [`TRUNC_W * `VL     - 1:0] sf_vsq;
     wire [`TRUNC_W * 2 * `VL - 1:0] vsq_recip;
-    wire [`TRUNC_W           - 1:0] int4_sf;
+    wire [`TRUNC_W           - 1:0] sf_int4;
     wire [`TRUNC_W * 2       - 1:0] int4_recip;
-    wire [`TRUNC_W           - 1:0] int8_sf;
+    wire [`TRUNC_W           - 1:0] sf_int8;
     wire [`TRUNC_W * 2       - 1:0] int8_recip;
 
     // quantize
@@ -116,8 +116,9 @@ module quantize (
                         vsq_cnt_w = vsq_cnt_r + 1;
                     end
 
-                    // matrix finish
+                    // col cnt
                     if (col_cnt_r == COL - 1) begin
+                        // matrix finish
                         col_cnt_w = 0;
                         state_w   = S_RUNMAX;
                         finish_w  = 1'b1;
@@ -161,8 +162,9 @@ module quantize (
                         vsq_cnt_w = vsq_cnt_r + 1;
                     end
 
-                    // matrix finish
+                    // col cnt
                     if (col_cnt_r == COL - 1) begin
+                        // matrix finish
                         col_cnt_w = 0;
                         state_w   = S_RUNMAX;
                         finish_w  = 1'b1;
@@ -274,33 +276,33 @@ module quantize (
     // sf //
     ////////
 
-    assign o_sf_vsq  = vsq_sf;
-    assign o_sf_int4 = int4_sf;
-    assign o_sf_int8 = int8_sf;
+    assign o_sf_vsq  = sf_vsq;
+    assign o_sf_int4 = sf_int4;
+    assign o_sf_int8 = sf_int8;
 
     // vsq scale factor
     generate
         for (gi = 0; gi < `VL; gi = gi + 1) begin: SF_CALC
-            assign vsq_sf[gi * `TRUNC_W +: `TRUNC_W] = (runmax_r[gi] * INT4_NORM) >> 8;
+            assign sf_vsq[gi * `TRUNC_W +: `TRUNC_W] = ({8'd0, runmax_r[gi]} * INT4_NORM) >> 8;
 
             reciprocal vsq_recip_unit (
-                .i_data  ( vsq_sf[gi * `TRUNC_W +: `TRUNC_W] ),
+                .i_data  ( sf_vsq[gi * `TRUNC_W +: `TRUNC_W] ),
                 .o_recip ( vsq_recip[gi * `TRUNC_W * 2 +: `TRUNC_W * 2] )
             );
         end
     endgenerate
 
     // int4 scale factor
-    assign int4_sf = (max_r * INT4_NORM) >> 8;
+    assign sf_int4 = ({8'd0, max_r} * INT4_NORM) >> 8;
     reciprocal int4_recip_unit (
-        .i_data  ( int4_sf ),
+        .i_data  ( sf_int4 ),
         .o_recip ( int4_recip )
     );
 
     // int8 scale factor
-    assign int8_sf = (max_r * INT8_NORM) >> 8;
+    assign sf_int8 = ({8'd0, max_r} * INT8_NORM) >> 8;
     reciprocal int8_recip_unit (
-        .i_data  ( int8_sf ),
+        .i_data  ( sf_int8 ),
         .o_recip ( int8_recip )
     );
 
@@ -340,12 +342,13 @@ module quantize (
         end
     end
 
-    function automatic [`DATA4_W - 1:0] int4_truncate;
-        input [`TRUNC_W * 3 - 1:0] data;
+    // truncate Q20.34 -> INT4
+    function automatic [3:0] int4_truncate;
+        input [53:0] data;
 
-        reg [`TRUNC_W * 3 - 1:0] data_abs;        // Q20.34
-        reg [`TRUNC_W * 3 - 1:0] data_abs_rnd;    // Q54.0
-        reg [`DATA4_W     - 1:0] data_abs_sat;    // INT4
+        reg [53:0] data_abs;        // Q20.34
+        reg [53:0] data_abs_rnd;    // Q54.0
+        reg [3:0]  data_abs_sat;    // INT4
 
         begin
             data_abs     = (data[53]) ? ~data + 54'd1 : data;
@@ -360,12 +363,13 @@ module quantize (
         end
     endfunction
 
-    function automatic [`DATA8_W - 1:0] int8_truncate;
-        input [`TRUNC_W * 3 - 1:0] data;
+    // truncate Q20.34 -> INT8
+    function automatic [7:0] int8_truncate;
+        input [53:0] data;
 
-        reg [`TRUNC_W * 3 - 1:0] data_abs;        // Q20.34
-        reg [`TRUNC_W * 3 - 1:0] data_abs_rnd;    // Q54.0
-        reg [`DATA8_W     - 1:0] data_abs_sat;    // INT8
+        reg [53:0] data_abs;        // Q20.34
+        reg [53:0] data_abs_rnd;    // Q54.0
+        reg [7:0]  data_abs_sat;    // INT8
 
         begin
             data_abs     = (data[53]) ? ~data + 54'd1 : data;

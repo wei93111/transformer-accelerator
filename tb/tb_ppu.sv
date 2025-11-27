@@ -104,9 +104,9 @@ module tb_ppu;
 
     // load data
     initial begin
-        // scale factors (all ones)
+        // scale factors (all 2e-6)
         for (i = 0; i < 16; i = i + 1) begin
-            u_ppu.scale_buf.registers[i] = {16{16'b0000010000000000}};
+            u_ppu.scale_buf.registers[i] = {16{16'b0000000000010000}};
         end
 
         // bias (all zeros)
@@ -171,7 +171,7 @@ module tb_ppu;
                     errors = errors + 1;
                 end else if (j == 0) begin
                     // display first row results
-                    $display("[CORRECT] [%d] Calculated: %b, Golden: %b", i, u_ram.mem[i][j*4 +: 4], vector_out[i][j*4 +: 4]);
+                    $display("[CORRECT] ram[%d][%d] = %b, Golden: %b", i, j, u_ram.mem[i][j*4 +: 4], vector_out[i][j*4 +: 4]);
                 end
             end
         end

@@ -254,9 +254,9 @@ module tb_top;
         for (integer idx = 0; idx < `M * `N; idx = idx + 1) begin
             if (mtrx_out[idx] !== mtrx_golden[idx]) begin
                 errors = errors + 1;
-                $display("[ERROR  ] [%d] Calculated:%24h Golden:%24h", idx, mtrx_out[idx], mtrx_golden[idx]);
+                $display("[ERROR  ] [%d] Calculated:%8b Golden:%8b", idx, mtrx_out[idx], mtrx_golden[idx]);
             end else begin
-                $display("[CORRECT] [%d] Calculated:%24h Golden:%24h", idx, mtrx_out[idx], mtrx_golden[idx]);
+                $display("[CORRECT] [%d] Calculated:%8b Golden:%8b", idx, mtrx_out[idx], mtrx_golden[idx]);
             end
         end
         
@@ -289,9 +289,9 @@ module tb_top;
 
     // load scale and bias
     initial begin
-        // scale factors (all ones)
+        // scale factors (all 2e-6)
         for (i = 0; i < 16; i = i + 1) begin
-            u_top.u_ppu.scale_buf.registers[i] = {16{16'b0000010000000000}};
+            u_top.u_ppu.scale_buf.registers[i] = {16{16'b0000000000010000}};
         end
 
         // bias (all zeros)
