@@ -16,20 +16,20 @@ def mode_to_params(mode: str):
     return bit_width, vs
 
 
-M             = 128                                      # rows of A
-K             = 128                                      # cols of A / rows of B
-N             = 128                                      # cols of B
-MODE          = "INT8"                               # MODE: "INT4", "INT8", or "INT4_VSQ"
+M             = 128
+K             = 128
+N             = 128
+MODE          = "INT8"
 BIT_WIDTH, VS = mode_to_params(MODE)
-VEC_PER_ROW   = K // VS                                  # number of K-vectors per row of A
-VEC_PER_COL   = K // VS                                  # number of K-vectors per column of B
+VEC_PER_ROW   = K // VS
+VEC_PER_COL   = K // VS
 
 PAT_ID        = 1
-INA_DIR       = Path(f"tb/pat_top/p{PAT_ID}_ina.dat")    # A input pattern
-INB_DIR       = Path(f"tb/pat_top/p{PAT_ID}_inb.dat")    # B input pattern
-OUT_DIR       = Path(f"tb/pat_top/p{PAT_ID}_out.dat")    # golden output pattern
-SFA_DIR       = Path(f"tb/pat_top/p{PAT_ID}_insfa.dat")  # A scale factors
-SFB_DIR       = Path(f"tb/pat_top/p{PAT_ID}_insfb.dat")  # B scale factors
+INA_DIR       = Path(f"tb/pat_top/p{PAT_ID}_ina.dat")
+INB_DIR       = Path(f"tb/pat_top/p{PAT_ID}_inb.dat")
+OUT_DIR       = Path(f"tb/pat_top/p{PAT_ID}_out.dat")
+SFA_DIR       = Path(f"tb/pat_top/p{PAT_ID}_insfa.dat")
+SFB_DIR       = Path(f"tb/pat_top/p{PAT_ID}_insfb.dat")
 
 
 def generate_random(m, k, n, bit_width, seed=None):

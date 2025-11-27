@@ -31,6 +31,7 @@ module mm_ctrl (
     localparam S_IDLE = 2'd0;
     localparam S_MAX  = 2'd1;
     localparam S_CALC = 2'd2;
+    localparam S_DONE = 2'd3;
 
 
     // ctrl
@@ -54,7 +55,7 @@ module mm_ctrl (
     // mac
     wire [`ACC_W * `VL - 1:0] mac_res;
 
-    // addr gen parameters
+    // ctrl params
     wire [`ADDR_W      - 1:0] VL     = `VL;
     wire [`ADDR_W      - 1:0] STRIDE = (mode_r == `INT8) ? (`K / `INT8_VS) : (`K / `INT4_VS);
     wire [`ADDR_W      - 1:0] COL    = (`N / `AD);
@@ -109,7 +110,7 @@ module mm_ctrl (
                     tile_done_w = 1'b1;
                     if (col_cnt_r == COL - 1 && row_cnt_r == ROW - 1) begin
                         // mtrx calc done
-                        state_w = S_IDLE;
+                        state_w = S_DONE;
                         mtrx_done_w = 1'b1;
                     end
                 end
@@ -119,7 +120,11 @@ module mm_ctrl (
                     ppu_start_w = 1'b1;
                 end
             end
-            default: begin
+            S_DONE: begin
+                // VL additional cycles for sending last tile to ppu
+                if (b_cnt_r == VL - 1) begin
+                    state_w = S_IDLE;
+                end
             end
         endcase
     end
@@ -215,7 +220,12 @@ module mm_ctrl (
                     end
                 end
             end
-            default: begin
+            S_DONE: begin
+                if (b_cnt_r == VL - 1) begin
+                    b_cnt_w = 0;
+                end else begin
+                    b_cnt_w = b_cnt_r + 1;
+                end
             end
         endcase
     end

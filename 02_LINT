@@ -1,4 +1,4 @@
 cd rtl
-sg_shell -tcl ../lint/lint_ppu.tcl
+sg_shell -tcl ../lint/lint_top.tcl
 rm -rf spyglass-1
 cd ..
