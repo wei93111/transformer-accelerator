@@ -53,6 +53,8 @@
 `define GROUP  (`M / `VL)
 `define STRIDE (`K / `VS)
 
+`define SDF_FILE "syn/top/top_syn.sdf"
+
 
 module tb_top;
 
@@ -209,6 +211,12 @@ module tb_top;
         .i_data  ( out_data ),
         .o_data  (  )
     );
+
+
+    // sdf annotate
+    `ifdef SDF
+        initial $sdf_annotate(`SDF_FILE, u_top);
+    `endif
 
 
     // // dump waveform
