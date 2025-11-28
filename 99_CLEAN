@@ -7,9 +7,9 @@ rm -rf spyglass-1
 rm -rf rtl/spyglass-1
 
 # synthesis
-rm -rf syn/*.log
-rm -rf syn/*.syn
-rm -rf syn/*.svf
-rm -rf syn/*.pvl
-rm -rf syn/*.mr
-rm -rf syn/alib-52
+rm -rf *.log
+rm -rf *.syn
+rm -rf *.svf
+rm -rf *.pvl
+rm -rf *.mr
+rm -rf alib-52

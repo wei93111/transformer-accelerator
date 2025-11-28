@@ -141,3 +141,8 @@ paper/
 
 # Others
 recip_gen.py
+*.txt
+
+# Synthesis Results
+syn/mac/
+syn/top/
