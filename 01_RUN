@@ -1,1 +1,1 @@
-vcs -full64 -R -f rtl/rtl.f +v2k -sverilog -debug_access+all +define+pat2
+vcs -full64 -R -f rtl/rtl.f +v2k -sverilog -debug_access+all +define+pat0

@@ -9,6 +9,15 @@ module top (
     input                         i_relu_en,
     input                         i_start,
 
+    // buffer in
+    input                         i_scale_buf_we,
+    input  [`ADDR_W        - 1:0] i_scale_buf_addr_wr,
+    input  [`SCALE_W * `VL - 1:0] i_scale_buf_data_wr,
+    input                         i_bias_buf_we,
+    input  [`ADDR_W        - 1:0] i_bias_buf_addr_wr,
+    input  [`BIAS_W  * `VL - 1:0] i_bias_buf_data_wr,
+    output                        o_bias_req,
+
     // input ram
     input  [`VEC_W * `VL   - 1:0] i_a_data,
     input  [`VEC_W         - 1:0] i_b_data,
@@ -42,7 +51,6 @@ module top (
     // interface
     wire                      ppu_start;
     wire [`ACC_W * `VL - 1:0] acc_data;
-    wire [1               :0] mode;
 
 
     // mm_ctrl
@@ -60,7 +68,7 @@ module top (
 
         .o_ppu_start ( ppu_start ),
         .o_acc_data  ( acc_data ),
-        .o_mode      ( mode ),
+        .o_bias_req  ( o_bias_req ),
 
         .o_tile_done ( o_tile_done ),
         .o_mtrx_done ( o_mtrx_done )
@@ -74,8 +82,15 @@ module top (
 
         .i_ppu_start           ( ppu_start ),
         .i_acc_data            ( acc_data ),
-        .i_mode                ( mode ),
+        .i_mode                ( i_mode ),
         .i_relu_en             ( i_relu_en ),
+
+        .i_scale_buf_we        ( i_scale_buf_we ),
+        .i_scale_buf_addr_wr   ( i_scale_buf_addr_wr ),
+        .i_scale_buf_data_wr   ( i_scale_buf_data_wr ),
+        .i_bias_buf_we         ( i_bias_buf_we ),
+        .i_bias_buf_addr_wr    ( i_bias_buf_addr_wr ),
+        .i_bias_buf_data_wr    ( i_bias_buf_data_wr ),
 
         .o_out_we              ( o_out_we ),
         .o_out_data            ( o_out_data ),

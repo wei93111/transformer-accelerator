@@ -17,7 +17,7 @@ module mm_ctrl (
     // ppu ctrl
     output                      o_ppu_start,
     output [`ACC_W * `VL - 1:0] o_acc_data,
-    output [1               :0] o_mode,
+    output                      o_bias_req,
 
     // finish
     output                      o_tile_done,
@@ -36,10 +36,10 @@ module mm_ctrl (
 
     // ctrl
     reg  [1               :0] state_w,     state_r;
-    reg  [1               :0] mode_w,      mode_r;
     reg                       tile_done_w, tile_done_r;
     reg                       mtrx_done_w, mtrx_done_r;
     reg                       ppu_start_w, ppu_start_r;
+    reg                       bias_req_w,  bias_req_r;
 
     // addr gen
     reg  [`ADDR_W      - 1:0] b_cnt_w,     b_cnt_r;
@@ -56,8 +56,8 @@ module mm_ctrl (
     wire [`ACC_W * `VL - 1:0] mac_res;
 
     // ctrl params
-    wire [`ADDR_W      - 1:0] VL     = `VL;
-    wire [`ADDR_W      - 1:0] STRIDE = (mode_r == `INT8) ? (`K / `INT8_VS) : (`K / `INT4_VS);
+    wire [`ADDR_W      - 1:0] AD     = `AD;
+    wire [`ADDR_W      - 1:0] STRIDE = (i_mode == `INT8) ? (`K / `INT8_VS) : (`K / `INT4_VS);
     wire [`ADDR_W      - 1:0] COL    = (`N / `AD);
     wire [`ADDR_W      - 1:0] ROW    = (`M / `VL);
 
@@ -70,7 +70,7 @@ module mm_ctrl (
 
     assign o_ppu_start = ppu_start_r;
     assign o_acc_data  = acc_data;
-    assign o_mode      = mode_r;
+    assign o_bias_req  = bias_req_r;
 
 
     //////////
@@ -82,30 +82,34 @@ module mm_ctrl (
         tile_done_w = 1'b0;
         mtrx_done_w = 1'b0;
         ppu_start_w = 1'b0;
+        bias_req_w  = 1'b0;
         
         state_w     = state_r;
-        mode_w      = mode_r;
 
         case (state_r)
             S_IDLE: begin
                 if (i_start) begin
-                    mode_w  = i_mode;
                     state_w = (i_mode == `INT4_VSQ) ? S_CALC : S_MAX;   // for INT4/INT8, one pass to calculate max first
                 end
             end
             S_MAX: begin
-                if (b_cnt_r == VL - 1 && a_cnt_r == STRIDE - 1 && col_cnt_r == COL - 1 && row_cnt_r == ROW - 1) begin
+                if (b_cnt_r == AD - 1 && a_cnt_r == STRIDE - 1 && col_cnt_r == COL - 1 && row_cnt_r == ROW - 1) begin
                     // mtrx max done (start calculate)
                     state_w = S_CALC;
                 end
 
                 // ppu start (one cycle earlier)
-                if (b_cnt_r == VL - 2 && a_cnt_r == STRIDE - 1) begin
+                if (b_cnt_r == AD - 2 && a_cnt_r == STRIDE - 1) begin
                     ppu_start_w = 1'b1;
+                end
+
+                // bias request (AD cycles before ppu start)
+                if (b_cnt_r == AD - 2 && a_cnt_r == STRIDE - 2) begin
+                    bias_req_w = 1'b1;
                 end
             end
             S_CALC: begin
-                if (b_cnt_r == VL - 1 && a_cnt_r == STRIDE - 1) begin
+                if (b_cnt_r == AD - 1 && a_cnt_r == STRIDE - 1) begin
                     // tile done
                     tile_done_w = 1'b1;
                     if (col_cnt_r == COL - 1 && row_cnt_r == ROW - 1) begin
@@ -116,13 +120,18 @@ module mm_ctrl (
                 end
 
                 // ppu start (one cycle earlier)
-                if (b_cnt_r == VL - 2 && a_cnt_r == STRIDE - 1) begin
+                if (b_cnt_r == AD - 2 && a_cnt_r == STRIDE - 1) begin
                     ppu_start_w = 1'b1;
+                end
+
+                // bias request (AD cycles before ppu start)
+                if (b_cnt_r == AD - 2 && a_cnt_r == STRIDE - 2) begin
+                    bias_req_w = 1'b1;
                 end
             end
             S_DONE: begin
-                // VL additional cycles for sending last tile to ppu
-                if (b_cnt_r == VL - 1) begin
+                // AD additional cycles for sending last tile to ppu
+                if (b_cnt_r == AD - 1) begin
                     state_w = S_IDLE;
                 end
             end
@@ -148,14 +157,14 @@ module mm_ctrl (
             end
             S_MAX: begin
                 // b_cnt
-                if (b_cnt_r == VL - 1) begin
+                if (b_cnt_r == AD - 1) begin
                     b_cnt_w = 0;
                 end else begin
                     b_cnt_w = b_cnt_r + 1;
                 end
 
                 // a_cnt
-                if (b_cnt_r == VL - 1) begin
+                if (b_cnt_r == AD - 1) begin
                     if (a_cnt_r == STRIDE - 1) begin
                         // tile done
                         a_cnt_w = 0;
@@ -165,7 +174,7 @@ module mm_ctrl (
                 end
 
                 // col_cnt
-                if (b_cnt_r == VL - 1 && a_cnt_r == STRIDE - 1) begin
+                if (b_cnt_r == AD - 1 && a_cnt_r == STRIDE - 1) begin
                     if (col_cnt_r == COL - 1) begin
                         col_cnt_w = 0;
                     end else begin
@@ -174,7 +183,7 @@ module mm_ctrl (
                 end
 
                 // row_cnt
-                if (b_cnt_r == VL - 1 && a_cnt_r == STRIDE - 1 && col_cnt_r == COL - 1) begin
+                if (b_cnt_r == AD - 1 && a_cnt_r == STRIDE - 1 && col_cnt_r == COL - 1) begin
                     if (row_cnt_r == ROW - 1) begin
                         // matrix done
                         row_cnt_w = 0;
@@ -185,14 +194,14 @@ module mm_ctrl (
             end
             S_CALC: begin
                 // b_cnt
-                if (b_cnt_r == VL - 1) begin
+                if (b_cnt_r == AD - 1) begin
                     b_cnt_w = 0;
                 end else begin
                     b_cnt_w = b_cnt_r + 1;
                 end
 
                 // a_cnt
-                if (b_cnt_r == VL - 1) begin
+                if (b_cnt_r == AD - 1) begin
                     if (a_cnt_r == STRIDE - 1) begin
                         // tile done
                         a_cnt_w = 0;
@@ -202,7 +211,7 @@ module mm_ctrl (
                 end
 
                 // col_cnt
-                if (b_cnt_r == VL - 1 && a_cnt_r == STRIDE - 1) begin
+                if (b_cnt_r == AD - 1 && a_cnt_r == STRIDE - 1) begin
                     if (col_cnt_r == COL - 1) begin
                         col_cnt_w = 0;
                     end else begin
@@ -211,7 +220,7 @@ module mm_ctrl (
                 end
 
                 // row_cnt
-                if (b_cnt_r == VL - 1 && a_cnt_r == STRIDE - 1 && col_cnt_r == COL - 1) begin
+                if (b_cnt_r == AD - 1 && a_cnt_r == STRIDE - 1 && col_cnt_r == COL - 1) begin
                     if (row_cnt_r == ROW - 1) begin
                         // matrix done
                         row_cnt_w = 0;
@@ -221,7 +230,7 @@ module mm_ctrl (
                 end
             end
             S_DONE: begin
-                if (b_cnt_r == VL - 1) begin
+                if (b_cnt_r == AD - 1) begin
                     b_cnt_w = 0;
                 end else begin
                     b_cnt_w = b_cnt_r + 1;
@@ -251,7 +260,7 @@ module mm_ctrl (
             assign b_sf    = i_b_data[0                   +:  `SF_W];
 
             mac mac_unit (
-                .i_mode    ( mode_r ),
+                .i_mode    ( i_mode ),
                 .i_psum    ( psum ),
                 .i_a_data  ( a_data ),
                 .i_b_data  ( b_data ),
@@ -293,20 +302,20 @@ module mm_ctrl (
     always @(posedge i_clk or negedge i_rst_n) begin
         if (!i_rst_n) begin
             state_r     <= S_IDLE;
-            mode_r      <= 0;
             tile_done_r <= 0;
             mtrx_done_r <= 0;
             ppu_start_r <= 0;
+            bias_req_r  <= 0;
             b_cnt_r     <= 0;
             a_cnt_r     <= 0;
             col_cnt_r   <= 0;
             row_cnt_r   <= 0;
         end else begin
             state_r     <= state_w;
-            mode_r      <= mode_w;
             tile_done_r <= tile_done_w;
             mtrx_done_r <= mtrx_done_w;
             ppu_start_r <= ppu_start_w;
+            bias_req_r  <= bias_req_w;
             b_cnt_r     <= b_cnt_w;
             a_cnt_r     <= a_cnt_w;
             col_cnt_r   <= col_cnt_w;

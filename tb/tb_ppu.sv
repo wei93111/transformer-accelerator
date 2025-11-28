@@ -57,10 +57,18 @@ module tb_ppu;
     ppu u_ppu (
         .i_clk                 ( clk ),
         .i_rst_n               ( rst_n ),
+
         .i_ppu_start           ( start ),
         .i_acc_data            ( acc_data ),
         .i_mode                ( `INT4_VSQ ),
         .i_relu_en             ( 1'b0 ),        // relu off
+
+        .i_scale_buf_we        ( '0 ),
+        .i_scale_buf_addr_wr   ( '0 ),
+        .i_scale_buf_data_wr   ( '0 ),
+        .i_bias_buf_we         ( '0 ),
+        .i_bias_buf_addr_wr    ( '0 ),
+        .i_bias_buf_data_wr    ( '0 ),
 
         .o_out_we              ( out_we ),
         .o_out_data            ( out_data ),
@@ -104,16 +112,6 @@ module tb_ppu;
 
     // load data
     initial begin
-        // scale factors (all 2e-6)
-        for (i = 0; i < 16; i = i + 1) begin
-            u_ppu.scale_buf.registers[i] = {16{16'b0000000000010000}};
-        end
-
-        // bias (all zeros)
-        for (i = 0; i < 16; i = i + 1) begin
-            u_ppu.bias_buf.registers[i] = {16{16'd0}};
-        end
-
         // input tile
         $readmemh(`IN, vector_in);
 
@@ -133,6 +131,16 @@ module tb_ppu;
         data_idx = 0;
         wait (rst_n === 1'b1);
         @(negedge clk);
+
+        // load scale factors (all 2e-6)
+        for (i = 0; i < 16; i = i + 1) begin
+            u_ppu.scale_buf.registers[i] = {16{16'b0000000000010000}};
+        end
+
+        // load bias (all zeros)
+        for (i = 0; i < 16; i = i + 1) begin
+            u_ppu.bias_buf.registers[i] = {16{16'd0}};
+        end
 
         repeat (4) begin
             // start

@@ -19,17 +19,30 @@ def mode_to_params(mode: str):
 M             = 128
 K             = 128
 N             = 128
-MODE          = "INT8"
+MODE          = "INT4"
 BIT_WIDTH, VS = mode_to_params(MODE)
 VEC_PER_ROW   = K // VS
 VEC_PER_COL   = K // VS
 
-PAT_ID        = 1
+PAT_ID        = 0
 INA_DIR       = Path(f"tb/pat_top/p{PAT_ID}_ina.dat")
 INB_DIR       = Path(f"tb/pat_top/p{PAT_ID}_inb.dat")
 OUT_DIR       = Path(f"tb/pat_top/p{PAT_ID}_out.dat")
 SFA_DIR       = Path(f"tb/pat_top/p{PAT_ID}_insfa.dat")
 SFB_DIR       = Path(f"tb/pat_top/p{PAT_ID}_insfb.dat")
+INSCALE_DIR   = Path(f"tb/pat_top/p{PAT_ID}_inscale.dat")   # per-output scale (Q6.10, 16-bit)
+INBIAS_DIR    = Path(f"tb/pat_top/p{PAT_ID}_inbias.dat")    # per-output bias  (Q6.10, 16-bit)
+
+# Q6.10 configuration for input scale range.
+# Values are real numbers; they will be converted to Q6.10 (× 2^10 and rounded).
+# You can edit these directly to constrain the inscale range, e.g. very small:
+SCALE_MIN = -8e-3
+SCALE_MAX =  8e-3
+
+Q_FRAC_BITS   = 10
+Q_SCALE       = 1 << Q_FRAC_BITS
+INT16_MIN     = -32768
+INT16_MAX     =  32767
 
 
 def generate_random(m, k, n, bit_width, seed=None):
@@ -57,6 +70,39 @@ def generate_random(m, k, n, bit_width, seed=None):
     a = np.random.randint(low, high, size=(m, k), dtype=np.int8)
     b = np.random.randint(low, high, size=(k, n), dtype=np.int8)
     return a, b
+
+
+def float_to_q6_10(x: np.ndarray) -> np.ndarray:
+    """Convert float array to Q6.10 int16 with saturation."""
+    q = np.rint(x * Q_SCALE)
+    q = np.clip(q, INT16_MIN, INT16_MAX)
+    return q.astype(np.int16)
+
+
+def q6_10_to_float(q: np.ndarray) -> np.ndarray:
+    """Convert Q6.10 int16 array to float."""
+    return q.astype(np.float64) / float(Q_SCALE)
+
+
+def generate_scale_and_bias(m: int, n: int):
+    """
+    Generate per-output scale and bias matrices.
+
+      scale_q: Q6.10 int16 in [SCALE_MIN, SCALE_MAX] (after quantization)
+      bias_q : Q6.10 int16, fully random over 16-bit signed range
+    """
+    if SCALE_MIN > SCALE_MAX:
+        raise ValueError("SCALE_MIN must be <= SCALE_MAX")
+
+    # Scale: uniform over configured real range, then quantized to Q6.10
+    scale_f = np.random.uniform(SCALE_MIN, SCALE_MAX, size=(m, n))
+    scale_q = float_to_q6_10(scale_f)
+
+    # Bias: random over full signed 16-bit range, already in Q6.10 domain
+    bias_q = np.random.randint(INT16_MIN, INT16_MAX + 1, size=(m, n), dtype=np.int32)
+    bias_q = bias_q.astype(np.int16)
+
+    return scale_q, bias_q
 
 
 def generate_scale_factors(mode: str, m: int, n: int):
@@ -151,6 +197,17 @@ def write_24bit_words_row_major(path: Path, data_2d) -> None:
             f.write(f"{word:06x}\n")
 
 
+def write_int16_words_row_major(path: Path, data_2d) -> None:
+    """Write a 2D int16 array in row-major order: one 16-bit hex word per line (no comments)."""
+    path.parent.mkdir(parents=True, exist_ok=True)
+    m, n = data_2d.shape
+    with path.open("w", encoding="utf-8") as f:
+        flat = data_2d.reshape(m * n)
+        for val in flat.tolist():
+            word = int(val) & 0xFFFF
+            f.write(f"{word:04x}\n")
+
+
 def quantize_symmetric_global(c_2d: np.ndarray, qmax: int) -> np.ndarray:
     """
     Symmetric quantization of an int32 matrix to the range [-qmax, qmax].
@@ -241,6 +298,9 @@ def main() -> None:
     # Compute full-precision golden result (24-bit wide stored in int32)
     c = compute_golden_24bit(a, b, sfa, sfb)
 
+    # Generate per-output scale (Q6.10) and bias (Q6.10), both MxN, raster-scan order.
+    scale_q, bias_q = generate_scale_and_bias(M, N)
+
     # Write in raster order with address comments
     if BIT_WIDTH == 4:
         write_int4_nibbles_row_major(INA_DIR, a)
@@ -266,19 +326,30 @@ def main() -> None:
                 byte = int(sfb[seg, j]) & 0xFF
                 f.write(f"{byte:02x}\n")
 
+    # Write per-output scale and bias patterns (Q6.10, 16-bit)
+    write_int16_words_row_major(INSCALE_DIR, scale_q)
+    write_int16_words_row_major(INBIAS_DIR, bias_q)
+
     # Quantize and write golden output depending on mode
+    # Apply per-output scale and bias (Q6.10) before quantization:
+    #   C_eff[i,j] = C[i,j] * scale[i,j] + bias[i,j]
+    c_f      = c.astype(np.float64)
+    scale_f  = q6_10_to_float(scale_q)
+    bias_f   = q6_10_to_float(bias_q)
+    c_effect = c_f * scale_f + bias_f
+
     if MODE == "INT4":
         # Global matrix max → scale = max/7 → outputs in [-7, 7], 4-bit wide
-        c_q = quantize_symmetric_global(c, qmax=7)
+        c_q = quantize_symmetric_global(c_effect, qmax=7)
         write_int4_nibbles_row_major(OUT_DIR, c_q)
     elif MODE == "INT8":
         # Global matrix max → scale = max/127 → outputs in [-127, 127], 8-bit wide
-        c_q = quantize_symmetric_global(c, qmax=127)
+        c_q = quantize_symmetric_global(c_effect, qmax=127)
         write_int8_bytes_row_major(OUT_DIR, c_q)
     elif MODE == "INT4_VSQ":
         # Vector-wise max over 64-entry row units along N:
         # For each row, split N into vectors of length 64 and quantize each independently.
-        c_q = quantize_symmetric_per_vector_rows(c, qmax=7, vec_len=64)
+        c_q = quantize_symmetric_per_vector_rows(c_effect, qmax=7, vec_len=64)
         write_int4_nibbles_row_major(OUT_DIR, c_q)
     else:
         raise ValueError(f"Unsupported MODE {MODE} for output quantization")
@@ -288,6 +359,8 @@ def main() -> None:
     print(f"Wrote B pattern: {INB_DIR} ({K*N} entries)")
     print(f"Wrote SFA pattern: {SFA_DIR} ({M*VEC_PER_ROW} entries)")
     print(f"Wrote SFB pattern: {SFB_DIR} ({VEC_PER_COL*N} entries)")
+    print(f"Wrote per-output scale: {INSCALE_DIR} ({M*N} entries)")
+    print(f"Wrote per-output bias: {INBIAS_DIR} ({M*N} entries)")
     print(f"Wrote quantized output: {OUT_DIR} ({M*N} entries)")
 
 

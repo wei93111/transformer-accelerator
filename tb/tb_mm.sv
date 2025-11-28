@@ -108,7 +108,6 @@ module tb_mm;
         
         .o_ppu_start ( ),
         .o_acc_data  ( ),
-        .o_mode      ( ),
 
         .o_tile_done ( tile_done ),
         .o_mtrx_done ( mtrx_done )
@@ -172,7 +171,6 @@ module tb_mm;
 
         #(`CYCLE * 1.0);
         start = 0;
-        mode  = 0;
     end
 
 

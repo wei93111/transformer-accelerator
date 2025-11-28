@@ -10,6 +10,14 @@ module ppu (
     input  [1                 :0] i_mode,
     input                         i_relu_en,
 
+    // scale and bias in
+    input                         i_scale_buf_we,
+    input  [`ADDR_W        - 1:0] i_scale_buf_addr_wr,
+    input  [`SCALE_W * `VL - 1:0] i_scale_buf_data_wr,
+    input                         i_bias_buf_we,
+    input  [`ADDR_W        - 1:0] i_bias_buf_addr_wr,
+    input  [`BIAS_W  * `VL - 1:0] i_bias_buf_data_wr,
+
     // output ram
     output                        o_out_we,
     output [`DATA8_W * `VL - 1:0] o_out_data,
@@ -191,10 +199,10 @@ module ppu (
         .DEPTH ( `AD )
     ) scale_buf (
         .i_clk     ( i_clk ),
-        .i_rst_n   ( 1'b1 ),
-        .i_we      ( 1'b0 ),
-        .i_addr_wr ( `ADDR_W'd0 ),
-        .i_data_wr ( {(`SCALE_W * `VL){1'b0}} ),
+        .i_rst_n   ( i_rst_n ),
+        .i_we      ( i_scale_buf_we ),
+        .i_addr_wr ( i_scale_buf_addr_wr ),
+        .i_data_wr ( i_scale_buf_data_wr ),
         .i_addr_rd ( scale_addr ),
         .o_data_rd ( scale_data )
     );
@@ -214,10 +222,10 @@ module ppu (
         .DEPTH ( `AD )
     ) bias_buf (
         .i_clk     ( i_clk ),
-        .i_rst_n   ( 1'b1 ),
-        .i_we      ( 1'b0 ),
-        .i_addr_wr ( `ADDR_W'd0 ),
-        .i_data_wr ( {(`BIAS_W * `VL){1'b0}} ),
+        .i_rst_n   ( i_rst_n ),
+        .i_we      ( i_bias_buf_we ),
+        .i_addr_wr ( i_bias_buf_addr_wr ),
+        .i_data_wr ( i_bias_buf_data_wr ),
         .i_addr_rd ( bias_addr ),
         .o_data_rd ( bias_data )
     );
