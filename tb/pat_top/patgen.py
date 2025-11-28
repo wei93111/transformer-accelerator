@@ -19,25 +19,22 @@ def mode_to_params(mode: str):
 M             = 128
 K             = 128
 N             = 128
-MODE          = "INT4"
+MODE          = "INT4_VSQ"
+PAT_ID        = 2
 BIT_WIDTH, VS = mode_to_params(MODE)
 VEC_PER_ROW   = K // VS
 VEC_PER_COL   = K // VS
 
-PAT_ID        = 0
-INA_DIR       = Path(f"tb/pat_top/p{PAT_ID}_ina.dat")
-INB_DIR       = Path(f"tb/pat_top/p{PAT_ID}_inb.dat")
-OUT_DIR       = Path(f"tb/pat_top/p{PAT_ID}_out.dat")
-SFA_DIR       = Path(f"tb/pat_top/p{PAT_ID}_insfa.dat")
-SFB_DIR       = Path(f"tb/pat_top/p{PAT_ID}_insfb.dat")
-INSCALE_DIR   = Path(f"tb/pat_top/p{PAT_ID}_inscale.dat")   # per-output scale (Q6.10, 16-bit)
-INBIAS_DIR    = Path(f"tb/pat_top/p{PAT_ID}_inbias.dat")    # per-output bias  (Q6.10, 16-bit)
+INA_DIR       = Path(f"tb/pat_top/p{PAT_ID}_in_mtrx_a.dat")
+INB_DIR       = Path(f"tb/pat_top/p{PAT_ID}_in_mtrx_b.dat")
+SFA_DIR       = Path(f"tb/pat_top/p{PAT_ID}_in_sf_a.dat")
+SFB_DIR       = Path(f"tb/pat_top/p{PAT_ID}_in_sf_b.dat")
+INSCALE_DIR   = Path(f"tb/pat_top/p{PAT_ID}_in_scale.dat")
+INBIAS_DIR    = Path(f"tb/pat_top/p{PAT_ID}_in_bias.dat")
+OUT_DIR       = Path(f"tb/pat_top/p{PAT_ID}_out_mtrx.dat")
 
-# Q6.10 configuration for input scale range.
-# Values are real numbers; they will be converted to Q6.10 (× 2^10 and rounded).
-# You can edit these directly to constrain the inscale range, e.g. very small:
-SCALE_MIN = -8e-3
-SCALE_MAX =  8e-3
+SCALE_MIN     = -8e-3
+SCALE_MAX     =  8e-3
 
 Q_FRAC_BITS   = 10
 Q_SCALE       = 1 << Q_FRAC_BITS
