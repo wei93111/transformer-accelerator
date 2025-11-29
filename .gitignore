@@ -146,3 +146,4 @@ recip_gen.py
 # Synthesis Results
 syn/mac/
 syn/top/
+syn/mm_ctrl/
