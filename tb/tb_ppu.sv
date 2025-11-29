@@ -32,6 +32,8 @@ module tb_ppu;
 
     // interface
     logic                        start;
+    logic                        mode;
+    logic                        relu_en;
     logic [`ACC_W * `VL   - 1:0] acc_data;
 
     logic                        out_we;
@@ -60,8 +62,8 @@ module tb_ppu;
 
         .i_ppu_start           ( start ),
         .i_acc_data            ( acc_data ),
-        .i_mode                ( `INT4_VSQ ),
-        .i_relu_en             ( 1'b0 ),        // relu off
+        .i_mode                ( mode ),
+        .i_relu_en             ( relu_en ),
 
         .i_scale_buf_we        ( '0 ),
         .i_scale_buf_addr_wr   ( '0 ),
@@ -106,16 +108,13 @@ module tb_ppu;
     // dump waveform
     initial begin
         $fsdbDumpfile("ppu.fsdb");
-        $fsdbDumpvars(0, tb_ppu, "+mda");
+        $fsdbDumpvars(1, tb_ppu, "+mda");
     end
 
 
     // load data
     initial begin
-        // input tile
         $readmemh(`IN, vector_in);
-
-        // output golden results
         $readmemh(`OUT, vector_out);
     end
 
@@ -127,6 +126,8 @@ module tb_ppu;
         // reset
         wait (rst_n === 1'b0);
         start    = 0;
+        mode     = 0;
+        relu_en  = 0;
         acc_data = 0;
         data_idx = 0;
         wait (rst_n === 1'b1);
@@ -145,7 +146,11 @@ module tb_ppu;
         repeat (4) begin
             // start
             #(`CYCLE * 32.0);
-            start = 1;   #(`CYCLE * 1.0);
+            start    = 1;
+            mode     = `MODE;
+            relu_en  = 0;
+
+            #(`CYCLE * 1.0);
             start = 0;
             
             // send data

@@ -285,7 +285,7 @@ module quantize (
         for (gi = 0; gi < `VL; gi = gi + 1) begin: SF_CALC
             assign sf_vsq[gi * `TRUNC_W +: `TRUNC_W] = ({8'd0, runmax_r[gi]} * INT4_NORM) >> 8;
 
-            reciprocal vsq_recip_unit (
+            reciprocal u_vsq_recip (
                 .i_data  ( sf_vsq[gi * `TRUNC_W +: `TRUNC_W] ),
                 .o_recip ( vsq_recip[gi * `TRUNC_W * 2 +: `TRUNC_W * 2] )
             );
@@ -294,14 +294,14 @@ module quantize (
 
     // int4 scale factor
     assign sf_int4 = ({8'd0, max_r} * INT4_NORM) >> 8;
-    reciprocal int4_recip_unit (
+    reciprocal u_int4_recip (
         .i_data  ( sf_int4 ),
         .o_recip ( int4_recip )
     );
 
     // int8 scale factor
     assign sf_int8 = ({8'd0, max_r} * INT8_NORM) >> 8;
-    reciprocal int8_recip_unit (
+    reciprocal u_int8_recip (
         .i_data  ( sf_int8 ),
         .o_recip ( int8_recip )
     );
@@ -347,19 +347,12 @@ module quantize (
         input [53:0] data;
 
         reg [53:0] data_abs;        // Q20.34
-        reg [53:0] data_abs_rnd;    // Q54.0
-        reg [3:0]  data_abs_sat;    // INT4
+        reg [3:0]  data_abs_trunc;  // INT4
 
         begin
-            data_abs     = (data[53]) ? ~data + 54'd1 : data;
-            data_abs_rnd = (data_abs[33]) ? (data_abs >> 34) + 54'd1 : data_abs >> 34;
-            if (data[53]) begin
-                // larger limit for negative numbers
-                data_abs_sat = (data_abs_rnd > {50'd0, 4'b1000}) ? 4'b1000 : data_abs_rnd[3:0];
-            end else begin
-                data_abs_sat = (data_abs_rnd > {50'd0, 4'b0111}) ? 4'b0111 : data_abs_rnd[3:0];
-            end
-            int4_truncate = (data[53]) ? ~data_abs_sat + 4'd1 : data_abs_sat;
+            data_abs       = (data[53]) ? ~data + 54'd1 : data;
+            data_abs_trunc = (data_abs[33]) ? data_abs[37:34] + 4'd1 : data_abs[37:34];
+            int4_truncate  = (data[53]) ? ~data_abs_trunc + 4'd1 : data_abs_trunc;
         end
     endfunction
 
@@ -368,19 +361,12 @@ module quantize (
         input [53:0] data;
 
         reg [53:0] data_abs;        // Q20.34
-        reg [53:0] data_abs_rnd;    // Q54.0
-        reg [7:0]  data_abs_sat;    // INT8
+        reg [7:0]  data_abs_trunc;  // INT8
 
         begin
-            data_abs     = (data[53]) ? ~data + 54'd1 : data;
-            data_abs_rnd = (data_abs[33]) ? (data_abs >> 34) + 54'd1 : data_abs >> 34;
-            if (data[53]) begin
-                // larger limit for negative numbers
-                data_abs_sat = (data_abs_rnd > {46'd0, 8'b10000000}) ? 8'b10000000 : data_abs_rnd[7:0];
-            end else begin
-                data_abs_sat = (data_abs_rnd > {46'd0, 8'b01111111}) ? 8'b01111111 : data_abs_rnd[7:0];
-            end
-            int8_truncate = (data[53]) ? ~data_abs_sat + 8'd1 : data_abs_sat;
+            data_abs       = (data[53]) ? ~data + 54'd1 : data;
+            data_abs_trunc = (data_abs[33]) ? data_abs[41:34] + 8'd1 : data_abs[41:34];
+            int8_truncate  = (data[53]) ? ~data_abs_trunc + 8'd1 : data_abs_trunc;
         end
     endfunction
 

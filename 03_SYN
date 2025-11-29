@@ -1,1 +1,1 @@
-dc_shell -f syn/top_syn.tcl
+dc_shell -f syn/mm_ctrl_syn.tcl

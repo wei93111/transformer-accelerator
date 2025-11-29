@@ -1,5 +1,5 @@
 `timescale 1ns / 10ps
-`define CYCLE 10.0
+`define CYCLE 60.0
 `define END_CYCLE 500000
 
 `include "define.v"
@@ -118,11 +118,11 @@ module tb_top;
     logic [`BIAS_W  * `VL - 1:0] bias_col_data;
 
 
-    // clk gen
-    clk_gen u_clk_gen (
-        .clk   ( clk ),
-        .rst_n ( rst_n )
-    );
+    // // clk gen
+    // clk_gen u_clk_gen (
+    //     .clk   ( clk ),
+    //     .rst_n ( rst_n )
+    // );
 
 
     // top
@@ -175,7 +175,7 @@ module tb_top;
                 .DEPTH ( (`M / `VL) * (`K / `VS) )
             ) u_ram_a (
                 .i_clk   ( clk ),
-                .i_rst_n ( '1 ),
+                .i_rst_n ( rst_n ),
                 .i_we    ( '0 ),
                 .i_addr  ( a_addr ),
                 .i_data  ( '0 ),
@@ -191,7 +191,7 @@ module tb_top;
         .DEPTH ( (`N / `VS) * `K )
     ) u_ram_b (
         .i_clk   ( clk ),
-        .i_rst_n ( '1 ),
+        .i_rst_n ( rst_n ),
         .i_we    ( '0 ),
         .i_addr  ( b_addr ),
         .i_data  ( '0 ),
@@ -219,11 +219,11 @@ module tb_top;
     `endif
 
 
-    // // dump waveform
-    // initial begin
-    //     $fsdbDumpfile("top.fsdb");
-    //     $fsdbDumpvars(0, tb_top, "+mda");
-    // end
+    // dump waveform
+    initial begin
+        $fsdbDumpfile("top.fsdb");
+        $fsdbDumpvars(1, tb_top, "+mda");
+    end
 
 
     // stimulus
@@ -239,6 +239,7 @@ module tb_top;
 
         // start
         @(negedge clk);
+        #(`CYCLE * 10.0);
         start = 1;   #(`CYCLE * 1.0);
         start = 0;
     end
@@ -381,8 +382,25 @@ module tb_top;
     end
 
 
+    // clk gen
+    always #(`CYCLE * 0.5) clk = ~clk;
+
+
+    // time limit
+    initial begin
+        #(`CYCLE * `END_CYCLE);
+        $display("Error! Time limit exceeded!");
+        $finish;
+    end
+
+
     // load pattern
     initial begin
+        clk   = 1'b0;
+        rst_n = 1'b1;   #(`CYCLE * 1.0);
+        rst_n = 1'b0;   #(`CYCLE * 2.0);
+        rst_n = 1'b1;
+
         $readmemh(`IN_MTRX_A, mtrx_ina);
         $readmemh(`IN_MTRX_B, mtrx_inb);
         $readmemh(`IN_SF_A, in_sf_a);
@@ -615,20 +633,20 @@ module tb_top;
 endmodule
 
 
-module clk_gen (
-    output logic clk,
-    output logic rst_n
-);
+// module clk_gen (
+//     output logic clk,
+//     output logic rst_n
+// );
 
-    always #(`CYCLE * 0.5) clk = ~clk;
+//     always #(`CYCLE * 0.5) clk = ~clk;
 
-    initial begin
-        clk   = 1'b0;
-        rst_n = 1'b1;   #(`CYCLE * 0.5);
-        rst_n = 1'b0;   #(`CYCLE * 2.0);
-        rst_n = 1'b1;   #(`CYCLE * `END_CYCLE);
-        $display("Error! Time limit exceeded!");
-        $finish;
-    end
+//     initial begin
+//         clk   = 1'b0;
+//         rst_n = 1'b1;   #(`CYCLE * 0.5);
+//         rst_n = 1'b0;   #(`CYCLE * 2.0);
+//         rst_n = 1'b1;   #(`CYCLE * `END_CYCLE);
+//         $display("Error! Time limit exceeded!");
+//         $finish;
+//     end
 
-endmodule
+// endmodule

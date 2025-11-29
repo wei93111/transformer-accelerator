@@ -197,7 +197,7 @@ module ppu (
     buffer #(
         .WIDTH ( `SCALE_W * `VL ),
         .DEPTH ( `AD )
-    ) scale_buf (
+    ) u_scale_buf (
         .i_clk     ( i_clk ),
         .i_rst_n   ( i_rst_n ),
         .i_we      ( i_scale_buf_we ),
@@ -220,7 +220,7 @@ module ppu (
     buffer #(
         .WIDTH ( `BIAS_W * `VL ),
         .DEPTH ( `AD )
-    ) bias_buf (
+    ) u_bias_buf (
         .i_clk     ( i_clk ),
         .i_rst_n   ( i_rst_n ),
         .i_we      ( i_bias_buf_we ),
@@ -240,7 +240,7 @@ module ppu (
     // relu (active when i_relu_en is high)
     generate
         for (gi = 0; gi < `VL; gi = gi + 1) begin: RELU
-            assign relu_res[gi*`FULL_W +: `FULL_W] = (!i_relu_en || ($signed(bias_res[gi*`FULL_W +: `FULL_W]) > `FULL_W'sd0)) ? bias_res[gi*`FULL_W +: `FULL_W] : `FULL_W'd0;
+            assign relu_res[gi*`FULL_W +: `FULL_W] = (i_relu_en && bias_res[gi * `FULL_W + `FULL_W - 1]) ? `FULL_W'd0 : bias_res[gi*`FULL_W +: `FULL_W];
         end
     endgenerate
 
@@ -279,7 +279,7 @@ module ppu (
     buffer #(
         .WIDTH ( `TRUNC_W * `VL ),
         .DEPTH ( `VSQ_BUF_D )
-    ) vsq_buf (
+    ) u_vsq_buf (
         .i_clk     ( i_clk ),
         .i_rst_n   ( i_rst_n ),
         .i_we      ( vsq_buf_we ),
@@ -294,7 +294,7 @@ module ppu (
     // quantize //
     //////////////
 
-    quantize quant (
+    quantize u_quantize (
         .i_clk      ( i_clk ),
         .i_rst_n    ( i_rst_n ),
 
@@ -322,7 +322,7 @@ module ppu (
     // softmax //
     /////////////
 
-    softmax softmax (
+    softmax u_softmax (
         .i_clk         ( i_clk ),
         .i_rst_n       ( i_rst_n ),
         .i_start       ( i_ppu_start ),

@@ -49,8 +49,10 @@ module mm_ctrl (
 
     // accumulator
     wire                      acc_we;
-    wire [`ADDR_W      - 1:0] acc_addr;
-    wire [`ACC_W * `VL - 1:0] acc_data;
+    wire [`ADDR_W      - 1:0] acc_addr_wr;
+    wire [`ADDR_W      - 1:0] acc_addr_rd;
+    wire [`ACC_W * `VL - 1:0] acc_data_wr;
+    wire [`ACC_W * `VL - 1:0] acc_data_rd;
     
     // mac
     wire [`ACC_W * `VL - 1:0] mac_res;
@@ -69,7 +71,7 @@ module mm_ctrl (
     assign o_mtrx_done = mtrx_done_r;
 
     assign o_ppu_start = ppu_start_r;
-    assign o_acc_data  = acc_data;
+    assign o_acc_data  = acc_data_rd;
     assign o_bias_req  = bias_req_r;
 
 
@@ -253,13 +255,13 @@ module mm_ctrl (
             wire [`SF_W  - 1:0] b_sf;
             wire [`ACC_W - 1:0] result;
 
-            assign psum    = (a_cnt_r == 0) ? 0 : acc_data[gi * `ACC_W +: `ACC_W];  // new round of accumulation
+            assign psum    = (a_cnt_r == 0) ? 0 : acc_data_rd[gi * `ACC_W +: `ACC_W];  // new round of accumulation
             assign a_data  = i_a_data[`SF_W + gi * `VEC_W +: `DAT_W];
             assign b_data  = i_b_data[`SF_W               +: `DAT_W];
             assign a_sf    = i_a_data[        gi * `VEC_W +:  `SF_W];
             assign b_sf    = i_b_data[0                   +:  `SF_W];
 
-            mac mac_unit (
+            mac u_mac (
                 .i_mode    ( i_mode ),
                 .i_psum    ( psum ),
                 .i_a_data  ( a_data ),
@@ -278,20 +280,22 @@ module mm_ctrl (
     // accumulator //
     /////////////////
 
-    assign acc_we   = (state_r != S_IDLE) ? 1'b1 : 1'b0;
-    assign acc_addr = b_cnt_r;
+    assign acc_we      = (state_r != S_IDLE) ? 1'b1 : 1'b0;
+    assign acc_data_wr = mac_res;
+    assign acc_addr_wr = b_cnt_r;
+    assign acc_addr_rd = b_cnt_r;
 
     buffer #(
         .WIDTH ( `ACC_W * `VL ),
         .DEPTH ( `AD )
-    ) accumulator (
+    ) u_acc_buf (
         .i_clk     ( i_clk ),
         .i_rst_n   ( i_rst_n ),
         .i_we      ( acc_we ),
-        .i_addr_wr ( acc_addr ),
-        .i_data_wr ( mac_res ),
-        .i_addr_rd ( acc_addr ),
-        .o_data_rd ( acc_data )
+        .i_addr_wr ( acc_addr_wr ),
+        .i_data_wr ( acc_data_wr ),
+        .i_addr_rd ( acc_addr_rd ),
+        .o_data_rd ( acc_data_rd )
     );
 
 

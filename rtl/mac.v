@@ -64,7 +64,7 @@ module mac (
         .DATA_W ( `DATA4_W ),
         .RES_W  ( `PROD4_W ),
         .VS     ( `INT4_VS )
-    ) int4_vp (
+    ) u_int4_vp (
         .i_a       ( i_a_data ),
         .i_b       ( int4_b_gated ),
         .o_product ( int4_product )
@@ -82,7 +82,7 @@ module mac (
         .DATA_W ( `DATA8_W ),
         .RES_W  ( `PROD8_W ),
         .VS     ( `INT8_VS )
-    ) int8_vp (
+    ) u_int8_vp (
         .i_a       ( i_a_data ),
         .i_b       ( int8_b_gated ),
         .o_product ( int8_product )
@@ -110,7 +110,7 @@ module mac (
         
         begin
             data_abs     = (data[`ACC_W]) ? ~data + 1 : data;
-            data_abs_sat = (data_abs > {(`ACC_W - 1){1'b1}}) ? {1'b0, {(`ACC_W - 1){1'b1}}} : data_abs[`ACC_W - 1:0];
+            data_abs_sat = (data_abs[`ACC_W - 1]) ? {1'b0, {(`ACC_W - 1){1'b1}}} : data_abs[`ACC_W - 1:0];
             saturate     = (data[`ACC_W]) ? ~data_abs_sat + 1 : data_abs_sat;
         end
     endfunction

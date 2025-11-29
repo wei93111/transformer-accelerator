@@ -16,20 +16,20 @@ def mode_to_params(mode: str):
     return bit_width, vs
 
 
-M             = 64                                      # rows of A
-K             = 64                                      # cols of A / rows of B
-N             = 64                                      # cols of B
-MODE          = "INT4_VSQ"                              # MODE: "INT4", "INT8", or "INT4_VSQ"
+M             = 128
+K             = 128
+N             = 128
+MODE          = "INT4_VSQ"
 BIT_WIDTH, VS = mode_to_params(MODE)
-VEC_PER_ROW   = K // VS                                 # number of K-vectors per row of A
-VEC_PER_COL   = K // VS                                 # number of K-vectors per column of B
+VEC_PER_ROW   = K // VS
+VEC_PER_COL   = K // VS
 
 PAT_ID        = 2
-INA_DIR       = Path(f"tb/pat_mm/p{PAT_ID}_ina.dat")    # A input pattern
-INB_DIR       = Path(f"tb/pat_mm/p{PAT_ID}_inb.dat")    # B input pattern
-OUT_DIR       = Path(f"tb/pat_mm/p{PAT_ID}_out.dat")    # golden output pattern
-SFA_DIR       = Path(f"tb/pat_mm/p{PAT_ID}_insfa.dat")  # A scale factors
-SFB_DIR       = Path(f"tb/pat_mm/p{PAT_ID}_insfb.dat")  # B scale factors
+INA_DIR       = Path(f"tb/pat_mm/p{PAT_ID}_in_mtrx_a.dat")
+INB_DIR       = Path(f"tb/pat_mm/p{PAT_ID}_in_mtrx_b.dat")
+OUT_DIR       = Path(f"tb/pat_mm/p{PAT_ID}_out_mtrx.dat")
+SFA_DIR       = Path(f"tb/pat_mm/p{PAT_ID}_in_sf_a.dat")
+SFB_DIR       = Path(f"tb/pat_mm/p{PAT_ID}_in_sf_b.dat")
 
 
 
