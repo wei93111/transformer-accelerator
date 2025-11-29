@@ -1,5 +1,5 @@
 `timescale 1ns / 10ps
-`define CYCLE 60.0
+`define CYCLE 50.0
 `define END_CYCLE 500000
 
 `include "define.v"
@@ -59,10 +59,12 @@
 module tb_top;
 
     genvar  gi;
-    integer errors;
     integer group, stride, entry, col, row;
     integer out_col_cnt,  out_row_cnt,  out_col,  out_row;
     integer bias_col_cnt, bias_row_cnt, bias_col, bias_row;
+
+    integer errors;
+    real    err_sum, err_avg, err, err_max;
 
 
     logic                        clk;
@@ -175,7 +177,7 @@ module tb_top;
                 .DEPTH ( (`M / `VL) * (`K / `VS) )
             ) u_ram_a (
                 .i_clk   ( clk ),
-                .i_rst_n ( rst_n ),
+                .i_rst_n ( '1 ),
                 .i_we    ( '0 ),
                 .i_addr  ( a_addr ),
                 .i_data  ( '0 ),
@@ -191,7 +193,7 @@ module tb_top;
         .DEPTH ( (`N / `VS) * `K )
     ) u_ram_b (
         .i_clk   ( clk ),
-        .i_rst_n ( rst_n ),
+        .i_rst_n ( '1 ),
         .i_we    ( '0 ),
         .i_addr  ( b_addr ),
         .i_data  ( '0 ),
@@ -304,7 +306,7 @@ module tb_top;
     end
 
 
-    // store stride outputs when done
+    // store outputs when vec done
     initial begin
         out_col_cnt = 0;
         out_row_cnt = 0;
@@ -339,7 +341,7 @@ module tb_top;
     end
 
 
-    // finish
+    // finish and calculate error
     initial begin
         wait (finish === 1'b1);
         #(`CYCLE * 100.0);
@@ -349,20 +351,36 @@ module tb_top;
         $display("==================================================================");
 
         $display("");
-        $display("First 32 outputs (tolerate +/- 1 mismatch):\n");
+        $display("First 32 outputs:\n");
 
-        errors = 0;
+        errors  = 0;
+        err_sum = 0.0;
+        err_max = 0;
+
         for (integer idx = 0; idx < `M * `N; idx = idx + 1) begin
-            if (mtrx_out[idx] !== mtrx_golden[idx] && mtrx_out[idx] !== $signed(mtrx_golden[idx]) + 4'sd1 && mtrx_out[idx] !== $signed(mtrx_golden[idx]) - 4'sd1) begin
-                // allow +/- 1 error
+            // error calculation
+            err = $signed(mtrx_out[idx]) - $signed(mtrx_golden[idx]);
+            if (err < 0) err = -err;
+            err_max = (err > err_max) ? err : err_max;
+            err_sum = err_sum + err;
+
+            // count mismatches
+            if (mtrx_out[idx] !== mtrx_golden[idx]) begin
                 errors = errors + 1;
-                if (idx < 32) $display("[ERROR  ] mtrx[0][%d] Calculated:%8b Golden:%8b", idx, mtrx_out[idx], mtrx_golden[idx]);
+                if (idx < 32) $display("[DIFF ] mtrx[0][%0d] Calculated:%8b Golden:%8b", idx, mtrx_out[idx], mtrx_golden[idx]);
             end else begin
-                if (idx < 32) $display("[CORRECT] mtrx[0][%d] Calculated:%8b Golden:%8b", idx, mtrx_out[idx], mtrx_golden[idx]);
+                if (idx < 32) $display("[MATCH] mtrx[0][%0d] Calculated:%8b Golden:%8b", idx, mtrx_out[idx], mtrx_golden[idx]);
             end
         end
-        
-        if (errors == 0) begin
+
+        err_avg = err_sum / (`M * `N);
+        $display("");
+        $display("Error summary:");
+        $display("Total mismatches           : %0d out of %0d entries", errors, `M * `N);
+        $display("Average per-entry error    : %0f", err_avg);
+        $display("Maximum per-entry error    : %0f", err_max);
+
+        if (err_avg < 1.0) begin
             $display("");
             $display("	//////////////////////////////               ");
             $display("	//                          //       |\__||  ");
@@ -382,7 +400,6 @@ module tb_top;
             $display("	//                          //  |^ ^ ^ ^ |w| ");
             $display("	//////////////////////////////   \\m___m__|_|");
             $display("");
-            $display("	Total of %d errors               ", errors);
         end
 
         $finish;

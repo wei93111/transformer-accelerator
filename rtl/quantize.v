@@ -40,8 +40,8 @@ module quantize (
     localparam S_QUANT  = 2'd3;
 
     // constants
-    localparam INT4_NORM = 8'b00100100;   // 1/7   in Q0.8
-    localparam INT8_NORM = 8'b00000010;   // 1/127 in Q0.8
+    localparam INT4_NORM = 16'b0010_0100_1001_0010;     // 1/7   in Q0.16
+    localparam INT8_NORM = 16'b0000_0010_0000_0100;     // 1/127 in Q0.16
 
 
     // ctrl
@@ -283,7 +283,7 @@ module quantize (
     // vsq scale factor
     generate
         for (gi = 0; gi < `VL; gi = gi + 1) begin: SF_CALC
-            assign sf_vsq[gi * `TRUNC_W +: `TRUNC_W] = ({8'd0, runmax_r[gi]} * INT4_NORM) >> 8;
+            assign sf_vsq[gi * `TRUNC_W +: `TRUNC_W] = ({16'd0, runmax_r[gi]} * INT4_NORM) >> 16;
 
             reciprocal u_vsq_recip (
                 .i_data  ( sf_vsq[gi * `TRUNC_W +: `TRUNC_W] ),
@@ -293,14 +293,14 @@ module quantize (
     endgenerate
 
     // int4 scale factor
-    assign sf_int4 = ({8'd0, max_r} * INT4_NORM) >> 8;
+    assign sf_int4 = ({16'd0, max_r} * INT4_NORM) >> 16;
     reciprocal u_int4_recip (
         .i_data  ( sf_int4 ),
         .o_recip ( int4_recip )
     );
 
     // int8 scale factor
-    assign sf_int8 = ({8'd0, max_r} * INT8_NORM) >> 8;
+    assign sf_int8 = ({16'd0, max_r} * INT8_NORM) >> 16;
     reciprocal u_int8_recip (
         .i_data  ( sf_int8 ),
         .o_recip ( int8_recip )
